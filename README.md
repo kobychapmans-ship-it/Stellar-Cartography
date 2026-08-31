@@ -1,12 +1,12 @@
-# Administratum Stellar Cartographica — iPhone PWA
+# Administratum Stellar Cartographica — iPhone PWA rev 17
 
-Phone-ready offline build of Administratum Stellar Cartographica.
+This package contains the latest mobile build. It prefers primary portrait orientation, uses a full-screen Campaign Manager on phone, and remains installable/offline through GitHub Pages.
 
 ## Install on iPhone
-1. Enable GitHub Pages for the repository: Settings → Pages → Deploy from branch → main → /(root).
-2. Open the Pages URL in Safari.
-3. Tap Share → Add to Home Screen.
-4. Launch the Home Screen app once while online. The service worker caches the full app shell for later offline use.
+1. Upload these files to the root of the Stellar-Cartography GitHub repository.
+2. Ensure GitHub Pages deploys from the `main` branch root.
+3. Open the Pages URL once in Safari while online.
+4. Share → Add to Home Screen.
+5. Launch the Home Screen app once while online so the rev-17 service-worker cache is installed.
 
-## Updating
-Replace the root files with a newer build. This package uses a versioned service-worker cache so an updated deployment replaces older cached application files after the site is opened online once.
+The campaign roster importer accepts BattleScribe `.ros`, `.rosz`, `.xml`, and BattleScribe HTML roster exports.
