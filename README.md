@@ -1,14 +1,12 @@
 # Administratum Stellar Cartographica — iPhone PWA
 
-This build is intended to be served from an HTTPS static host (for example GitHub Pages). On iPhone, open the hosted URL in Safari, then use **Share → Add to Home Screen**. The service worker caches the complete application after the first successful load, so it can then run offline as a standalone Home Screen app.
+Phone-ready offline build of Administratum Stellar Cartographica.
 
-## GitHub Pages
-1. Create a repository.
-2. Upload the contents of this folder to the repository root.
-3. In GitHub: **Settings → Pages → Build and deployment → Deploy from a branch**.
-4. Select the default branch and `/ (root)`.
-5. Open the Pages URL in Safari on the iPhone.
-6. Use **Share → Add to Home Screen**.
-7. Launch it once while online so the offline cache completes.
+## Install on iPhone
+1. Enable GitHub Pages for the repository: Settings → Pages → Deploy from branch → main → /(root).
+2. Open the Pages URL in Safari.
+3. Tap Share → Add to Home Screen.
+4. Launch the Home Screen app once while online. The service worker caches the full app shell for later offline use.
 
-The generator itself does not require remote APIs or external assets after installation.
+## Updating
+Replace the root files with a newer build. This package uses a versioned service-worker cache so an updated deployment replaces older cached application files after the site is opened online once.

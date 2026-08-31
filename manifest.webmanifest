@@ -1,7 +1,7 @@
 {
   "name": "Administratum Stellar Cartographica",
   "short_name": "Cartographica",
-  "description": "Offline-capable Warhammer 30k/40k stellar, sub-sector and sector generator with interactive 3D cartography.",
+  "description": "Offline-capable Warhammer 30k/40k stellar campaign, sector, sub-sector and system cartography.",
   "id": "./",
   "start_url": "./index.html",
   "scope": "./",
