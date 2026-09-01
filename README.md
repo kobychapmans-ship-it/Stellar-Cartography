@@ -1,16 +1,11 @@
-# Administratum Stellar Cartographica — iPhone PWA rev 18
+# Administratum Stellar Cartographica — Revision 20 PWA
 
-This package contains the latest mobile build. It prefers primary portrait orientation, uses a full-screen Campaign Manager on phone, and remains installable/offline through GitHub Pages.
+Revision 20 gives settlements physical settlement silhouettes, graphical building/district icons, an ongoing Settlement Operations panel, and a configurable map-intelligence layer system. The default campaign map only shows standing-force (T) and population (P) identifiers; resources, colonies, fleet-contact badges, defences, adventures and ownership halos can be switched on individually from Campaign Command.
 
-## Install on iPhone
-1. Upload these files to the root of the Stellar-Cartography GitHub repository.
-2. Ensure GitHub Pages deploys from the `main` branch root.
-3. Open the Pages URL once in Safari while online.
-4. Share → Add to Home Screen.
-5. Launch the Home Screen app once while online so the rev-18 service-worker cache is installed.
+## GitHub Pages / iPhone update
+1. Replace the repository-root `index.html`, `manifest.webmanifest`, `sw.js`, and icons with the files in this package.
+2. Keep GitHub Pages set to `main` and `/ (root)`.
+3. Open `index.html?rev=20-visual-settlements-v1` once in Safari while online.
+4. If an older Cartographica Home Screen icon is installed, remove it and add Revision 20 again with Share → Add to Home Screen.
 
-The campaign roster importer accepts BattleScribe `.ros`, `.rosz`, `.xml`, and BattleScribe HTML roster exports.
-
-
-## Rev 18 settlement development
-Campaign settlements now include a four-branch, five-tier development web inspired by grand-strategy settlement building. Worlds, moons, asteroid belts and system objects show every campaign settlement and core/native colony recorded on that location when inspected.
+The Revision 20 service worker uses a new cache/PWA identity and deletes older Cartographica caches during installation.
