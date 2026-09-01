@@ -1,4 +1,4 @@
-# Administratum Stellar Cartographica — iPhone PWA rev 17
+# Administratum Stellar Cartographica — iPhone PWA rev 18
 
 This package contains the latest mobile build. It prefers primary portrait orientation, uses a full-screen Campaign Manager on phone, and remains installable/offline through GitHub Pages.
 
@@ -10,3 +10,7 @@ This package contains the latest mobile build. It prefers primary portrait orien
 5. Launch the Home Screen app once while online so the rev-17 service-worker cache is installed.
 
 The campaign roster importer accepts BattleScribe `.ros`, `.rosz`, `.xml`, and BattleScribe HTML roster exports.
+
+
+## Rev 18 settlement development
+Campaign settlements now include a four-branch, five-tier development web inspired by grand-strategy settlement building. Worlds, moons, asteroid belts and system objects show every campaign settlement and core/native colony recorded on that location when inspected.
