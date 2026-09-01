@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
 <link rel="manifest" href="./manifest.webmanifest" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
-<title>Administratum Stellar Cartographica — Revision 20 Visual Settlements</title>
+<title>Administratum Stellar Cartographica — Revision 21 Turn Cycle & Colony UI</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -3685,14 +3685,134 @@ const _campaignRulesReferenceHTML_rev20=campaignRulesReferenceHTML;campaignRules
 const _campaignColoniesHTML_rev20=campaignColoniesHTML;
 campaignColoniesHTML=function(root,c){const p=campaignPlayer(c),rows=[];for(const fac of c.factions||[])for(const s of fac.settlements||[])if(s.status!=='Destroyed')rows.push({fac,s});if(!rows.length)return _campaignColoniesHTML_rev20(root,c);rows.sort((a,b)=>(a.fac.id===p.id?-1:1)-(b.fac.id===p.id?-1:1)||String(a.s.locationName).localeCompare(String(b.s.locationName)));return rows.map(({fac,s})=>{const occ=s.occupiedBy?campaignFaction(c,s.occupiedBy):null,own=fac.id===p.id;return `<div class="campaign-colony-row visual ${own?'':'foreign'}" style="--fac:${fac.color}"><div class="campaign-colony-list-icon">${campaignSettlementIconSVG(s.colony.size,fac.color)}</div><div class="colony-owner-ribbon">${campaignOwnerBadge(fac)}<b>${esc(s.locationName)}</b><span class="colony-reason">${esc(campaignRecord(root,s.systemId)?.name||s.systemId)} • ${esc(s.locationKind)}</span>${occ?`<span class="rangdan-tag">Occupied by ${esc(occ.name)}</span>`:''}</div><h4>${esc(s.colony.displayType||s.colony.type)}</h4><div class="campaign-local-buildings">${campaignMiniBuildings(s.colony)}</div><div class="campaign-dev-mini">${campaignDevTierSummary(s.colony)}</div>${soiColonyStatusHTML(s.colony)}${campaignSettlementOperationsHTML(s,fac)}${campaignSettlementYieldHTML(s,fac)}<div class="adv-line"><span>Infrastructure</span><strong>${esc((s.colony.infrastructure||[]).join(', ')||'Founding infrastructure only')}</strong></div><div class="adv-line"><span>Current Requirement</span><strong>${esc(s.colony.requiredInfrastructure||'None')}</strong></div><div class="adv-line"><span>Support</span><strong>${esc((s.colony.supportUpgrades||[]).join(', ')||'None')}</strong></div>${s.colony.acceleratedFoundation?'<div class="campaign-accelerated-foundation"><b>Accelerated Foundation:</b> raised immediately to Size 5 by additional strategic expenditure.</div>':''}${own?`<div class="campaign-actionrow"><button class="ghost campaign-development-button" type="button" data-open-development="${esc(s.id)}" data-development-faction="${esc(fac.id)}">Open Settlement & Buildings</button><button class="ghost" data-campaign-colony="advance" data-settlement="${s.id}" type="button">Advance Extra 90 Days</button>${s.colony.requiredInfrastructure?`<button class="ghost" data-campaign-colony="infra" data-settlement="${s.id}" type="button">Build Infrastructure (5 Materiel)</button>`:''}<button class="ghost" data-campaign-colony="support" data-settlement="${s.id}" type="button">Install Suggested Support (6 Materiel)</button></div>`:'<div class="hint">Foreign settlement: autonomous faction controls construction and growth.</div>'}</div>`}).join('')};
 
-const rev20Badge=document.querySelector('.generation-head-actions .badge');if(rev20Badge)rev20Badge.textContent='rev 20.0 Visual Settlements';const rev20Title=document.querySelector('title');if(rev20Title)rev20Title.textContent='Administratum Stellar Cartographica — Visual Settlements & Map Layers';
+const rev20Badge=document.querySelector('.generation-head-actions .badge');if(rev20Badge)rev20Badge.textContent='rev 21.0 Turn Cycle & Colony UI';const rev20Title=document.querySelector('title');if(rev20Title)rev20Title.textContent='Administratum Stellar Cartographica — Visual Settlements & Map Layers';
 
-const rev18Badge=document.querySelector('.generation-head-actions .badge');if(rev18Badge)rev18Badge.textContent='rev 20.0 Visual Settlements';const rev18Title=document.querySelector('title');if(rev18Title)rev18Title.textContent='Administratum Stellar Cartographica — Visual Settlements & Map Layers';
+const rev18Badge=document.querySelector('.generation-head-actions .badge');if(rev18Badge)rev18Badge.textContent='rev 21.0 Turn Cycle & Colony UI';const rev18Title=document.querySelector('title');if(rev18Title)rev18Title.textContent='Administratum Stellar Cartographica — Visual Settlements & Map Layers';
 
+
+
+/* ---------- Colony growth is now turn-driven ---------- */
+function campaignSettlementGrowthHTML(col,compact=false){
+  if(!col)return'';
+  const size=Math.max(0,Math.min(10,Number(col.size)||0)),next=Math.min(10,size+1),curName=(SOI_COLONY_SIZE[size]||['Extinct/Unknown'])[0],nextName=(SOI_COLONY_SIZE[next]||['Maximum'])[0],curSlots=campaignSettlementSlotCount(col),nextSlots=campaignSettlementSlotCount({size:next}),atMax=size>=10,req=col.requiredInfrastructure||null;
+  return `<section class="campaign-growth-guide ${compact?'compact':''}"><div class="campaign-growth-head"><h4>Settlement Growth & Size</h4><span class="spacer"></span><span class="campaign-growth-pill">Automatic at End Turn</span><span class="campaign-growth-pill">${col.cycles||0} cycles completed</span></div><div class="campaign-growth-track"><div class="campaign-growth-stage"><span>Current</span><b>Size ${size} — ${esc(curName)}</b><small>${curSlots} district slot${curSlots===1?'':'s'}</small></div><div class="campaign-growth-arrow">→</div><div class="campaign-growth-stage"><span>${atMax?'Maximum reached':'Next growth unlock'}</span><b>${atMax?'Size 10 maximum':`Size ${next} — ${esc(nextName)}`}</b><small>${atMax?`${curSlots} district slots`:`${nextSlots} district slots${nextSlots>curSlots?` (+${nextSlots-curSlots})`:''}`}</small></div></div>${atMax?'':`<div class="campaign-growth-chances"><span class="loss"><b>20%</b>d10 1–2: −1 Size</span><span class="hold"><b>50%</b>d10 3–7: no Size change</span><span class="gain"><b>30%</b>d10 8–10: +1 Size</span></div>`}<div class="campaign-growth-note"><b>How Size increases:</b> every campaign End Turn advances one 90-day colony cycle and rolls Colony Growth automatically. A successful +1 Size immediately unlocks the next district capacity shown above. ${req?`Current growth strain requires <b>${esc(req)}</b>; completing it removes the post-growth Complacency strain.`:'There is no outstanding post-growth infrastructure strain.'} Order 0 can cause additional decline before the growth roll.</div></section>`;
+}
+window.campaignSettlementGrowthHTML=campaignSettlementGrowthHTML;
+
+const _colonyCardHTML_rev21=colonyCardHTML;
+colonyCardHTML=function(targetId,c,p,targetKind='world'){
+  let h=_colonyCardHTML_rev21(targetId,c,p,targetKind),active=c?.status!=='Prospect';
+  if(active){
+    h=h.replace(/<button[^>]*data-colony-action="advance"[^>]*>[\s\S]*?<\/button>/g,'');
+    h=h.replace(/<button[^>]*data-colony-action="reroll"[^>]*>[\s\S]*?<\/button>/g,'');
+    if(!h.includes('campaign-growth-guide'))h=h.replace('<div class="adventure-actions">',campaignSettlementGrowthHTML(c,true)+'<div class="adventure-actions">');
+  }
+  return h;
+};
+
+const _soiColonyHTML_rev21=soiColonyHTML;
+soiColonyHTML=function(w,p){
+  let h=_soiColonyHTML_rev21(w,p),c=p?.nativeColony||p?.colony||p?.colonialProspect;
+  const established=!!(p?.nativeColony||p?.colony||c?.established);
+  if(established){
+    h=h.replace(/<button[^>]*data-advance-colony="[^"]*"[^>]*>[\s\S]*?<\/button>/g,'');
+    h=h.replace(/<button[^>]*data-reroll-colony="[^"]*"[^>]*>[\s\S]*?<\/button>/g,'');
+    if(p?.nativeColony&&!p?.colony)h=h.replace(/<button[^>]*data-found-colony="[^"]*"[^>]*>[\s\S]*?<\/button>/g,'');
+    const note=`<div class="campaign-growth-note"><b>Turn-based colony:</b> once established, this colony no longer has a manual 90-day advance or reroll control. During a campaign it advances automatically when End Turn resolves.</div>${campaignSettlementGrowthHTML(c,true)}`;
+    h=h.replace('</div><div class="hint">Characteristics follow Chapter III:',`${note}</div><div class="hint">Characteristics follow Chapter III:`);
+  }
+  return h;
+};
+
+function campaignAdvanceCoreColonies(root){
+  const seen=new Set(),list=[];
+  for(const rec of campaignSystemRecords(root))for(const loc of campaignMapLocations(rec.sys)){const p=loc?.p;if(!p)continue;for(const c of [p.colony,p.nativeColony])if(c?.established&&!seen.has(c)){seen.add(c);list.push({c,p,label:loc.name||rec.name})}}
+  for(const x of list)withSeededRng(`${root.campaign.seed}|T${root.campaign.turn-1}|CORECOL|${x.label}`,()=>soiAdvanceColony(x.c,x.p||{}));
+  if(list.length)campaignLog(root.campaign,`${list.length} core/native colon${list.length===1?'y':'ies'} advanced through the same 90-day turn cycle.`,'gain');
+  return list.length;
+}
+
+/* ---------- 10-second End Turn presentation ---------- */
+function campaignEndTurnOverlay(root){
+  document.querySelector('.campaign-endturn-overlay')?.remove();
+  const d=document.createElement('div');d.className='campaign-endturn-overlay';d.innerHTML=`<div class="campaign-endturn-card"><h3>Advancing Campaign Turn</h3><p id="campaignEndTurnPhase">Committing player orders and preparing autonomous factions…</p><div class="campaign-endturn-track"><div id="campaignEndTurnFill" class="campaign-endturn-fill"></div></div><div class="campaign-endturn-meta"><span id="campaignEndTurnPct">0%</span><span>90-day strategic cycle</span></div></div>`;document.body.appendChild(d);return d;
+}
+const _campaignEndTurn_rev21_immediate=campaignEndTurn;
+campaignEndTurn=function(root){
+  const c=root?.campaign;if(!c||c._endTurnProcessing)return;
+  c._endTurnProcessing=true;const before=c.turn,overlay=campaignEndTurnOverlay(root),fill=overlay.querySelector('#campaignEndTurnFill'),pct=overlay.querySelector('#campaignEndTurnPct'),phase=overlay.querySelector('#campaignEndTurnPhase'),start=performance.now(),duration=10000;
+  const phaseText=p=>p<18?'Committing player orders…':p<42?'Autonomous factions are planning and moving…':p<64?'Resolving fleet movement, wars and strategic reactions…':p<84?'Processing settlement economies and 90-day growth…':'Compiling events, reports and the next player phase…';
+  const tick=()=>{const p=Math.min(100,Math.floor((performance.now()-start)/duration*100));fill.style.width=p+'%';pct.textContent=p+'%';phase.textContent=phaseText(p);if(p<100)requestAnimationFrame(tick)};requestAnimationFrame(tick);
+  setTimeout(()=>{
+    try{_campaignEndTurn_rev21_immediate(root);if(root?.campaign?.turn===before+1){campaignAdvanceCoreColonies(root);campaignPersist(root)}}finally{if(root?.campaign)root.campaign._endTurnProcessing=false;overlay.remove()}
+  },duration);
+};
+
+/* ---------- Save/data moved out of primary navigation controls ---------- */
+function campaignSaveDataHTML(root,c){
+  const p=campaignPlayer(c),key=campaignLocalKey(root);return `<div class="campaign-save-panel"><section class="campaign-save-card"><h4>Campaign Save</h4><p>Cartographica auto-saves after most campaign actions and at the end of each turn. Use this panel for explicit snapshots and portable save files.</p><div class="campaign-save-meta"><span>Turn<b>${c.turn}</b></span><span>Player<b>${esc(p?.name||'Unknown')}</b></span><span>Campaign seed<b>${esc(c.sectorSeed||root?.config?.seed||'Unknown')}</b></span><span>Local key<b>${esc(key)}</b></span></div><div class="campaign-actionrow"><button id="campaignSaveLocalBtn" class="ghost" type="button">Save Locally Now</button><button id="campaignExportSaveBtn" class="ghost" type="button">Export Campaign Save</button></div></section><section class="campaign-save-card"><h4>Load / Transfer</h4><p>Import a Cartographica campaign JSON into the currently generated theatre. A seed mismatch is shown before anything is replaced.</p><div class="campaign-actionrow"><button id="campaignImportSaveActiveBtn" class="ghost" type="button">Import Campaign Save</button><input id="campaignImportSaveActiveFile" class="hidden" type="file" accept=".json"/></div>${c.persistWarning?`<div class="campaign-roster-note campaign-roster-error">${esc(c.persistWarning)}</div>`:'<div class="hint">Local browser storage currently reports no warning.</div>'}</section></div>`;
+}
+const _campaignDashboardHTML_rev21=campaignDashboardHTML;
+campaignDashboardHTML=function(root,c){
+  let h=_campaignDashboardHTML_rev21(root,c);
+  h=h.replace(/<button id="campaignSaveLocalBtn"[\s\S]*?<\/button>/,'').replace(/<button id="campaignExportSaveBtn"[\s\S]*?<\/button>/,'').replace(/<button id="campaignImportSaveActiveBtn"[\s\S]*?<\/button>/,'').replace(/<input id="campaignImportSaveActiveFile"[^>]*>/,'');
+  if(!h.includes('data-campaign-view="save"'))h=h.replace('<button class="ghost" data-campaign-view="log">Turn Log</button>',`<button class="ghost" data-campaign-view="save">Save / Data</button><button class="ghost" data-campaign-view="log">Turn Log</button>`);
+  if(!h.includes('id="campaignViewSave"'))h=h.replace('<div id="campaignViewLog" class="campaign-view hidden">',`<div id="campaignViewSave" class="campaign-view hidden">${campaignSaveDataHTML(root,c)}</div><div id="campaignViewLog" class="campaign-view hidden">`);
+  return h;
+};
+
+/* ---------- Territory/site defence reference ---------- */
+const _campaignSystemsHTML_rev21=campaignSystemsHTML;
+campaignSystemsHTML=function(root,c){
+  const p=campaignPlayer(c),rows=campaignSystemRecords(root).map(r=>{const st=c.systems[r.id]||{},o=campaignOwner(c,r.id),mine=o?.id===p.id,pres=(st.presenceFactionIds||[]).map(id=>campaignFaction(c,id)).filter(Boolean),effective=o?campaignSystemDefence(c,r.id,o.id):(st.defence||0);return `<div class="campaign-system-row ${c.selectedSystemId===r.id?'selected':''}"><div><div class="sysname">${esc(r.name)}</div><div class="subname">${esc(r.sub?.name||'Unassigned Sector Volume')}</div></div><div class="ownercol">${campaignOwnerBadge(o)}${pres.length?`<div class="subname">Presence: ${pres.map(x=>esc(x.name)).join(', ')}</div>`:''}</div><div class="defence">Site ${st.defence||0}<small>Effective ${effective}</small></div><button class="ghost" type="button" data-campaign-system="${r.id}">${mine?'Manage':'Select'}</button></div>`}).join('');
+  const ref=`<section class="campaign-defence-reference"><h4>What Site Defence Does</h4><div class="campaign-defence-grid"><div><span>Fortify order</span><b>8 Materiel + 1 Command</b></div><div><span>Fortification test</span><b>d6 + doctrine; 3+ succeeds</b></div><div><span>Site Defence</span><b>+1 per success, maximum 6</b></div><div><span>Battle effect</span><b>Defender roll + up to 3; +300 power per effective Defence</b></div></div><p><b>Site Defence</b> is the permanent fortified value shown in the territory ledger. <b>Effective Defence</b> also includes local settlement depth: each active settlement contributes up to +3 based on Size. In auto-resolve, effective Defence adds up to +3 to the defender's d6 and adds 300 equivalent strategic points per Defence level. It does not modify HH1/7e unit datasheets; if you play the battle on tabletop, treat it as the strategic reason for prepared positions, defensive terrain, orbital cover or fortification assets appropriate to the generated battlefield.</p></section>`;
+  return ref+`<div class="campaign-system-list">${rows}</div>`;
+};
+
+/* ---------- Clear settlement size progression ---------- */
+const _campaignDevelopmentWebHTML_rev21=campaignDevelopmentWebHTML;
+campaignDevelopmentWebHTML=function(root,fac,s,readonly=false){let h=_campaignDevelopmentWebHTML_rev21(root,fac,s,readonly);if(!h.includes('campaign-growth-guide'))h=h.replace('<section class="campaign-city-core">',campaignSettlementGrowthHTML(s.colony,false)+'<section class="campaign-city-core">');return h};
+
+const _campaignColoniesHTML_rev21=campaignColoniesHTML;
+campaignColoniesHTML=function(root,c){
+  const p=campaignPlayer(c),rows=[];for(const fac of c.factions||[])for(const s of fac.settlements||[])if(s.status!=='Destroyed')rows.push({fac,s});if(!rows.length)return _campaignColoniesHTML_rev21(root,c);rows.sort((a,b)=>(a.fac.id===p.id?-1:1)-(b.fac.id===p.id?-1:1)||String(a.s.locationName).localeCompare(String(b.s.locationName)));
+  return rows.map(({fac,s})=>{const occ=s.occupiedBy?campaignFaction(c,s.occupiedBy):null,own=fac.id===p.id;return `<div class="campaign-colony-row visual ${own?'':'foreign'}" style="--fac:${fac.color}"><div class="campaign-colony-list-icon">${campaignSettlementIconSVG(s.colony.size,fac.color)}</div><div class="colony-owner-ribbon">${campaignOwnerBadge(fac)}<b>${esc(s.locationName)}</b><span class="colony-reason">${esc(campaignRecord(root,s.systemId)?.name||s.systemId)} • ${esc(s.locationKind)}</span>${occ?`<span class="rangdan-tag">Occupied by ${esc(occ.name)}</span>`:''}</div><h4>${esc(s.colony.displayType||s.colony.type)}</h4><div class="campaign-local-buildings">${campaignMiniBuildings(s.colony)}</div><div class="campaign-dev-mini">${campaignDevTierSummary(s.colony)}</div>${soiColonyStatusHTML(s.colony)}${campaignSettlementGrowthHTML(s.colony,true)}${campaignSettlementOperationsHTML(s,fac)}${campaignSettlementYieldHTML(s,fac)}<div class="adv-line"><span>Infrastructure</span><strong>${esc((s.colony.infrastructure||[]).join(', ')||'Founding infrastructure only')}</strong></div><div class="adv-line"><span>Current Requirement</span><strong>${esc(s.colony.requiredInfrastructure||'None')}</strong></div><div class="adv-line"><span>Support</span><strong>${esc((s.colony.supportUpgrades||[]).join(', ')||'None')}</strong></div>${s.colony.acceleratedFoundation?'<div class="campaign-accelerated-foundation"><b>Accelerated Foundation:</b> raised immediately to Size 5 by additional strategic expenditure.</div>':''}${own?`<div class="campaign-actionrow"><button class="ghost campaign-development-button" type="button" data-open-development="${esc(s.id)}" data-development-faction="${esc(fac.id)}">Open Settlement & Buildings</button>${s.colony.requiredInfrastructure?`<button class="ghost" data-campaign-colony="infra" data-settlement="${s.id}" type="button">Build Infrastructure (5 Materiel)</button>`:''}<button class="ghost" data-campaign-colony="support" data-settlement="${s.id}" type="button">Install Suggested Support (6 Materiel)</button></div>`:'<div class="hint">Foreign settlement: autonomous faction controls construction and growth during its turn.</div>'}</div>`}).join('');
+};
+
+/* Keep the rules reference aligned with the revised flow. */
+const _campaignRulesReferenceHTML_rev21=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev21(root);h=h.replace('<h4>6. Settlements & Colonies</h4><p>','<h4>6. Settlements & Colonies</h4><p><b>Turn-based growth:</b> established colonies and settlements no longer have manual 90-day advance or reroll controls. End Turn advances their 90-day growth, calamity/fortune and Size cycle automatically. Size increases unlock additional district slots immediately. ');return h};
+
+/* Revision identity */
+const rev21Badge=document.querySelector('.generation-head-actions .badge');if(rev21Badge)rev21Badge.textContent='rev 21.0 Turn Cycle & Colony UI';const rev21Title=document.querySelector('title');if(rev21Title)rev21Title.textContent='Administratum Stellar Cartographica — Turn Cycle & Colony UI';
 
 })();
 
 </script>
+
+
+
+
+<style id="rev21-turn-cycle-ui-css">
+/* Revision 21: turn-cycle settlement flow, save/data tab, defence help, mobile colony repair */
+.campaign-endturn-overlay{position:fixed;inset:0;z-index:9999;background:rgba(4,6,8,.94);display:grid;place-items:center;padding:18px;backdrop-filter:blur(4px)}
+.campaign-endturn-card{width:min(620px,94vw);border:1px solid rgba(214,184,92,.62);background:linear-gradient(180deg,#151719,#090b0d);box-shadow:0 24px 90px #000;padding:18px}
+.campaign-endturn-card h3{margin:0 0 5px;color:#ead8a3;text-transform:uppercase;letter-spacing:.08em;font-size:18px}.campaign-endturn-card p{margin:0;color:#a9a18f;font-size:12px;line-height:1.45}
+.campaign-endturn-track{height:18px;margin:16px 0 8px;border:1px solid #594a29;background:#07090b;overflow:hidden}.campaign-endturn-fill{height:100%;width:0;background:linear-gradient(90deg,#6c1414,#b99749);box-shadow:0 0 16px rgba(185,151,73,.25);transition:width .12s linear}
+.campaign-endturn-meta{display:flex;justify-content:space-between;gap:10px;color:#c9b98e;font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.07em}
+.campaign-save-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.campaign-save-card{border:1px solid rgba(185,151,73,.25);background:rgba(255,255,255,.018);padding:11px}.campaign-save-card h4{margin:0 0 6px;color:#ddc78d}.campaign-save-card p{margin:4px 0;color:#9f9888;font-size:10px;line-height:1.45}.campaign-save-card .campaign-actionrow{margin-top:9px}.campaign-save-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin-top:8px}.campaign-save-meta span{padding:6px;border:1px solid rgba(255,255,255,.07);font-size:8px;color:#8f8b80}.campaign-save-meta b{display:block;color:#ded0ac;font-size:10px;margin-top:2px;overflow-wrap:anywhere}
+.campaign-defence-reference{margin-bottom:10px;border:1px solid rgba(105,155,194,.35);background:linear-gradient(90deg,rgba(62,101,130,.12),rgba(0,0,0,.08));padding:10px}.campaign-defence-reference h4{margin:0 0 6px;color:#add0e4;text-transform:uppercase;letter-spacing:.06em}.campaign-defence-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.campaign-defence-grid>div{border:1px solid rgba(255,255,255,.07);padding:7px}.campaign-defence-grid span{display:block;color:#8d979d;font-size:8px;text-transform:uppercase}.campaign-defence-grid b{display:block;color:#d5e2e8;font-size:10px;margin-top:2px}.campaign-defence-reference p{font-size:9px;color:#9da7aa;line-height:1.45;margin:7px 0 0}
+.campaign-growth-guide{border:1px solid rgba(150,178,111,.35);background:linear-gradient(90deg,rgba(100,132,76,.11),rgba(0,0,0,.08));padding:9px;margin:8px 0}.campaign-growth-guide.compact{padding:7px}.campaign-growth-head{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.campaign-growth-head h4{margin:0;color:#c8dda9;font-size:11px;text-transform:uppercase;letter-spacing:.06em}.campaign-growth-head .spacer{flex:1}.campaign-growth-pill{border:1px solid rgba(150,178,111,.3);border-radius:12px;padding:2px 6px;color:#b8c8a1;font-size:8px}.campaign-growth-track{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:center;margin-top:7px}.campaign-growth-stage{border:1px solid rgba(255,255,255,.07);padding:7px;background:rgba(0,0,0,.15)}.campaign-growth-stage span{font-size:7px;color:#858c84;text-transform:uppercase}.campaign-growth-stage b{display:block;color:#ddd4b8;font-size:10px;margin-top:2px}.campaign-growth-arrow{color:#b99749;font-size:17px}.campaign-growth-chances{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:6px}.campaign-growth-chances span{padding:5px;border:1px solid rgba(255,255,255,.06);text-align:center;font-size:8px;color:#a7a89c}.campaign-growth-chances b{display:block;font-size:10px}.campaign-growth-chances .loss b{color:#d0928b}.campaign-growth-chances .hold b{color:#c7c0ad}.campaign-growth-chances .gain b{color:#b9d59e}.campaign-growth-note{font-size:8.5px;color:#9da497;line-height:1.45;margin-top:6px}.campaign-growth-note b{color:#cad8b5}
+/* Fix colony register layout: header/icon first, then all data panels full width. */
+.campaign-colony-row.visual{align-items:start}.campaign-colony-row.visual>*{min-width:0}.campaign-colony-row.visual>.colony-stats,.campaign-colony-row.visual>.campaign-settlement-operations,.campaign-colony-row.visual>.campaign-colony-output,.campaign-colony-row.visual>.campaign-growth-guide,.campaign-colony-row.visual>.adv-line,.campaign-colony-row.visual>.campaign-accelerated-foundation,.campaign-colony-row.visual>.campaign-actionrow,.campaign-colony-row.visual>.hint{grid-column:1/-1!important}.campaign-colony-row.visual>.campaign-settlement-operations{position:relative;z-index:0;margin:2px 0}.campaign-colony-row.visual>.colony-stats{position:relative;z-index:0;margin:6px 0}
+.campaign-system-row .defence{white-space:nowrap}.campaign-system-row .defence small{display:block;color:#7f8d92;font-size:7px}
+@media(max-width:720px){
+ .campaign-save-panel{grid-template-columns:1fr}.campaign-defence-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .campaign-colony-row.visual{grid-template-columns:60px minmax(0,1fr)!important;padding:7px!important}.campaign-colony-row.visual .campaign-colony-list-icon{min-height:74px!important}.campaign-colony-row.visual .colony-owner-ribbon{align-items:flex-start}.campaign-colony-row.visual>.colony-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px!important}.campaign-colony-row.visual>.colony-stats>div{min-height:58px!important;padding:6px!important}.campaign-colony-row.visual>.colony-stats b{font-size:13px!important;line-height:1.15!important}.campaign-colony-row.visual>.colony-stats span{font-size:8px!important}.campaign-colony-row.visual .campaign-op-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.campaign-colony-row.visual .campaign-settlement-operations{padding:8px!important}.campaign-colony-row.visual .campaign-colony-output{padding:8px!important}
+ .campaign-growth-track{grid-template-columns:1fr}.campaign-growth-arrow{transform:rotate(90deg);text-align:center;height:18px}.campaign-growth-chances{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .campaign-endturn-card{width:96vw;padding:14px}.campaign-endturn-card h3{font-size:15px}
+}
+</style>
 
 
 
@@ -3716,16 +3836,16 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || location.hos
 <script>
 /* Revision 18 cache migration: purge any pre-r18 Cartographica caches and force the latest service worker. */
 (function(){
-  const REV='20';
+  const REV='21';
   document.documentElement.dataset.cartographicaRevision=REV;
   window.addEventListener('load', async ()=>{
     try{
       if('caches' in window){
         const keys=await caches.keys();
-        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r20-visual-settlements-v1/i.test(k)).map(k=>caches.delete(k)));
+        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r21-turn-cycle-colony-ui-v1/i.test(k)).map(k=>caches.delete(k)));
       }
       if('serviceWorker' in navigator){
-        const reg=await navigator.serviceWorker.register('./sw.js?v=19-settlement-slots-v1',{updateViaCache:'none'});
+        const reg=await navigator.serviceWorker.register('./sw.js?v=21-turn-cycle-colony-ui-v1',{updateViaCache:'none'});
         try{ await reg.update(); }catch(_){}
       }
     }catch(_){}
