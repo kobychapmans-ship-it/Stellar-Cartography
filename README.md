@@ -1,54 +1,35 @@
-# Administratum Stellar Cartographica — Revision 23.5
+# Administratum Stellar Cartographica — Revision 23.5.2
 
-Build: `23.5-fleet-operations-stable-v11`
+Build: `23.5.2-in-system-navigation-v12`
 
-This package is built directly on the known-good Revision 23.4.1 Stable Runtime. The v23.5 fleet/threat systems remain inside the same campaign runtime and do not recreate the old out-of-scope extension failure.
+This build is based on the stable v23.5.1 Fleet Operations runtime and corrects fleet movement inside a star system without removing any prior campaign systems.
 
-## Revision 23.5 additions
+## In-System Navigation
 
-### Fleet Journey Planner
-The Fleets tab now provides navigation without repeated map clicks:
-- Direct Translation to any generated campaign navigation node.
-- Multi-Journey waypoint planning, up to 24 waypoints.
-- Auto-Route for long trips.
-- Route summary with legs, distance, estimated turns, Supply and Command.
-- The complete multi-journey reserves its Supply once and consumes one fleet strategic action when confirmed.
-- Later legs begin automatically after arrival unless a threat/disruption pauses the route.
-- Paused journeys can be resumed or cancelled.
+Sector and sub-sector campaigns now track two separate fleet positions:
 
-Confirmed fleet movement is displayed on the strategic map. Sector/sub-sector movement retains the existing route arrows, multi-journeys add the full itinerary, and direct AU movement now visibly draws the origin/destination line and moving fleet marker on system maps.
+- **Strategic System** — the star system containing the fleet. This remains unchanged during local movement.
+- **Local Position** — System Translation Point, world, moon, asteroid/belt, station, or other spatial object inside that system.
 
-### Translation failure notices
-Player translation attempts now show a modal reason when rejected, including invalid destinations, current transit, active journey, strategic disruption, cargo overload, exhausted fleet actions, threat/warp blockade, insufficient Supply or insufficient Command. Invasion translation also reports missing/invalid targets and missing embarked ground forces.
+The Fleets tab contains a dedicated **In-System Navigation** panel. Local travel uses AU realspace movement, one fleet action, Supply, and **0 Command**. It never initiates a Warp/inter-system translation.
 
-### Fleet Designation Rules
-The Fleets tab contains an open Fleet Designation Roles reference showing each role's description and its Speed, Capacity, Void, Assault and Colony modifiers.
+You can move locally either by:
 
-### Fleet Development and Fleet-Colony factions
-Fleets can progress through:
-1. Sustained Logistics Refit
-2. Habitat & Civilian Decks
-3. Mobile Colony Core
-4. Migratory Enclave
-5. Fleet-City
+1. Selecting a world/object from the In-System Navigation dropdown and choosing **Move Within System**; or
+2. Choosing **Plot Local Move on System Map** and clicking a world, moon, asteroid, or spatial object on the current system map.
 
-At Tier III the fleet becomes both a fleet and a mobile settlement. It contributes settlement economy, defence and political power and appears in the Colonies interface as well as the Fleet interface. Higher tiers add survey/expedition capacity and stronger strategic contributions. A faction with a Tier III+ mobile colony may adopt a Fleet-Colony polity.
+Confirmed local routes display directly on the system map with the fleet marker moving along the route.
 
-### Major Threat Table
-A major system-scale threat is scheduled 1–50 turns after the previous threat. The table includes Solar Flares, Necron Awakenings, Xenos Uprisings, Warp Storms, Space Hulk Incursions, Plague Blooms, Gravitic Shears, Archeotech Cascades, Greenskin Migrations, Empyric Incursions, Relativistic Debris Storms and Psychic Resonance Crises.
+The separate **Inter-System Journey Planner** remains available for travel to other star systems, including direct translations, manual waypoints, and automatic Multi-Journey routes.
 
-Threats have persistent multi-turn effects and can damage forces, settlements, Defence and resources or disrupt/block fleet translation. Active threats and the next scheduled threat check appear in the campaign overview.
+## Retained systems
 
-## Preserved systems
-Revision 23.5 retains the complete Revision 23.4.1 campaign feature set including full diplomacy, allied detachments, restored settlement founding, strategic settlement programmes, Expedition & Survey districts and launch caps, Decrees, detailed battle auto-resolve, fleet action limits, empire recruitment/mobilisation ceilings, proactive AI attacks, Influence negotiation leverage and technology-ceiling breakthroughs.
+The build retains full diplomacy, Diplomatic Standing and allied detachments, settlement founding, fleet-colonies, Expedition & Survey districts and expedition caps, Decrees, fleet roles and development, recruitment/mobilisation limits, fleet action limits, major threats, AI warfare and diplomacy, technology-ceiling breakthroughs, battle auto-resolve detail, and offline PWA support.
 
-## GitHub Pages / PWA installation
-Upload the **contents** of this folder directly to the repository root. `index.html`, `manifest.webmanifest`, `sw.js` and the icon files must sit directly in the Pages root.
+## GitHub Pages deployment
 
-Canonical launch URL:
+Replace the repository-root files with the contents of this package. After GitHub Pages completes deployment, open once while online:
 
-`https://kobychapmans-ship-it.github.io/Stellar-Cartography/?rev=23.5-fleet-operations-stable-v11`
+`https://kobychapmans-ship-it.github.io/Stellar-Cartography/?rev=23.5.2-in-system-navigation-v12`
 
-Open that URL once while online after GitHub Pages finishes deploying. The service worker caches the application shell and icons for subsequent offline launches. The existing PWA application ID is intentionally retained so a working v23.4.x Home Screen installation can update in place.
-
-The service worker deletes older Cartographica caches during activation and uses network-first navigation with the v23.5 cached application as the offline fallback.
+The service worker then caches the application shell for offline use.

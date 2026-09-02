@@ -1,16 +1,26 @@
 {
-  "name": "Administratum Stellar Cartographica — Revision 23.5",
-  "short_name": "Cartographica 23.5",
-  "description": "Feature-complete stellar campaign grand-strategy PWA. Revision 23.5 adds direct fleet navigation, multi-journey route planning, visible confirmed travel, fleet role rules, fleet development into mobile settlements, Fleet-Colony factions and major system threats while retaining the complete Revision 23.4.1 stable campaign runtime.",
+  "name": "Administratum Stellar Cartographica — Revision 23.5.2",
+  "short_name": "Cartographica R23.5.2",
+  "description": "Stable Revision 23.5.2 with true in-system fleet navigation, inter-system journey planning, fleet-colony development, major threats, full diplomacy, settlements, expeditions, Decrees, mobilisation and offline play.",
   "id": "./?app=cartographica-r23.4-final-offline-v8",
-  "start_url": "./index.html?rev=23.5-fleet-operations-stable-v11",
+  "start_url": "./index.html?rev=23.5.2-in-system-navigation-v12",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",
   "theme_color": "#05070a",
   "orientation": "portrait-primary",
   "icons": [
-    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
-    {"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }

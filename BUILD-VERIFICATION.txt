@@ -1,102 +1,59 @@
-Administratum Stellar Cartographica — Revision 23.5
-Build: 23.5-fleet-operations-stable-v11
-Verification date: 2026-09-03
-
-BASELINE
-- Built on the v23.4.1 Stable Runtime consolidated architecture.
-- Revision 23.5 code is inside the main campaign runtime/IIFE; it does not recreate the earlier out-of-scope append-layer bug.
-- Prior grand-strategy systems remain present: full diplomacy, settlement founding, expedition districts/caps, Decrees, allied detachments, mobilisation, AI offensives, technology-ceiling breakthroughs and detailed auto-resolve.
+Administratum Stellar Cartographica — Revision 23.5.2
+Build: 23.5.2-in-system-navigation-v12
 
 STATIC VALIDATION
-- 4 embedded JavaScript blocks checked with Node syntax parser: PASS (0 syntax errors).
-- sw.js checked with Node syntax parser: PASS.
-- sw-v23-4.js compatibility worker checked with Node syntax parser: PASS.
-- manifest.webmanifest parsed as JSON: PASS.
-- No external JavaScript sources: PASS.
-- No external stylesheet dependencies: PASS.
-- Canonical build URL: ?rev=23.5-fleet-operations-stable-v11.
-- Offline cache: cartographica-r23.5-fleet-operations-stable-v11.
+- Embedded JavaScript syntax: PASS (Node --check)
+- sw.js syntax: PASS
+- manifest.webmanifest JSON: PASS
+- Manifest start URL: ./index.html?rev=23.5.2-in-system-navigation-v12
+- Offline cache: cartographica-r23.5.2-in-system-navigation-v12
 
-BROWSER FUNCTIONAL TEST
-Performed in headless Chromium against the complete index.html:
-- Generated a full sector: PASS.
-- Launched a sector campaign: PASS.
-- Fleet Journey Planner rendered in Fleets tab: PASS.
-- Fleet Designation Roles rules rendered in Fleets tab: PASS.
-- Translation rejection with 0 Command produced a visible modal explaining "Insufficient Command": PASS.
-- Auto-Route produced a multi-leg journey summary: PASS.
-- Confirm Multi-Journey created an active journeyPlan and fleet transit: PASS.
-- Confirmed multi-journey path rendered into the campaign SVG map: PASS.
-- Fleet development progressed to Tier III on an eligible Expeditionary Fleet: PASS.
-- Tier III created a Mobile Fleet Colony: PASS.
-- Mobile Fleet Colony rendered in the Colonies tab as a settlement as well as a fleet: PASS.
-- Major threat generated and persisted: PASS.
-- Next major-threat interval was within 1–50 turns (test interval: 20): PASS.
-- Browser page/runtime exceptions during the functional pass: 0.
+BROWSER FUNCTIONAL TEST — DIRECT LOCAL MOVE
+- Generated full sector: PASS
+- Launched sector campaign: PASS
+- In-System Navigation panel rendered: PASS
+- Dropdown contained current-system worlds/spatial objects: PASS
+- Issuing local move created localTransit2352: PASS
+- Strategic fleet system ID remained unchanged: PASS
+- Local move spent no Command: PASS
+- Confirmed local AU route rendered on system SVG map: PASS
+- Local transit completion changed only localLocationId2352: PASS
+- Runtime exceptions: 0
 
-FLEET MOVEMENT
-- Direct translations can be ordered entirely from the Fleets tab.
-- Waypoint mode supports manually planned itineraries.
-- Auto-Route creates intermediate waypoints for long inter-system travel when useful.
-- Up to 24 waypoints may be stored in one confirmed journey.
-- Full-route Supply + 1 Command are reserved when the route is confirmed.
-- Subsequent route legs begin automatically when each waypoint is reached.
-- Existing per-fleet strategic action cap is retained; a confirmed multi-journey consumes one fleet action when ordered.
-- Existing map-click plot-and-confirm movement remains available as an alternate workflow.
+BROWSER FUNCTIONAL TEST — MAP PLOT
+- Local map-plot mode opened current fleet system: PASS
+- Clicking a world staged pendingFleetOrder.type = local: PASS
+- Confirmation panel identified an in-system move: PASS
+- Confirming map plot created localTransit2352 to clicked world: PASS
+- Runtime exceptions: 0
 
-TRANSLATION REJECTION POPUPS
-Player movement attempts now explain failures including:
-- no fleet/destination
-- invalid destination
-- already in transit
-- already committed to a multi-journey
-- already at target
-- strategic disruption
-- cargo overload
-- fleet action limit exhausted
-- major-threat/Warp blockade
-- insufficient Supply
-- insufficient Command
+BROWSER FUNCTIONAL TEST — INTER-SYSTEM REGRESSION
+- Inter-System Journey Planner remained visible: PASS
+- Direct inter-system move created normal fleet.transit: PASS
+- Strategic system remained origin until arrival: PASS
+- Inter-system translation still spent 1 Command: PASS
+- Runtime exceptions: 0
 
-FLEET DEVELOPMENT / FLEET-COLONY
-- Tier I: Sustained Logistics Refit.
-- Tier II: Habitat & Civilian Decks.
-- Tier III: Mobile Colony Core; fleet is simultaneously a fleet and settlement.
-- Tier IV: Migratory Enclave; mobile expedition/survey capacity begins.
-- Tier V: Fleet-City; stronger economy, mobilisation and expedition capacity.
-- Mobile colonies contribute income, defence, diplomatic power, mobilisation and resource/expedition access where applicable.
-- Mobile colonies appear in both Fleets and Colonies interfaces.
-- Faction can adopt Fleet-Colony polity after obtaining a Tier III+ mobile settlement.
-- AI can develop suitable fleets toward mobile colonies.
-
-MAJOR THREAT TABLE
-A new threat is scheduled 1–50 turns after the previous threat. Included events:
-1. Catastrophic Solar Flare
-2. Necron Awakening
-3. Xenos Uprising
-4. Sudden Warp Storm
-5. Space Hulk Incursion
-6. Systemic Plague Bloom
-7. Gravitic Shear Event
-8. Archeotech Cascade
-9. Greenskin Migration
-10. Empyric Incursion
-11. Relativistic Debris Storm
-12. Psychic Resonance Crisis
-Threats have multi-turn system-scale effects and can damage forces, settlements, Defence/resources or interfere with fleet travel.
+FEATURE RETENTION MARKERS
+- True in-system local state: PASS
+- Local transit state: PASS
+- In-System Navigation panel: PASS
+- Local map plot: PASS
+- Local route SVG: PASS
+- Inter-System Journey Planner: PASS
+- Multi-Journey: PASS
+- Fleet roles: PASS
+- Fleet colony: PASS
+- Major threats: PASS
+- Full diplomacy: PASS
+- Allied detachments: PASS
+- Expedition district: PASS
+- Decrees: PASS
+- Battle breakdown: PASS
+- Tech ceiling: PASS
 
 PWA / OFFLINE
-- Service worker uses a fresh Revision 23.5 cache and deletes older Cartographica caches on activation.
-- Network-first navigation keeps deployed builds fresh while retaining cached index.html as offline fallback.
-- Complete app shell (index, manifest and icons) is cached after first successful online launch.
-- Application HTML contains no external JS/CSS dependencies, so gameplay code remains locally available offline.
-- The existing PWA app ID is intentionally retained so installed v23.4.x PWAs can upgrade in place.
-
-NOTE ON TEST ENVIRONMENT
-Direct localhost navigation is blocked by the execution environment's browser administrator policy, so service-worker network/offline switching could not be exercised through an HTTP origin here. The worker/manifest were syntax/structure validated, and the full application runtime was exercised in Chromium using the complete HTML document.
-
-V11 FINAL DELTA
-- Direct in-system AU translations now render a confirmed travel line and moving fleet marker on the system map.
-- Multi-journey continuation pauses with a visible reason when a later leg is blocked by disruption or a major threat.
-- Final v11 static validation repeated: manifest JSON PASS; all embedded JavaScript PASS; both service workers PASS; requested feature markers PASS.
-- The final archive is packaged with repository files at ZIP root for direct GitHub Pages deployment.
+- Fresh v12 service-worker cache deletes older Cartographica caches on activation.
+- Network-first navigation keeps deployed GitHub Pages builds fresh.
+- Cached canonical index and plain index provide offline fallback after first successful online load.
+- Application contains no external JS/CSS runtime dependencies.

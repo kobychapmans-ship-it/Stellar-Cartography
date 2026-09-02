@@ -1,5 +1,4 @@
 Administratum Stellar Cartographica
-Revision: 23.5
-Build: 23.5-fleet-operations-stable-v11
-Base runtime: Revision 23.4.1 Stable Runtime
-PWA cache: cartographica-r23.5-fleet-operations-stable-v11
+Revision: 23.5.2
+Build: 23.5.2-in-system-navigation-v12
+Focus: true in-system AU navigation + stable fleet operations + offline PWA
