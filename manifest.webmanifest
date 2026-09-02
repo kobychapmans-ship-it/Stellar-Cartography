@@ -1,16 +1,26 @@
 {
-  "name": "Administratum Stellar Cartographica — Revision 23.4 Complete",
-  "short_name": "Cartographica R23.4",
-  "description": "Feature-complete Revision 23.4: full diplomacy, settlement founding, allied detachments, expedition districts and launch caps, Decrees, detailed battle auto-resolve, mobilisation limits, AI war actions, and technology-ceiling breakthroughs. Fully offline-capable after first load.",
+  "name": "Administratum Stellar Cartographica — Revision 23.4.1 Stable",
+  "short_name": "Cartographica 23.4.1",
+  "description": "Feature-complete stable runtime with full diplomacy, settlement founding, allied detachments, expedition districts and caps, Decrees, detailed battle auto-resolve, mobilisation, AI warfare, and technology-ceiling breakthroughs. Offline-capable after first load.",
   "id": "./?app=cartographica-r23.4-final-offline-v8",
-  "start_url": "./index.html?rev=23.4-final-offline-v8",
+  "start_url": "./index.html?rev=23.4.1-stable-runtime-v9",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",
   "theme_color": "#05070a",
   "orientation": "portrait-primary",
   "icons": [
-    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
-    {"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }

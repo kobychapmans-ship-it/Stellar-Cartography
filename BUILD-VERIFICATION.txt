@@ -1,36 +1,45 @@
-Stellar Cartography — Revision 23.4 Complete / Final Offline Locked
-Build: 23.4-final-offline-v8
+STELLAR CARTOGRAPHY PWA — REVISION 23.4.1 STABLE RUNTIME
 
-VERSION / ANTI-REVERSION
-[PASS] Base HTML badge is Revision 23.4 before JavaScript runs
-[PASS] Legacy runtime badge writers (rev 7/8/9/10/11/12/13/16) can no longer display an older revision
-[PASS] Page title is Revision 23.4 from source and through runtime wrappers
-[PASS] Manifest has a v23.4-only app ID and v23.4 start URL
-[PASS] Versioned service worker filename sw-v23-4.js is registered with updateViaCache=none
-[PASS] Legacy sw.js is also supplied with the same v23.4 worker code so an existing root-scope registration can update
-[PASS] Service worker deletes older Cartographica caches on install/activate
-[PASS] Navigation is network-first and falls back to the cached v23.4 canonical application shell
+ROOT CAUSE FIXED
+The previous v23.4 deployment appended the v23, v23.3 and v23.4 feature scripts outside the primary campaign IIFE. Those scripts referenced private lexical bindings from the core runtime, producing immediate browser ReferenceErrors including CAMPAIGN_TECH_NAMES, campaignFoundSettlement and CAMPAIGN_BUILDING_CHAINS. The UI could therefore reach the title/setup screen while the later campaign systems never initialised correctly.
 
-OFFLINE
-[PASS] Main application is self-contained in index.html
-[PASS] No external HTTP/HTTPS runtime dependencies in index.html
-[PASS] Canonical index, plain index, manifest and icons are pre-cached
-[PASS] Offline navigation falls back to the cached Revision 23.4 shell
+FIX
+- Consolidated the v23, v23.3 and v23.4 feature layers into the primary campaign lexical scope.
+- Preserved every feature wrapper and compatibility layer; feature logic was not stripped.
+- Removed controllerchange / forced reload behaviour from the title-screen runtime.
+- Reduced service-worker registration to one stable registration path.
+- Kept sw-v23-4.js as a compatibility alias so an existing v23.4 Home Screen installation can update its old worker registration.
+- Service worker is network-first for navigations and falls back to the cached v23.4.1 application shell offline.
+- No external JS/CSS/CDN dependencies are required by index.html.
 
-FEATURE RETENTION
-[PASS] Full direct diplomacy action set and Influence leverage
-[PASS] Diplomatic Standing / allied detachment access
-[PASS] Settlement founding and strategic colony investment
-[PASS] Expedition & Survey district and expedition launch capacity
-[PASS] Decrees tab and decree campaign effects
-[PASS] Detailed battle auto-resolve breakdown
-[PASS] Fleet action limit
-[PASS] Empire recruitment/mobilisation capacity
-[PASS] Proactive AI wartime offensive opportunity
-[PASS] Technology ceiling breakthrough requirements
+BROWSER RUNTIME TESTS COMPLETED
+1. Loaded complete HTML in headless Chromium: 0 JavaScript exceptions.
+2. Generated a full sector (41 systems in the test run): successful.
+3. Opened Campaign Start Manager: successful.
+4. Launched a Sector Campaign: successful.
+5. Campaign dashboard rendered with Overview, Territory, Army, Colonies, Fleets, Factions/Diplomacy, Decrees, Battles, Save/Data and Turn Log tabs.
+6. Diplomacy tab rendered the complete action set including one-way trade, access, guarantees, alliances and vassalisation.
+7. Decrees tab rendered all four decree categories.
+8. Colonies tab rendered the independent Found New Campaign Settlement workspace and the founding action executed without runtime error.
+9. End Turn completed through autonomous-faction processing and advanced Turn 1 -> Turn 2 with 0 runtime exceptions.
 
-VALIDATION
-[PASS] manifest.webmanifest parses as JSON
-[PASS] sw.js JavaScript syntax
-[PASS] sw-v23-4.js JavaScript syntax
-[PASS] All embedded index.html script blocks pass Node syntax validation
+FEATURE PRESENCE CHECKS
+- revision_23_4_1: PASS
+- full_diplomacy: PASS
+- allied_detachments: PASS
+- expedition_district: PASS
+- decrees: PASS
+- battle_breakdown: PASS
+- settlement_founder: PASS
+- fleet_action_limit: PASS
+- recruitment_cap: PASS
+- ai_attack_popup: PASS
+- tech_ceiling: PASS
+- no_external_assets: PASS
+- no_forced_controller_reload: PASS
+
+PWA / OFFLINE
+Canonical start URL: ./index.html?rev=23.4.1-stable-runtime-v9
+Cache: cartographica-r23.4.1-stable-runtime-v9
+Existing v23.4 app ID is retained intentionally so the installed Home Screen PWA can update in place.
+After one successful online load following deployment, the app shell is cached and navigation falls back to the cached application when offline.

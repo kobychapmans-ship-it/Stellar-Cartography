@@ -1,31 +1,20 @@
-# Administratum Stellar Cartographica — Revision 23.4 Complete / Offline Locked
+# Administratum Stellar Cartographica — Revision 23.4.1 Stable Runtime
 
-This package contains the full accumulated campaign feature set through Revision 23.4. Legacy revision-labelled compatibility functions remain internally where newer systems depend on them, but they can no longer relabel or launch the application as an older revision.
+This is the corrected, feature-complete v23.4 campaign PWA. It fixes the runtime scope failure that prevented the post-v22/v23 feature layers from initialising while preserving the full campaign systems already created.
 
-## Installation on GitHub Pages
+## Deploy to GitHub Pages
+Replace the files in the repository root with **all files in this package**. Keep both `sw.js` and `sw-v23-4.js`; the latter is a compatibility update path for existing v23.4 Home Screen installs. GitHub Pages should remain configured for `main` / `(root)`.
 
-Upload the **contents** of this folder to the repository root. `index.html`, `manifest.webmanifest`, `sw.js`, and `sw-v23-4.js` must all sit in the root together.
+After the Pages deployment completes, open once while online:
 
-Open once while online:
+`https://kobychapmans-ship-it.github.io/Stellar-Cartography/?rev=23.4.1-stable-runtime-v9`
 
-`index.html?rev=23.4-final-offline-v8`
+The page does **not** force-reload when the service worker changes. It updates the URL revision in-place and registers the stable worker after the game has loaded.
 
-The application registers the versioned `sw-v23-4.js` worker at the root scope, purges older Cartographica caches, claims the page immediately, and caches the complete self-contained application shell for offline use.
-
-## PWA / Home Screen
-
-This build has a new v23.4-only PWA identity so it cannot be mistaken for an older installed revision. If an existing Home Screen icon was originally installed from Revision 12 or another old manifest, remove that old icon and add the site to the Home Screen again after the first v23.4 online load. The new icon will then open `23.4-final-offline-v8` and continue to work offline.
+## Offline
+On the first successful online load, the worker caches `index.html`, the canonical start URL, manifest and icons. Navigation is network-first while online and falls back to the cached stable build when offline. The game HTML has no external script/style/CDN dependency.
 
 ## Included campaign systems
+Full direct diplomacy and Influence leverage; 0–200 Diplomatic Standing; allied detachments; settlement founding; settlement Supply/Influence programmes; Expedition & Survey districts and launch caps; Decrees; detailed auto-resolve; fleet action limits; empire recruitment/mobilisation limits; proactive AI attacks and popups; technology-ceiling breakthroughs; trade/access/guarantees/defensive pacts/alliances/vassalisation; save/data and turn-cycle systems.
 
-- Full direct diplomacy and Influence leverage
-- Non-aggression, access, trade, aid, guarantees, defensive pacts, alliances, peace, war, treaty cancellation and vassalisation
-- Diplomatic Standing and allied detachments
-- Settlement founding/restoration and colonial strategic programmes
-- Expedition & Survey districts with local and empire launch caps
-- Decrees for resources, expeditions, battle and diplomacy
-- Detailed battle auto-resolve breakdowns
-- Fleet action and empire recruitment/mobilisation caps
-- Proactive AI wartime attacks and pop-up notifications
-- Difficult technology-ceiling breakthroughs
-- Offline PWA cache and update migration
+See `BUILD-VERIFICATION.txt` for the runtime test results and root-cause notes.
