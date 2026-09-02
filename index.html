@@ -3685,9 +3685,9 @@ const _campaignRulesReferenceHTML_rev20=campaignRulesReferenceHTML;campaignRules
 const _campaignColoniesHTML_rev20=campaignColoniesHTML;
 campaignColoniesHTML=function(root,c){const p=campaignPlayer(c),rows=[];for(const fac of c.factions||[])for(const s of fac.settlements||[])if(s.status!=='Destroyed')rows.push({fac,s});if(!rows.length)return _campaignColoniesHTML_rev20(root,c);rows.sort((a,b)=>(a.fac.id===p.id?-1:1)-(b.fac.id===p.id?-1:1)||String(a.s.locationName).localeCompare(String(b.s.locationName)));return rows.map(({fac,s})=>{const occ=s.occupiedBy?campaignFaction(c,s.occupiedBy):null,own=fac.id===p.id;return `<div class="campaign-colony-row visual ${own?'':'foreign'}" style="--fac:${fac.color}"><div class="campaign-colony-list-icon">${campaignSettlementIconSVG(s.colony.size,fac.color)}</div><div class="colony-owner-ribbon">${campaignOwnerBadge(fac)}<b>${esc(s.locationName)}</b><span class="colony-reason">${esc(campaignRecord(root,s.systemId)?.name||s.systemId)} • ${esc(s.locationKind)}</span>${occ?`<span class="rangdan-tag">Occupied by ${esc(occ.name)}</span>`:''}</div><h4>${esc(s.colony.displayType||s.colony.type)}</h4><div class="campaign-local-buildings">${campaignMiniBuildings(s.colony)}</div><div class="campaign-dev-mini">${campaignDevTierSummary(s.colony)}</div>${soiColonyStatusHTML(s.colony)}${campaignSettlementOperationsHTML(s,fac)}${campaignSettlementYieldHTML(s,fac)}<div class="adv-line"><span>Infrastructure</span><strong>${esc((s.colony.infrastructure||[]).join(', ')||'Founding infrastructure only')}</strong></div><div class="adv-line"><span>Current Requirement</span><strong>${esc(s.colony.requiredInfrastructure||'None')}</strong></div><div class="adv-line"><span>Support</span><strong>${esc((s.colony.supportUpgrades||[]).join(', ')||'None')}</strong></div>${s.colony.acceleratedFoundation?'<div class="campaign-accelerated-foundation"><b>Accelerated Foundation:</b> raised immediately to Size 5 by additional strategic expenditure.</div>':''}${own?`<div class="campaign-actionrow"><button class="ghost campaign-development-button" type="button" data-open-development="${esc(s.id)}" data-development-faction="${esc(fac.id)}">Open Settlement & Buildings</button><button class="ghost" data-campaign-colony="advance" data-settlement="${s.id}" type="button">Advance Extra 90 Days</button>${s.colony.requiredInfrastructure?`<button class="ghost" data-campaign-colony="infra" data-settlement="${s.id}" type="button">Build Infrastructure (5 Materiel)</button>`:''}<button class="ghost" data-campaign-colony="support" data-settlement="${s.id}" type="button">Install Suggested Support (6 Materiel)</button></div>`:'<div class="hint">Foreign settlement: autonomous faction controls construction and growth.</div>'}</div>`}).join('')};
 
-const rev20Badge=document.querySelector('.generation-head-actions .badge');if(rev20Badge)rev20Badge.textContent='rev 21.0 Turn Cycle & Colony UI';const rev20Title=document.querySelector('title');if(rev20Title)rev20Title.textContent='Administratum Stellar Cartographica — Visual Settlements & Map Layers';
+const rev20Badge=document.querySelector('.generation-head-actions .badge');if(rev20Badge)rev20Badge.textContent='rev 22.0 Resource Expeditions & Colonial Focus';const rev20Title=document.querySelector('title');if(rev20Title)rev20Title.textContent='Administratum Stellar Cartographica — Visual Settlements & Map Layers';
 
-const rev18Badge=document.querySelector('.generation-head-actions .badge');if(rev18Badge)rev18Badge.textContent='rev 21.0 Turn Cycle & Colony UI';const rev18Title=document.querySelector('title');if(rev18Title)rev18Title.textContent='Administratum Stellar Cartographica — Visual Settlements & Map Layers';
+const rev18Badge=document.querySelector('.generation-head-actions .badge');if(rev18Badge)rev18Badge.textContent='rev 22.0 Resource Expeditions & Colonial Focus';const rev18Title=document.querySelector('title');if(rev18Title)rev18Title.textContent='Administratum Stellar Cartographica — Visual Settlements & Map Layers';
 
 
 
@@ -3783,8 +3783,139 @@ campaignColoniesHTML=function(root,c){
 const _campaignRulesReferenceHTML_rev21=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev21(root);h=h.replace('<h4>6. Settlements & Colonies</h4><p>','<h4>6. Settlements & Colonies</h4><p><b>Turn-based growth:</b> established colonies and settlements no longer have manual 90-day advance or reroll controls. End Turn advances their 90-day growth, calamity/fortune and Size cycle automatically. Size increases unlock additional district slots immediately. ');return h};
 
+
+/* ===== rev 22.0 Colonial Focus, Fleet Positioning, Resource Expeditions & Growth District ===== */
+
+/* Keep planetary information on the tab the player was actually using. */
+window._cartoPlanetDataTab=window._cartoPlanetDataTab||'population';
+const _soiPopulationAdventureHTML_rev22=soiPopulationAdventureHTML;
+soiPopulationAdventureHTML=function(w,p){
+  let h=_soiPopulationAdventureHTML_rev22(w,p),tab=window._cartoPlanetDataTab||'population';
+  if(tab!=='population'){
+    h=h.replace('class="active" data-planet-data-tab="population"','data-planet-data-tab="population"')
+       .replace(`data-planet-data-tab="${tab}"`,`class="active" data-planet-data-tab="${tab}"`)
+       .replace('class="planet-info-tabpanel active" data-planet-data-panel="population"','class="planet-info-tabpanel" data-planet-data-panel="population"')
+       .replace(`class="planet-info-tabpanel" data-planet-data-panel="${tab}"`,`class="planet-info-tabpanel active" data-planet-data-panel="${tab}"`);
+  }
+  return h;
+};
+document.addEventListener('click',e=>{
+  const tab=e.target.closest?.('[data-planet-data-tab]');if(tab)window._cartoPlanetDataTab=tab.dataset.planetDataTab||'population';
+  if(e.target.closest?.('[data-open-development]'))window._cartoPlanetDataTab='colonies';
+},true);
+
+/* Settlement development and the campaign command console share the viewport instead of covering each other. */
+const _campaignOpenDevelopmentWeb_rev22=campaignOpenDevelopmentWeb;
+campaignOpenDevelopmentWeb=function(root,facId,settlementId){
+  window._cartoPlanetDataTab='colonies';document.body.classList.add('campaign-dev-open');
+  _campaignOpenDevelopmentWeb_rev22(root,facId,settlementId);
+  const modal=document.querySelector('.campaign-dev-modal');
+  if(!modal){document.body.classList.remove('campaign-dev-open');return;}
+  modal.querySelector('#campaignDevClose')?.addEventListener('click',()=>document.body.classList.remove('campaign-dev-open'),{once:true});
+};
+
+/* A dedicated growth district gives the player direct influence over Size stability/growth. */
+CAMPAIGN_BUILDING_CHAINS.growth={
+  label:'Expansion & Population',icon:'↑',color:'#70865a',summary:'Invests directly in migration, housing capacity and civic resilience so the settlement is more likely to grow and less likely to shrink.',
+  common:{
+    1:{name:'Settlement Expansion Office',reward:'5% extra chance to gain Size after each 90-day turn.',effect:{growthChanceBonus:.05}},
+    2:{name:'Colonist Reception District',reward:'10% extra growth chance and 10% protection against Size loss.',effect:{growthChanceBonus:.10,declineProtection:.10},statGain:{complacency:1}}
+  },
+  paths:{
+    expansion:{label:'Mass Expansion',tiers:{
+      3:{name:'Migration & Land Grant Bureau',reward:'+15% growth chance.',effect:{growthChanceBonus:.15,supplyBonus:1}},
+      4:{name:'Continental Expansion Authority',reward:'+22% growth chance and +1 Supply.',effect:{growthChanceBonus:.22,supplyBonus:1}},
+      5:{name:'Population Ascendancy Programme',reward:'+30% growth chance and +2 Supply.',effect:{growthChanceBonus:.30,supplyBonus:2}}
+    }},
+    stability:{label:'Population Stability',tiers:{
+      3:{name:'Civic Resilience Network',reward:'25% chance to cancel a Size loss.',effect:{declineProtection:.25},statGain:{order:1}},
+      4:{name:'Social Continuity Directorate',reward:'45% chance to cancel Size loss.',effect:{declineProtection:.45,influenceBonus:1},statGain:{complacency:1}},
+      5:{name:'Demographic Preservation Mandate',reward:'70% chance to cancel Size loss and +1 Influence.',effect:{declineProtection:.70,influenceBonus:1},statGain:{order:1}}
+    }},
+    planned:{label:'Planned Urbanisation',tiers:{
+      3:{name:'Habitat Planning Authority',reward:'+10% growth and 15% decline protection.',effect:{growthChanceBonus:.10,declineProtection:.15,localTechBonus:1}},
+      4:{name:'Arcology Expansion Grid',reward:'+15% growth, 25% decline protection and +1 Materiel.',effect:{growthChanceBonus:.15,declineProtection:.25,materielBonus:1}},
+      5:{name:'Planetary Urbanisation Nexus',reward:'+20% growth, 40% decline protection, +1 Supply and +1 Materiel.',effect:{growthChanceBonus:.20,declineProtection:.40,supplyBonus:1,materielBonus:1}}
+    }}
+  }
+};
+const _campaignBuildingIconSVG_rev22=campaignBuildingIconSVG;
+campaignBuildingIconSVG=function(chain,tier=1,path=''){if(chain!=='growth')return _campaignBuildingIconSVG_rev22(chain,tier,path);const t=Math.max(1,Math.min(5,Number(tier)||1)),g=path==='expansion'?'↑':path==='stability'?'⊙':path==='planned'?'⌂':'';return `<svg class="campaign-building-icon-svg" viewBox="0 0 64 64" aria-hidden="true"><g fill="currentColor"><path d="M8 52h48v5H8zM12 52V37h11v15H12zm15 0V29h12v23H27zm16 0V20h9v32H43z"/><path d="M15 31 32 10l17 21h-8l-9-11-9 11h-8Z"/>${Array.from({length:t},(_,i)=>`<rect x="${15+i*7}" y="59" width="5" height="2.5" rx="1"/>`).join('')}</g>${g?`<circle cx="51" cy="13" r="9" fill="#0b0d0f" stroke="currentColor" stroke-width="2"/><text x="51" y="17" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">${g}</text>`:''}</svg>`};
+const _campaignDevEffects_rev22=campaignDevEffects;
+campaignDevEffects=function(col){
+  const out=_campaignDevEffects_rev22(col);out.growthChanceBonus=0;out.declineProtection=0;
+  const web=campaignEnsureDevelopmentWeb(col);if(!web)return out;
+  const merge=e=>{if(!e)return;out.growthChanceBonus+=Number(e.growthChanceBonus||0);out.declineProtection+=Number(e.declineProtection||0)};
+  for(const slot of web.slots){if(!slot.chain||!slot.tier)continue;for(let t=1;t<=Math.min(2,slot.tier);t++)merge(campaignDevNode(slot.chain,t)?.effect);for(let t=3;t<=slot.tier;t++)merge(campaignDevNode(slot.chain,t,slot.path)?.effect)}
+  out.growthChanceBonus=Math.min(.60,out.growthChanceBonus);out.declineProtection=Math.min(.85,out.declineProtection);return out;
+};
+const _campaignBuildingEffectText_rev22=campaignBuildingEffectText;
+campaignBuildingEffectText=function(node){let t=_campaignBuildingEffectText_rev22(node),e=node?.effect||{},x=[];if(e.growthChanceBonus)x.push(`+${Math.round(e.growthChanceBonus*100)}% growth chance`);if(e.declineProtection)x.push(`${Math.round(e.declineProtection*100)}% decline protection`);return [t,...x].filter(Boolean).join(' • ')||'Specialised settlement function'};
+const _campaignSettlementActivity_rev22=campaignSettlementActivity;
+campaignSettlementActivity=function(s,fac){const a=_campaignSettlementActivity_rev22(s,fac);if(a.primary?.startsWith('Expansion & Population'))a.doing='Expanding habitable capacity, attracting population and protecting the settlement against demographic collapse';return a};
+const _soiAdvanceColony_rev22=soiAdvanceColony;
+soiAdvanceColony=function(c,p){
+  const before=Number(c?.size||0),res=_soiAdvanceColony_rev22(c,p);if(!c||!res)return res;
+  const eff=campaignDevEffects(c),after=Number(c.size||0);
+  if(res.delta<0&&eff.declineProtection>0&&RNG()<eff.declineProtection){c.size=Math.min(10,c.size+1);res.delta=0;res.growthProtected=true;c.events?.unshift({kind:'Development',text:'Settlement expansion infrastructure absorbed demographic losses and prevented a Size decrease.'});}
+  else if(res.delta===0&&eff.growthChanceBonus>0&&c.size<10&&RNG()<eff.growthChanceBonus){c.size=Math.min(10,c.size+1);res.delta=1;res.growthAccelerated=true;c.requiredInfrastructure=c.requiredInfrastructure||pick(SOI_INFRA);c.complacency=Math.max(0,(c.complacency||0)-1);c.pendingInfrastructurePenalty=true;c.events?.unshift({kind:'Development',text:'Expansion infrastructure accelerated migration and habitation growth, increasing Settlement Size.'});}
+  c.pfValue=soiColonyPF(c);return res;
+};
+const _campaignSettlementGrowthHTML_rev22=campaignSettlementGrowthHTML;
+campaignSettlementGrowthHTML=function(col,compact=false){let h=_campaignSettlementGrowthHTML_rev22(col,compact),e=campaignDevEffects(col);if((e.growthChanceBonus||e.declineProtection)&&!h.includes('Growth district effects'))h=h.replace('</section>',`<div class="campaign-growth-development"><b>Growth district effects:</b> +${Math.round(e.growthChanceBonus*100)}% bonus growth opportunity • ${Math.round(e.declineProtection*100)}% chance to cancel a Size decrease.</div></section>`);return h};
+
+/* Strategic doctrines now explain their live mechanical effects. */
+const CAMPAIGN_DOCTRINE_DETAILS={
+  balanced:{title:'Balanced Expedition',effect:'Logistics +1',use:'Improves territorial claims, settlement founding and translation/movement rolls. No direct combat or income penalty.',best:'Flexible expeditionary play, mixed fronts and uncertain theatres.'},
+  aggressive:{title:'Shock Offensive',effect:'Attack +1 • Defence −1',use:'Adds +1 to strategic battle attack rolls but subtracts 1 from defensive rolls. It does not alter HH1/7e datasheets.',best:'Fast conquest when you can keep the initiative.'},
+  defensive:{title:'Fortress Doctrine',effect:'Defence +1 • Attack −1',use:'Adds +1 to fortification and defensive battle rolls, but subtracts 1 when attacking.',best:'Holding developed systems, chokepoints and valuable colonies.'},
+  industrial:{title:'Industrial Mobilisation',effect:'+2 Materiel each campaign turn',use:'Directly increases faction Materiel income. Combat and logistics rolls are unchanged.',best:'Mechanicum-style build-up, armour production and expensive recruitment.'},
+  raider:{title:'Raiding Doctrine',effect:'Attack +1 • Logistics +1 • −1 Materiel income',use:'Improves attack, movement, claims and settlement rolls, but the dispersed war economy loses 1 Materiel per turn.',best:'Mobile factions that live by offensive tempo and opportunistic expansion.'},
+  subversive:{title:'Subversion Network',effect:'Logistics +1',use:'Improves claims, settlement establishment and movement/translation. Rangdan additionally receive their existing claim bonus.',best:'Covert expansion, enclaves, infiltrators and territorial subversion.'}
+};
+function campaignDoctrinePreviewHTML(key,id='campaignDoctrinePreview'){const d=CAMPAIGN_DOCTRINE_DETAILS[key]||CAMPAIGN_DOCTRINE_DETAILS.balanced;return `<div id="${id}" class="campaign-doctrine-preview"><b>${esc(d.title)}</b><span>${esc(d.effect)}</span><p>${esc(d.use)}</p><small>Best for: ${esc(d.best)}</small></div>`}
+const _campaignOverviewHTML_rev22=campaignOverviewHTML;
+campaignOverviewHTML=function(root,c){let h=_campaignOverviewHTML_rev22(root,c),p=campaignPlayer(c);if(!h.includes('id="campaignDoctrinePreview"'))h=h.replace('<button id="campaignApplyDoctrine"',campaignDoctrinePreviewHTML(p.doctrine)+'<button id="campaignApplyDoctrine"');return h};
+const _campaignLauncherHTML_rev22=campaignLauncherHTML;
+campaignLauncherHTML=function(root){let h=_campaignLauncherHTML_rev22(root);if(!h.includes('campaignStartDoctrinePreview'))h=h.replace(/(<select id="campaignStartDoctrine">[\s\S]*?<\/select>)/,`$1${campaignDoctrinePreviewHTML('balanced','campaignStartDoctrinePreview')}`);return h};
+
+/* Fleet cards show strategic coordinates and can jump directly to their current map location. */
+function campaignFleetMapPosition(root,fleet){
+  if(!root||!fleet)return{label:'Unknown',detail:'No cartographic fix'};
+  if(fleet.transit){const from=campaignRecord(root,fleet.transit.fromId),to=campaignRecord(root,fleet.transit.targetId),speed=campaignFleetSpeed(root,fleet),total=Math.max(.01,Number(fleet.transit.total||fleet.transit.distance||fleet.transit.remaining||1)),done=Math.max(0,total-Number(fleet.transit.remaining||0)),pct=Math.round(Math.min(1,done/total)*100);return{label:`In transit • ${pct}%`,detail:`${from?.name||fleet.transit.fromId} → ${to?.name||fleet.transit.targetId} • ${Number(fleet.transit.remaining||0).toFixed(root._campaignScope==='system'?1:2)} ${root._campaignScope==='system'?'AU':'ly'} remaining • ${speed.toFixed(root._campaignScope==='system'?0:1)} / turn`};}
+  const r=campaignRecord(root,fleet.currentId);if(!r)return{label:'Unknown',detail:fleet.currentId||'No current node'};
+  const p=r.position||{};return{label:r.name,detail:`${r.sub?.name?`${r.sub.name} • `:''}X ${Number(p.x||0).toFixed(1)} • Y ${Number(p.y||0).toFixed(1)} • Z ${Number(p.z||0).toFixed(1)}${root._campaignScope==='system'?' AU':' ly'}`};
+}
+const _campaignFleetCardHTML_rev22=campaignFleetCardHTML;
+campaignFleetCardHTML=function(root,c,fac,fleet,owned){let h=_campaignFleetCardHTML_rev22(root,c,fac,fleet,owned),pos=campaignFleetMapPosition(root,fleet);if(!h.includes('campaign-fleet-mapfix'))h=h.replace('<div class="campaign-fleet-capacity"',`<div class="campaign-fleet-mapfix"><span>Cartographic Position</span><b>${esc(pos.label)}</b><small>${esc(pos.detail)}</small>${owned?`<button class="ghost" type="button" data-fleet-focus="${esc(fleet.id)}">Focus Fleet on Map</button>`:''}</div><div class="campaign-fleet-capacity"`);return h};
+function campaignFocusFleetOnMap(root,fleetId){const c=root?.campaign,p=campaignPlayer(c),fleet=p?.fleets?.find(x=>x.id===fleetId);if(!fleet)return;c.selectedFleetId=fleet.id;const id=fleet.transit?fleet.transit.fromId:fleet.currentId,rec=campaignRecord(root,id);if(rec)c.selectedSystemId=rec.id;campaignPersist(root);if(root._campaignScope==='system'){renderSystem(root._campaignRootSystem,null,null);return}if(root._campaignScope==='subsector'){if(rec?.sys)renderSystem(rec.sys,root._campaignRootSubsector,null);else renderSubsector(root._campaignRootSubsector,null);return}if(rec?.sys){renderSystem(rec.sys,rec.sub||null,root);return}renderSector(root)}
+
+/* Resource-expedition campaign action: turn astronomical Resources into strategic Materiel/research. */
+function campaignResourceExpeditionProfile(r){
+  const a=Math.max(0,Number(r?.abundance||0)),tier=a<=15?0:a<=40?1:a<=65?2:a<=85?3:a<=98?4:5,base=[1,2,3,5,7,10][tier],key=soiResourceReferenceKey(r)||'',special=/Archeotech|Xenos Ruins|Exotic Material|Radioactive/i.test(`${r?.kind||''} ${key}`),relic=/Archeotech|Xenos Ruins/i.test(`${r?.kind||''} ${key}`),mineral=r?.kind==='Mineral',organic=r?.kind==='Organic Compound';let materiel=base+(mineral?1:0)+(special?2:0),research=relic?(8+tier*5):special?(4+tier*3):0,supplyCost=1+Math.ceil(Math.max(1,materiel)/5),influenceCost=special?2:1;if(organic)materiel=Math.max(1,materiel-1);return{tier,materiel,research,supplyCost,influenceCost,special,relic,label:a<=0?'Exhausted':soiAbundanceLabel(a)}}
+function campaignResourceAccess(root,fac,sys,locationId){const recs=campaignSystemRecords(root).filter(r=>r.sys===sys),specific=root._campaignScope==='system'?recs.find(r=>r.nodeLocationId===locationId):recs[0];if(!specific)return{ok:false,reason:'No strategic campaign node is associated with this site.'};const id=specific.id,settled=(fac.settlements||[]).some(s=>s.status!=='Destroyed'&&s.systemId===id&&(s.locationId===locationId||root._campaignScope!=='system')),force=(fac.taskForces||[]).some(tf=>tf.systemId===id),fleet=(fac.fleets||[]).some(f=>!f.transit&&f.currentId===id),presence=fac.territory.includes(id)||fac.presence.includes(id);return{ok:settled||force||fleet||presence,reason:settled?'Local settlement':force?'Ground expedition present':fleet?'Fleet present':presence?'Faction presence / control':'Move a fleet or Task Force here, establish presence, or found a settlement first.',nodeId:id}}
+function campaignResourceOpsHTML(root,sys,locationId,label){const c=root?.campaign,fac=campaignPlayer(c),p=campaignObjectProfile(sys,locationId),res=p?.resources||[],access=fac?campaignResourceAccess(root,fac,sys,locationId):{ok:false,reason:'No player faction'};if(!c||!fac||!res.length)return'';return `<section class="campaign-resource-expeditions"><div class="campaign-resource-expedition-head"><div><h4>Resource Extraction Operations</h4><p>Commit an expedition to strip or recover a surveyed deposit. Each action costs Supply and Influence, grants strategic Materiel, and reduces the deposit by <b>1d5 Abundance</b>. Xenotech/relic deposits also advance faction research.</p></div><span class="badge">${esc(access.reason)}</span></div><div class="campaign-resource-expedition-grid">${res.map((r,i)=>{const q=campaignResourceExpeditionProfile(r),empty=Number(r.abundance||0)<=0,can=access.ok&&!empty&&fac.treasury.supply>=q.supplyCost&&fac.treasury.influence>=q.influenceCost;return `<article class="campaign-resource-expedition-card ${empty?'exhausted':''}"><h5>${esc(r.kind)} // ${esc(r.subtype)}</h5><div class="resource-expedition-stats"><span>Abundance<b>${Math.max(0,Number(r.abundance||0))} • ${esc(q.label)}</b></span><span>Expected recovery<b>+${q.materiel} Materiel</b></span><span>Expedition cost<b>${q.supplyCost} Supply • ${q.influenceCost} Influence</b></span><span>Knowledge gain<b>${q.research?`+${q.research} research progress`:'None'}</b></span></div><button class="ghost" type="button" data-campaign-resource-extract="${i}" data-resource-node="${esc(access.nodeId||'')}" data-resource-location="${esc(locationId)}" ${can?'':'disabled'}>${empty?'Deposit Exhausted':can?'Launch Extraction Expedition':'Requirements Not Met'}</button></article>`}).join('')}</div></section>`}
+function campaignExecuteResourceExtraction(root,fac,nodeId,locationId,index,ai=false){const c=root?.campaign,rec=campaignRecord(root,nodeId);if(!c||!fac||!rec)return false;const loc=campaignLocationProfiles(rec.sys).find(x=>x.id===locationId)||campaignMapLocations(rec.sys).find(x=>x.id===locationId),p=loc?.p||campaignObjectProfile(rec.sys,locationId),r=p?.resources?.[Number(index)];if(!r||Number(r.abundance||0)<=0)return false;const access=campaignResourceAccess(root,fac,rec.sys,locationId),q=campaignResourceExpeditionProfile(r);if(!ai&&!access.ok){campaignLog(c,`Cannot extract ${r.subtype}: ${access.reason}`,'war');return false}if(fac.treasury.supply<q.supplyCost||fac.treasury.influence<q.influenceCost)return false;fac.treasury.supply-=q.supplyCost;fac.treasury.influence-=q.influenceCost;fac.treasury.materiel+=q.materiel;const depletion=Math.min(Number(r.abundance||0),roll(5,'Resource expedition depletion'));r.abundance=Math.max(0,Number(r.abundance||0)-depletion);r.label=r.abundance>0?soiAbundanceLabel(r.abundance):'Exhausted';r.campaignExtraction=(r.campaignExtraction||0)+q.materiel;r.lastExtractionTurn=c.turn;let tech='';if(q.research){fac.researchProgress=Number(fac.researchProgress||0)+q.research;const meta=campaignTechMeta(fac.key),current=campaignFactionTech(fac).tier;if(fac.researchProgress>=100&&current<meta.max){fac.researchProgress-=100;fac.techBonus=Number(fac.techBonus||0)+1;tech=' A recovered breakthrough increased faction Arsenal Technology by one tier.'}}
+  campaignLog(c,`${fac.name} extracted ${r.kind} / ${r.subtype} at ${loc?.name||locationId}: +${q.materiel} Materiel, −${q.supplyCost} Supply, −${q.influenceCost} Influence, ${depletion} Abundance depleted.${q.research?` +${q.research} research progress.`:''}${tech}`,'gain');campaignPersist(root);return true}
+function campaignResourceSitesForFaction(root,fac){const out=[];for(const id of [...new Set([...(fac.territory||[]),...(fac.presence||[])])]){const rec=campaignRecord(root,id);if(!rec)continue;const locs=root._campaignScope==='system'&&rec.nodeLocationId?campaignLocationProfiles(rec.sys).filter(l=>l.id===rec.nodeLocationId):campaignLocationProfiles(rec.sys);for(const loc of locs)for(let i=0;i<(loc.p?.resources||[]).length;i++){const r=loc.p.resources[i];if(Number(r.abundance||0)>0)out.push({rec,loc,index:i,r,q:campaignResourceExpeditionProfile(r)})}}return out}
+function campaignAIExtractResource(root,fac){if(fac.treasury.supply<2||fac.treasury.influence<1)return false;const sites=campaignResourceSitesForFaction(root,fac).filter(x=>fac.treasury.supply>=x.q.supplyCost&&fac.treasury.influence>=x.q.influenceCost).sort((a,b)=>(b.q.materiel+b.q.research/10)-(a.q.materiel+a.q.research/10));if(!sites.length)return false;const x=sites[0];return campaignExecuteResourceExtraction(root,fac,x.rec.id,x.loc.id,x.index,true)}
+const _campaignAITurn_rev22=campaignAITurn;
+campaignAITurn=function(root,fac){if(root?.campaign&&campaignRandom(root.campaign,`AI resource expedition ${fac.id} T${root.campaign.turn}`)<.32)campaignAIExtractResource(root,fac);return _campaignAITurn_rev22(root,fac)};
+const _campaignAppendObjectSettlements_rev22=campaignAppendObjectSettlements;
+campaignAppendObjectSettlements=function(sys,locationId,label){_campaignAppendObjectSettlements_rev22(sys,locationId,label);const root=window.currentSector,ins=$('inspector');if(!root?.campaign||!ins)return;ins.querySelector('.campaign-resource-expeditions')?.remove();const h=campaignResourceOpsHTML(root,sys,locationId,label);if(h)ins.insertAdjacentHTML('beforeend',h);ins.querySelectorAll('[data-campaign-resource-extract]').forEach(b=>b.addEventListener('click',()=>{const fac=campaignPlayer(root.campaign),node=b.dataset.resourceNode,idx=Number(b.dataset.campaignResourceExtract);if(!confirm(`Launch resource extraction expedition?\n\nThis spends strategic Supply/Influence and depletes the selected deposit by 1d5 Abundance.`))return;if(campaignExecuteResourceExtraction(root,fac,node,b.dataset.resourceLocation,idx,false)){campaignAppendObjectSettlements(sys,locationId,label);campaignRenderDashboard(root)}}))};
+
+/* Final UI bindings for doctrine previews and fleet map-focus controls. */
+const _campaignBindDashboard_rev22=campaignBindDashboard;
+campaignBindDashboard=function(root){_campaignBindDashboard_rev22(root);const c=root.campaign,p=campaignPlayer(c);$('campaignDoctrineSelect')?.addEventListener('change',e=>{const box=$('campaignDoctrinePreview');if(box)box.outerHTML=campaignDoctrinePreviewHTML(e.target.value)});document.querySelectorAll('[data-fleet-focus]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();campaignFocusFleetOnMap(root,b.dataset.fleetFocus)}));};
+const _campaignBindLauncher_rev22=campaignBindLauncher;
+campaignBindLauncher=function(root){_campaignBindLauncher_rev22(root);$('campaignStartDoctrine')?.addEventListener('change',e=>{const box=$('campaignStartDoctrinePreview');if(box)box.outerHTML=campaignDoctrinePreviewHTML(e.target.value,'campaignStartDoctrinePreview')});};
+
+/* Updated growth explanation includes district modifiers. */
+const _campaignRulesReferenceHTML_rev22=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev22(root);h=h.replace('<h4>6. Settlements & Colonies</h4><p>','<h4>6. Settlements & Colonies</h4><p><b>Expansion & Population district:</b> a dedicated building chain can directly improve the chance of settlement Size growth and/or protect against Size decline. ');return h};
+
 /* Revision identity */
-const rev21Badge=document.querySelector('.generation-head-actions .badge');if(rev21Badge)rev21Badge.textContent='rev 21.0 Turn Cycle & Colony UI';const rev21Title=document.querySelector('title');if(rev21Title)rev21Title.textContent='Administratum Stellar Cartographica — Turn Cycle & Colony UI';
+const rev21Badge=document.querySelector('.generation-head-actions .badge');if(rev21Badge)rev21Badge.textContent='rev 22.0 Resource Expeditions & Colonial Focus';const rev21Title=document.querySelector('title');if(rev21Title)rev21Title.textContent='Administratum Stellar Cartographica — Resource Expeditions & Colonial Focus';
 
 })();
 
@@ -3816,6 +3947,26 @@ const rev21Badge=document.querySelector('.generation-head-actions .badge');if(re
 
 
 
+
+<style id="rev22-colonial-focus-css">
+/* Revision 22: colonial tab persistence, non-overlapping development viewport, fleet coordinates, doctrine cards and resource expeditions */
+.campaign-doctrine-preview{margin:7px 0 9px;border:1px solid rgba(185,151,73,.3);background:linear-gradient(90deg,rgba(185,151,73,.08),rgba(0,0,0,.1));padding:8px}.campaign-doctrine-preview>b{display:block;color:#e1ca90;font-size:11px}.campaign-doctrine-preview>span{display:inline-block;margin-top:3px;border:1px solid rgba(185,151,73,.24);padding:2px 5px;color:#cbb67d;font:700 8px ui-monospace,SFMono-Regular,Menlo,monospace}.campaign-doctrine-preview p{margin:5px 0 2px;color:#a9a18f;font-size:9px;line-height:1.4}.campaign-doctrine-preview small{color:#777d7f;font-size:8px}
+.campaign-fleet-mapfix{margin:7px 0;border:1px solid rgba(94,153,188,.25);background:rgba(53,101,128,.08);padding:7px}.campaign-fleet-mapfix>span{display:block;color:#7995a4;font-size:7px;text-transform:uppercase;letter-spacing:.08em}.campaign-fleet-mapfix>b{display:block;color:#c9dfe8;font-size:10px;margin-top:2px}.campaign-fleet-mapfix>small{display:block;color:#87949a;font-size:8px;margin:2px 0 6px;line-height:1.35}.campaign-fleet-mapfix button{width:100%;font-size:8px;padding:5px}
+.campaign-resource-expeditions{margin-top:12px;border:1px solid rgba(185,151,73,.3);background:linear-gradient(180deg,rgba(87,68,32,.09),rgba(4,7,8,.36));padding:10px}.campaign-resource-expedition-head{display:flex;gap:10px;align-items:flex-start}.campaign-resource-expedition-head>div{flex:1}.campaign-resource-expedition-head h4{margin:0;color:#dfc982;text-transform:uppercase;letter-spacing:.06em}.campaign-resource-expedition-head p{margin:4px 0;color:#9f9888;font-size:9px;line-height:1.45}.campaign-resource-expedition-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px;margin-top:8px}.campaign-resource-expedition-card{border:1px solid rgba(185,151,73,.22);background:rgba(0,0,0,.22);padding:8px}.campaign-resource-expedition-card.exhausted{opacity:.55}.campaign-resource-expedition-card h5{margin:0 0 6px;color:#dfcda0}.resource-expedition-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.resource-expedition-stats span{border:1px solid rgba(255,255,255,.06);padding:5px;color:#85877f;font-size:7px}.resource-expedition-stats b{display:block;color:#cfc6ad;font-size:9px;margin-top:2px}.campaign-resource-expedition-card button{width:100%;margin-top:7px}.campaign-growth-development{margin-top:6px;padding:6px;border-left:2px solid #7d9b62;background:rgba(90,119,65,.08);color:#aebc9e;font-size:8px;line-height:1.4}.campaign-growth-development b{color:#cad9b2}
+/* Desktop: settlement development occupies the map/workspace while the campaign console remains visible at right. */
+body.campaign-dev-open .campaign-dev-modal{z-index:16000;right:calc(min(445px,39vw) + 18px);inset-block:2vh;left:2vw}
+body.campaign-dev-open #campaignDashboard.campaign-panel{z-index:16010}
+@media(max-width:1050px){
+ body.campaign-dev-open .campaign-dev-modal{inset:0 0 calc(104px + env(safe-area-inset-bottom)) 0!important;z-index:16000!important}
+ body.campaign-dev-open #campaignDashboard.campaign-panel{display:block!important;top:auto!important;bottom:0!important;left:0!important;right:0!important;width:100vw!important;height:104px!important;max-height:104px!important;min-height:104px!important;z-index:16010!important;border-top:1px solid rgba(185,151,73,.55)!important;overflow:hidden!important;padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)!important}
+ body.campaign-dev-open #campaignDashboard .panel-body{display:none!important}
+ body.campaign-dev-open #campaignDashboard .panel-head{height:104px!important;min-height:104px!important;padding:10px 12px!important;align-items:center!important}
+ body.campaign-dev-open #campaignDashboard .campaign-drawer-tools{display:flex!important}
+ .campaign-resource-expedition-grid{grid-template-columns:1fr}.campaign-resource-expedition-head{display:block}.campaign-resource-expedition-head .badge{margin-top:5px}.resource-expedition-stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:620px){body.campaign-dev-open .campaign-dev-modal{inset:0 0 calc(96px + env(safe-area-inset-bottom)) 0!important}body.campaign-dev-open #campaignDashboard.campaign-panel,body.campaign-dev-open #campaignDashboard .panel-head{height:96px!important;min-height:96px!important;max-height:96px!important}.campaign-dev-modal-body{padding-bottom:18px!important}}
+</style>
+
 <script>
 /* iPhone Home-Screen orientation guard: prefer primary portrait and avoid inverted secondary portrait. */
 (function(){
@@ -3836,16 +3987,16 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || location.hos
 <script>
 /* Revision 18 cache migration: purge any pre-r18 Cartographica caches and force the latest service worker. */
 (function(){
-  const REV='21';
+  const REV='22';
   document.documentElement.dataset.cartographicaRevision=REV;
   window.addEventListener('load', async ()=>{
     try{
       if('caches' in window){
         const keys=await caches.keys();
-        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r21-turn-cycle-colony-ui-v1/i.test(k)).map(k=>caches.delete(k)));
+        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r22-resource-expeditions-colonial-focus-v1/i.test(k)).map(k=>caches.delete(k)));
       }
       if('serviceWorker' in navigator){
-        const reg=await navigator.serviceWorker.register('./sw.js?v=21-turn-cycle-colony-ui-v1',{updateViaCache:'none'});
+        const reg=await navigator.serviceWorker.register('./sw.js?v=22-resource-expeditions-colonial-focus-v1',{updateViaCache:'none'});
         try{ await reg.update(); }catch(_){}
       }
     }catch(_){}

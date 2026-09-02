@@ -1,21 +1,12 @@
-# Administratum Stellar Cartographica — iPhone PWA Revision 21
+# Administratum Stellar Cartographica — Revision 22 PWA
 
-Revision 21 focuses on campaign turn flow and colony clarity.
+Revision 22 adds persistent Colonial Structure tabs, a non-overlapping settlement-development workspace, fleet cartographic position/focus controls, full strategic-doctrine explanations, resource-extraction expeditions for worlds/moons/asteroids/void sites, autonomous AI resource exploitation, and an Expansion & Population district that changes settlement growth/decline chances.
 
-## Main changes
-- Established colonies and settlements no longer expose manual 90-day advance or reroll controls during a campaign. Settlement growth happens automatically at End Turn.
-- End Turn now presents a 10-second campaign-resolution progress screen before AI, fleet, economy, colony and event processing completes.
-- Campaign save/export/import controls are moved to their own Save / Data tab.
-- Territory view now explains Site Defence, Fortify costs and auto-resolve effects.
-- Colony cards are reformatted for phone screens so colony characteristics, operations and output no longer overlap.
-- Settlement development screens show the Size growth roll, current district capacity and the next Size/district unlock.
+## GitHub Pages / iPhone
+1. Replace the files in the repository root with this package.
+2. GitHub Pages: deploy from `main` / `(root)`.
+3. Open `index.html?rev=22-resource-expeditions-colonial-focus-v1` once while online.
+4. On iPhone, remove an older Cartographica Home Screen icon before adding this revision again.
+5. Safari → Share → Add to Home Screen.
 
-## Install through GitHub Pages
-1. Replace the files in the root of `kobychapmans-ship-it/Stellar-Cartography` with the files in this package.
-2. Keep Pages set to `main` → `/ (root)`.
-3. Open `https://kobychapmans-ship-it.github.io/Stellar-Cartography/index.html?rev=21-turn-cycle-colony-ui-v1` in Safari while online.
-4. If an older Home Screen copy exists, remove it first.
-5. Share → Add to Home Screen.
-6. Launch once while online so the Revision 21 service worker takes control.
-
-The service worker uses a new Revision 21 cache identity and deletes older Cartographica caches when activated.
+The service worker uses a new revision-22 cache and deletes older Cartographica caches during activation.
