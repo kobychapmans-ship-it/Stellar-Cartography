@@ -9,12 +9,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=23.4-grand-strategy-expeditions-decrees-v6" />
+<link rel="manifest" href="./manifest.webmanifest?v=23.4-complete-consolidated-v7" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.4 hard migration: this build never retains an older launch URL. */
 (function(){
-  const canonicalRev='23.4-grand-strategy-expeditions-decrees-v6';
+  const canonicalRev='23.4-complete-consolidated-v7';
   const u=new URL(location.href);
   if(u.searchParams.get('rev')!==canonicalRev){
     u.searchParams.set('rev',canonicalRev);
@@ -578,7 +578,7 @@ html.carto-orientation-lock body:after{content:'';display:none}
 .campaign-colony-row.visual{display:grid;grid-template-columns:88px minmax(0,1fr);gap:8px}.campaign-colony-row.visual .campaign-colony-list-icon{grid-row:1/4;display:grid;place-items:center;min-height:112px;border:1px solid color-mix(in srgb,var(--fac) 45%,#4b4b45);background:radial-gradient(circle,color-mix(in srgb,var(--fac) 16%,#1a1d20),#090b0d 72%);color:var(--fac)}.campaign-colony-row.visual .campaign-colony-list-icon .campaign-settlement-icon-svg{width:70px;height:70px}.campaign-colony-row.visual .colony-owner-ribbon,.campaign-colony-row.visual>h4,.campaign-colony-row.visual>.campaign-dev-mini,.campaign-colony-row.visual>.campaign-colony-output,.campaign-colony-row.visual>.campaign-settlement-operations,.campaign-colony-row.visual>.adv-line,.campaign-colony-row.visual>.campaign-accelerated-foundation,.campaign-colony-row.visual>.campaign-actionrow,.campaign-colony-row.visual>.hint{grid-column:2}.campaign-colony-row.visual .campaign-local-buildings{grid-column:2;margin-top:0}.campaign-colony-row.visual .campaign-settlement-operations{margin-top:4px}@media(max-width:720px){.campaign-colony-row.visual{grid-template-columns:62px minmax(0,1fr);gap:6px}.campaign-colony-row.visual .campaign-colony-list-icon{min-height:84px}.campaign-colony-row.visual .campaign-colony-list-icon .campaign-settlement-icon-svg{width:52px;height:52px}}
 </style>
 <style>
-/* Revision 23.4 compatibility layer: settlement restoration + diplomacy console */
+/* Revision 23.3 settlement restoration + diplomacy console */
 .campaign-founder233{border-color:rgba(205,174,91,.48)!important;background:linear-gradient(180deg,rgba(104,81,27,.11),rgba(8,10,12,.5));margin-bottom:10px}.campaign-founder233 h4{color:#e4cd8b!important}.campaign-founder233 .campaign-setup-grid{margin-top:8px}.campaign-dip-summary233{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-bottom:9px}.campaign-dip-summary233>div{border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18);padding:7px}.campaign-dip-summary233 span{display:block;color:#8e9597;font-size:8px;text-transform:uppercase;letter-spacing:.06em}.campaign-dip-summary233 b{display:block;color:#e3d4ae;font-size:11px;margin-top:2px}.campaign-dip-target233{border:1px solid rgba(255,255,255,.09);border-left:5px solid var(--fac,#888);padding:10px;margin:9px 0;background:linear-gradient(90deg,color-mix(in srgb,var(--fac,#888) 8%,transparent),rgba(0,0,0,.14) 45%)}.campaign-dip-target233 .campaign-dip-head{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.campaign-dip-target233 .campaign-dip-head>div:first-child{min-width:180px;flex:1}.campaign-dip-target233 .campaign-dip-head h4{margin:0;color:#e4d5ae}.campaign-dip-target233 .campaign-dip-head small{display:block;color:#899093;font-size:8px;margin-top:2px}.campaign-dip-agreements{display:flex;gap:5px;flex-wrap:wrap;margin:7px 0}.campaign-dip-agreement{display:inline-flex;align-items:center;gap:5px;border:1px solid rgba(167,188,143,.3);background:rgba(91,118,72,.09);padding:3px 6px;border-radius:12px;font-size:8px;color:#c8d8b8}.campaign-dip-agreement button{border:0;background:transparent;color:#d5b4a8;padding:0;min-width:12px;font-size:11px}.campaign-dip-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}.campaign-dip-group{border:1px solid rgba(255,255,255,.07);padding:7px;background:rgba(0,0,0,.12)}.campaign-dip-group h5{margin:0 0 5px;color:#cbb675;font-size:9px;text-transform:uppercase;letter-spacing:.07em}.campaign-dip-action{display:grid;grid-template-columns:minmax(0,1fr) 84px;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)}.campaign-dip-action:last-child{border-bottom:0}.campaign-dip-action b{display:block;color:#d8cfb9;font-size:9px}.campaign-dip-action small{display:block;color:#8f9698;font-size:7.5px;line-height:1.35;margin:1px 0}.campaign-dip-action em{display:block;color:#b7837d;font-size:7px;font-style:normal}.campaign-dip-odds{display:block;color:#9d9a89;font-size:7px;margin-top:2px}.campaign-dip-odds strong{color:#d9bd74}.campaign-dip-warbar{display:flex;gap:7px;margin-top:8px;border-top:1px solid rgba(255,255,255,.08);padding-top:8px}.campaign-diplomacy-233 .campaign-dip-boost{border:1px dashed rgba(191,158,80,.25);padding:7px;background:rgba(90,70,20,.05)}
 @media(max-width:900px){.campaign-dip-summary233{grid-template-columns:repeat(3,minmax(0,1fr))}.campaign-dip-groups{grid-template-columns:1fr}.campaign-dip-action{grid-template-columns:minmax(0,1fr) 78px}}
 @media(max-width:560px){.campaign-dip-summary233{grid-template-columns:repeat(2,minmax(0,1fr))}.campaign-founder233 .campaign-setup-grid{grid-template-columns:1fr!important}.campaign-dip-target233{padding:7px}.campaign-dip-action{grid-template-columns:1fr}.campaign-dip-action button{width:100%}.campaign-dip-warbar{flex-direction:column}}
@@ -3703,9 +3703,9 @@ const _campaignRulesReferenceHTML_rev20=campaignRulesReferenceHTML;campaignRules
 const _campaignColoniesHTML_rev20=campaignColoniesHTML;
 campaignColoniesHTML=function(root,c){const p=campaignPlayer(c),rows=[];for(const fac of c.factions||[])for(const s of fac.settlements||[])if(s.status!=='Destroyed')rows.push({fac,s});if(!rows.length)return _campaignColoniesHTML_rev20(root,c);rows.sort((a,b)=>(a.fac.id===p.id?-1:1)-(b.fac.id===p.id?-1:1)||String(a.s.locationName).localeCompare(String(b.s.locationName)));return rows.map(({fac,s})=>{const occ=s.occupiedBy?campaignFaction(c,s.occupiedBy):null,own=fac.id===p.id;return `<div class="campaign-colony-row visual ${own?'':'foreign'}" style="--fac:${fac.color}"><div class="campaign-colony-list-icon">${campaignSettlementIconSVG(s.colony.size,fac.color)}</div><div class="colony-owner-ribbon">${campaignOwnerBadge(fac)}<b>${esc(s.locationName)}</b><span class="colony-reason">${esc(campaignRecord(root,s.systemId)?.name||s.systemId)} • ${esc(s.locationKind)}</span>${occ?`<span class="rangdan-tag">Occupied by ${esc(occ.name)}</span>`:''}</div><h4>${esc(s.colony.displayType||s.colony.type)}</h4><div class="campaign-local-buildings">${campaignMiniBuildings(s.colony)}</div><div class="campaign-dev-mini">${campaignDevTierSummary(s.colony)}</div>${soiColonyStatusHTML(s.colony)}${campaignSettlementOperationsHTML(s,fac)}${campaignSettlementYieldHTML(s,fac)}<div class="adv-line"><span>Infrastructure</span><strong>${esc((s.colony.infrastructure||[]).join(', ')||'Founding infrastructure only')}</strong></div><div class="adv-line"><span>Current Requirement</span><strong>${esc(s.colony.requiredInfrastructure||'None')}</strong></div><div class="adv-line"><span>Support</span><strong>${esc((s.colony.supportUpgrades||[]).join(', ')||'None')}</strong></div>${s.colony.acceleratedFoundation?'<div class="campaign-accelerated-foundation"><b>Accelerated Foundation:</b> raised immediately to Size 5 by additional strategic expenditure.</div>':''}${own?`<div class="campaign-actionrow"><button class="ghost campaign-development-button" type="button" data-open-development="${esc(s.id)}" data-development-faction="${esc(fac.id)}">Open Settlement & Buildings</button><button class="ghost" data-campaign-colony="advance" data-settlement="${s.id}" type="button">Advance Extra 90 Days</button>${s.colony.requiredInfrastructure?`<button class="ghost" data-campaign-colony="infra" data-settlement="${s.id}" type="button">Build Infrastructure (5 Materiel)</button>`:''}<button class="ghost" data-campaign-colony="support" data-settlement="${s.id}" type="button">Install Suggested Support (6 Materiel)</button></div>`:'<div class="hint">Foreign settlement: autonomous faction controls construction and growth.</div>'}</div>`}).join('')};
 
-const rev20Badge=document.querySelector('.generation-head-actions .badge');if(rev20Badge)rev20Badge.textContent='rev 23.4 Diplomacy + Allied Detachments + Expeditions + Decrees';const rev20Title=document.querySelector('title');if(rev20Title)rev20Title.textContent='Administratum Stellar Cartographica — Revision 23.4 Grand Strategy Expansion';
+const rev20Badge=document.querySelector('.generation-head-actions .badge');if(rev20Badge)rev20Badge.textContent='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';const rev20Title=document.querySelector('title');if(rev20Title)rev20Title.textContent='Administratum Stellar Cartographica — Revision 23.4 Grand Strategy Expansion';
 
-const rev18Badge=document.querySelector('.generation-head-actions .badge');if(rev18Badge)rev18Badge.textContent='rev 23.4 Diplomacy + Allied Detachments + Expeditions + Decrees';const rev18Title=document.querySelector('title');if(rev18Title)rev18Title.textContent='Administratum Stellar Cartographica — Revision 23.4 Grand Strategy Expansion';
+const rev18Badge=document.querySelector('.generation-head-actions .badge');if(rev18Badge)rev18Badge.textContent='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';const rev18Title=document.querySelector('title');if(rev18Title)rev18Title.textContent='Administratum Stellar Cartographica — Revision 23.4 Grand Strategy Expansion';
 
 
 
@@ -3933,7 +3933,7 @@ const _campaignRulesReferenceHTML_rev22=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev22(root);h=h.replace('<h4>6. Settlements & Colonies</h4><p>','<h4>6. Settlements & Colonies</h4><p><b>Expansion & Population district:</b> a dedicated building chain can directly improve the chance of settlement Size growth and/or protect against Size decline. ');return h};
 
 /* Revision identity */
-const rev21Badge=document.querySelector('.generation-head-actions .badge');if(rev21Badge)rev21Badge.textContent='rev 23.4 Diplomacy + Allied Detachments + Expeditions + Decrees';const rev21Title=document.querySelector('title');if(rev21Title)rev21Title.textContent='Administratum Stellar Cartographica — Revision 23.4 Grand Strategy Expansion';
+const rev21Badge=document.querySelector('.generation-head-actions .badge');if(rev21Badge)rev21Badge.textContent='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';const rev21Title=document.querySelector('title');if(rev21Title)rev21Title.textContent='Administratum Stellar Cartographica — Revision 23.4 Grand Strategy Expansion';
 
 })();
 
@@ -4174,16 +4174,16 @@ campaignEndTurn=function(root){const c=campaignRev23Ensure(root),before=c?.turn;
 const _campaignRulesReferenceHTML_rev23=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev23(root);const add=`<div class="campaign-rule-card"><h4>13. Mobilisation & Fleet Actions</h4><p>Each fleet can perform up to ${CAMPAIGN_FLEET_ACTION_LIMIT} strategic fleet actions per turn. Recruitment is also capped by an empire-wide mobilisation pool generated by all active colonies: population/Size forms the base, recruitment districts are the strongest multiplier, and defence/garrison infrastructure adds reserve capacity.</p></div><div class="campaign-rule-card"><h4>14. Strategic Colony Investment</h4><p>A faction may spend Supply and Influence to fund one temporary programme per settlement per turn, granting +2 Productivity, Order or Piety/Cohesion through that 90-day economy and colony resolution.</p></div><div class="campaign-rule-card"><h4>15. Diplomacy & Technology Ceilings</h4><p>Diplomacy supports non-aggression, access, mutual trade, unilateral aid, guarantees, defensive pacts, alliances, vassalisation, peace and war. Extra Influence can be committed as negotiation leverage. Normal research stops at the current faction ceiling; raising that ceiling requires a Size 5 advanced Research settlement, large strategic expenditure and a difficult breakthrough roll.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
 
-const rb=document.querySelector('.generation-head-actions .badge');if(rb)rb.textContent='rev 23.4 Diplomacy + Allied Detachments + Expeditions + Decrees';
-document.documentElement.dataset.cartographicaRevision='23.4';
+const rb=document.querySelector('.generation-head-actions .badge');if(rb)rb.textContent='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';
+document.documentElement.dataset.cartographicaCompat='23.3';document.documentElement.dataset.cartographicaRevision='23.4';
 })();
 </script>
 
 <script>
-/* ===== Revision 23.4 compatibility layer — Settlement Restoration + Full Diplomacy Integration ===== */
+/* ===== Revision 23.3 — Settlement Restoration + Full Diplomacy Integration ===== */
 (function(){
 'use strict';
-const REV233='23.4';
+const REV233='23.3';
 
 /* ---------- Settlement founding: campaign + generator ---------- */
 function campaignSettlementPresence233(root,fac,nodeId){
@@ -4404,8 +4404,8 @@ campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev2
 window.__cartoCampaignDiplomacyProposal233=campaignDiplomacyProposal233;
 window.__cartoCampaignDipAcceptance233=campaignDipAcceptance233;
 window.__cartoCampaignSettlementPresence233=campaignSettlementPresence233;
-const rb233=document.querySelector('.generation-head-actions .badge');if(rb233)rb233.textContent='rev 23.4 Diplomacy + Allied Detachments + Expeditions + Decrees';
-document.documentElement.dataset.cartographicaRevision=REV233;
+const rb233=document.querySelector('.generation-head-actions .badge');if(rb233)rb233.textContent='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';
+document.documentElement.dataset.cartographicaCompat=REV233;document.documentElement.dataset.cartographicaRevision='23.4';
 })();
 </script>
 
@@ -4521,10 +4521,10 @@ document.documentElement.dataset.cartographicaRevision=REV234;
     try{
       if('caches' in window){
         const keys=await caches.keys();
-        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r23.4-grand-strategy-expeditions-decrees-v6/i.test(k)).map(k=>caches.delete(k)));
+        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r23.4-complete-consolidated-v7/i.test(k)).map(k=>caches.delete(k)));
       }
       if('serviceWorker' in navigator){
-        const reg=await navigator.serviceWorker.register('./sw.js?v=23.4-grand-strategy-expeditions-decrees-v6',{updateViaCache:'none'});
+        const reg=await navigator.serviceWorker.register('./sw.js?v=23.4-complete-consolidated-v7',{updateViaCache:'none'});
         try{ await reg.update(); }catch(_){}
       }
     }catch(_){}
@@ -4532,20 +4532,29 @@ document.documentElement.dataset.cartographicaRevision=REV234;
 })();
 </script>
 
+
 <script>
-/* Revision 23.4 identity guard: never present this build as an earlier revision. */
+/* Revision 23.4 COMPLETE identity guard. This does not modify campaign compatibility layers. */
 (function(){
-  const label='rev 23.4 Diplomacy + Allied Detachments + Expeditions + Decrees';
-  document.documentElement.dataset.cartographicaRevision='23.4';
-  document.documentElement.dataset.cartographicaBuild='23.4-grand-strategy-expeditions-decrees-v6';
-  const apply=()=>{
+  'use strict';
+  const REVISION='23.4';
+  const BUILD='23.4-complete-consolidated-v7';
+  const LABEL='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';
+  const enforce=()=>{
+    if(document.documentElement.dataset.cartographicaRevision!==REVISION) document.documentElement.dataset.cartographicaRevision=REVISION;
+    document.documentElement.dataset.cartographicaBuild=BUILD;
     const badge=document.querySelector('.generation-head-actions .badge');
-    if(badge) badge.textContent=label;
-    if(document.title.indexOf('Revision 23.4')===-1) document.title='Administratum Stellar Cartographica — Revision 23.4 Grand Strategy Expansion';
+    if(badge && badge.textContent!==LABEL) badge.textContent=LABEL;
+    if(!document.title.includes('Revision 23.4')) document.title='Administratum Stellar Cartographica — Revision 23.4 Complete';
   };
-  apply();
-  window.addEventListener('DOMContentLoaded',apply,{once:true});
-  window.addEventListener('pageshow',apply);
+  enforce();
+  document.addEventListener('DOMContentLoaded',()=>{
+    enforce();
+    const obs=new MutationObserver(enforce);
+    obs.observe(document.documentElement,{attributes:true,attributeFilter:['data-cartographica-revision','data-cartographica-build']});
+    obs.observe(document.body,{subtree:true,childList:true,characterData:true});
+  },{once:true});
+  window.addEventListener('pageshow',enforce);
 })();
 </script>
 </body>
