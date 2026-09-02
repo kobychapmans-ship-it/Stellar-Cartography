@@ -1,45 +1,102 @@
-STELLAR CARTOGRAPHY PWA — REVISION 23.4.1 STABLE RUNTIME
+Administratum Stellar Cartographica — Revision 23.5
+Build: 23.5-fleet-operations-stable-v11
+Verification date: 2026-09-03
 
-ROOT CAUSE FIXED
-The previous v23.4 deployment appended the v23, v23.3 and v23.4 feature scripts outside the primary campaign IIFE. Those scripts referenced private lexical bindings from the core runtime, producing immediate browser ReferenceErrors including CAMPAIGN_TECH_NAMES, campaignFoundSettlement and CAMPAIGN_BUILDING_CHAINS. The UI could therefore reach the title/setup screen while the later campaign systems never initialised correctly.
+BASELINE
+- Built on the v23.4.1 Stable Runtime consolidated architecture.
+- Revision 23.5 code is inside the main campaign runtime/IIFE; it does not recreate the earlier out-of-scope append-layer bug.
+- Prior grand-strategy systems remain present: full diplomacy, settlement founding, expedition districts/caps, Decrees, allied detachments, mobilisation, AI offensives, technology-ceiling breakthroughs and detailed auto-resolve.
 
-FIX
-- Consolidated the v23, v23.3 and v23.4 feature layers into the primary campaign lexical scope.
-- Preserved every feature wrapper and compatibility layer; feature logic was not stripped.
-- Removed controllerchange / forced reload behaviour from the title-screen runtime.
-- Reduced service-worker registration to one stable registration path.
-- Kept sw-v23-4.js as a compatibility alias so an existing v23.4 Home Screen installation can update its old worker registration.
-- Service worker is network-first for navigations and falls back to the cached v23.4.1 application shell offline.
-- No external JS/CSS/CDN dependencies are required by index.html.
+STATIC VALIDATION
+- 4 embedded JavaScript blocks checked with Node syntax parser: PASS (0 syntax errors).
+- sw.js checked with Node syntax parser: PASS.
+- sw-v23-4.js compatibility worker checked with Node syntax parser: PASS.
+- manifest.webmanifest parsed as JSON: PASS.
+- No external JavaScript sources: PASS.
+- No external stylesheet dependencies: PASS.
+- Canonical build URL: ?rev=23.5-fleet-operations-stable-v11.
+- Offline cache: cartographica-r23.5-fleet-operations-stable-v11.
 
-BROWSER RUNTIME TESTS COMPLETED
-1. Loaded complete HTML in headless Chromium: 0 JavaScript exceptions.
-2. Generated a full sector (41 systems in the test run): successful.
-3. Opened Campaign Start Manager: successful.
-4. Launched a Sector Campaign: successful.
-5. Campaign dashboard rendered with Overview, Territory, Army, Colonies, Fleets, Factions/Diplomacy, Decrees, Battles, Save/Data and Turn Log tabs.
-6. Diplomacy tab rendered the complete action set including one-way trade, access, guarantees, alliances and vassalisation.
-7. Decrees tab rendered all four decree categories.
-8. Colonies tab rendered the independent Found New Campaign Settlement workspace and the founding action executed without runtime error.
-9. End Turn completed through autonomous-faction processing and advanced Turn 1 -> Turn 2 with 0 runtime exceptions.
+BROWSER FUNCTIONAL TEST
+Performed in headless Chromium against the complete index.html:
+- Generated a full sector: PASS.
+- Launched a sector campaign: PASS.
+- Fleet Journey Planner rendered in Fleets tab: PASS.
+- Fleet Designation Roles rules rendered in Fleets tab: PASS.
+- Translation rejection with 0 Command produced a visible modal explaining "Insufficient Command": PASS.
+- Auto-Route produced a multi-leg journey summary: PASS.
+- Confirm Multi-Journey created an active journeyPlan and fleet transit: PASS.
+- Confirmed multi-journey path rendered into the campaign SVG map: PASS.
+- Fleet development progressed to Tier III on an eligible Expeditionary Fleet: PASS.
+- Tier III created a Mobile Fleet Colony: PASS.
+- Mobile Fleet Colony rendered in the Colonies tab as a settlement as well as a fleet: PASS.
+- Major threat generated and persisted: PASS.
+- Next major-threat interval was within 1–50 turns (test interval: 20): PASS.
+- Browser page/runtime exceptions during the functional pass: 0.
 
-FEATURE PRESENCE CHECKS
-- revision_23_4_1: PASS
-- full_diplomacy: PASS
-- allied_detachments: PASS
-- expedition_district: PASS
-- decrees: PASS
-- battle_breakdown: PASS
-- settlement_founder: PASS
-- fleet_action_limit: PASS
-- recruitment_cap: PASS
-- ai_attack_popup: PASS
-- tech_ceiling: PASS
-- no_external_assets: PASS
-- no_forced_controller_reload: PASS
+FLEET MOVEMENT
+- Direct translations can be ordered entirely from the Fleets tab.
+- Waypoint mode supports manually planned itineraries.
+- Auto-Route creates intermediate waypoints for long inter-system travel when useful.
+- Up to 24 waypoints may be stored in one confirmed journey.
+- Full-route Supply + 1 Command are reserved when the route is confirmed.
+- Subsequent route legs begin automatically when each waypoint is reached.
+- Existing per-fleet strategic action cap is retained; a confirmed multi-journey consumes one fleet action when ordered.
+- Existing map-click plot-and-confirm movement remains available as an alternate workflow.
+
+TRANSLATION REJECTION POPUPS
+Player movement attempts now explain failures including:
+- no fleet/destination
+- invalid destination
+- already in transit
+- already committed to a multi-journey
+- already at target
+- strategic disruption
+- cargo overload
+- fleet action limit exhausted
+- major-threat/Warp blockade
+- insufficient Supply
+- insufficient Command
+
+FLEET DEVELOPMENT / FLEET-COLONY
+- Tier I: Sustained Logistics Refit.
+- Tier II: Habitat & Civilian Decks.
+- Tier III: Mobile Colony Core; fleet is simultaneously a fleet and settlement.
+- Tier IV: Migratory Enclave; mobile expedition/survey capacity begins.
+- Tier V: Fleet-City; stronger economy, mobilisation and expedition capacity.
+- Mobile colonies contribute income, defence, diplomatic power, mobilisation and resource/expedition access where applicable.
+- Mobile colonies appear in both Fleets and Colonies interfaces.
+- Faction can adopt Fleet-Colony polity after obtaining a Tier III+ mobile settlement.
+- AI can develop suitable fleets toward mobile colonies.
+
+MAJOR THREAT TABLE
+A new threat is scheduled 1–50 turns after the previous threat. Included events:
+1. Catastrophic Solar Flare
+2. Necron Awakening
+3. Xenos Uprising
+4. Sudden Warp Storm
+5. Space Hulk Incursion
+6. Systemic Plague Bloom
+7. Gravitic Shear Event
+8. Archeotech Cascade
+9. Greenskin Migration
+10. Empyric Incursion
+11. Relativistic Debris Storm
+12. Psychic Resonance Crisis
+Threats have multi-turn system-scale effects and can damage forces, settlements, Defence/resources or interfere with fleet travel.
 
 PWA / OFFLINE
-Canonical start URL: ./index.html?rev=23.4.1-stable-runtime-v9
-Cache: cartographica-r23.4.1-stable-runtime-v9
-Existing v23.4 app ID is retained intentionally so the installed Home Screen PWA can update in place.
-After one successful online load following deployment, the app shell is cached and navigation falls back to the cached application when offline.
+- Service worker uses a fresh Revision 23.5 cache and deletes older Cartographica caches on activation.
+- Network-first navigation keeps deployed builds fresh while retaining cached index.html as offline fallback.
+- Complete app shell (index, manifest and icons) is cached after first successful online launch.
+- Application HTML contains no external JS/CSS dependencies, so gameplay code remains locally available offline.
+- The existing PWA app ID is intentionally retained so installed v23.4.x PWAs can upgrade in place.
+
+NOTE ON TEST ENVIRONMENT
+Direct localhost navigation is blocked by the execution environment's browser administrator policy, so service-worker network/offline switching could not be exercised through an HTTP origin here. The worker/manifest were syntax/structure validated, and the full application runtime was exercised in Chromium using the complete HTML document.
+
+V11 FINAL DELTA
+- Direct in-system AU translations now render a confirmed travel line and moving fleet marker on the system map.
+- Multi-journey continuation pauses with a visible reason when a later leg is blocked by disruption or a major threat.
+- Final v11 static validation repeated: manifest JSON PASS; all embedded JavaScript PASS; both service workers PASS; requested feature markers PASS.
+- The final archive is packaged with repository files at ZIP root for direct GitHub Pages deployment.

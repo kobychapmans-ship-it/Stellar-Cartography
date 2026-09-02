@@ -1,20 +1,54 @@
-# Administratum Stellar Cartographica — Revision 23.4.1 Stable Runtime
+# Administratum Stellar Cartographica — Revision 23.5
 
-This is the corrected, feature-complete v23.4 campaign PWA. It fixes the runtime scope failure that prevented the post-v22/v23 feature layers from initialising while preserving the full campaign systems already created.
+Build: `23.5-fleet-operations-stable-v11`
 
-## Deploy to GitHub Pages
-Replace the files in the repository root with **all files in this package**. Keep both `sw.js` and `sw-v23-4.js`; the latter is a compatibility update path for existing v23.4 Home Screen installs. GitHub Pages should remain configured for `main` / `(root)`.
+This package is built directly on the known-good Revision 23.4.1 Stable Runtime. The v23.5 fleet/threat systems remain inside the same campaign runtime and do not recreate the old out-of-scope extension failure.
 
-After the Pages deployment completes, open once while online:
+## Revision 23.5 additions
 
-`https://kobychapmans-ship-it.github.io/Stellar-Cartography/?rev=23.4.1-stable-runtime-v9`
+### Fleet Journey Planner
+The Fleets tab now provides navigation without repeated map clicks:
+- Direct Translation to any generated campaign navigation node.
+- Multi-Journey waypoint planning, up to 24 waypoints.
+- Auto-Route for long trips.
+- Route summary with legs, distance, estimated turns, Supply and Command.
+- The complete multi-journey reserves its Supply once and consumes one fleet strategic action when confirmed.
+- Later legs begin automatically after arrival unless a threat/disruption pauses the route.
+- Paused journeys can be resumed or cancelled.
 
-The page does **not** force-reload when the service worker changes. It updates the URL revision in-place and registers the stable worker after the game has loaded.
+Confirmed fleet movement is displayed on the strategic map. Sector/sub-sector movement retains the existing route arrows, multi-journeys add the full itinerary, and direct AU movement now visibly draws the origin/destination line and moving fleet marker on system maps.
 
-## Offline
-On the first successful online load, the worker caches `index.html`, the canonical start URL, manifest and icons. Navigation is network-first while online and falls back to the cached stable build when offline. The game HTML has no external script/style/CDN dependency.
+### Translation failure notices
+Player translation attempts now show a modal reason when rejected, including invalid destinations, current transit, active journey, strategic disruption, cargo overload, exhausted fleet actions, threat/warp blockade, insufficient Supply or insufficient Command. Invasion translation also reports missing/invalid targets and missing embarked ground forces.
 
-## Included campaign systems
-Full direct diplomacy and Influence leverage; 0–200 Diplomatic Standing; allied detachments; settlement founding; settlement Supply/Influence programmes; Expedition & Survey districts and launch caps; Decrees; detailed auto-resolve; fleet action limits; empire recruitment/mobilisation limits; proactive AI attacks and popups; technology-ceiling breakthroughs; trade/access/guarantees/defensive pacts/alliances/vassalisation; save/data and turn-cycle systems.
+### Fleet Designation Rules
+The Fleets tab contains an open Fleet Designation Roles reference showing each role's description and its Speed, Capacity, Void, Assault and Colony modifiers.
 
-See `BUILD-VERIFICATION.txt` for the runtime test results and root-cause notes.
+### Fleet Development and Fleet-Colony factions
+Fleets can progress through:
+1. Sustained Logistics Refit
+2. Habitat & Civilian Decks
+3. Mobile Colony Core
+4. Migratory Enclave
+5. Fleet-City
+
+At Tier III the fleet becomes both a fleet and a mobile settlement. It contributes settlement economy, defence and political power and appears in the Colonies interface as well as the Fleet interface. Higher tiers add survey/expedition capacity and stronger strategic contributions. A faction with a Tier III+ mobile colony may adopt a Fleet-Colony polity.
+
+### Major Threat Table
+A major system-scale threat is scheduled 1–50 turns after the previous threat. The table includes Solar Flares, Necron Awakenings, Xenos Uprisings, Warp Storms, Space Hulk Incursions, Plague Blooms, Gravitic Shears, Archeotech Cascades, Greenskin Migrations, Empyric Incursions, Relativistic Debris Storms and Psychic Resonance Crises.
+
+Threats have persistent multi-turn effects and can damage forces, settlements, Defence and resources or disrupt/block fleet translation. Active threats and the next scheduled threat check appear in the campaign overview.
+
+## Preserved systems
+Revision 23.5 retains the complete Revision 23.4.1 campaign feature set including full diplomacy, allied detachments, restored settlement founding, strategic settlement programmes, Expedition & Survey districts and launch caps, Decrees, detailed battle auto-resolve, fleet action limits, empire recruitment/mobilisation ceilings, proactive AI attacks, Influence negotiation leverage and technology-ceiling breakthroughs.
+
+## GitHub Pages / PWA installation
+Upload the **contents** of this folder directly to the repository root. `index.html`, `manifest.webmanifest`, `sw.js` and the icon files must sit directly in the Pages root.
+
+Canonical launch URL:
+
+`https://kobychapmans-ship-it.github.io/Stellar-Cartography/?rev=23.5-fleet-operations-stable-v11`
+
+Open that URL once while online after GitHub Pages finishes deploying. The service worker caches the application shell and icons for subsequent offline launches. The existing PWA application ID is intentionally retained so a working v23.4.x Home Screen installation can update in place.
+
+The service worker deletes older Cartographica caches during activation and uses network-first navigation with the v23.5 cached application as the offline fallback.

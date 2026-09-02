@@ -1,3 +1,5 @@
 Administratum Stellar Cartographica
-Revision 23.4.1 Stable Runtime
-Build: 23.4.1-stable-runtime-v9
+Revision: 23.5
+Build: 23.5-fleet-operations-stable-v11
+Base runtime: Revision 23.4.1 Stable Runtime
+PWA cache: cartographica-r23.5-fleet-operations-stable-v11
