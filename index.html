@@ -4,14 +4,25 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="18" />
+<meta name="cartographica-revision" content="23.2" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="manifest" href="./manifest.webmanifest?v=23-grand-strategy-diplomacy-mobilisation-v3" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
-<title>Administratum Stellar Cartographica — Revision 23 Grand Strategy</title>
+<script>
+/* Revision 23.2 hard migration: this build never retains a Revision 22 launch URL. */
+(function(){
+  const canonicalRev='23-grand-strategy-diplomacy-mobilisation-v3';
+  const u=new URL(location.href);
+  if(u.searchParams.get('rev')!==canonicalRev){
+    u.searchParams.set('rev',canonicalRev);
+    history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash);
+  }
+})();
+</script>
+<title>Administratum Stellar Cartographica — Revision 23.2 Grand Strategy</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -3685,9 +3696,9 @@ const _campaignRulesReferenceHTML_rev20=campaignRulesReferenceHTML;campaignRules
 const _campaignColoniesHTML_rev20=campaignColoniesHTML;
 campaignColoniesHTML=function(root,c){const p=campaignPlayer(c),rows=[];for(const fac of c.factions||[])for(const s of fac.settlements||[])if(s.status!=='Destroyed')rows.push({fac,s});if(!rows.length)return _campaignColoniesHTML_rev20(root,c);rows.sort((a,b)=>(a.fac.id===p.id?-1:1)-(b.fac.id===p.id?-1:1)||String(a.s.locationName).localeCompare(String(b.s.locationName)));return rows.map(({fac,s})=>{const occ=s.occupiedBy?campaignFaction(c,s.occupiedBy):null,own=fac.id===p.id;return `<div class="campaign-colony-row visual ${own?'':'foreign'}" style="--fac:${fac.color}"><div class="campaign-colony-list-icon">${campaignSettlementIconSVG(s.colony.size,fac.color)}</div><div class="colony-owner-ribbon">${campaignOwnerBadge(fac)}<b>${esc(s.locationName)}</b><span class="colony-reason">${esc(campaignRecord(root,s.systemId)?.name||s.systemId)} • ${esc(s.locationKind)}</span>${occ?`<span class="rangdan-tag">Occupied by ${esc(occ.name)}</span>`:''}</div><h4>${esc(s.colony.displayType||s.colony.type)}</h4><div class="campaign-local-buildings">${campaignMiniBuildings(s.colony)}</div><div class="campaign-dev-mini">${campaignDevTierSummary(s.colony)}</div>${soiColonyStatusHTML(s.colony)}${campaignSettlementOperationsHTML(s,fac)}${campaignSettlementYieldHTML(s,fac)}<div class="adv-line"><span>Infrastructure</span><strong>${esc((s.colony.infrastructure||[]).join(', ')||'Founding infrastructure only')}</strong></div><div class="adv-line"><span>Current Requirement</span><strong>${esc(s.colony.requiredInfrastructure||'None')}</strong></div><div class="adv-line"><span>Support</span><strong>${esc((s.colony.supportUpgrades||[]).join(', ')||'None')}</strong></div>${s.colony.acceleratedFoundation?'<div class="campaign-accelerated-foundation"><b>Accelerated Foundation:</b> raised immediately to Size 5 by additional strategic expenditure.</div>':''}${own?`<div class="campaign-actionrow"><button class="ghost campaign-development-button" type="button" data-open-development="${esc(s.id)}" data-development-faction="${esc(fac.id)}">Open Settlement & Buildings</button><button class="ghost" data-campaign-colony="advance" data-settlement="${s.id}" type="button">Advance Extra 90 Days</button>${s.colony.requiredInfrastructure?`<button class="ghost" data-campaign-colony="infra" data-settlement="${s.id}" type="button">Build Infrastructure (5 Materiel)</button>`:''}<button class="ghost" data-campaign-colony="support" data-settlement="${s.id}" type="button">Install Suggested Support (6 Materiel)</button></div>`:'<div class="hint">Foreign settlement: autonomous faction controls construction and growth.</div>'}</div>`}).join('')};
 
-const rev20Badge=document.querySelector('.generation-head-actions .badge');if(rev20Badge)rev20Badge.textContent='rev 22.0 Resource Expeditions & Colonial Focus';const rev20Title=document.querySelector('title');if(rev20Title)rev20Title.textContent='Administratum Stellar Cartographica — Visual Settlements & Map Layers';
+const rev20Badge=document.querySelector('.generation-head-actions .badge');if(rev20Badge)rev20Badge.textContent='rev 23.2 Grand Strategy Diplomacy & Mobilisation';const rev20Title=document.querySelector('title');if(rev20Title)rev20Title.textContent='Administratum Stellar Cartographica — Revision 23.2 Grand Strategy';
 
-const rev18Badge=document.querySelector('.generation-head-actions .badge');if(rev18Badge)rev18Badge.textContent='rev 22.0 Resource Expeditions & Colonial Focus';const rev18Title=document.querySelector('title');if(rev18Title)rev18Title.textContent='Administratum Stellar Cartographica — Visual Settlements & Map Layers';
+const rev18Badge=document.querySelector('.generation-head-actions .badge');if(rev18Badge)rev18Badge.textContent='rev 23.2 Grand Strategy Diplomacy & Mobilisation';const rev18Title=document.querySelector('title');if(rev18Title)rev18Title.textContent='Administratum Stellar Cartographica — Revision 23.2 Grand Strategy';
 
 
 
@@ -3784,7 +3795,7 @@ const _campaignRulesReferenceHTML_rev21=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev21(root);h=h.replace('<h4>6. Settlements & Colonies</h4><p>','<h4>6. Settlements & Colonies</h4><p><b>Turn-based growth:</b> established colonies and settlements no longer have manual 90-day advance or reroll controls. End Turn advances their 90-day growth, calamity/fortune and Size cycle automatically. Size increases unlock additional district slots immediately. ');return h};
 
 
-/* ===== rev 22.0 Colonial Focus, Fleet Positioning, Resource Expeditions & Growth District ===== */
+/* ===== Colonial Focus, Fleet Positioning, Resource Expeditions & Growth District compatibility layer ===== */
 
 /* Keep planetary information on the tab the player was actually using. */
 window._cartoPlanetDataTab=window._cartoPlanetDataTab||'population';
@@ -3915,7 +3926,7 @@ const _campaignRulesReferenceHTML_rev22=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev22(root);h=h.replace('<h4>6. Settlements & Colonies</h4><p>','<h4>6. Settlements & Colonies</h4><p><b>Expansion & Population district:</b> a dedicated building chain can directly improve the chance of settlement Size growth and/or protect against Size decline. ');return h};
 
 /* Revision identity */
-const rev21Badge=document.querySelector('.generation-head-actions .badge');if(rev21Badge)rev21Badge.textContent='rev 22.0 Resource Expeditions & Colonial Focus';const rev21Title=document.querySelector('title');if(rev21Title)rev21Title.textContent='Administratum Stellar Cartographica — Resource Expeditions & Colonial Focus';
+const rev21Badge=document.querySelector('.generation-head-actions .badge');if(rev21Badge)rev21Badge.textContent='rev 23.2 Grand Strategy Diplomacy & Mobilisation';const rev21Title=document.querySelector('title');if(rev21Title)rev21Title.textContent='Administratum Stellar Cartographica — Revision 23.2 Grand Strategy';
 
 })();
 
@@ -4156,8 +4167,8 @@ campaignEndTurn=function(root){const c=campaignRev23Ensure(root),before=c?.turn;
 const _campaignRulesReferenceHTML_rev23=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev23(root);const add=`<div class="campaign-rule-card"><h4>13. Mobilisation & Fleet Actions</h4><p>Each fleet can perform up to ${CAMPAIGN_FLEET_ACTION_LIMIT} strategic fleet actions per turn. Recruitment is also capped by an empire-wide mobilisation pool generated by all active colonies: population/Size forms the base, recruitment districts are the strongest multiplier, and defence/garrison infrastructure adds reserve capacity.</p></div><div class="campaign-rule-card"><h4>14. Strategic Colony Investment</h4><p>A faction may spend Supply and Influence to fund one temporary programme per settlement per turn, granting +2 Productivity, Order or Piety/Cohesion through that 90-day economy and colony resolution.</p></div><div class="campaign-rule-card"><h4>15. Diplomacy & Technology Ceilings</h4><p>Diplomacy supports non-aggression, access, mutual trade, unilateral aid, guarantees, defensive pacts, alliances, vassalisation, peace and war. Extra Influence can be committed as negotiation leverage. Normal research stops at the current faction ceiling; raising that ceiling requires a Size 5 advanced Research settlement, large strategic expenditure and a difficult breakthrough roll.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
 
-const rb=document.querySelector('.generation-head-actions .badge');if(rb)rb.textContent='rev 23.0 Grand Strategy Diplomacy & Mobilisation';
-document.documentElement.dataset.cartographicaRevision='23';
+const rb=document.querySelector('.generation-head-actions .badge');if(rb)rb.textContent='rev 23.2 Grand Strategy Diplomacy & Mobilisation';
+document.documentElement.dataset.cartographicaRevision='23.2';
 })();
 </script>
 
@@ -4173,24 +4184,18 @@ document.documentElement.dataset.cartographicaRevision='23';
 })();
 </script>
 <script>
-if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-}
-</script>
-
-<script>
-/* Revision 18 cache migration: purge any pre-r18 Cartographica caches and force the latest service worker. */
+/* Revision 23.2 hard migration: purge prior Cartographica caches and force the v23-only service worker. */
 (function(){
-  const REV='23.1';
+  const REV='23.2';
   document.documentElement.dataset.cartographicaRevision=REV;
   window.addEventListener('load', async ()=>{
     try{
       if('caches' in window){
         const keys=await caches.keys();
-        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r23-grand-strategy-diplomacy-mobilisation-v2/i.test(k)).map(k=>caches.delete(k)));
+        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r23-grand-strategy-diplomacy-mobilisation-v3/i.test(k)).map(k=>caches.delete(k)));
       }
       if('serviceWorker' in navigator){
-        const reg=await navigator.serviceWorker.register('./sw.js?v=23-grand-strategy-diplomacy-mobilisation-v2',{updateViaCache:'none'});
+        const reg=await navigator.serviceWorker.register('./sw.js?v=23-grand-strategy-diplomacy-mobilisation-v3',{updateViaCache:'none'});
         try{ await reg.update(); }catch(_){}
       }
     }catch(_){}
