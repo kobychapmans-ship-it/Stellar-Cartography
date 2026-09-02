@@ -1,6 +1,6 @@
-const CACHE_NAME='cartographica-r23.4-grand-strategy-expeditions-decrees-v5';
-const CANONICAL_PATH='./index.html?rev=23.4-grand-strategy-expeditions-decrees-v5';
-const APP_SHELL=[CANONICAL_PATH,'./manifest.webmanifest?v=23.4-grand-strategy-expeditions-decrees-v5','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
+const CACHE_NAME='cartographica-r23.4-grand-strategy-expeditions-decrees-v6';
+const CANONICAL_PATH='./index.html?rev=23.4-grand-strategy-expeditions-decrees-v6';
+const APP_SHELL=[CANONICAL_PATH,'./manifest.webmanifest?v=23.4-grand-strategy-expeditions-decrees-v6','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(

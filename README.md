@@ -21,3 +21,9 @@ Canonical launch URL:
 `index.html?rev=23.4-grand-strategy-expeditions-decrees-v5`
 
 The service worker uses a new Revision 23.4 cache key and deletes older Cartographica caches during install/activation.
+
+
+## Revision 23.4 launch hotfix
+This package is hard-pinned to Revision 23.4. The manifest uses a v23.4-specific PWA ID, the canonical launch URL is `index.html?rev=23.4-grand-strategy-expeditions-decrees-v6`, the service worker redirects any other app navigation to that URL, and all visible fallback revision labels have been updated to 23.4.
+
+For an iPhone Home Screen install that was originally created from v23.3, open the v23.4 canonical URL once in Safari while online so the new service worker activates. If the old icon still preserves the old installed-app metadata, remove that Home Screen icon and add it again from the canonical v23.4 page.
