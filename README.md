@@ -1,38 +1,23 @@
-# Administratum Stellar Cartographica — Revision 23.3
+# Administratum Stellar Cartographica — Revision 23.4
 
-Revision 23.3 restores settlement creation and fully exposes the Grand Strategy diplomacy layer.
+Revision 23.4 extends the Revision 23 grand-strategy campaign layer while retaining settlement founding, mobilisation limits, fleet action limits, AI warfare, strategic colony programmes and the v23-only PWA migration.
 
-## Settlement restoration
-- Campaign settlements can again be founded from the normal Overview strategic orders.
-- The Colonies tab now contains a dedicated **Found New Campaign Settlement** workspace.
-- Founding is allowed at controlled territory, established faction presence, a local Task Force, or a fleet physically present at the node.
-- Standard and accelerated Size 5 foundation packages are both supported.
-- World, moon, asteroid and void-site inspectors retain **Add Colony / Settlement** and **Add Colonial Prospect** controls.
+## Revision 23.4 additions
 
-## Full diplomacy
-- Improve Relations
-- Non-Aggression Pacts
-- Request or grant Military Access
-- Mutual Trade Agreements
-- One-Way Export Agreements
-- Request One-Way Imports
-- Immediate Aid
-- Guarantees of Independence
-- Defensive Pacts
-- Full Alliances
-- Demand Vassalisation
-- Offer Vassalage
-- Negotiate Peace
-- Declare War
-- Break individual treaties or all treaties
-- Spend extra Influence for +5 percentage points of negotiation acceptance per Influence
-- Trade and vassal agreements have recurring economic effects
-- Defensive treaties can widen wars
+- Full diplomacy options are displayed directly in the Factions / Diplomacy tab rather than hidden behind a generic Negotiate button.
+- Diplomatic Standing ranges from 0–200 and combines relations with active treaties.
+- At 120+ Diplomatic Standing and Allied relations, the player may request one allied detachment per allied faction per turn. The detachment is generated from that faction's own troop catalogue and joins a selected Task Force.
+- New Expedition & Survey settlement district. A resource expedition now requires this district in a settlement on the exact planet or spatial object being exploited.
+- Expedition launches are capped per local hub and faction each turn. Higher district tiers increase capacity; an Expedition Support Directive temporarily raises it.
+- Battle auto-resolve now stores and displays effective points, command/doctrine rolls, fortification contribution, combat multipliers, victory margin, casualty calculation, surviving Strength and territorial outcome.
+- New Decrees tab with four neutral one-turn directives: Resource Allocation, Expedition Support, Operational Coordination and Diplomatic Initiative. Each costs Supply, Influence and Command.
 
-## PWA deployment
-Replace the repository-root files with this package and deploy GitHub Pages from `main` / `(root)`.
+## GitHub Pages / PWA deployment
+
+Replace the repository-root files with the contents of this package. `index.html`, `manifest.webmanifest` and `sw.js` must remain in the root of the Pages deployment.
 
 Canonical launch URL:
-`index.html?rev=23-full-diplomacy-settlement-restoration-v4`
 
-The v23-only PWA identity is retained and the service-worker cache is advanced to the v4 package so older v23.2 assets are removed.
+`index.html?rev=23.4-grand-strategy-expeditions-decrees-v5`
+
+The service worker uses a new Revision 23.4 cache key and deletes older Cartographica caches during install/activation.
