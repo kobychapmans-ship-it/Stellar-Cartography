@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
 <link rel="manifest" href="./manifest.webmanifest" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
-<title>Administratum Stellar Cartographica — Revision 21 Turn Cycle & Colony UI</title>
+<title>Administratum Stellar Cartographica — Revision 23 Grand Strategy</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -4181,16 +4181,16 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || location.hos
 <script>
 /* Revision 18 cache migration: purge any pre-r18 Cartographica caches and force the latest service worker. */
 (function(){
-  const REV='23';
+  const REV='23.1';
   document.documentElement.dataset.cartographicaRevision=REV;
   window.addEventListener('load', async ()=>{
     try{
       if('caches' in window){
         const keys=await caches.keys();
-        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r23-grand-strategy-diplomacy-mobilisation-v1/i.test(k)).map(k=>caches.delete(k)));
+        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r23-grand-strategy-diplomacy-mobilisation-v2/i.test(k)).map(k=>caches.delete(k)));
       }
       if('serviceWorker' in navigator){
-        const reg=await navigator.serviceWorker.register('./sw.js?v=23-grand-strategy-diplomacy-mobilisation-v1',{updateViaCache:'none'});
+        const reg=await navigator.serviceWorker.register('./sw.js?v=23-grand-strategy-diplomacy-mobilisation-v2',{updateViaCache:'none'});
         try{ await reg.update(); }catch(_){}
       }
     }catch(_){}
