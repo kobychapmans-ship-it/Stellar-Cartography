@@ -1,25 +1,38 @@
-# Administratum Stellar Cartographica — Revision 23.2 PWA
+# Administratum Stellar Cartographica — Revision 23.3
 
-This package is a hard v23-only migration. Revision 22 is not used as the PWA identity, launch URL, or navigation fallback.
+Revision 23.3 restores settlement creation and fully exposes the Grand Strategy diplomacy layer.
 
-## Deploy to GitHub Pages
-1. Replace the repository-root files with the contents of this package.
-2. Keep GitHub Pages deployed from `main` / `(root)`.
-3. Open `index.html?rev=23-grand-strategy-diplomacy-mobilisation-v3` once in Safari while online.
-4. If an older Home Screen icon still identifies itself as Revision 22, remove that old icon and add the site to the Home Screen again. The new manifest uses a distinct Revision 23 app ID.
+## Settlement restoration
+- Campaign settlements can again be founded from the normal Overview strategic orders.
+- The Colonies tab now contains a dedicated **Found New Campaign Settlement** workspace.
+- Founding is allowed at controlled territory, established faction presence, a local Task Force, or a fleet physically present at the node.
+- Standard and accelerated Size 5 foundation packages are both supported.
+- World, moon, asteroid and void-site inspectors retain **Add Colony / Settlement** and **Add Colonial Prospect** controls.
 
-## Hard migration behaviour
-- The manifest ID is Revision 23 only.
-- The start URL is Revision 23 only.
-- Any old root/index launch URL, including `rev=22...`, is redirected to the canonical Revision 23 URL by the service worker once the new worker is active.
-- All older Cartographica caches are deleted during service-worker install/activation.
-- The HTML also canonicalises its own URL to Revision 23 before the application UI runs.
+## Full diplomacy
+- Improve Relations
+- Non-Aggression Pacts
+- Request or grant Military Access
+- Mutual Trade Agreements
+- One-Way Export Agreements
+- Request One-Way Imports
+- Immediate Aid
+- Guarantees of Independence
+- Defensive Pacts
+- Full Alliances
+- Demand Vassalisation
+- Offer Vassalage
+- Negotiate Peace
+- Declare War
+- Break individual treaties or all treaties
+- Spend extra Influence for +5 percentage points of negotiation acceptance per Influence
+- Trade and vassal agreements have recurring economic effects
+- Defensive treaties can widen wars
 
-## Revision 23 systems
-- Settlement strategic programmes using Supply + Influence for Productivity, Order, or Piety/Cohesion.
-- Empire-wide mobilisation/recruitment ceilings based on settlement size and military development.
-- Per-fleet strategic action limits.
-- More proactive AI wartime offensives with attack notifications.
-- Influence leverage in negotiations.
-- Difficult technology-ceiling breakthroughs.
-- Expanded Total War / HOI-style diplomacy including treaties, trade, guarantees, alliances, peace and vassalisation.
+## PWA deployment
+Replace the repository-root files with this package and deploy GitHub Pages from `main` / `(root)`.
+
+Canonical launch URL:
+`index.html?rev=23-full-diplomacy-settlement-restoration-v4`
+
+The v23-only PWA identity is retained and the service-worker cache is advanced to the v4 package so older v23.2 assets are removed.

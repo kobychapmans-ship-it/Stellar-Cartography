@@ -1,6 +1,6 @@
-const CACHE_NAME='cartographica-r23-only-grand-strategy-v3';
-const CANONICAL_PATH='./index.html?rev=23-grand-strategy-diplomacy-mobilisation-v3';
-const APP_SHELL=[CANONICAL_PATH,'./manifest.webmanifest?v=23-grand-strategy-diplomacy-mobilisation-v3','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
+const CACHE_NAME='cartographica-r23-full-diplomacy-settlements-v4';
+const CANONICAL_PATH='./index.html?rev=23-full-diplomacy-settlement-restoration-v4';
+const APP_SHELL=[CANONICAL_PATH,'./manifest.webmanifest?v=23-full-diplomacy-settlement-restoration-v4','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(

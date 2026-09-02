@@ -1,9 +1,9 @@
 {
-  "name": "Administratum Stellar Cartographica — Revision 23.2",
-  "short_name": "Cartographica R23",
-  "description": "Offline-capable Warhammer 30k/40k stellar campaign cartography and grand-strategy tool. Revision 23.2, Grand Strategy Diplomacy & Mobilisation.",
+  "name": "Administratum Stellar Cartographica — Revision 23.3",
+  "short_name": "Cartographica R23.3",
+  "description": "Offline-capable Warhammer 30k/40k stellar campaign cartography and grand-strategy tool. Revision 23.3, Full Diplomacy and Settlement Restoration.",
   "id": "./?app=cartographica-r23-grand-strategy-diplomacy-mobilisation",
-  "start_url": "./index.html?rev=23-grand-strategy-diplomacy-mobilisation-v3",
+  "start_url": "./index.html?rev=23-full-diplomacy-settlement-restoration-v4",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",

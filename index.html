@@ -9,12 +9,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=23-grand-strategy-diplomacy-mobilisation-v3" />
+<link rel="manifest" href="./manifest.webmanifest?v=23-full-diplomacy-settlement-restoration-v4" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
-/* Revision 23.2 hard migration: this build never retains a Revision 22 launch URL. */
+/* Revision 23.3 hard migration: this build never retains a Revision 22 launch URL. */
 (function(){
-  const canonicalRev='23-grand-strategy-diplomacy-mobilisation-v3';
+  const canonicalRev='23-full-diplomacy-settlement-restoration-v4';
   const u=new URL(location.href);
   if(u.searchParams.get('rev')!==canonicalRev){
     u.searchParams.set('rev',canonicalRev);
@@ -22,7 +22,7 @@
   }
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 23.2 Grand Strategy</title>
+<title>Administratum Stellar Cartographica — Revision 23.3 Full Diplomacy + Settlement Restoration</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -576,6 +576,13 @@ html.carto-orientation-lock body:after{content:'';display:none}
 
 <style id="rev20-colony-list-visual-css">
 .campaign-colony-row.visual{display:grid;grid-template-columns:88px minmax(0,1fr);gap:8px}.campaign-colony-row.visual .campaign-colony-list-icon{grid-row:1/4;display:grid;place-items:center;min-height:112px;border:1px solid color-mix(in srgb,var(--fac) 45%,#4b4b45);background:radial-gradient(circle,color-mix(in srgb,var(--fac) 16%,#1a1d20),#090b0d 72%);color:var(--fac)}.campaign-colony-row.visual .campaign-colony-list-icon .campaign-settlement-icon-svg{width:70px;height:70px}.campaign-colony-row.visual .colony-owner-ribbon,.campaign-colony-row.visual>h4,.campaign-colony-row.visual>.campaign-dev-mini,.campaign-colony-row.visual>.campaign-colony-output,.campaign-colony-row.visual>.campaign-settlement-operations,.campaign-colony-row.visual>.adv-line,.campaign-colony-row.visual>.campaign-accelerated-foundation,.campaign-colony-row.visual>.campaign-actionrow,.campaign-colony-row.visual>.hint{grid-column:2}.campaign-colony-row.visual .campaign-local-buildings{grid-column:2;margin-top:0}.campaign-colony-row.visual .campaign-settlement-operations{margin-top:4px}@media(max-width:720px){.campaign-colony-row.visual{grid-template-columns:62px minmax(0,1fr);gap:6px}.campaign-colony-row.visual .campaign-colony-list-icon{min-height:84px}.campaign-colony-row.visual .campaign-colony-list-icon .campaign-settlement-icon-svg{width:52px;height:52px}}
+</style>
+<style>
+/* Revision 23.3 settlement restoration + diplomacy console */
+.campaign-founder233{border-color:rgba(205,174,91,.48)!important;background:linear-gradient(180deg,rgba(104,81,27,.11),rgba(8,10,12,.5));margin-bottom:10px}.campaign-founder233 h4{color:#e4cd8b!important}.campaign-founder233 .campaign-setup-grid{margin-top:8px}.campaign-dip-summary233{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-bottom:9px}.campaign-dip-summary233>div{border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18);padding:7px}.campaign-dip-summary233 span{display:block;color:#8e9597;font-size:8px;text-transform:uppercase;letter-spacing:.06em}.campaign-dip-summary233 b{display:block;color:#e3d4ae;font-size:11px;margin-top:2px}.campaign-dip-target233{border:1px solid rgba(255,255,255,.09);border-left:5px solid var(--fac,#888);padding:10px;margin:9px 0;background:linear-gradient(90deg,color-mix(in srgb,var(--fac,#888) 8%,transparent),rgba(0,0,0,.14) 45%)}.campaign-dip-target233 .campaign-dip-head{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.campaign-dip-target233 .campaign-dip-head>div:first-child{min-width:180px;flex:1}.campaign-dip-target233 .campaign-dip-head h4{margin:0;color:#e4d5ae}.campaign-dip-target233 .campaign-dip-head small{display:block;color:#899093;font-size:8px;margin-top:2px}.campaign-dip-agreements{display:flex;gap:5px;flex-wrap:wrap;margin:7px 0}.campaign-dip-agreement{display:inline-flex;align-items:center;gap:5px;border:1px solid rgba(167,188,143,.3);background:rgba(91,118,72,.09);padding:3px 6px;border-radius:12px;font-size:8px;color:#c8d8b8}.campaign-dip-agreement button{border:0;background:transparent;color:#d5b4a8;padding:0;min-width:12px;font-size:11px}.campaign-dip-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}.campaign-dip-group{border:1px solid rgba(255,255,255,.07);padding:7px;background:rgba(0,0,0,.12)}.campaign-dip-group h5{margin:0 0 5px;color:#cbb675;font-size:9px;text-transform:uppercase;letter-spacing:.07em}.campaign-dip-action{display:grid;grid-template-columns:minmax(0,1fr) 84px;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)}.campaign-dip-action:last-child{border-bottom:0}.campaign-dip-action b{display:block;color:#d8cfb9;font-size:9px}.campaign-dip-action small{display:block;color:#8f9698;font-size:7.5px;line-height:1.35;margin:1px 0}.campaign-dip-action em{display:block;color:#b7837d;font-size:7px;font-style:normal}.campaign-dip-odds{display:block;color:#9d9a89;font-size:7px;margin-top:2px}.campaign-dip-odds strong{color:#d9bd74}.campaign-dip-warbar{display:flex;gap:7px;margin-top:8px;border-top:1px solid rgba(255,255,255,.08);padding-top:8px}.campaign-diplomacy-233 .campaign-dip-boost{border:1px dashed rgba(191,158,80,.25);padding:7px;background:rgba(90,70,20,.05)}
+@media(max-width:900px){.campaign-dip-summary233{grid-template-columns:repeat(3,minmax(0,1fr))}.campaign-dip-groups{grid-template-columns:1fr}.campaign-dip-action{grid-template-columns:minmax(0,1fr) 78px}}
+@media(max-width:560px){.campaign-dip-summary233{grid-template-columns:repeat(2,minmax(0,1fr))}.campaign-founder233 .campaign-setup-grid{grid-template-columns:1fr!important}.campaign-dip-target233{padding:7px}.campaign-dip-action{grid-template-columns:1fr}.campaign-dip-action button{width:100%}.campaign-dip-warbar{flex-direction:column}}
+
 </style>
 </head>
 <body>
@@ -3696,9 +3703,9 @@ const _campaignRulesReferenceHTML_rev20=campaignRulesReferenceHTML;campaignRules
 const _campaignColoniesHTML_rev20=campaignColoniesHTML;
 campaignColoniesHTML=function(root,c){const p=campaignPlayer(c),rows=[];for(const fac of c.factions||[])for(const s of fac.settlements||[])if(s.status!=='Destroyed')rows.push({fac,s});if(!rows.length)return _campaignColoniesHTML_rev20(root,c);rows.sort((a,b)=>(a.fac.id===p.id?-1:1)-(b.fac.id===p.id?-1:1)||String(a.s.locationName).localeCompare(String(b.s.locationName)));return rows.map(({fac,s})=>{const occ=s.occupiedBy?campaignFaction(c,s.occupiedBy):null,own=fac.id===p.id;return `<div class="campaign-colony-row visual ${own?'':'foreign'}" style="--fac:${fac.color}"><div class="campaign-colony-list-icon">${campaignSettlementIconSVG(s.colony.size,fac.color)}</div><div class="colony-owner-ribbon">${campaignOwnerBadge(fac)}<b>${esc(s.locationName)}</b><span class="colony-reason">${esc(campaignRecord(root,s.systemId)?.name||s.systemId)} • ${esc(s.locationKind)}</span>${occ?`<span class="rangdan-tag">Occupied by ${esc(occ.name)}</span>`:''}</div><h4>${esc(s.colony.displayType||s.colony.type)}</h4><div class="campaign-local-buildings">${campaignMiniBuildings(s.colony)}</div><div class="campaign-dev-mini">${campaignDevTierSummary(s.colony)}</div>${soiColonyStatusHTML(s.colony)}${campaignSettlementOperationsHTML(s,fac)}${campaignSettlementYieldHTML(s,fac)}<div class="adv-line"><span>Infrastructure</span><strong>${esc((s.colony.infrastructure||[]).join(', ')||'Founding infrastructure only')}</strong></div><div class="adv-line"><span>Current Requirement</span><strong>${esc(s.colony.requiredInfrastructure||'None')}</strong></div><div class="adv-line"><span>Support</span><strong>${esc((s.colony.supportUpgrades||[]).join(', ')||'None')}</strong></div>${s.colony.acceleratedFoundation?'<div class="campaign-accelerated-foundation"><b>Accelerated Foundation:</b> raised immediately to Size 5 by additional strategic expenditure.</div>':''}${own?`<div class="campaign-actionrow"><button class="ghost campaign-development-button" type="button" data-open-development="${esc(s.id)}" data-development-faction="${esc(fac.id)}">Open Settlement & Buildings</button><button class="ghost" data-campaign-colony="advance" data-settlement="${s.id}" type="button">Advance Extra 90 Days</button>${s.colony.requiredInfrastructure?`<button class="ghost" data-campaign-colony="infra" data-settlement="${s.id}" type="button">Build Infrastructure (5 Materiel)</button>`:''}<button class="ghost" data-campaign-colony="support" data-settlement="${s.id}" type="button">Install Suggested Support (6 Materiel)</button></div>`:'<div class="hint">Foreign settlement: autonomous faction controls construction and growth.</div>'}</div>`}).join('')};
 
-const rev20Badge=document.querySelector('.generation-head-actions .badge');if(rev20Badge)rev20Badge.textContent='rev 23.2 Grand Strategy Diplomacy & Mobilisation';const rev20Title=document.querySelector('title');if(rev20Title)rev20Title.textContent='Administratum Stellar Cartographica — Revision 23.2 Grand Strategy';
+const rev20Badge=document.querySelector('.generation-head-actions .badge');if(rev20Badge)rev20Badge.textContent='rev 23.3 Full Diplomacy + Settlement Restoration';const rev20Title=document.querySelector('title');if(rev20Title)rev20Title.textContent='Administratum Stellar Cartographica — Revision 23.3 Full Diplomacy + Settlement Restoration';
 
-const rev18Badge=document.querySelector('.generation-head-actions .badge');if(rev18Badge)rev18Badge.textContent='rev 23.2 Grand Strategy Diplomacy & Mobilisation';const rev18Title=document.querySelector('title');if(rev18Title)rev18Title.textContent='Administratum Stellar Cartographica — Revision 23.2 Grand Strategy';
+const rev18Badge=document.querySelector('.generation-head-actions .badge');if(rev18Badge)rev18Badge.textContent='rev 23.3 Full Diplomacy + Settlement Restoration';const rev18Title=document.querySelector('title');if(rev18Title)rev18Title.textContent='Administratum Stellar Cartographica — Revision 23.3 Full Diplomacy + Settlement Restoration';
 
 
 
@@ -3926,7 +3933,7 @@ const _campaignRulesReferenceHTML_rev22=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev22(root);h=h.replace('<h4>6. Settlements & Colonies</h4><p>','<h4>6. Settlements & Colonies</h4><p><b>Expansion & Population district:</b> a dedicated building chain can directly improve the chance of settlement Size growth and/or protect against Size decline. ');return h};
 
 /* Revision identity */
-const rev21Badge=document.querySelector('.generation-head-actions .badge');if(rev21Badge)rev21Badge.textContent='rev 23.2 Grand Strategy Diplomacy & Mobilisation';const rev21Title=document.querySelector('title');if(rev21Title)rev21Title.textContent='Administratum Stellar Cartographica — Revision 23.2 Grand Strategy';
+const rev21Badge=document.querySelector('.generation-head-actions .badge');if(rev21Badge)rev21Badge.textContent='rev 23.3 Full Diplomacy + Settlement Restoration';const rev21Title=document.querySelector('title');if(rev21Title)rev21Title.textContent='Administratum Stellar Cartographica — Revision 23.3 Full Diplomacy + Settlement Restoration';
 
 })();
 
@@ -4167,10 +4174,241 @@ campaignEndTurn=function(root){const c=campaignRev23Ensure(root),before=c?.turn;
 const _campaignRulesReferenceHTML_rev23=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev23(root);const add=`<div class="campaign-rule-card"><h4>13. Mobilisation & Fleet Actions</h4><p>Each fleet can perform up to ${CAMPAIGN_FLEET_ACTION_LIMIT} strategic fleet actions per turn. Recruitment is also capped by an empire-wide mobilisation pool generated by all active colonies: population/Size forms the base, recruitment districts are the strongest multiplier, and defence/garrison infrastructure adds reserve capacity.</p></div><div class="campaign-rule-card"><h4>14. Strategic Colony Investment</h4><p>A faction may spend Supply and Influence to fund one temporary programme per settlement per turn, granting +2 Productivity, Order or Piety/Cohesion through that 90-day economy and colony resolution.</p></div><div class="campaign-rule-card"><h4>15. Diplomacy & Technology Ceilings</h4><p>Diplomacy supports non-aggression, access, mutual trade, unilateral aid, guarantees, defensive pacts, alliances, vassalisation, peace and war. Extra Influence can be committed as negotiation leverage. Normal research stops at the current faction ceiling; raising that ceiling requires a Size 5 advanced Research settlement, large strategic expenditure and a difficult breakthrough roll.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
 
-const rb=document.querySelector('.generation-head-actions .badge');if(rb)rb.textContent='rev 23.2 Grand Strategy Diplomacy & Mobilisation';
-document.documentElement.dataset.cartographicaRevision='23.2';
+const rb=document.querySelector('.generation-head-actions .badge');if(rb)rb.textContent='rev 23.3 Full Diplomacy + Settlement Restoration';
+document.documentElement.dataset.cartographicaRevision='23.3';
 })();
 </script>
+
+<script>
+/* ===== Revision 23.3 — Settlement Restoration + Full Diplomacy Integration ===== */
+(function(){
+'use strict';
+const REV233='23.3';
+
+/* ---------- Settlement founding: campaign + generator ---------- */
+function campaignSettlementPresence233(root,fac,nodeId){
+  const c=root?.campaign;if(!c||!fac||!nodeId)return false;
+  const owner=campaignOwner(c,nodeId);
+  if(owner?.id===fac.id)return true;
+  if((fac.territory||[]).includes(nodeId)||(fac.presence||[]).includes(nodeId))return true;
+  if((fac.taskForces||[]).some(tf=>tf.systemId===nodeId))return true;
+  if((fac.fleets||[]).some(fl=>!fl.transit&&(fl.currentId===nodeId||fl.fromId===nodeId)))return true;
+  return false;
+}
+function campaignSettlementEligibleNodes233(root,fac){
+  return campaignSystemRecords(root).filter(r=>campaignSettlementPresence233(root,fac,r.id));
+}
+function campaignSettlementFoundCost233(root,fac,nodeId,locationId){
+  const c=root?.campaign,rec=campaignRecord(root,nodeId);if(!c||!rec)return null;
+  const locs=campaignLocationProfiles(rec.sys),loc=locs.find(x=>x.id===locationId)||locs[0];if(!loc)return null;
+  const ck=CAMPAIGN_FACTION_META[fac.key]?.colony||'xenos';
+  const col=withSeededRng(`${c.seed}|${c.turn}|SETTLE|${fac.id}|${nodeId}|${loc.id}|${(fac.settlements||[]).length}`,()=>soiColonyProfile(loc.p,soiSuggestedColonyType(loc.p),true,ck,'Campaign settlement foundation'));
+  const base=Math.max(4,Math.min(14,(Number(col.creationCost)||5)+2)),accelerated=c.settlementFoundationPlan==='size5',extra=accelerated?(typeof CAMPAIGN_SIZE5_FOUNDATION_EXTRA!=='undefined'?CAMPAIGN_SIZE5_FOUNDATION_EXTRA:{supply:10,materiel:14,command:1}):{supply:0,materiel:0,command:0};
+  return{loc,col,base,accelerated,total:{supply:base+(extra.supply||0),materiel:extra.materiel||0,command:1+(extra.command||0)}};
+}
+
+/* Replace the layered founding wrapper with one authoritative implementation. */
+campaignFoundSettlement=function(root,fac,nodeId,locationId,ai=false){
+  const c=root?.campaign,rec=campaignRecord(root,nodeId);if(!c||!fac||!rec)return false;
+  fac.settlements=fac.settlements||[];fac.presence=fac.presence||[];fac.territory=fac.territory||[];
+  if(!campaignSettlementPresence233(root,fac,nodeId)){
+    if(!ai)campaignLog(c,'Settlement founding requires territorial control, recorded presence, a local Task Force, or a fleet physically present at the node.','war');
+    return false;
+  }
+  const plan=campaignSettlementFoundCost233(root,fac,nodeId,locationId);if(!plan)return false;
+  const {loc,total}=plan;
+  if((fac.treasury?.supply||0)<total.supply||(fac.treasury?.materiel||0)<total.materiel||(fac.command||0)<total.command){
+    if(!ai)campaignLog(c,`Settlement at ${loc.name} requires ${total.supply} Supply${total.materiel?`, ${total.materiel} Materiel`:''} and ${total.command} Command.`,'war');
+    return false;
+  }
+  const ck=CAMPAIGN_FACTION_META[fac.key]?.colony||'xenos';
+  const colony=withSeededRng(`${c.seed}|${c.turn}|SETTLE|${fac.id}|${nodeId}|${loc.id}|${fac.settlements.length}`,()=>soiColonyProfile(loc.p,soiSuggestedColonyType(loc.p),true,ck,ai?'Autonomous colonial expansion':'Player-directed campaign settlement'));
+  const rr=campaignRoll(c,`${fac.name} settlement establishment at ${loc.name}`,6,campaignRollMod(fac,'logistics')+(fac.key==='mechanicum'&&colony.type==='Mining and Industry'?1:0));
+  fac.treasury.supply-=total.supply;fac.treasury.materiel-=total.materiel;fac.command=Math.max(0,fac.command-total.command);
+  if(rr.total<4){campaignLog(c,`${fac.name} failed to establish a permanent settlement at ${loc.name}; the foundation expedition consumed its committed resources.`,'war');return false}
+  if(plan.accelerated){const old=Math.max(1,Number(colony.size)||1);if(old<5){colony.complacency+=Math.max(0,4-(old-1));colony.productivity+=Math.max(0,2-Math.floor((old-1)/2));colony.order+=Math.max(0,2-Math.floor((old-1)/2));colony.piety+=Math.max(0,1-Math.floor((old-1)/3));colony.size=5}colony.acceleratedFoundation=true}
+  colony.pfValue=soiColonyPF(colony);if(typeof campaignEnsureDevelopmentWeb==='function')campaignEnsureDevelopmentWeb(colony);
+  const s={id:`cs-${hashText(`${c.turn}|${fac.id}|${nodeId}|${loc.id}|${fac.settlements.length}|${Date.now()}`).toString(36)}`,factionId:fac.id,systemId:nodeId,locationId:loc.id,locationName:loc.name,locationKind:loc.kind,colony,status:'Active',foundedTurn:c.turn,occupiedBy:null};
+  fac.settlements.push(s);fac.stats=fac.stats||{};fac.stats.coloniesFounded=(fac.stats.coloniesFounded||0)+1;
+  if(!fac.presence.includes(nodeId))fac.presence.push(nodeId);if(c.systems?.[nodeId]){c.systems[nodeId].presenceFactionIds=c.systems[nodeId].presenceFactionIds||[];if(!c.systems[nodeId].presenceFactionIds.includes(fac.id))c.systems[nodeId].presenceFactionIds.push(fac.id)}
+  campaignLog(c,`${fac.name} founded ${colony.displayType||colony.type} at ${loc.name} in ${rec.name}${plan.accelerated?' at accelerated Size 5':''}.`,'gain');
+  if(!ai&&typeof campaignQueueNotice==='function')campaignQueueNotice(root,'Settlement Established',`${colony.displayType||colony.type} founded at ${loc.name} in ${rec.name}.`);
+  return true;
+};
+
+/* Put a guaranteed, visible founding workspace directly in the Colonies tab. */
+const _campaignColoniesHTML_rev233=campaignColoniesHTML;
+campaignColoniesHTML=function(root,c){
+  const p=campaignPlayer(c),eligible=campaignSettlementEligibleNodes233(root,p),fallback=eligible[0]?.id||c.selectedSystemId||p.homeSystemId,current=eligible.some(r=>r.id===c.settlementFounderNodeId)?c.settlementFounderNodeId:fallback;
+  c.settlementFounderNodeId=current;
+  let founder='';
+  if(current){
+    const rec=campaignRecord(root,current),locs=campaignLocationProfiles(rec.sys),lid=locs.some(x=>x.id===c.settlementFounderLocationId)?c.settlementFounderLocationId:locs[0]?.id;c.settlementFounderLocationId=lid;
+    const pv=campaignSettlementFoundCost233(root,p,current,lid),cost=pv?.total,plan=c.settlementFoundationPlan||'standard';
+    founder=`<section class="campaign-card campaign-founder233"><h4>＋ Found New Campaign Settlement</h4><p>This control is independent of the map action mode. A settlement may be founded anywhere you control or where you currently have a fleet, Task Force, or established presence.</p><div class="campaign-setup-grid"><div class="field"><label>Strategic node</label><select id="campaignColonyFoundNode">${eligible.map(r=>`<option value="${esc(r.id)}" ${r.id===current?'selected':''}>${esc(r.name)} — ${esc(campaignOwner(c,r.id)?.name||'Presence')}</option>`).join('')}</select></div><div class="field"><label>Settlement site</label><select id="campaignColonyFoundLocation">${locs.map(x=>`<option value="${esc(x.id)}" ${x.id===lid?'selected':''}>${esc(x.name)} — ${esc(x.kind)}</option>`).join('')}</select></div><div class="field"><label>Foundation package</label><select id="campaignColonyFoundPackage"><option value="standard" ${plan==='standard'?'selected':''}>Standard foundation</option><option value="size5" ${plan==='size5'?'selected':''}>Accelerated Size 5</option></select></div></div><div class="campaign-cost">Current foundation cost: <b>${cost?`${cost.supply} Supply${cost.materiel?` + ${cost.materiel} Materiel`:''} + ${cost.command} Command`:'Select a valid site'}</b>. Establishment still uses the campaign founding roll.</div><div class="campaign-actionrow"><button id="campaignColonyFoundNow" class="generate" type="button">Found Settlement</button><button id="campaignColonyPlotOnMap" class="ghost" type="button">Use Map Founding Mode</button></div></section>`;
+  }else founder=`<section class="campaign-card campaign-founder233"><h4>＋ Found New Campaign Settlement</h4><p>No eligible founding node is currently available. Move a fleet or Task Force to a node, establish presence, or claim territory first.</p></section>`;
+  return founder+_campaignColoniesHTML_rev233(root,c);
+};
+
+/* Rebuild generator/manual colony binding so Add Colony / Settlement works on worlds, moons and void sites. */
+bindMultiColonyEvents=function(sys){
+  document.querySelectorAll('[data-colony-action]').forEach(btn=>{
+    if(btn.dataset.colonyBound233)return;btn.dataset.colonyBound233='1';
+    btn.addEventListener('click',ev=>{
+      ev.preventDefault();const t=colonyTarget(sys,btn.dataset.colonyTarget,btn.dataset.colonyOwner);if(!t)return;
+      const p=t.p,cfg=sys.config||getConfig(),action=btn.dataset.colonyAction,id=btn.dataset.colonyId;p.colonies=p.colonies||[];p.colonialProspects=p.colonialProspects||[];
+      withSeededRng(`${sys.config?.seed||sys.name}|COLONY-ACTION-233|${btn.dataset.colonyOwner}|${id||action}|${Date.now()}`,()=>{
+        if(action==='add'||action==='addProspect'){
+          const active=action==='add',key=colonyAutoFaction(p,cfg,()=>RNG(),p.colonies.length>0),col=soiColonyProfile(p,soiSuggestedColonyType(p),active,key,colonyReason(()=>RNG(),active));
+          (active?p.colonies:p.colonialProspects).push(col);
+        }else{
+          const col=colonyById(p,id);if(!col)return;
+          if(action==='activate'){p.colonialProspects=p.colonialProspects.filter(x=>x!==col);col.status='Active';col.established=true;col.pfValue=soiColonyPF(col);p.colonies.push(col)}
+          else if(action==='advance')soiAdvanceColony(col,p);
+          else if(action==='build')soiBuildRequiredInfrastructure(col);
+          else if(action==='support'){if(soiInstallSupportUpgrade(col,col.suggestedSupport)){const opts=SOI_SUPPORT.filter(x=>!col.supportUpgrades.includes(x));col.suggestedSupport=pick(opts.length?opts:SOI_SUPPORT)}}
+          else if(action==='reroll'){const active=col.status!=='Prospect',replacement=soiColonyProfile(p,col.type,active,col.factionKey,col.settlementReason),arr=active?p.colonies:p.colonialProspects,i=arr.indexOf(col);if(i>=0)arr[i]=replacement}
+        }
+        colonySyncAliases(p);
+      });
+      try{t.refresh()}catch(_){};try{whSystemMilitaryLayer(sys,cfg,true)}catch(_){};if($('viewMilitary'))$('viewMilitary').innerHTML=whSystemMilitaryHTML(sys);
+    });
+  });
+};
+
+/* ---------- Diplomacy: explicit Total War / HOI-style campaign console ---------- */
+const DIPLO_ACTIONS_233={
+  improve:{label:'Improve Relations',group:'Political',desc:'Send envoys and political concessions to improve relations.',difficulty:0,cost:1,minRel:-100},
+  nap:{label:'Non-Aggression Pact',group:'Treaties',desc:'Mutual pledge not to initiate hostilities until the pact is broken.',difficulty:8,cost:2,minRel:-20,type:'nap'},
+  access_request:{label:'Request Military Access',group:'Access',desc:'Ask the target to let your fleets and armies operate through its territory.',difficulty:14,cost:3,minRel:0,type:'access_to_player'},
+  access_grant:{label:'Grant Military Access',group:'Access',desc:'Unilaterally allow the target to move through your territory.',difficulty:-12,cost:1,minRel:-20,type:'access_to_target'},
+  trade_mutual:{label:'Mutual Trade Agreement',group:'Trade',desc:'Two-way commerce; both factions receive recurring Supply and Materiel.',difficulty:10,cost:2,minRel:-5,type:'trade_mutual'},
+  trade_export:{label:'One-Way Export Agreement',group:'Trade',desc:'You grant the target a recurring Supply concession, gaining diplomatic goodwill and Influence.',difficulty:-5,cost:1,minRel:-30,type:'trade_export'},
+  trade_import:{label:'Request One-Way Imports',group:'Trade',desc:'Ask the target to supply you each turn without reciprocal material benefit.',difficulty:26,cost:4,minRel:15,type:'trade_import'},
+  aid:{label:'Send Immediate Aid',group:'Trade',desc:'Transfer 4 Supply immediately for a substantial relations boost.',difficulty:-10,cost:1,minRel:-40},
+  guarantee:{label:'Guarantee Independence',group:'Security',desc:'Promise to enter a war against any faction that attacks the target.',difficulty:-2,cost:2,minRel:0,type:'guarantee'},
+  defence:{label:'Defensive Pact',group:'Security',desc:'Mutual defensive commitment. An attack on either member can call the other into war.',difficulty:28,cost:4,minRel:30,type:'defence'},
+  alliance:{label:'Full Alliance',group:'Security',desc:'Highest mutual diplomatic relationship short of vassalisation.',difficulty:40,cost:6,minRel:55,type:'alliance'},
+  demand_vassal:{label:'Demand Vassalisation',group:'Subjects',desc:'Demand that the target become your subject and pay recurring tribute.',difficulty:58,cost:8,minRel:35},
+  offer_vassal:{label:'Offer Vassalage',group:'Subjects',desc:'Offer to become the target’s vassal in exchange for protection.',difficulty:18,cost:4,minRel:30},
+  peace:{label:'Negotiate Peace',group:'War',desc:'End the current war and return relations to a cold peace.',difficulty:12,cost:2,warOnly:true}
+};
+function dipAgreementType233(a){return a?.type||''}
+function dipAgreementExists233(c,a,b,type){return (c.diplomacyAgreements||[]).some(x=>x.active!==false&&x.pair===dipPair(a,b)&&dipAgreementType233(x)===type)}
+function campaignDipPowerMod233(c,p,t,action){const ratio=campaignDiplomaticPower(c,p)/Math.max(1,campaignDiplomaticPower(c,t));if(action==='demand_vassal')return Math.max(-35,Math.min(45,Math.round((ratio-1)*28)));if(action==='offer_vassal')return Math.max(-20,Math.min(25,Math.round((1/Math.max(.2,ratio)-1)*18)));return 0}
+function campaignDipAcceptance233(root,p,t,action,boost=0){
+  const c=root.campaign,cfg=DIPLO_ACTIONS_233[action];if(!cfg)return{ok:false,score:0,reasons:['Invalid action']};const rel=campaignRelation(c,p,t),war=campaignRelationState(rel)==='War',reasons=[];
+  if(cfg.warOnly&&!war)reasons.push('only available during war');if(!cfg.warOnly&&war&&action!=='improve')reasons.push('war blocks this treaty');if(cfg.minRel!=null&&rel<cfg.minRel&&!['aid','access_grant'].includes(action))reasons.push(`requires relation ${cfg.minRel}+`);
+  if(cfg.type&&dipAgreementExists233(c,p,t,cfg.type))reasons.push('agreement already active');if(action==='demand_vassal'&&t.overlordId)reasons.push('target already has an overlord');if(action==='offer_vassal'&&p.overlordId)reasons.push('you already have an overlord');
+  let personality=campaignDipPersonalityMod(t,action==='demand_vassal'?'vassal':action==='trade_mutual'?'trade':action==='nap'?'nap':action==='defence'?'defence':action==='alliance'?'alliance':action),power=campaignDipPowerMod233(c,p,t,action),score=50+rel*.45+(Number(boost)||0)*5+personality+power-cfg.difficulty;
+  if(action==='access_grant'||action==='guarantee')score=100;score=Math.round(Math.max(5,Math.min(95,score)));return{ok:!reasons.length,score,reasons,rel,power,personality,cfg};
+}
+function campaignAddDirectionalAgreement233(c,p,t,type,fromId,toId){
+  c.diplomacyAgreements=c.diplomacyAgreements||[];const old=(c.diplomacyAgreements||[]).find(x=>x.active!==false&&x.pair===dipPair(p,t)&&x.type===type&&x.fromId===fromId&&x.toId===toId);if(old)return old;
+  const a={id:`dip233-${c.turn}-${Date.now().toString(36)}-${type}`,pair:dipPair(p,t),aId:p.id,bId:t.id,type,fromId,toId,startTurn:c.turn,active:true};c.diplomacyAgreements.push(a);return a;
+}
+function campaignDiplomacyProposal233(root,targetId,action,boost=0){
+  const c=campaignRev23Ensure(root),p=campaignPlayer(c),t=campaignFaction(c,targetId),cfg=DIPLO_ACTIONS_233[action];if(!p||!t||!cfg||p.id===t.id)return false;boost=Math.max(0,Math.min(10,Number(boost)||0));const check=campaignDipAcceptance233(root,p,t,action,boost),total=cfg.cost+boost;
+  if(!check.ok){campaignLog(c,`${cfg.label} unavailable with ${t.name}: ${check.reasons.join('; ')}.`,'war');campaignPersist(root);campaignRenderDashboard(root);return false}
+  if((p.treasury.influence||0)<total||p.command<1){campaignLog(c,`${cfg.label} requires ${total} Influence and 1 Command.`,'war');campaignPersist(root);campaignRenderDashboard(root);return false}
+  if(action==='aid'&&(p.treasury.supply||0)<4){campaignLog(c,'Immediate Aid additionally requires 4 Supply.','war');return false}
+  p.treasury.influence-=total;p.command--;const rel=campaignRelation(c,p,t);
+  if(action==='improve'){
+    const rr=campaignRoll(c,`${p.name} diplomatic mission to ${t.name}`,6,Math.floor(boost/2)),delta=Math.max(5,7+rr.total+Math.floor(boost/2));campaignSetRelation(c,p,t,Math.min(100,rel+delta));campaignLog(c,`Diplomatic mission improved relations with ${t.name} by ${delta}${boost?` using ${boost} Influence leverage`:''}.`,'gain');campaignPersist(root);campaignRenderDashboard(root);return true;
+  }
+  const automatic=['access_grant','guarantee'].includes(action),roll=automatic?1:1+Math.floor(campaignRandom(c,`dip233 ${action} ${t.id} T${c.turn}`)*100),accepted=automatic||roll<=check.score;
+  campaignLog(c,`${cfg.label} with ${t.name}: ${accepted?'accepted':'refused'} (${roll} vs ${check.score}% acceptance)${boost?` after ${boost} extra Influence`:''}.`,accepted?'gain':'war');
+  if(!accepted){campaignSetRelation(c,p,t,Math.max(-100,rel-2));campaignPersist(root);campaignRenderDashboard(root);return false}
+  if(action==='peace'){campaignBreakAgreements(c,p,t);campaignSetRelation(c,p,t,-10)}
+  else if(action==='nap'){campaignAddDirectionalAgreement233(c,p,t,'nap',p.id,t.id);campaignSetRelation(c,p,t,Math.max(rel,10))}
+  else if(action==='access_request'){campaignAddDirectionalAgreement233(c,p,t,'access_to_player',t.id,p.id);campaignSetRelation(c,p,t,rel+7)}
+  else if(action==='access_grant'){campaignAddDirectionalAgreement233(c,p,t,'access_to_target',p.id,t.id);campaignSetRelation(c,p,t,rel+6)}
+  else if(action==='trade_mutual'){campaignAddDirectionalAgreement233(c,p,t,'trade_mutual',p.id,t.id);campaignSetRelation(c,p,t,rel+12)}
+  else if(action==='trade_export'){campaignAddDirectionalAgreement233(c,p,t,'trade_export',p.id,t.id);campaignSetRelation(c,p,t,rel+15)}
+  else if(action==='trade_import'){campaignAddDirectionalAgreement233(c,p,t,'trade_import',t.id,p.id);campaignSetRelation(c,p,t,rel+8)}
+  else if(action==='aid'){p.treasury.supply-=4;t.treasury.supply=(t.treasury.supply||0)+4;campaignSetRelation(c,p,t,rel+18)}
+  else if(action==='guarantee'){campaignAddDirectionalAgreement233(c,p,t,'guarantee',p.id,t.id);campaignSetRelation(c,p,t,rel+10)}
+  else if(action==='defence'){campaignAddDirectionalAgreement233(c,p,t,'defence',p.id,t.id);campaignSetRelation(c,p,t,Math.max(rel,45))}
+  else if(action==='alliance'){campaignAddDirectionalAgreement233(c,p,t,'alliance',p.id,t.id);campaignSetRelation(c,p,t,Math.max(rel,70))}
+  else if(action==='demand_vassal'){campaignBreakAgreements(c,p,t);t.overlordId=p.id;campaignAddDirectionalAgreement233(c,p,t,'vassal',p.id,t.id);campaignSetRelation(c,p,t,90)}
+  else if(action==='offer_vassal'){campaignBreakAgreements(c,p,t);p.overlordId=t.id;campaignAddDirectionalAgreement233(c,p,t,'vassal',t.id,p.id);campaignSetRelation(c,p,t,85)}
+  campaignPersist(root);campaignRenderDashboard(root);return true;
+}
+function dipLabel233(a,viewer){
+  const other=a.aId===viewer.id?a.bId:a.aId,from=a.fromId,to=a.toId;
+  const map={nap:'Non-Aggression Pact',access_to_player:to===viewer.id?'Military Access Granted to You':'Military Access',access_to_target:to===viewer.id?'Military Access Granted to You':'You Granted Military Access',trade_mutual:'Mutual Trade Agreement',trade_export:from===viewer.id?'Your One-Way Export Agreement':'One-Way Imports to You',trade_import:to===viewer.id?'One-Way Imports to You':'One-Way Export Agreement',guarantee:from===viewer.id?'You Guarantee Independence':'Your Independence is Guaranteed',defence:'Defensive Pact',alliance:'Alliance',vassal:from===viewer.id?'Vassal Relationship — You are Overlord':'Vassal Relationship — You are Subject',trade:'Legacy Mutual Trade',aid:'Legacy One-Way Trade / Aid',access:'Legacy Military Access'};
+  return map[a.type]||a.type;
+}
+function campaignDiplomacySummary233(c,p){const agreements=(c.diplomacyAgreements||[]).filter(a=>a.active!==false&&a.pair?.includes(p.id)),wars=(c.factions||[]).filter(f=>f.id!==p.id&&campaignRelationState(campaignRelation(c,p,f))==='War'),vassals=(c.factions||[]).filter(f=>f.overlordId===p.id);return `<div class="campaign-dip-summary233"><div><span>Influence</span><b>${p.treasury.influence}</b></div><div><span>Command</span><b>${p.command}/${p.maxCommand}</b></div><div><span>Active Treaties</span><b>${agreements.length}</b></div><div><span>Wars</span><b>${wars.length}</b></div><div><span>Vassals</span><b>${vassals.length}</b></div><div><span>Your Overlord</span><b>${p.overlordId?esc(campaignFaction(c,p.overlordId)?.name||'Unknown'):'None'}</b></div></div>`}
+campaignDiplomacyHTML=function(root,c){
+  campaignRev23Ensure(root);const p=campaignPlayer(c),groups=['Political','Treaties','Access','Trade','Security','Subjects','War'];
+  const cards=(c.factions||[]).filter(f=>f.id!==p.id).map(f=>{
+    const rel=campaignRelation(c,p,f),state=campaignRelationState(rel),war=state==='War',ags=campaignAgreements(c,p,f),boost=0,pow=campaignDiplomaticPower(c,p)/Math.max(1,campaignDiplomaticPower(c,f));
+    const actionHTML=groups.map(group=>{const acts=Object.entries(DIPLO_ACTIONS_233).filter(([k,a])=>a.group===group&&(war?(a.warOnly||k==='improve'):!a.warOnly));if(!acts.length)return'';return `<div class="campaign-dip-group"><h5>${group}</h5>${acts.map(([k,a])=>{const chk=campaignDipAcceptance233(root,p,f,k,boost),disabled=!chk.ok,reason=chk.reasons.join('; ');return `<div class="campaign-dip-action"><div><b>${esc(a.label)}</b><small>${esc(a.desc)}</small><span class="campaign-dip-odds">Acceptance: <strong data-dip-odds="${k}" data-faction="${f.id}">${chk.score}%</strong> • ${a.cost} Influence + 1 Command${a.minRel!=null&&a.minRel>-100?` • Relation ${a.minRel}+`:''}</span>${reason?`<em>${esc(reason)}</em>`:''}</div><button class="ghost" type="button" data-dip233-proposal="${k}" data-faction="${f.id}" ${disabled?'disabled':''}>${k==='peace'?'Propose':'Negotiate'}</button></div>`}).join('')}</div>`}).join('');
+    const treatyHTML=ags.length?ags.map(a=>`<span class="campaign-dip-agreement">${esc(dipLabel233(a,p))}<button type="button" title="Cancel this agreement" data-dip233-cancel="${esc(a.id)}">×</button></span>`).join(''):'<span class="hint">No active agreements.</span>';
+    return `<section class="campaign-dip-target campaign-dip-target233" style="--fac:${f.color}"><div class="campaign-dip-head"><div><h4>${esc(f.name)}</h4><small>${esc(f.personality||'Autonomous power')} • ${f.territory?.length||0} territories • ${(f.settlements||[]).filter(s=>s.status!=='Destroyed').length} settlements</small></div><span class="badge">${rel} • ${esc(state)}</span><span class="badge">Power ${campaignDiplomaticPower(c,f).toLocaleString()}</span><span class="badge">Relative ${(pow).toFixed(2)}×</span>${f.overlordId===p.id?'<span class="badge">Your Vassal</span>':''}${p.overlordId===f.id?'<span class="badge">Your Overlord</span>':''}</div><div class="campaign-dip-agreements">${treatyHTML}</div><div class="campaign-dip-boost"><div class="hint"><b>Influence leverage:</b> extra Influence increases negotiated acceptance by +5 percentage points each and is consumed whether accepted or refused.</div><div class="field"><label>Extra Influence</label><select data-dip233-boost="${f.id}"><option value="0">0</option><option value="1">1 (+5%)</option><option value="2">2 (+10%)</option><option value="3">3 (+15%)</option><option value="5">5 (+25%)</option><option value="10">10 (+50%)</option></select></div></div><div class="campaign-dip-groups">${actionHTML}</div><div class="campaign-dip-warbar"><button class="ghost" type="button" data-dip233-war="${f.id}" ${war?'disabled':''}>Declare War</button><button class="ghost" type="button" data-dip233-breakall="${f.id}" ${ags.length?'':'disabled'}>Break All Treaties</button></div></section>`;
+  }).join('');
+  return `<div class="campaign-diplomacy-console campaign-diplomacy-233">${campaignDiplomacySummary233(c,p)}<div class="campaign-card"><h4>Grand Strategy Diplomacy</h4><p>Diplomacy is now treaty-based rather than a single relation roll. Agreements can be mutual or directional, Influence can be committed as negotiation leverage, vassals pay tribute, trade creates recurring resources, and guarantees/defensive pacts/alliances can widen wars.</p></div>${cards}</div>`;
+};
+
+/* Recurring economic effects for the new directional treaties. */
+const _campaignFactionIncome_rev233=campaignFactionIncome;
+campaignFactionIncome=function(c,root,fac){
+  const t=_campaignFactionIncome_rev233(c,root,fac);for(const a of c.diplomacyAgreements||[]){if(a.active===false||!a.pair?.includes(fac.id))continue;
+    if(a.type==='trade_mutual'){fac.treasury.supply+=1;fac.treasury.materiel+=1;t.supply=(t.supply||0)+1;t.materiel=(t.materiel||0)+1}
+    else if(a.type==='trade_export'&&a.toId===fac.id){fac.treasury.supply+=1;t.supply=(t.supply||0)+1}
+    else if(a.type==='trade_export'&&a.fromId===fac.id){fac.treasury.influence+=1;t.influence=(t.influence||0)+1}
+    else if(a.type==='trade_import'&&a.toId===fac.id){fac.treasury.supply+=1;t.supply=(t.supply||0)+1}
+    else if(a.type==='trade_import'&&a.fromId===fac.id){fac.treasury.influence+=1;t.influence=(t.influence||0)+1}
+  }return t;
+};
+
+/* New treaties are respected by AI diplomacy and war declarations. */
+const _campaignDeclareWarRev233=campaignDeclareWarRev23;
+campaignDeclareWarRev23=function(root,targetId){const c=campaignRev23Ensure(root),p=campaignPlayer(c),t=campaignFaction(c,targetId);if(!t)return false;const nap=dipAgreementExists233(c,p,t,'nap');if(nap){campaignSetRelation(c,p,t,campaignRelation(c,p,t)-20);campaignLog(c,`${p.name} broke a Non-Aggression Pact with ${t.name} before declaring war; relations suffered an additional penalty.`,'war')}return _campaignDeclareWarRev233(root,targetId)};
+
+const _campaignAIDiplomacy_rev233=campaignAIDiplomacy;
+campaignAIDiplomacy=function(root,fac){
+  const c=campaignRev23Ensure(root),p=campaignPlayer(c);if(!fac?.ai)return false;
+  const others=(c.factions||[]).filter(x=>x.id!==fac.id&&x.id!==p?.id);if(!others.length)return _campaignAIDiplomacy_rev233(root,fac);
+  /* Keep AI-to-AI diplomacy autonomous; player treaties remain player-negotiated. */
+  if(campaignRandom(c,`AI dip233 ${fac.id} T${c.turn}`)>.38)return false;const t=others[Math.floor(campaignRandom(c,`AI dip target233 ${fac.id}`)*others.length)],rel=campaignRelation(c,fac,t),state=campaignRelationState(rel);
+  if(state==='War'){if(campaignRandom(c,`AI peace233 ${fac.id}`)<.28){campaignSetRelation(c,fac,t,-10);campaignBreakAgreements(c,fac,t);campaignLog(c,`${fac.name} and ${t.name} signed an autonomous peace settlement.`,'ai');return true}return false}
+  if(rel>=60&&!campaignAgreement(c,fac,t,'alliance')&&campaignRandom(c,`AI ally233 ${fac.id}`)<.20){campaignAddAgreement(c,fac,t,'alliance');campaignSetRelation(c,fac,t,Math.max(70,rel));campaignLog(c,`${fac.name} and ${t.name} formed a full alliance.`,'ai');return true}
+  if(rel>=30&&!campaignAgreement(c,fac,t,'defence')&&campaignRandom(c,`AI def233 ${fac.id}`)<.25){campaignAddAgreement(c,fac,t,'defence');campaignLog(c,`${fac.name} and ${t.name} signed a defensive pact.`,'ai');return true}
+  if(rel>=0&&!campaignAgreement(c,fac,t,'trade')&&!dipAgreementExists233(c,fac,t,'trade_mutual')&&campaignRandom(c,`AI trade233 ${fac.id}`)<.35){campaignAddAgreement(c,fac,t,'trade');campaignSetRelation(c,fac,t,rel+5);campaignLog(c,`${fac.name} and ${t.name} concluded a mutual trade agreement.`,'ai');return true}
+  if(rel>=-10&&!campaignAgreement(c,fac,t,'nap')&&campaignRandom(c,`AI nap233 ${fac.id}`)<.28){campaignAddAgreement(c,fac,t,'nap');campaignSetRelation(c,fac,t,Math.max(10,rel));campaignLog(c,`${fac.name} and ${t.name} signed a non-aggression pact.`,'ai');return true}
+  return false;
+};
+
+/* ---------- Dashboard bindings ---------- */
+const _campaignBindDashboard_rev233=campaignBindDashboard;
+campaignBindDashboard=function(root){
+  _campaignBindDashboard_rev233(root);const c=campaignRev23Ensure(root),p=campaignPlayer(c);
+  $('campaignColonyFoundNode')?.addEventListener('change',e=>{c.settlementFounderNodeId=e.target.value;c.settlementFounderLocationId=null;campaignPersist(root);campaignRenderDashboard(root);campaignShowView('colonies')});
+  $('campaignColonyFoundLocation')?.addEventListener('change',e=>{c.settlementFounderLocationId=e.target.value;campaignPersist(root);campaignRenderDashboard(root);campaignShowView('colonies')});
+  $('campaignColonyFoundPackage')?.addEventListener('change',e=>{c.settlementFoundationPlan=e.target.value;campaignPersist(root);campaignRenderDashboard(root);campaignShowView('colonies')});
+  $('campaignColonyFoundNow')?.addEventListener('click',()=>{const sid=c.settlementFounderNodeId||c.selectedSystemId,lid=c.settlementFounderLocationId;campaignFoundSettlement(root,p,sid,lid,false);campaignPersist(root);campaignSyncMap(root);campaignRenderDashboard(root);campaignShowView('colonies')});
+  $('campaignColonyPlotOnMap')?.addEventListener('click',()=>{c.selectedSystemId=c.settlementFounderNodeId||c.selectedSystemId;if(typeof campaignStartMapAction==='function')campaignStartMapAction(root,'settle');campaignRenderDashboard(root);campaignShowView('overview')});
+  document.querySelectorAll('[data-dip233-boost]').forEach(sel=>sel.addEventListener('change',()=>{const tid=sel.dataset.dip233Boost,boost=Number(sel.value)||0,t=campaignFaction(c,tid);document.querySelectorAll(`[data-dip-odds][data-faction="${tid}"]`).forEach(el=>{const q=campaignDipAcceptance233(root,p,t,el.dataset.dipOdds,boost);el.textContent=q.score+'%'})}));
+  document.querySelectorAll('[data-dip233-proposal]').forEach(b=>b.addEventListener('click',()=>{const boost=Number(document.querySelector(`[data-dip233-boost="${b.dataset.faction}"]`)?.value||0);campaignDiplomacyProposal233(root,b.dataset.faction,b.dataset.dip233Proposal,boost);campaignShowView('diplomacy')}));
+  document.querySelectorAll('[data-dip233-cancel]').forEach(b=>b.addEventListener('click',()=>{const a=(c.diplomacyAgreements||[]).find(x=>x.id===b.dataset.dip233Cancel);if(!a)return;a.active=false;const other=campaignFaction(c,a.aId===p.id?a.bId:a.aId);if(a.type==='vassal'){if(p.overlordId===other?.id)p.overlordId=null;if(other?.overlordId===p.id)other.overlordId=null}if(other)campaignSetRelation(c,p,other,campaignRelation(c,p,other)-8);campaignLog(c,`${p.name} terminated ${dipLabel233(a,p)}${other?` with ${other.name}`:''}.`,'war');campaignPersist(root);campaignRenderDashboard(root);campaignShowView('diplomacy')}));
+  document.querySelectorAll('[data-dip233-breakall]').forEach(b=>b.addEventListener('click',()=>{const t=campaignFaction(c,b.dataset.dip233Breakall);if(!t)return;campaignBreakAgreements(c,p,t);if(p.overlordId===t.id)p.overlordId=null;if(t.overlordId===p.id)t.overlordId=null;campaignSetRelation(c,p,t,campaignRelation(c,p,t)-15);campaignLog(c,`${p.name} broke all treaties with ${t.name}.`,'war');campaignPersist(root);campaignRenderDashboard(root);campaignShowView('diplomacy')}));
+  document.querySelectorAll('[data-dip233-war]').forEach(b=>b.addEventListener('click',()=>{if(confirm('Declare war? Any active bilateral treaties will be broken.'))campaignDeclareWarRev23(root,b.dataset.dip233War);campaignShowView('diplomacy')}));
+};
+
+/* Update rules text and visible revision. */
+const _campaignRulesReferenceHTML_rev233=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev233(root);const add=`<div class="campaign-rule-card"><h4>16. Full Diplomatic Treaties</h4><p>The Diplomacy tab now exposes directional military access, mutual and one-way trade, non-aggression, guarantees, defensive pacts, alliances, immediate aid, peace, demanding vassalisation and offering vassalage. Negotiated actions show an acceptance chance and can be boosted with extra Influence.</p></div><div class="campaign-rule-card"><h4>17. Settlement Founding Controls</h4><p>The Colonies tab has a dedicated Found New Campaign Settlement workspace. Founding works from controlled territory, established presence, a local Task Force or a fleet physically present at the node. World/moon/void inspectors also retain manual Add Colony / Settlement controls.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
+
+window.__cartoCampaignDiplomacyProposal233=campaignDiplomacyProposal233;
+window.__cartoCampaignDipAcceptance233=campaignDipAcceptance233;
+window.__cartoCampaignSettlementPresence233=campaignSettlementPresence233;
+const rb233=document.querySelector('.generation-head-actions .badge');if(rb233)rb233.textContent='rev 23.3 Grand Strategy Diplomacy + Settlement Restoration';
+document.documentElement.dataset.cartographicaRevision=REV233;
+})();
+</script>
+
 
 <script>
 /* iPhone Home-Screen orientation guard: prefer primary portrait and avoid inverted secondary portrait. */
@@ -4184,18 +4422,18 @@ document.documentElement.dataset.cartographicaRevision='23.2';
 })();
 </script>
 <script>
-/* Revision 23.2 hard migration: purge prior Cartographica caches and force the v23-only service worker. */
+/* Revision 23.3 hard migration: purge prior Cartographica caches and force the v23-only service worker. */
 (function(){
-  const REV='23.2';
+  const REV='23.3';
   document.documentElement.dataset.cartographicaRevision=REV;
   window.addEventListener('load', async ()=>{
     try{
       if('caches' in window){
         const keys=await caches.keys();
-        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r23-grand-strategy-diplomacy-mobilisation-v3/i.test(k)).map(k=>caches.delete(k)));
+        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r23-full-diplomacy-settlement-restoration-v4/i.test(k)).map(k=>caches.delete(k)));
       }
       if('serviceWorker' in navigator){
-        const reg=await navigator.serviceWorker.register('./sw.js?v=23-grand-strategy-diplomacy-mobilisation-v3',{updateViaCache:'none'});
+        const reg=await navigator.serviceWorker.register('./sw.js?v=23-full-diplomacy-settlement-restoration-v4',{updateViaCache:'none'});
         try{ await reg.update(); }catch(_){}
       }
     }catch(_){}
