@@ -1,21 +1,31 @@
-# Administratum Stellar Cartographica — Revision 23.4 Complete
+# Administratum Stellar Cartographica — Revision 23.4 Complete / Offline Locked
 
-This is the consolidated feature-complete Revision 23.4 build. It is based on the full v23.4 campaign expansion, with PWA anti-reversion safeguards applied outside the campaign feature/compatibility code.
+This package contains the full accumulated campaign feature set through Revision 23.4. Legacy revision-labelled compatibility functions remain internally where newer systems depend on them, but they can no longer relabel or launch the application as an older revision.
 
-## Included systems
-- Restored campaign settlement founding and generated-object colony/settlement controls.
-- Full direct diplomacy actions, Influence leverage, AI diplomacy, treaties, war escalation and vassalisation.
-- 0–200 Diplomatic Standing and Allied Detachments.
-- Expedition & Survey district chain with local and empire-wide expedition launch caps.
-- Decrees tab and Supply/Influence/Command-funded decrees.
-- Detailed battle auto-resolve breakdown.
-- Settlement strategic programmes for Productivity, Order and Piety/Cohesion.
-- Fleet action caps and empire recruitment/mobilisation limits.
-- More proactive AI attacks with battle/pop-up integration.
-- Difficult technology-ceiling breakthroughs.
-- End Turn overlay above the Campaign Manager.
+## Installation on GitHub Pages
 
-## Canonical PWA launch
-`index.html?rev=23.4-complete-consolidated-v7`
+Upload the **contents** of this folder to the repository root. `index.html`, `manifest.webmanifest`, `sw.js`, and `sw-v23-4.js` must all sit in the root together.
 
-The manifest uses the same v23.4 app ID as the previous v23.4-only package so an installed v23.4 app can update in place. The service worker deletes older Cartographica caches and redirects older/root navigation to the canonical v23.4 Complete URL.
+Open once while online:
+
+`index.html?rev=23.4-final-offline-v8`
+
+The application registers the versioned `sw-v23-4.js` worker at the root scope, purges older Cartographica caches, claims the page immediately, and caches the complete self-contained application shell for offline use.
+
+## PWA / Home Screen
+
+This build has a new v23.4-only PWA identity so it cannot be mistaken for an older installed revision. If an existing Home Screen icon was originally installed from Revision 12 or another old manifest, remove that old icon and add the site to the Home Screen again after the first v23.4 online load. The new icon will then open `23.4-final-offline-v8` and continue to work offline.
+
+## Included campaign systems
+
+- Full direct diplomacy and Influence leverage
+- Non-aggression, access, trade, aid, guarantees, defensive pacts, alliances, peace, war, treaty cancellation and vassalisation
+- Diplomatic Standing and allied detachments
+- Settlement founding/restoration and colonial strategic programmes
+- Expedition & Survey districts with local and empire launch caps
+- Decrees for resources, expeditions, battle and diplomacy
+- Detailed battle auto-resolve breakdowns
+- Fleet action and empire recruitment/mobilisation caps
+- Proactive AI wartime attacks and pop-up notifications
+- Difficult technology-ceiling breakthroughs
+- Offline PWA cache and update migration

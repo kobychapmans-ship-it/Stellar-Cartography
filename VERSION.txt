@@ -1,0 +1,6 @@
+Administratum Stellar Cartographica
+Revision: 23.4 Complete
+Build: 23.4-final-offline-v8
+PWA ID: cartographica-r23.4-final-offline-v8
+Canonical start: index.html?rev=23.4-final-offline-v8
+Offline: Yes — complete app shell cached after first successful online load.

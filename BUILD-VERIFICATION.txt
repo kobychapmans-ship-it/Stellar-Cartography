@@ -1,30 +1,36 @@
-Stellar Cartography Revision 23.4 Complete — Build Verification
+Stellar Cartography — Revision 23.4 Complete / Final Offline Locked
+Build: 23.4-final-offline-v8
 
-v23.4 feature-layer SHA-256: 1de48268ea7e9a2c0d48eb8501a6a3e67d6d51200dca026844c46500541ec3f2
+VERSION / ANTI-REVERSION
+[PASS] Base HTML badge is Revision 23.4 before JavaScript runs
+[PASS] Legacy runtime badge writers (rev 7/8/9/10/11/12/13/16) can no longer display an older revision
+[PASS] Page title is Revision 23.4 from source and through runtime wrappers
+[PASS] Manifest has a v23.4-only app ID and v23.4 start URL
+[PASS] Versioned service worker filename sw-v23-4.js is registered with updateViaCache=none
+[PASS] Legacy sw.js is also supplied with the same v23.4 worker code so an existing root-scope registration can update
+[PASS] Service worker deletes older Cartographica caches on install/activate
+[PASS] Navigation is network-first and falls back to the cached v23.4 canonical application shell
 
-[PASS] Feature layer unchanged from full v23.4
-[PASS] Internal v23.3 compatibility constant preserved
-[PASS] No visible rev 23.3 labels
-[PASS] Canonical v23.4 Complete URL in HTML
-[PASS] Manifest v23.4 Complete start URL
-[PASS] Manifest preserves v23.4 app identity
-[PASS] Service worker v7 cache
-[PASS] No old v5/v6 canonical refs
-[PASS] Full diplomacy actions
-[PASS] Allied detachments
-[PASS] Expedition district/caps
-[PASS] Decrees tab
-[PASS] Detailed auto-resolve
-[PASS] Settlement creation
-[PASS] Fleet action cap
-[PASS] Recruitment mobilisation cap
-[PASS] AI attack behaviour
-[PASS] Technology ceiling breakthroughs
-[PASS] Settlement strategic programmes
-[PASS] End-turn overlay handling
+OFFLINE
+[PASS] Main application is self-contained in index.html
+[PASS] No external HTTP/HTTPS runtime dependencies in index.html
+[PASS] Canonical index, plain index, manifest and icons are pre-cached
+[PASS] Offline navigation falls back to the cached Revision 23.4 shell
 
-Canonical launch:
-index.html?rev=23.4-complete-consolidated-v7
+FEATURE RETENTION
+[PASS] Full direct diplomacy action set and Influence leverage
+[PASS] Diplomatic Standing / allied detachment access
+[PASS] Settlement founding and strategic colony investment
+[PASS] Expedition & Survey district and expedition launch capacity
+[PASS] Decrees tab and decree campaign effects
+[PASS] Detailed battle auto-resolve breakdown
+[PASS] Fleet action limit
+[PASS] Empire recruitment/mobilisation capacity
+[PASS] Proactive AI wartime offensive opportunity
+[PASS] Technology ceiling breakthrough requirements
 
-Compatibility note:
-REV233 remains 23.3 internally only as the settlement/diplomacy compatibility layer identifier. It no longer controls the displayed PWA revision, which is locked to 23.4.
+VALIDATION
+[PASS] manifest.webmanifest parses as JSON
+[PASS] sw.js JavaScript syntax
+[PASS] sw-v23-4.js JavaScript syntax
+[PASS] All embedded index.html script blocks pass Node syntax validation

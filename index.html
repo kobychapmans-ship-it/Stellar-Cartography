@@ -9,20 +9,54 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=23.4-complete-consolidated-v7" />
+<link rel="manifest" href="./manifest.webmanifest?v=23.4-final-offline-v8" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
-/* Revision 23.4 hard migration: this build never retains an older launch URL. */
+/* Revision 23.4 final/offline bootstrap. Runs before all legacy compatibility layers. */
 (function(){
-  const canonicalRev='23.4-complete-consolidated-v7';
+  'use strict';
+  const REVISION='23.4';
+  const BUILD='23.4-final-offline-v8';
+  const LABEL='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';
+  const TITLE='Administratum Stellar Cartographica — Revision 23.4 Complete';
   const u=new URL(location.href);
-  if(u.searchParams.get('rev')!==canonicalRev){
-    u.searchParams.set('rev',canonicalRev);
-    history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash);
+  if(u.searchParams.get('rev')!==BUILD){
+    u.searchParams.set('rev',BUILD);
+    try{history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}catch(_){}
+  }
+  document.documentElement.dataset.cartographicaRevision=REVISION;
+  document.documentElement.dataset.cartographicaBuild=BUILD;
+  const enforceIdentity=()=>{
+    document.documentElement.dataset.cartographicaRevision=REVISION;
+    document.documentElement.dataset.cartographicaBuild=BUILD;
+    if(document.title!==TITLE)document.title=TITLE;
+    const badge=document.querySelector('.generation-head-actions .badge');
+    if(badge&&badge.textContent!==LABEL)badge.textContent=LABEL;
+  };
+  const observer=new MutationObserver(enforceIdentity);
+  observer.observe(document.documentElement,{subtree:true,childList:true,characterData:true});
+  document.addEventListener('DOMContentLoaded',enforceIdentity);
+  window.addEventListener('pageshow',enforceIdentity);
+
+  if('serviceWorker' in navigator){
+    let reloaded=false;
+    navigator.serviceWorker.addEventListener('controllerchange',()=>{
+      if(reloaded)return;
+      reloaded=true;
+      try{
+        const key='cartographica-r23.4-v8-controller-reload';
+        if(sessionStorage.getItem(key)!=='1'){
+          sessionStorage.setItem(key,'1');
+          location.reload();
+        }
+      }catch(_){}
+    });
+    navigator.serviceWorker.register('./sw-v23-4.js?build=23.4-final-offline-v8',{scope:'./',updateViaCache:'none'})
+      .then(reg=>reg.update().catch(()=>{})).catch(()=>{});
   }
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 23.4 Grand Strategy Expansion</title>
+<title>Administratum Stellar Cartographica — Revision 23.4 Complete</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -601,7 +635,7 @@ html.carto-orientation-lock body:after{content:'';display:none}
 
   <main class="shell">
     <aside class="panel controls">
-      <div class="panel-head"><h2>Generation Litany</h2><div class="generation-head-actions"><span class="badge">rev 12.0 Starting Muster & Warp Orders</span><button id="collapseToolsBtn" class="tools-collapse hidden" type="button" title="Hide generation tools and expand the map workspace">⇤ Hide Tools</button></div></div>
+      <div class="panel-head"><h2>Generation Litany</h2><div class="generation-head-actions"><span class="badge">rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees</span><button id="collapseToolsBtn" class="tools-collapse hidden" type="button" title="Hide generation tools and expand the map workspace">⇤ Hide Tools</button></div></div>
       <div class="panel-body">
         <button id="generateBtn" class="generate">Generate Complete System</button>
         <div class="buttonrow">
@@ -2668,7 +2702,7 @@ const _renderSubsector_campaign=renderSubsector;renderSubsector=function(sub,par
 const _renderSystem_campaign=renderSystem;renderSystem=function(sys,parentSubsector=null,parentSector=null){_renderSystem_campaign(sys,parentSubsector,parentSector);const sector=parentSector||window.currentSector;if(sector?.campaign){const f=campaignOwner(sector.campaign,sys.campaignId);$('results')?.insertAdjacentHTML('afterbegin',campaignMiniHTML(sector,`${sys.name}${f?' • '+f.name:''}`));campaignBindMini(sector)}};
 
 // Upgrade visible revision marker and source notes.
-const revBadge=document.querySelector('.generation-head-actions .badge');if(revBadge)revBadge.textContent='rev 7.0 Sector Campaign';
+const revBadge=document.querySelector('.generation-head-actions .badge');if(revBadge)revBadge.textContent='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';
 document.querySelectorAll('.source-note').forEach(n=>{if(n.textContent.includes('Warhammer 30k/40k War Zone')&&!n.textContent.includes('Sector Campaign'))n.innerHTML+=`<br/><br/><b>Sector Campaign:</b> turn-based grand-strategy play is a Cartographica campaign framework layered over the generated sector, HH1 force packages and Chapter III colony chassis. Autonomous faction decisions, strategic resources, diplomacy and auto-resolution are new campaign rules; tabletop battles can instead be played using the generated/imported rosters and reported back into the campaign. BattleScribe .ros/.rosz imports preserve roster names, detachments and points without attempting to reinterpret every nested wargear option.`});
 
 
@@ -2789,7 +2823,7 @@ const _selectWorld_scope=selectWorld;selectWorld=function(id,sys,switchTab){_sel
 const _selectSoiElement_scope=selectSoiElement;selectSoiElement=function(id,sys,switchTab){_selectSoiElement_scope(id,sys,switchTab);const root=window.currentSector,c=root?._campaignScope==='system'?root.campaign:null;if(c){const rec=campaignSystemRecords(root).find(r=>r.nodeLocationId===`element:${id}`);if(rec){c.selectedSystemId=rec.id;const sel=$('campaignSelectedSystem');if(sel)sel.value=rec.id}}};
 
 /* Final revision marker. */
-const deepRevBadge=document.querySelector('.generation-head-actions .badge');if(deepRevBadge)deepRevBadge.textContent='rev 8.0 Deep Focus Campaign';
+const deepRevBadge=document.querySelector('.generation-head-actions .badge');if(deepRevBadge)deepRevBadge.textContent='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';
 document.querySelectorAll('.source-note').forEach(n=>{if(n.textContent.includes('Sector Campaign')&&!n.textContent.includes('Deep Focus Navigator'))n.innerHTML+=`<br/><br/><b>Deep Focus Navigator:</b> the 3D Sector, Sub-sector and System maps now include a local search overlay that can focus the camera on a matching contact or descend directly to the parent system and select a world, moon or system element. <b>Scoped Campaigns:</b> campaigns may use a Sector, Sub-sector or single System as their maximum strategic theatre. At System scale, worlds, moons, asteroid/debris sites and other settleable system elements become strategic territorial nodes.`});
 
 
@@ -3156,11 +3190,11 @@ const _campaignDiplomacyHTML_fleet=campaignDiplomacyHTML;
 campaignDiplomacyHTML=function(root,c){campaignEnsureFleetState(root);let h=_campaignDiplomacyHTML_fleet(root,c);for(const f of c.factions||[]){const needle=`<div class="metric"><span>Arsenal</span><b>${esc(campaignFactionTech(f).label)}</b></div>`;h=h.replace(needle,needle+`<div class="metric"><span>Fleets / Settlements</span><b>${(f.fleets||[]).length} / ${(f.settlements||[]).filter(s=>s.status!=='Destroyed').length}</b></div>`)}return h};
 
 /* Final campaign visual / fleet revision marker. */
-const fleetRevBadge=document.querySelector('.generation-head-actions .badge');if(fleetRevBadge)fleetRevBadge.textContent='rev 10.0 Fleet Command Campaign';
+const fleetRevBadge=document.querySelector('.generation-head-actions .badge');if(fleetRevBadge)fleetRevBadge.textContent='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';
 document.querySelectorAll('.source-note').forEach(n=>{if(n.textContent.includes('Sector Campaign')&&!n.textContent.includes('Fleet Command'))n.innerHTML+=`<br/><br/><b>Fleet Command:</b> campaign ground forces now require strategic fleet lift. Fleet class controls base troop-point capacity, translation speed and abstract void-interception strength; designated fleet role modifies capacity, speed and invasion support. Sector/Sub-sector movement uses generated light-year coordinates, while System-scale movement uses orbital AU positions. Fleet travel can take multiple 90-day turns and is rendered as moving triangular markers. Settlement diamonds share their owning faction's campaign colour in the map and colony register. The campaign command UI is now a docked/minimisable map-first console, and the campaign launcher includes a pre-game rules reference inspired by grand-strategy interface patterns while retaining HH1.0/7th Edition as the ground-battle layer.`});
 
 /* Revision and source-fidelity note. */
-const arsenalRevBadge=document.querySelector('.generation-head-actions .badge');if(arsenalRevBadge)arsenalRevBadge.textContent='rev 9.0 BattleScribe Arsenal';
+const arsenalRevBadge=document.querySelector('.generation-head-actions .badge');if(arsenalRevBadge)arsenalRevBadge.textContent='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';
 document.querySelectorAll('.source-note').forEach(n=>{if(n.textContent.includes('Sector Campaign')&&!n.textContent.includes('BattleScribe Arsenal'))n.innerHTML+=`<br/><br/><b>BattleScribe Arsenal:</b> embedded campaign units now expose a compact source-linked upgrade layer. BattleScribe-backed options retain catalogue provenance and points; the full nested catalogue condition tree is intentionally condensed to unit-appropriate campaign choices. Imported .ros/.rosz rosters preserve their nested upgrade selections and authoritative total points. Faction technology / knowledge gates advanced upgrades and affects autonomous AI refitting; unsupported procedural factions use clearly-labelled campaign-generated technology packages rather than invented BattleScribe entries.`});
 
 
@@ -3240,8 +3274,8 @@ campaignBindDashboard=function(root){_campaignBindDashboard_orders(root);const c
 
 document.addEventListener('click',e=>{const m=e.target.closest?.('.campaign-fleet-svg[data-campaign-fleet-id]');if(!m)return;campaignOpenFleetMarker(window.currentSector,m.dataset.campaignFactionId,m.dataset.campaignFleetId)});
 
-const badge=document.querySelector('.generation-head-actions .badge');if(badge)badge.textContent='rev 11.0 Strategic Orders & Faction Presence';
-const title=document.querySelector('title');if(title)title.textContent='Administratum Stellar Cartographica — Strategic Orders Campaign';
+const badge=document.querySelector('.generation-head-actions .badge');if(badge)badge.textContent='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';
+const title=document.querySelector('title');if(title)title.textContent='Administratum Stellar Cartographica — Revision 23.4 Complete';
 document.querySelectorAll('.source-note').forEach(n=>{if(n.textContent.includes('Sector Campaign')&&!n.textContent.includes('Strategic Orders'))n.innerHTML+=`<br/><br/><b>Strategic Orders:</b> fleets can now be inspected directly from map markers, including fleet class/role and embarked Task Force manifests. Active translation orders draw visible route lines; movement uses a dashed blue route/destination while invasions use a solid red attack route. The full campaign console is retained while descending from Sector to Sub-sector to System maps. Planetary Population, Planetside Adventures and Colonial Structure are separated into tabs. Generation now includes a pre-campaign faction-geography layer with per-faction states from Diaspora through Hegemonic, which changes initial territory, presence, settlements, military depth and fleet projection when Campaign Mode begins.`});
 })();
 
@@ -3463,13 +3497,13 @@ const _renderSubsectorMap_rev13=renderSubsectorMap;renderSubsectorMap=function(s
 /* Stronger legend so players can immediately decode the map. */
 const _campaignLegendHTML_rev13=campaignLegendHTML;campaignLegendHTML=function(c){return _campaignLegendHTML_rev13(c)+`<div class="campaign-intel-legend campaign-intel-legend-strong"><span><b>i</b>object intelligence</span><span><b>R</b>resources</span><span><b>T</b>troops</span><span><b>C</b>colonies</span><span><b>P</b>population</span><span><b>F</b>fleets</span><span><b>D</b>defence</span><span><b>A</b>adventures</span><span>◆ coloured diamond = campaign settlement</span><span>● pale colony pip = core/native colony</span></div>`};
 const _renderSystem_rev13=renderSystem;renderSystem=function(sys,parentSubsector=null,parentSector=null){const out=_renderSystem_rev13(sys,parentSubsector,parentSector),root=parentSector||window.currentSector;if(root?.campaign){const leg=document.querySelector('#results .maplegend');if(leg&&!leg.querySelector('.campaign-intel-help-card'))leg.insertAdjacentHTML('beforeend',`<div class="campaign-intel-help-card"><b>Campaign object intelligence:</b> every major world/spatial contact now has an <b>i</b> hub. R/T/C/P/F/D/A badges show resources, troops, colonies, population, fleets, defence and adventure sites. Hover for detail; click the hub to open the object. Faction-coloured diamonds are campaign settlements, while pale colony pips are core/native colony records.</div>`)}return out};
-const rev13Badge=document.querySelector('.generation-head-actions .badge');if(rev13Badge)rev13Badge.textContent='rev 13.0 Visual Strategic Actions & Map Intelligence';
-const rev13Title=document.querySelector('title');if(rev13Title)rev13Title.textContent='Administratum Stellar Cartographica — Visual Strategic Actions';
+const rev13Badge=document.querySelector('.generation-head-actions .badge');if(rev13Badge)rev13Badge.textContent='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';
+const rev13Title=document.querySelector('title');if(rev13Title)rev13Title.textContent='Administratum Stellar Cartographica — Revision 23.4 Complete';
 document.querySelectorAll('.source-note').forEach(n=>{if(n.textContent.includes('Sector Campaign')&&!n.textContent.includes('Visual Strategic Actions'))n.innerHTML+=`<br/><br/><b>Visual Strategic Actions:</b> Campaign colony founding, claiming and fortification can now be plotted by clicking strategic map objects and confirmed before resources are spent. System maps show persistent object-intelligence hubs for worlds, moons and spatial contacts with resource, military, colony, population, fleet, defence and adventure badges; both campaign settlements and core/native colonies are rendered on the map. Founding or changing a colony immediately refreshes the campaign map instead of waiting for navigation or a new turn.`});
 
 
 /* Revision marker. */
-const b=document.querySelector('.generation-head-actions .badge');if(b)b.textContent='rev 13.0 Visual Strategic Actions & Map Intelligence';const t=document.querySelector('title');if(t)t.textContent='Administratum Stellar Cartographica — Visual Strategic Actions';document.querySelectorAll('.source-note').forEach(n=>{if(n.textContent.includes('Sector Campaign')&&!n.textContent.includes('Starting Muster'))n.innerHTML+=`<br/><br/><b>Starting Muster & Warp Orders:</b> Campaign launch now includes a clickable generated start-position map and a manual HH1/BSData-backed starting army builder. System maps display hover intelligence icons for resources, troops, colonies, population and fleets. The Campaign Viewer has persistent Map-first/Balanced/Ledger/Compact layouts. Fleet movement is now staged through a plot-and-confirm workflow with clickable map targets, visible one-turn range shells, route information, Supply/ETA/risk previews and an explicit confirmation step. Inter-system travel applies a faction-sensitive Warp/Webway/dimensional/near-light framework while local movement remains AU-based realspace travel.`});
+const b=document.querySelector('.generation-head-actions .badge');if(b)b.textContent='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';const t=document.querySelector('title');if(t)t.textContent='Administratum Stellar Cartographica — Revision 23.4 Complete';document.querySelectorAll('.source-note').forEach(n=>{if(n.textContent.includes('Sector Campaign')&&!n.textContent.includes('Starting Muster'))n.innerHTML+=`<br/><br/><b>Starting Muster & Warp Orders:</b> Campaign launch now includes a clickable generated start-position map and a manual HH1/BSData-backed starting army builder. System maps display hover intelligence icons for resources, troops, colonies, population and fleets. The Campaign Viewer has persistent Map-first/Balanced/Ledger/Compact layouts. Fleet movement is now staged through a plot-and-confirm workflow with clickable map targets, visible one-turn range shells, route information, Supply/ETA/risk previews and an explicit confirmation step. Inter-system travel applies a faction-sensitive Warp/Webway/dimensional/near-light framework while local movement remains AU-based realspace travel.`});
 
 
 
@@ -3555,8 +3589,8 @@ campaignInjectScoped=function(root){
 };
 /* Ebook/session recovery: if a generated map is already present with no campaign, expose the same complete manager. */
 setTimeout(()=>{const root=campaignStarterRootNow();if(generationHasRun&&root&&!root.campaign)campaignStarterOpen(root,true)},20);
-const rev15Badge=document.querySelector('.generation-head-actions .badge');if(rev15Badge)rev15Badge.textContent='rev 16.0 Campaign Starter Runtime Fix';
-const rev15Title=document.querySelector('title');if(rev15Title)rev15Title.textContent='Administratum Stellar Cartographica — Campaign Starter Runtime Fix';
+const rev15Badge=document.querySelector('.generation-head-actions .badge');if(rev15Badge)rev15Badge.textContent='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';
+const rev15Title=document.querySelector('title');if(rev15Title)rev15Title.textContent='Administratum Stellar Cartographica — Revision 23.4 Complete';
 
 
 /* ===== rev 17.0 Campaign Economy, Recruitment & BattleScribe HTML ===== */
@@ -4495,7 +4529,7 @@ window.__cartoCampaignDiplomaticStanding234=campaignDiplomaticStanding234;
 window.__cartoCampaignAlliedDetachment234=campaignRequestAlliedDetachment234;
 window.__cartoCampaignExpeditionAvailability234=campaignExpeditionAvailability234;
 window.__cartoCampaignAutoResolve234=campaignAutoResolveBattle;
-const rb234=document.querySelector('.generation-head-actions .badge');if(rb234)rb234.textContent='rev 23.4 Diplomacy + Allied Detachments + Expeditions + Decrees';
+const rb234=document.querySelector('.generation-head-actions .badge');if(rb234)rb234.textContent='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';
 document.documentElement.dataset.cartographicaRevision=REV234;
 })();
 </script>
@@ -4513,19 +4547,17 @@ document.documentElement.dataset.cartographicaRevision=REV234;
 })();
 </script>
 <script>
-/* Revision 23.4 hard migration: purge prior Cartographica caches and force the v23-only service worker. */
+/* Revision 23.4 final/offline cache cleanup. Campaign feature layers above are untouched. */
 (function(){
-  const REV='23.4';
-  document.documentElement.dataset.cartographicaRevision=REV;
   window.addEventListener('load', async ()=>{
     try{
       if('caches' in window){
         const keys=await caches.keys();
-        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r23.4-complete-consolidated-v7/i.test(k)).map(k=>caches.delete(k)));
+        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && k!=='cartographica-r23.4-final-offline-v8').map(k=>caches.delete(k)));
       }
       if('serviceWorker' in navigator){
-        const reg=await navigator.serviceWorker.register('./sw.js?v=23.4-complete-consolidated-v7',{updateViaCache:'none'});
-        try{ await reg.update(); }catch(_){}
+        const reg=await navigator.serviceWorker.register('./sw-v23-4.js?build=23.4-final-offline-v8',{scope:'./',updateViaCache:'none'});
+        try{await reg.update()}catch(_){}
       }
     }catch(_){}
   });
@@ -4538,7 +4570,7 @@ document.documentElement.dataset.cartographicaRevision=REV234;
 (function(){
   'use strict';
   const REVISION='23.4';
-  const BUILD='23.4-complete-consolidated-v7';
+  const BUILD='23.4-final-offline-v8';
   const LABEL='rev 23.4 Complete — Diplomacy + Allied Detachments + Expeditions + Decrees';
   const enforce=()=>{
     if(document.documentElement.dataset.cartographicaRevision!==REVISION) document.documentElement.dataset.cartographicaRevision=REVISION;

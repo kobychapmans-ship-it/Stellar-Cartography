@@ -1,9 +1,9 @@
 {
   "name": "Administratum Stellar Cartographica — Revision 23.4 Complete",
   "short_name": "Cartographica R23.4",
-  "description": "Complete Revision 23.4 with full diplomacy, settlements, allied detachments, expedition districts and caps, detailed battle auto-resolve, Decrees, mobilisation, AI war actions, and technology-ceiling breakthroughs.",
-  "id": "./?app=cartographica-r23.4-expeditions-decrees-allied-detachments",
-  "start_url": "./index.html?rev=23.4-complete-consolidated-v7",
+  "description": "Feature-complete Revision 23.4: full diplomacy, settlement founding, allied detachments, expedition districts and launch caps, Decrees, detailed battle auto-resolve, mobilisation limits, AI war actions, and technology-ceiling breakthroughs. Fully offline-capable after first load.",
+  "id": "./?app=cartographica-r23.4-final-offline-v8",
+  "start_url": "./index.html?rev=23.4-final-offline-v8",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",
