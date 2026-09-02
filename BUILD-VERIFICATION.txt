@@ -1,59 +1,54 @@
-Administratum Stellar Cartographica — Revision 23.5.2
-Build: 23.5.2-in-system-navigation-v12
+Administratum Stellar Cartographica — Revision 23.6
+Build: 23.6-colony-sovereignty-v13
 
-STATIC VALIDATION
-- Embedded JavaScript syntax: PASS (Node --check)
-- sw.js syntax: PASS
-- manifest.webmanifest JSON: PASS
-- Manifest start URL: ./index.html?rev=23.5.2-in-system-navigation-v12
-- Offline cache: cartographica-r23.5.2-in-system-navigation-v12
+VERIFICATION SUMMARY
+====================
 
-BROWSER FUNCTIONAL TEST — DIRECT LOCAL MOVE
-- Generated full sector: PASS
-- Launched sector campaign: PASS
-- In-System Navigation panel rendered: PASS
-- Dropdown contained current-system worlds/spatial objects: PASS
-- Issuing local move created localTransit2352: PASS
-- Strategic fleet system ID remained unchanged: PASS
-- Local move spent no Command: PASS
-- Confirmed local AU route rendered on system SVG map: PASS
-- Local transit completion changed only localLocationId2352: PASS
-- Runtime exceptions: 0
+PASS — All embedded JavaScript parses successfully with Node.js syntax validation.
+PASS — sw.js and sw-v23-4.js parse successfully.
+PASS — manifest.webmanifest is valid JSON.
+PASS — No external JavaScript/CSS runtime dependencies were found in index.html.
+PASS — Revision 23.5.2 In-System Navigation block is byte-for-byte unchanged from the known-good v23.5.2 build.
+      SHA-256: 66e3cbd715b60e35482fcf3cdcbf6080b9ef6cbd0409e7462a0cf9c1c559b5ee
+PASS — Chromium runtime: sector generated and campaign launched with no page exceptions.
+PASS — Faction-appropriate names and stable identity codes generated.
+PASS — Colonies view renders faction-grouped settlement register and fleet-settlement projects.
+PASS — Orbital Platform founding succeeded in browser test, registered a local object claim and provided +2 strategic Defence.
+PASS — Fleet register renders grouped/collapsible by faction and no longer exposes fleet-settlement upgrade buttons in the Fleets tab.
+PASS — Forced Tier III mobile fleet renders as a Colonies-tab settlement with infrastructure/support explanation and full district/building development modal.
+PASS — Campaign End Turn advanced Turn 1 -> Turn 2 with no JavaScript exceptions.
+PASS — All requested v23.6 and prior v23.4/v23.5 feature markers are present.
 
-BROWSER FUNCTIONAL TEST — MAP PLOT
-- Local map-plot mode opened current fleet system: PASS
-- Clicking a world staged pendingFleetOrder.type = local: PASS
-- Confirmation panel identified an in-system move: PASS
-- Confirming map plot created localTransit2352 to clicked world: PASS
-- Runtime exceptions: 0
+OFFLINE / PWA
+=============
 
-BROWSER FUNCTIONAL TEST — INTER-SYSTEM REGRESSION
-- Inter-System Journey Planner remained visible: PASS
-- Direct inter-system move created normal fleet.transit: PASS
-- Strategic system remained origin until arrival: PASS
-- Inter-system translation still spent 1 Command: PASS
-- Runtime exceptions: 0
+- Canonical launch: ./index.html?rev=23.6-colony-sovereignty-v13
+- Cache: cartographica-r23.6-colony-sovereignty-v13
+- Existing Cartographica PWA app identity is retained for in-place upgrades.
+- The service worker purges older Cartographica caches at install/activation and pre-caches the complete application shell.
+- Navigation is network-first with cached v23.6 fallback; static assets are cache-first.
+- Localhost service-worker offline reload could not be exercised in this execution environment because loopback browser navigation is blocked by administrator policy. Service-worker syntax, cache paths, shell completeness and absence of remote runtime dependencies were validated instead.
 
-FEATURE RETENTION MARKERS
-- True in-system local state: PASS
-- Local transit state: PASS
-- In-System Navigation panel: PASS
-- Local map plot: PASS
-- Local route SVG: PASS
-- Inter-System Journey Planner: PASS
-- Multi-Journey: PASS
-- Fleet roles: PASS
-- Fleet colony: PASS
-- Major threats: PASS
-- Full diplomacy: PASS
-- Allied detachments: PASS
-- Expedition district: PASS
-- Decrees: PASS
-- Battle breakdown: PASS
-- Tech ceiling: PASS
+REVISION 23.6 FEATURE CHECK
+===========================
 
-PWA / OFFLINE
-- Fresh v12 service-worker cache deletes older Cartographica caches on activation.
-- Network-first navigation keeps deployed GitHub Pages builds fresh.
-- Cached canonical index and plain index provide offline fallback after first successful online load.
-- Application contains no external JS/CSS runtime dependencies.
+- Fleet settlements managed in Colonies: PRESENT
+- Full normal districts/buildings on fleet settlements: PRESENT
+- Infrastructure/support detailed explanations: PRESENT
+- Orbital Platform settlement type: PRESENT
+- Planet/moon/asteroid/spatial-object claims: PRESENT
+- Claim/founding success/failure/block popups: PRESENT
+- Object info claimant display: PRESENT
+- Colony lists grouped by faction: PRESENT
+- Fleet lists grouped by faction: PRESENT
+- Faction-specific generated names + identity codes: PRESENT
+- v23.5.2 AU in-system navigation retained unchanged: PRESENT
+- Multi-Journey routing: PRESENT
+- Major threat table: PRESENT
+- Full diplomacy + allied detachments: PRESENT
+- Expedition districts/caps: PRESENT
+- Decrees: PRESENT
+- Mobilisation/recruitment limits: PRESENT
+- AI offensives: PRESENT
+- Technology ceiling breakthrough: PRESENT
+- Detailed battle auto-resolve: PRESENT

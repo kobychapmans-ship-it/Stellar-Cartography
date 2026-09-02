@@ -1,4 +1,4 @@
 Administratum Stellar Cartographica
-Revision: 23.5.2
-Build: 23.5.2-in-system-navigation-v12
-Focus: true in-system AU navigation + stable fleet operations + offline PWA
+Revision: 23.6
+Build: 23.6-colony-sovereignty-v13
+Focus: colony sovereignty + fleet settlements + claims + orbital platforms + faction identity + offline PWA

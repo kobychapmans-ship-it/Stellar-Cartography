@@ -1,35 +1,26 @@
-# Administratum Stellar Cartographica — Revision 23.5.2
+# Administratum Stellar Cartographica — Revision 23.6
 
-Build: `23.5.2-in-system-navigation-v12`
+Revision 23.6 consolidates settlement sovereignty and colony management on top of the stable v23.5.2 in-system navigation runtime.
 
-This build is based on the stable v23.5.1 Fleet Operations runtime and corrects fleet movement inside a star system without removing any prior campaign systems.
+## Revision 23.6 additions
 
-## In-System Navigation
+- Fleet settlements are managed through **Colonies**, not the Fleets tab. Tier III+ fleets appear as mobile settlements and use the normal district/building development web, infrastructure, support, strategic programmes, economy, defence, recruitment and expedition interactions.
+- Fleet development projects that lead to mobile-settlement status are surfaced in Colonies. The Fleets tab remains focused on fleet operations, routing and designation rules.
+- Infrastructure and support installation now explains what each option does, why it is required/recommended and its immediate/ongoing effects. The Colonies UI includes full reference lists.
+- **Orbital Platform** is a selectable settlement archetype when founding. It remains a normal settlement while adding +2 strategic Defence to its system and starting with orbital defensive infrastructure.
+- Planets, moons, asteroids and spatial objects now have persistent local claims. Claim ownership is shown in object information, settlement-founding selectors and campaign intel.
+- Local object claims and strategic claims produce clear success, failure and blocked-action popups, including resource requirements, roll results and foreign-claim restrictions. Losing a claim to an AI faction also produces a notice.
+- In-system settlement lists are grouped by faction in collapsible registers. Fleets are grouped the same way to reduce clutter.
+- Factions receive deterministic, type-appropriate campaign names plus unique identity codes, giving generated campaigns clearer faction identities.
+- Existing v23.5.2 local AU navigation, multi-journey fleet routing, route visualisation, fleet-colony factions and major-threat mechanics remain intact.
+- Existing full diplomacy, allied detachments, expedition districts/caps, Decrees, recruitment/mobilisation limits, AI offensives, technology-ceiling breakthroughs and battle auto-resolve breakdowns remain intact.
 
-Sector and sub-sector campaigns now track two separate fleet positions:
+## PWA deployment
 
-- **Strategic System** — the star system containing the fleet. This remains unchanged during local movement.
-- **Local Position** — System Translation Point, world, moon, asteroid/belt, station, or other spatial object inside that system.
+Upload every file in this package directly to the repository root. GitHub Pages should deploy from `main` / `(root)`.
 
-The Fleets tab contains a dedicated **In-System Navigation** panel. Local travel uses AU realspace movement, one fleet action, Supply, and **0 Command**. It never initiates a Warp/inter-system translation.
+Open once online after deployment:
 
-You can move locally either by:
+`https://kobychapmans-ship-it.github.io/Stellar-Cartography/?rev=23.6-colony-sovereignty-v13`
 
-1. Selecting a world/object from the In-System Navigation dropdown and choosing **Move Within System**; or
-2. Choosing **Plot Local Move on System Map** and clicking a world, moon, asteroid, or spatial object on the current system map.
-
-Confirmed local routes display directly on the system map with the fleet marker moving along the route.
-
-The separate **Inter-System Journey Planner** remains available for travel to other star systems, including direct translations, manual waypoints, and automatic Multi-Journey routes.
-
-## Retained systems
-
-The build retains full diplomacy, Diplomatic Standing and allied detachments, settlement founding, fleet-colonies, Expedition & Survey districts and expedition caps, Decrees, fleet roles and development, recruitment/mobilisation limits, fleet action limits, major threats, AI warfare and diplomacy, technology-ceiling breakthroughs, battle auto-resolve detail, and offline PWA support.
-
-## GitHub Pages deployment
-
-Replace the repository-root files with the contents of this package. After GitHub Pages completes deployment, open once while online:
-
-`https://kobychapmans-ship-it.github.io/Stellar-Cartography/?rev=23.5.2-in-system-navigation-v12`
-
-The service worker then caches the application shell for offline use.
+The application intentionally retains the established Cartographica PWA app ID so an existing Home Screen installation can update in place. The service worker uses a new v23.6 cache, deletes older Cartographica caches during activation and caches the complete application shell for offline use after the first successful online load.

@@ -1,9 +1,9 @@
 {
-  "name": "Administratum Stellar Cartographica — Revision 23.5.2",
-  "short_name": "Cartographica R23.5.2",
-  "description": "Stable Revision 23.5.2 with true in-system fleet navigation, inter-system journey planning, fleet-colony development, major threats, full diplomacy, settlements, expeditions, Decrees, mobilisation and offline play.",
+  "name": "Administratum Stellar Cartographica — Revision 23.6",
+  "short_name": "Cartographica R23.6",
+  "description": "Stable Revision 23.6 with fleet settlements in the Colonies layer, explained infrastructure and support effects, orbital platforms, planetary/object claims, explicit claim and settlement feedback, faction-grouped colonies and fleets, faction identity naming, plus all prior fleet navigation, diplomacy, expeditions, Decrees, mobilisation, threats and offline play.",
   "id": "./?app=cartographica-r23.4-final-offline-v8",
-  "start_url": "./index.html?rev=23.5.2-in-system-navigation-v12",
+  "start_url": "./index.html?rev=23.6-colony-sovereignty-v13",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",
