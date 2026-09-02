@@ -3967,6 +3967,200 @@ body.campaign-dev-open #campaignDashboard.campaign-panel{z-index:16010}
 @media(max-width:620px){body.campaign-dev-open .campaign-dev-modal{inset:0 0 calc(96px + env(safe-area-inset-bottom)) 0!important}body.campaign-dev-open #campaignDashboard.campaign-panel,body.campaign-dev-open #campaignDashboard .panel-head{height:96px!important;min-height:96px!important;max-height:96px!important}.campaign-dev-modal-body{padding-bottom:18px!important}}
 </style>
 
+
+<style id="rev23-grand-strategy-css">
+/* Revision 23: strategic investments, mobilisation limits, aggressive AI notifications, diplomacy and ceiling breakthroughs */
+.campaign-endturn-overlay{z-index:30050!important}
+.campaign-strategic-investment{margin:8px 0;border:1px solid rgba(185,151,73,.28);background:linear-gradient(90deg,rgba(185,151,73,.07),rgba(0,0,0,.10));padding:8px}.campaign-strategic-investment h5{margin:0 0 5px;color:#dec98e;text-transform:uppercase;letter-spacing:.05em}.campaign-strategic-investment p{margin:3px 0;color:#9f9887;font-size:8.5px;line-height:1.45}.campaign-invest-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:7px}.campaign-invest-grid button{font-size:8px;padding:6px}.campaign-invest-active{border-left:3px solid #b99749;padding:5px 7px;background:rgba(185,151,73,.08);color:#cdbb8d;font-size:8px}
+.campaign-muster-panel{margin:8px 0;border:1px solid rgba(138,165,104,.3);background:rgba(90,119,65,.07);padding:8px}.campaign-muster-panel h4{margin:0 0 5px;color:#c9d9b0}.campaign-muster-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.campaign-muster-grid>div{border:1px solid rgba(255,255,255,.07);padding:6px}.campaign-muster-grid span{display:block;color:#858d84;font-size:7px;text-transform:uppercase}.campaign-muster-grid b{display:block;color:#d8dfcc;font-size:10px;margin-top:2px}.campaign-muster-track{height:7px;border:1px solid rgba(138,165,104,.25);background:#080a0b;margin-top:6px;overflow:hidden}.campaign-muster-track i{display:block;height:100%;background:linear-gradient(90deg,#586f45,#b5c98d)}
+.campaign-fleet-actions{margin:5px 0 0;font-size:8px;color:#aeb8ba}.campaign-fleet-actions b{color:#d2e1e4}.campaign-fleet-actions.exhausted{color:#d29187}.campaign-fleet-actions.exhausted b{color:#e7a398}
+.campaign-diplomacy-console{display:grid;gap:9px}.campaign-dip-target{border:1px solid rgba(185,151,73,.25);padding:9px;background:rgba(255,255,255,.015)}.campaign-dip-head{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.campaign-dip-head h4{margin:0;color:#dfcd9d}.campaign-dip-head .spacer{flex:1}.campaign-dip-agreements{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}.campaign-dip-agreement{border:1px solid rgba(117,150,164,.28);padding:3px 5px;font-size:7px;color:#adc3ca;background:rgba(66,103,119,.08)}.campaign-dip-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:5px;margin-top:8px}.campaign-dip-action{border:1px solid rgba(255,255,255,.07);padding:6px;background:rgba(0,0,0,.16)}.campaign-dip-action b{display:block;color:#d7ccb1;font-size:9px}.campaign-dip-action small{display:block;color:#858b8d;font-size:7.5px;line-height:1.35;margin:2px 0 5px}.campaign-dip-action button{width:100%;font-size:8px}.campaign-dip-boost{display:grid;grid-template-columns:1fr 160px;gap:7px;align-items:end;margin-top:7px}.campaign-dip-boost .hint{font-size:8px}
+.campaign-tech-ceiling{margin-top:7px;border:1px solid rgba(114,88,142,.34);background:rgba(95,64,126,.08);padding:8px}.campaign-tech-ceiling b{color:#d0b5e0}.campaign-tech-ceiling button{margin-top:6px;width:100%}
+.campaign-notify-overlay{position:fixed;inset:0;z-index:30100;display:grid;place-items:center;background:rgba(3,5,7,.74);padding:18px}.campaign-notify-card{width:min(560px,94vw);border:1px solid #8b3933;background:linear-gradient(180deg,#1a1212,#090b0d);box-shadow:0 28px 100px #000;padding:15px}.campaign-notify-card h3{margin:0 0 6px;color:#e3aaa0;text-transform:uppercase;letter-spacing:.08em}.campaign-notify-card p{color:#c5b8a9;font-size:11px;line-height:1.5}.campaign-notify-card .campaign-actionrow{justify-content:flex-end}
+@media(max-width:720px){.campaign-invest-grid{grid-template-columns:1fr}.campaign-muster-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.campaign-dip-boost{grid-template-columns:1fr}.campaign-dip-actions{grid-template-columns:1fr}}
+</style>
+<script>
+/* ===== Revision 23 — Grand Strategy Diplomacy & Mobilisation ===== */
+(function(){
+const CAMPAIGN_FLEET_ACTION_LIMIT=2, CAMPAIGN_TECH_ABSOLUTE_CEILING=8;
+if(Array.isArray(CAMPAIGN_TECH_NAMES)){
+  if(!CAMPAIGN_TECH_NAMES[6])CAMPAIGN_TECH_NAMES[6]='Transcendent / Lost Age';
+  if(!CAMPAIGN_TECH_NAMES[7])CAMPAIGN_TECH_NAMES[7]='Civilisation Apex';
+}
+function campaignRev23EnsureFaction(f){
+  if(!f)return f;
+  if(!f.recruitmentLedger)f.recruitmentLedger={turn:0,points:0};
+  if(!Number.isFinite(Number(f.techCeilingBonus)))f.techCeilingBonus=0;
+  if(!Number.isFinite(Number(f.ceilingBreakthroughs)))f.ceilingBreakthroughs=0;
+  if(!f.diplomaticFlags)f.diplomaticFlags={};
+  return f;
+}
+function campaignRev23Ensure(root){
+  const c=root?.campaign;if(!c)return null;
+  c.diplomacyAgreements=c.diplomacyAgreements||[];
+  c.playerNotifications=c.playerNotifications||[];
+  for(const f of c.factions||[])campaignRev23EnsureFaction(f);
+  return c;
+}
+const _campaignMakeFaction_rev23=campaignMakeFaction;
+campaignMakeFaction=function(...args){return campaignRev23EnsureFaction(_campaignMakeFaction_rev23(...args))};
+
+/* ----- Temporary colony strategic investment ----- */
+const _soiColonyEffective_rev23=soiColonyEffective;
+soiColonyEffective=function(col){
+  const e=_soiColonyEffective_rev23(col),root=window.currentSector,c=root?.campaign,inv=col?.campaignStrategicInvestment;
+  if(inv&&c&&Number(inv.turn)===Number(c.turn)&&['productivity','order','piety'].includes(inv.stat))e[inv.stat]=Math.max(0,Number(e[inv.stat]||0)+Number(inv.bonus||0));
+  return e;
+};
+function campaignStrategicInvest(root,settlementId,stat){
+  const c=campaignRev23Ensure(root),p=campaignPlayer(c),s=p?.settlements?.find(x=>x.id===settlementId&&x.status!=='Destroyed');
+  if(!c||!p||!s||!['productivity','order','piety'].includes(stat))return false;
+  if(s.colony.campaignStrategicInvestment?.turn===c.turn){campaignLog(c,`${s.locationName} already has a funded strategic programme this turn.`,'war');return false}
+  const supply=4,influence=3;
+  if(p.treasury.supply<supply||p.treasury.influence<influence){campaignLog(c,`Strategic investment at ${s.locationName} requires ${supply} Supply and ${influence} Influence.`,'war');return false}
+  p.treasury.supply-=supply;p.treasury.influence-=influence;
+  s.colony.campaignStrategicInvestment={turn:c.turn,stat,bonus:2,cost:{supply,influence}};
+  campaignLog(c,`${p.name} funded a ${stat==='productivity'?'Productivity Drive':stat==='order'?'Order & Security Programme':'Piety / Cohesion Campaign'} at ${s.locationName}: +2 ${stat} for the current 90-day resolution; cost ${supply} Supply and ${influence} Influence.`,'gain');
+  campaignPersist(root);return true;
+}
+function campaignStrategicInvestHTML(s,owned){
+  const c=window.currentSector?.campaign,inv=s?.colony?.campaignStrategicInvestment,active=inv&&c&&inv.turn===c.turn;
+  return `<div class="campaign-strategic-investment"><h5>Strategic Supply & Influence Programme</h5>${active?`<div class="campaign-invest-active">Active this turn: <b>+${inv.bonus} ${esc(inv.stat)}</b>. The bonus applies to 90-day output and colony resolution, then expires.</div>`:`<p>Spend <b>4 Supply + 3 Influence</b> to focus this settlement for one 90-day turn. Only one programme can be active per settlement each turn.</p>${owned?`<div class="campaign-invest-grid"><button class="ghost" data-campaign-invest="productivity" data-invest-settlement="${esc(s.id)}" type="button">Productivity Drive +2</button><button class="ghost" data-campaign-invest="order" data-invest-settlement="${esc(s.id)}" type="button">Order Programme +2</button><button class="ghost" data-campaign-invest="piety" data-invest-settlement="${esc(s.id)}" type="button">Piety / Cohesion +2</button></div>`:''}`}</div>`;
+}
+const _campaignColoniesHTML_rev23=campaignColoniesHTML;
+campaignColoniesHTML=function(root,c){
+  let h=_campaignColoniesHTML_rev23(root,c),p=campaignPlayer(c);
+  for(const s of p?.settlements||[]){if(s.status==='Destroyed')continue;const needle=`data-settlement="${s.id}"`;const pos=h.indexOf(needle);if(pos<0)continue;const cardStart=h.lastIndexOf('<div class="campaign-colony-row',pos),cardEnd=h.indexOf('</div>',pos);/* safe injection uses output block anchor instead */
+    const outNeedle=campaignSettlementYieldHTML(s,p);if(h.includes(outNeedle))h=h.replace(outNeedle,outNeedle+campaignStrategicInvestHTML(s,true));
+  }
+  return h;
+};
+
+/* ----- Empire-wide recruitment / mobilisation ceiling ----- */
+function campaignDistrictTier(col,chain){const w=campaignEnsureDevelopmentWeb(col);return (w?.slots||[]).filter(x=>x.chain===chain).reduce((n,x)=>n+Math.max(0,Number(x.tier)||0),0)}
+function campaignRecruitmentCapacity(root,fac){
+  campaignRev23EnsureFaction(fac);let civilian=0,recruitment=0,defence=0,support=0,settlementCount=0;
+  for(const s of fac?.settlements||[]){if(s.status==='Destroyed')continue;settlementCount++;const col=s.colony||{},size=Math.max(1,Number(col.size)||1),rt=campaignDistrictTier(col,'recruitment'),dt=campaignDistrictTier(col,'defence');civilian+=250+size*200;recruitment+=rt*350;defence+=dt*150;const sup=col.supportUpgrades||[];if(sup.includes('Infantry Garrison'))support+=400;if(sup.includes('Industrial Facility'))support+=250;if(sup.includes('Mechanicum Station'))support+=300}
+  if(!settlementCount)civilian=750+Math.max(0,(fac.territory?.length||0)-1)*150;
+  const cap=Math.max(750,Math.round((civilian+recruitment+defence+support)/50)*50),ledger=fac.recruitmentLedger||{turn:0,points:0};
+  if(ledger.turn!==root.campaign.turn){ledger.turn=root.campaign.turn;ledger.points=0;fac.recruitmentLedger=ledger}
+  return{cap,used:Math.max(0,Number(ledger.points)||0),remaining:Math.max(0,cap-(Number(ledger.points)||0)),civilian,recruitment,defence,support,settlementCount};
+}
+function campaignRecordRecruitment(root,fac,pts){const q=campaignRecruitmentCapacity(root,fac);fac.recruitmentLedger.turn=root.campaign.turn;fac.recruitmentLedger.points=q.used+Math.max(0,Number(pts)||0)}
+function campaignRecruitmentCapacityHTML(root,fac){const q=campaignRecruitmentCapacity(root,fac),pct=Math.min(100,Math.round(q.used/Math.max(1,q.cap)*100));return `<div class="campaign-muster-panel"><h4>Empire Mobilisation Ceiling</h4><div class="campaign-muster-grid"><div><span>This turn</span><b>${q.used.toLocaleString()} / ${q.cap.toLocaleString()} pts</b></div><div><span>Colony base</span><b>${Math.round(q.civilian).toLocaleString()}</b></div><div><span>Recruitment districts</span><b>+${Math.round(q.recruitment).toLocaleString()}</b></div><div><span>Defence & support</span><b>+${Math.round(q.defence+q.support).toLocaleString()}</b></div></div><div class="campaign-muster-track"><i style="width:${pct}%"></i></div><div class="hint">The faction can still move and fight normally after exhausting this pool, but cannot add more newly mustered tabletop points until the next 90-day turn. Recruitment districts contribute most; defence districts and garrison/industrial support provide smaller reserve-mobilisation capacity.</div></div>`}
+const _campaignUnitRecruitRequirements_rev23=campaignUnitRecruitRequirements;
+campaignUnitRecruitRequirements=function(root,fac,tf,t,models){const r=_campaignUnitRecruitRequirements_rev23(root,fac,tf,t,models),q=campaignRecruitmentCapacity(root,fac);r.recruitmentCapacity=q;if(r.points>q.remaining)r.reasons.push(`empire mobilisation remaining ${q.remaining.toLocaleString()} pts < ${r.points.toLocaleString()} pts`);r.ok=!r.reasons.length;return r};
+const _campaignAddUnitToForce_rev23=campaignAddUnitToForce;
+campaignAddUnitToForce=function(c,fac,tf,templateName,models,detId){const root=window.currentSector,before=campaignTaskForcePoints(tf),ok=_campaignAddUnitToForce_rev23(c,fac,tf,templateName,models,detId);if(ok){const after=campaignTaskForcePoints(tf);campaignRecordRecruitment(root,fac,Math.max(0,after-before))}return ok};
+const _campaignForceManagerHTML_rev23=campaignForceManagerHTML;
+campaignForceManagerHTML=function(root,c){return campaignRecruitmentCapacityHTML(root,campaignPlayer(c))+_campaignForceManagerHTML_rev23(root,c)};
+const _campaignOverviewHTML_rev23=campaignOverviewHTML;
+campaignOverviewHTML=function(root,c){return _campaignOverviewHTML_rev23(root,c)+campaignRecruitmentCapacityHTML(root,campaignPlayer(c))};
+
+/* replace AI reinforcement logic so autonomous powers obey the same empire pool */
+campaignAIRecruit=function(c,root,fac){
+  campaignRev23EnsureFaction(fac);const q=campaignRecruitmentCapacity(root,fac);if(q.remaining<500||fac.treasury.materiel<2)return false;
+  let tf=(fac.taskForces||[]).slice().sort((a,b)=>campaignTaskForcePoints(b)-campaignTaskForcePoints(a))[0],want=Math.min(2500,q.remaining,Math.floor(fac.treasury.materiel/3)*250);want=Math.floor(want/250)*250;if(want<500)return false;
+  if(!tf){want=Math.min(want,1500);tf=campaignTaskForceFromGenerated(fac.key,want,fac.homeSystemId||fac.territory[0],`${fac.name} Field Army`);fac.taskForces.push(tf)}else{const reinforcement=campaignTaskForceFromGenerated(fac.key,want,tf.systemId,'Reinforcement');tf.detachments.push(...reinforcement.detachments.map((d,i)=>({...d,id:`${d.id}-r${c.turn}-${i}`,name:`Reinforcement Detachment T${c.turn}`})))}
+  const cost=Math.max(2,Math.ceil(want/250));fac.treasury.materiel=Math.max(0,fac.treasury.materiel-cost);campaignRecordRecruitment(root,fac,want);campaignLog(c,`${fac.name} autonomously mustered approximately ${want.toLocaleString()} points of reinforcement (${campaignRecruitmentCapacity(root,fac).used.toLocaleString()}/${q.cap.toLocaleString()} mobilisation used).`,'ai');return true;
+};
+
+/* ----- Fleet actions ----- */
+function campaignFleetActions(root,fleet){const c=root?.campaign;if(!c||!fleet)return{used:0,limit:CAMPAIGN_FLEET_ACTION_LIMIT,remaining:0};if(fleet.actionTurn!==c.turn){fleet.actionTurn=c.turn;fleet.actionsUsed=0}const used=Math.max(0,Number(fleet.actionsUsed)||0);return{used,limit:CAMPAIGN_FLEET_ACTION_LIMIT,remaining:Math.max(0,CAMPAIGN_FLEET_ACTION_LIMIT-used)}}
+function campaignSpendFleetAction(root,fleet,label){const q=campaignFleetActions(root,fleet);if(q.remaining<1){if(!campaignPlayer(root.campaign)?.ai)campaignLog(root.campaign,`${fleet.name} has exhausted its ${q.limit} fleet actions for Turn ${root.campaign.turn}.`,'war');return false}fleet.actionsUsed=q.used+1;fleet.lastActionLabel=label;return true}
+function campaignUndoFleetAction(root,fleet){fleet.actionsUsed=Math.max(0,(Number(fleet.actionsUsed)||0)-1)}
+const _campaignFleetIssueMove_rev23=campaignFleetIssueMove;
+campaignFleetIssueMove=function(root,fac,fleet,targetId,attackTfId=null,ai=false){if(!campaignSpendFleetAction(root,fleet,attackTfId?'Invasion order':'Translation order'))return false;const ok=_campaignFleetIssueMove_rev23(root,fac,fleet,targetId,attackTfId,ai);if(!ok)campaignUndoFleetAction(root,fleet);return ok};
+for(const name of ['campaignEmbarkForce','campaignDisembarkForce','campaignFleetRedesignate']){const old=window[name];window[name]=function(root,fac,fleet,...args){if(!campaignSpendFleetAction(root,fleet,name==='campaignEmbarkForce'?'Embarkation':name==='campaignDisembarkForce'?'Disembarkation':'Role redesignation'))return false;const ok=old(root,fac,fleet,...args);if(!ok)campaignUndoFleetAction(root,fleet);return ok}}
+const _campaignFleetCardHTML_rev23=campaignFleetCardHTML;
+campaignFleetCardHTML=function(root,c,fac,fleet,owned){let h=_campaignFleetCardHTML_rev23(root,c,fac,fleet,owned),q=campaignFleetActions(root,fleet),line=`<div class="campaign-fleet-actions ${q.remaining?'':'exhausted'}">Fleet actions: <b>${q.remaining}/${q.limit} remaining this turn</b>${fleet.lastActionLabel?` • last: ${esc(fleet.lastActionLabel)}`:''}</div>`;const i=h.lastIndexOf('</div>');return i>=0?h.slice(0,i)+line+h.slice(i):h+line};
+
+/* ----- AI offensive opportunity & on-screen attack notices ----- */
+function campaignWarCount(c){let n=0,seen=new Set();for(const a of c.factions||[])for(const b of c.factions||[]){if(a.id>=b.id)continue;const k=a.id+'|'+b.id;if(!seen.has(k)&&campaignRelationState(campaignRelation(c,a,b))==='War'){seen.add(k);n++}}return n}
+function campaignQueueNotice(root,title,text){const c=campaignRev23Ensure(root);c.playerNotifications.push({title,text,turn:c.turn});setTimeout(()=>campaignShowNextNotice(root),80)}
+function campaignShowNextNotice(root){if(document.querySelector('.campaign-notify-overlay'))return;const c=root?.campaign,n=c?.playerNotifications?.shift();if(!n)return;const d=document.createElement('div');d.className='campaign-notify-overlay';d.innerHTML=`<div class="campaign-notify-card"><h3>${esc(n.title)}</h3><p>${esc(n.text)}</p><div class="campaign-actionrow"><button class="ghost" type="button" data-notice-close>Continue</button></div></div>`;document.body.appendChild(d);d.querySelector('[data-notice-close]').addEventListener('click',()=>{d.remove();campaignShowNextNotice(root)})}
+function campaignAIOffensiveOpportunity(root,fac){
+  const c=root.campaign,wars=(c.factions||[]).filter(o=>o.id!==fac.id&&campaignRelationState(campaignRelation(c,fac,o))==='War');if(!wars.length)return false;
+  const player=campaignPlayer(c),globalWars=campaignWarCount(c),candidates=[];
+  for(const tf of fac.taskForces||[]){if(tf.movedTurn===c.turn)continue;for(const n of campaignNeighbors(root,tf.systemId)){const o=campaignOwner(c,n.id);if(o&&wars.some(w=>w.id===o.id))candidates.push({tf,target:n,owner:o})}}
+  if(!candidates.length)return false;const vsPlayer=candidates.some(x=>x.owner.id===player?.id),chance=Math.min(.9,(vsPlayer?.68:.48)+(globalWars>=2?.14:0)+((fac.personality==='Aggressive'||fac.personality==='Relentless')?0.10:0));if(campaignRandom(c,`rev23 offensive ${fac.id}`)>chance)return false;
+  candidates.sort((a,b)=>(c.systems[a.target.id]?.defence||0)-(c.systems[b.target.id]?.defence||0)||campaignTaskForcePoints(b.tf)-campaignTaskForcePoints(a.tf));const x=candidates[0];campaignLog(c,`${fac.name} identified an offensive opportunity against ${x.owner.name} at ${x.target.name}.`,'war');return campaignMoveTaskForce(root,fac,x.tf,x.target.id,true,true)
+}
+function campaignAIDiplomacy(root,fac){const c=root.campaign,others=(c.factions||[]).filter(x=>x.id!==fac.id);if(!others.length||campaignRandom(c,`AI diplomacy gate ${fac.id}`)>.32)return false;others.sort((a,b)=>campaignRelation(c,fac,b)-campaignRelation(c,fac,a));for(const t of others){const rel=campaignRelation(c,fac,t),state=campaignRelationState(rel),ags=campaignAgreements(c,fac,t),power=campaignDiplomaticPower(c,fac)/campaignDiplomaticPower(c,t);if(state==='War'){if((power<.72||fac.treasury.supply<6)&&campaignRandom(c,`AI peace ${fac.id} ${t.id}`)<.5){campaignSetRelation(c,fac,t,-10);campaignBreakAgreements(c,fac,t);campaignLog(c,`${fac.name} and ${t.name} concluded an autonomous peace settlement.`,'ai');return true}continue}if(rel>=65&&!campaignAgreement(c,fac,t,'alliance')&&campaignRandom(c,`AI alliance ${fac.id} ${t.id}`)<.16){campaignAddAgreement(c,fac,t,'alliance');campaignSetRelation(c,fac,t,Math.max(70,rel));campaignLog(c,`${fac.name} and ${t.name} formed an alliance.`,'ai');return true}if(rel>=35&&!campaignAgreement(c,fac,t,'defence')&&campaignRandom(c,`AI defence ${fac.id} ${t.id}`)<.22){campaignAddAgreement(c,fac,t,'defence');campaignLog(c,`${fac.name} and ${t.name} formed a defensive pact.`,'ai');return true}if(rel>=10&&!campaignAgreement(c,fac,t,'trade')&&campaignRandom(c,`AI trade ${fac.id} ${t.id}`)<.3){campaignAddAgreement(c,fac,t,'trade');campaignSetRelation(c,fac,t,rel+5);campaignLog(c,`${fac.name} and ${t.name} opened a mutual trade agreement.`,'ai');return true}if(rel>=0&&!campaignAgreement(c,fac,t,'nap')&&campaignRandom(c,`AI nap ${fac.id} ${t.id}`)<.26){campaignAddAgreement(c,fac,t,'nap');campaignSetRelation(c,fac,t,Math.max(10,rel));campaignLog(c,`${fac.name} and ${t.name} signed a non-aggression pact.`,'ai');return true}if(rel>=45&&power>2.2&&!t.overlordId&&campaignRandom(c,`AI vassal ${fac.id} ${t.id}`)<.08){t.overlordId=fac.id;campaignBreakAgreements(c,fac,t);campaignAddAgreement(c,fac,t,'vassal',fac.id);campaignSetRelation(c,fac,t,90);campaignLog(c,`${t.name} accepted vassalisation under ${fac.name}.`,'ai');return true}}return false}
+const _campaignAITurn_rev23=campaignAITurn;
+campaignAITurn=function(root,fac){campaignRev23Ensure(root);campaignAIOffensiveOpportunity(root,fac);const out=_campaignAITurn_rev23(root,fac);campaignAIDiplomacy(root,fac);if(campaignRandom(root.campaign,`AI ceiling attempt ${fac.id}`)<.1)campaignAttemptTechCeiling(root,fac,true);return out};
+function campaignTreatyWarResponse(root,attacker,defender){const c=root.campaign,p=campaignPlayer(c);for(const a of c.diplomacyAgreements||[]){if(a.active===false)continue;let protectorId=null;if((a.type==='defence'||a.type==='alliance')&&a.pair===dipPair(defender,campaignFaction(c,a.aId===defender.id?a.bId:a.aId))){if(a.aId===defender.id)protectorId=a.bId;else if(a.bId===defender.id)protectorId=a.aId}else if(a.type==='guarantee'&&a.bId===defender.id)protectorId=a.fromId;if(!protectorId||protectorId===attacker.id)continue;const protector=campaignFaction(c,protectorId);if(!protector||campaignRelationState(campaignRelation(c,protector,attacker))==='War')continue;campaignSetRelation(c,protector,attacker,-75);campaignLog(c,`${protector.name} entered the war against ${attacker.name} under a ${a.type==='guarantee'?'guarantee of independence':dipTypeLabel(a.type)} with ${defender.name}.`,'war');if(protector.id===p?.id||defender.id===p?.id)campaignQueueNotice(root,'Treaty War Escalation',`${protector.name} has entered the war against ${attacker.name} in defence of ${defender.name}.`)}}
+const _campaignCreateBattle_rev23=campaignCreateBattle;
+campaignCreateBattle=function(root,attacker,atf,defender,sysId,ai=false){const ok=_campaignCreateBattle_rev23(root,attacker,atf,defender,sysId,ai);if(ok){campaignTreatyWarResponse(root,attacker,defender);if(attacker?.ai){const p=campaignPlayer(root.campaign),rec=campaignRecord(root,sysId);campaignQueueNotice(root,'Autonomous Offensive',`${attacker.name} has launched an attack against ${defender.name} at ${rec?.name||sysId}.${defender.id===p?.id?' Your forces are directly engaged.':''}`)}}return ok};
+
+/* ----- Hard technology ceiling breakthroughs ----- */
+const _campaignFactionTech_rev23=campaignFactionTech;
+campaignFactionTech=function(fac){campaignRev23EnsureFaction(fac);const meta=campaignTechMeta(fac?.key),bonus=Math.max(0,Number(fac?.techBonus||0)),colony=campaignFactionResearchBonus(fac),max=Math.min(CAMPAIGN_TECH_ABSOLUTE_CEILING,meta.max+Math.max(0,Number(fac.techCeilingBonus)||0)),tier=Math.min(max,meta.base+bonus+colony);return{tier,base:meta.base,max,bonus,colony,label:CAMPAIGN_TECH_NAMES[tier-1]||`Tier ${tier}`,identity:meta.label,domain:meta.domain,progress:Number(fac?.researchProgress||0)}};
+campaignResearchArmoury=function(root,fac){const c=root.campaign,tech=campaignFactionTech(fac);if(tech.tier>=tech.max){campaignLog(c,`${fac.name} is at its current campaign technology ceiling (${campaignTechTierLabel(tech.max)}). A ceiling breakthrough is required before further normal research.`,'roll');return false}if(fac.treasury.materiel<8||fac.treasury.influence<3||fac.command<1)return false;fac.treasury.materiel-=8;fac.treasury.influence-=3;fac.command--;const colony=campaignFactionResearchBonus(fac),r=campaignRoll(c,`${fac.name} military research`,6,colony),gain=Math.max(1,r.total);fac.researchProgress=(fac.researchProgress||0)+gain;const threshold=8+Math.max(0,tech.tier-tech.base)*3;if(fac.researchProgress>=threshold){fac.researchProgress-=threshold;fac.techBonus=(fac.techBonus||0)+1;campaignLog(c,`${fac.name} expanded its arsenal knowledge to ${campaignFactionTech(fac).label}.`,'gain')}else campaignLog(c,`${fac.name} gained ${gain} military research progress (${fac.researchProgress}/${threshold}).`,'gain');return true};
+function campaignTechCeilingRequirements(root,fac){const tech=campaignFactionTech(fac),breaks=Math.max(0,Number(fac.ceilingBreakthroughs)||0),researchTiers=(fac.settlements||[]).filter(s=>s.status!=='Destroyed'&&(s.colony?.size||0)>=5).map(s=>campaignDistrictTier(s.colony,'research')),research=Math.max(0,...researchTiers),cost={supply:15+breaks*5,materiel:30+breaks*15,influence:18+breaks*8,command:2},target=10+Math.min(2,breaks);const reasons=[];if(tech.max>=CAMPAIGN_TECH_ABSOLUTE_CEILING)reasons.push(`absolute campaign ceiling T${CAMPAIGN_TECH_ABSOLUTE_CEILING} reached`);if(tech.tier<tech.max)reasons.push(`must first reach current ceiling T${tech.max}`);if(research<4)reasons.push('requires a Size 5 settlement with a Tier IV+ Research district');if(fac.treasury.supply<cost.supply)reasons.push(`${cost.supply} Supply`);if(fac.treasury.materiel<cost.materiel)reasons.push(`${cost.materiel} Materiel`);if(fac.treasury.influence<cost.influence)reasons.push(`${cost.influence} Influence`);if(fac.command<cost.command)reasons.push(`${cost.command} Command`);return{ok:!reasons.length,reasons,cost,target,research,tech}}
+function campaignAttemptTechCeiling(root,fac,ai=false){const c=root?.campaign;if(!c||!fac)return false;const q=campaignTechCeilingRequirements(root,fac);if(!q.ok)return false;fac.treasury.supply-=q.cost.supply;fac.treasury.materiel-=q.cost.materiel;fac.treasury.influence-=q.cost.influence;fac.command-=q.cost.command;const mod=Math.min(2,Math.floor(q.research/3)),r=campaignRoll(c,`${fac.name} technology-ceiling breakthrough`,12,mod);if(r.total>=q.target){fac.techCeilingBonus=(fac.techCeilingBonus||0)+1;fac.ceilingBreakthroughs=(fac.ceilingBreakthroughs||0)+1;campaignLog(c,`${fac.name} broke through its campaign technology ceiling. New maximum: ${campaignTechTierLabel(campaignFactionTech(fac).max)}.`,'gain');if(!ai)campaignQueueNotice(root,'Technology Ceiling Broken',`${fac.name} can now research toward ${campaignTechTierLabel(campaignFactionTech(fac).max)}.`);return true}campaignLog(c,`${fac.name} failed a technology-ceiling breakthrough (needed ${q.target}+). The committed strategic resources were consumed.`,'war');return false}
+const _campaignTechHTML_rev23=campaignTechHTML;
+campaignTechHTML=function(fac){let h=_campaignTechHTML_rev23(fac),root=window.currentSector,q=root?.campaign?campaignTechCeilingRequirements(root,fac):null;if(!q)return h;const extra=`<div class="campaign-tech-ceiling"><b>Raise Campaign Technology Ceiling</b><div class="hint">Current maximum ${campaignTechTierLabel(q.tech.max)}. This is intentionally difficult: reach the ceiling, maintain a Size 5 settlement with Tier IV+ Research, then commit ${q.cost.supply} Supply, ${q.cost.materiel} Materiel, ${q.cost.influence} Influence and ${q.cost.command} Command for a d12 breakthrough (target ${q.target}+).</div>${fac.id===root.campaign.playerFactionId?`<button id="campaignTechCeilingBtn" class="ghost" type="button" ${q.ok?'':'disabled'}>${q.tech.max>=CAMPAIGN_TECH_ABSOLUTE_CEILING?'Absolute Ceiling Reached':q.ok?'Attempt Ceiling Breakthrough':'Breakthrough Requirements Not Met'}</button>`:''}</div>`;return h+extra};
+
+/* ----- Diplomacy system ----- */
+const DIPLO_ACTIONS={
+ improve:{label:'Improve Relations',desc:'Formal mission intended only to improve standing.',difficulty:0,cost:1,relation:8},
+ nap:{label:'Non-Aggression Pact',desc:'Both sides pledge not to declare war while the pact stands.',difficulty:8,cost:2,minRel:-20},
+ access:{label:'Military Access',desc:'Permission to move strategic forces through controlled territory without treating entry as hostile.',difficulty:15,cost:3,minRel:0},
+ trade:{label:'Mutual Trade Agreement',desc:'Two-way commercial compact; both powers gain a small recurring economic benefit.',difficulty:10,cost:2,minRel:-5},
+ aid:{label:'One-Way Trade / Aid',desc:'A unilateral concession. The proposer commits resources and receives a stronger diplomatic improvement.',difficulty:-8,cost:1,minRel:-30},
+ guarantee:{label:'Guarantee Independence',desc:'A unilateral security guarantee improving trust and providing a basis for later defensive arrangements.',difficulty:5,cost:2,minRel:5},
+ defence:{label:'Defensive Pact',desc:'Mutual defence commitment; requires substantial trust.',difficulty:28,cost:4,minRel:30},
+ alliance:{label:'Alliance',desc:'Full strategic alliance short of direct subordination.',difficulty:40,cost:6,minRel:55},
+ vassal:{label:'Demand / Offer Vassalisation',desc:'Attempt to subordinate the target as a vassal. Power disparity and relations strongly affect acceptance.',difficulty:58,cost:8,minRel:35},
+ peace:{label:'Negotiate Peace',desc:'End the current war and reset relations to a cold peace.',difficulty:12,cost:2,warOnly:true}
+};
+function dipPair(a,b){return [a.id,b.id].sort().join('|')}
+function campaignAgreement(c,a,b,type){return (c.diplomacyAgreements||[]).find(x=>x.active!==false&&x.pair===dipPair(a,b)&&x.type===type)}
+function campaignAgreements(c,a,b){return (c.diplomacyAgreements||[]).filter(x=>x.active!==false&&x.pair===dipPair(a,b))}
+function campaignAddAgreement(c,a,b,type,fromId=null){const old=campaignAgreement(c,a,b,type);if(old)return old;const x={id:`dip-${c.turn}-${Date.now().toString(36)}-${type}`,pair:dipPair(a,b),aId:a.id,bId:b.id,type,fromId:fromId||a.id,startTurn:c.turn,active:true};c.diplomacyAgreements.push(x);return x}
+function campaignBreakAgreements(c,a,b){for(const x of campaignAgreements(c,a,b))x.active=false}
+function campaignDipPersonalityMod(f,action){const p=f.personality||'';let m=0;if(action==='alliance'||action==='defence'){if(['Defensive','Honour-bound'].includes(p))m+=8;if(['Aggressive','Relentless'].includes(p))m-=10}if(action==='vassal'){if(['Defensive','Opportunist'].includes(p))m+=4;if(['Relentless','Aggressive'].includes(p))m-=8}if(action==='trade'&&['Technocratic','Opportunist','Expansionist'].includes(p))m+=8;if(action==='nap'&&p==='Relentless')m-=18;return m}
+function campaignDiplomaticPower(c,f){return Math.max(1,campaignFactionPower(c,f)+(f.territory?.length||0)*5000+(f.settlements?.length||0)*2500)}
+function campaignDiplomacyProposal(root,targetId,action,boost=0){const c=campaignRev23Ensure(root),p=campaignPlayer(c),t=campaignFaction(c,targetId),cfg=DIPLO_ACTIONS[action];if(!p||!t||!cfg||p.id===t.id)return false;boost=Math.max(0,Math.min(10,Number(boost)||0));const rel=campaignRelation(c,p,t),war=campaignRelationState(rel)==='War';if(cfg.warOnly&&!war)return false;if(!cfg.warOnly&&war&&action!=='improve')return false;const totalCost=cfg.cost+boost;if(p.treasury.influence<totalCost||p.command<1)return false;if(cfg.minRel!=null&&rel<cfg.minRel&&action!=='aid')return false;p.treasury.influence-=totalCost;p.command--;
+  if(action==='improve'){const rr=campaignRoll(c,`${p.name} diplomatic mission to ${t.name}`,6,Math.floor(boost/2)),delta=Math.max(3,cfg.relation+rr.total);campaignSetRelation(c,p,t,rel+delta);campaignLog(c,`Diplomatic mission improved relations with ${t.name} by ${delta}.`,'gain');campaignPersist(root);campaignRenderDashboard(root);return true}
+  const powerRatio=campaignDiplomaticPower(c,p)/campaignDiplomaticPower(c,t),powerMod=action==='vassal'?Math.round((powerRatio-1)*25):0,score=50+rel*.45+boost*5+campaignDipPersonalityMod(t,action)+powerMod-cfg.difficulty,roll=1+Math.floor(campaignRandom(c,`diplomacy ${action} ${t.id}`)*100),accepted=roll<=Math.max(5,Math.min(95,score));campaignLog(c,`${cfg.label} with ${t.name}: acceptance ${roll} vs ${Math.round(Math.max(5,Math.min(95,score)))}%${boost?` after ${boost} Influence leverage`:''}.`,accepted?'gain':'war');if(!accepted){campaignSetRelation(c,p,t,rel-2);campaignPersist(root);campaignRenderDashboard(root);return false}
+  if(action==='peace'){campaignBreakAgreements(c,p,t);campaignSetRelation(c,p,t,-10)}
+  else if(action==='nap'){campaignAddAgreement(c,p,t,'nap');campaignSetRelation(c,p,t,Math.max(rel,10))}
+  else if(action==='access'){campaignAddAgreement(c,p,t,'access',p.id);campaignSetRelation(c,p,t,rel+8)}
+  else if(action==='trade'){campaignAddAgreement(c,p,t,'trade');campaignSetRelation(c,p,t,rel+12)}
+  else if(action==='aid'){if(p.treasury.supply>=4){p.treasury.supply-=4;t.treasury.supply+=4}campaignAddAgreement(c,p,t,'aid',p.id);campaignSetRelation(c,p,t,rel+18)}
+  else if(action==='guarantee'){campaignAddAgreement(c,p,t,'guarantee',p.id);campaignSetRelation(c,p,t,rel+10)}
+  else if(action==='defence'){campaignAddAgreement(c,p,t,'defence');campaignSetRelation(c,p,t,Math.max(rel,45))}
+  else if(action==='alliance'){campaignAddAgreement(c,p,t,'alliance');campaignSetRelation(c,p,t,Math.max(rel,70))}
+  else if(action==='vassal'){t.overlordId=p.id;campaignBreakAgreements(c,p,t);campaignAddAgreement(c,p,t,'vassal',p.id);campaignSetRelation(c,p,t,90)}
+  campaignPersist(root);campaignRenderDashboard(root);return true;
+}
+function campaignDeclareWarRev23(root,targetId){const c=campaignRev23Ensure(root),p=campaignPlayer(c),t=campaignFaction(c,targetId);if(!t)return;campaignBreakAgreements(c,p,t);campaignSetRelation(c,p,t,-80);campaignLog(c,`${p.name} declared war on ${t.name}; bilateral treaties were terminated.`,'war');campaignPersist(root);campaignRenderDashboard(root)}
+function dipTypeLabel(t){return({nap:'Non-Aggression Pact',access:'Military Access',trade:'Trade Agreement',aid:'One-Way Trade / Aid',guarantee:'Independence Guarantee',defence:'Defensive Pact',alliance:'Alliance',vassal:'Vassalisation'})[t]||t}
+campaignDiplomacyHTML=function(root,c){const p=campaignPlayer(c),cards=c.factions.filter(f=>f.id!==p.id).map(f=>{const rel=campaignRelation(c,p,f),st=campaignRelationState(rel),ags=campaignAgreements(c,p,f),war=st==='War',vassal=f.overlordId===p.id;const actions=Object.entries(DIPLO_ACTIONS).filter(([k,a])=>war?a.warOnly||k==='improve':!a.warOnly).map(([k,a])=>`<div class="campaign-dip-action"><b>${esc(a.label)}</b><small>${esc(a.desc)} Base Influence ${a.cost}${a.minRel!=null?` • relation ${a.minRel}+`:''}.</small><button class="ghost" type="button" data-dip-proposal="${k}" data-faction="${f.id}">${k==='peace'?'Propose Peace':'Propose'}</button></div>`).join('');return `<section class="campaign-dip-target" style="--fac:${f.color}"><div class="campaign-dip-head"><h4>${esc(f.name)}</h4><span class="badge">${rel} • ${esc(st)}</span>${vassal?'<span class="badge">Your Vassal</span>':''}<span class="spacer"></span><span class="hint">Power ${campaignDiplomaticPower(c,f).toLocaleString()}</span></div><div class="campaign-dip-agreements">${ags.length?ags.map(a=>`<span class="campaign-dip-agreement">${esc(dipTypeLabel(a.type))}</span>`).join(''):'<span class="hint">No active bilateral agreements.</span>'}</div><div class="campaign-dip-boost"><div class="hint">Influence leverage is spent in addition to the proposal cost and adds <b>+5 acceptance per Influence</b>. It is consumed even if the target refuses.</div><div class="field"><label>Negotiation leverage</label><select data-dip-boost-for="${f.id}"><option value="0">No extra Influence</option><option value="2">+2 Influence</option><option value="5">+5 Influence</option><option value="10">+10 Influence</option></select></div></div><div class="campaign-dip-actions">${actions}<div class="campaign-dip-action"><b>${war?'War Active':'Declare War'}</b><small>${war?'Use Negotiate Peace to end hostilities.':'Immediately sets relations to War and cancels incompatible agreements.'}</small><button class="ghost" type="button" data-dip-war="${f.id}" ${war?'disabled':''}>Declare War</button></div>${ags.length?`<div class="campaign-dip-action"><b>Break Treaties</b><small>Terminate all active agreements with this faction; relations deteriorate.</small><button class="ghost" type="button" data-dip-break="${f.id}">Break Agreements</button></div>`:''}</div></section>`}).join('');return `<div class="campaign-diplomacy-console"><div class="campaign-card"><h4>Diplomatic Framework</h4><p>Relations, negotiated treaties and power balance now operate separately. Influence can be committed as leverage to improve proposal acceptance. Agreements include unilateral and mutual arrangements, defensive commitments, alliance, vassalisation, peace and war.</p></div>${cards}</div>`};
+
+/* recurring diplomacy economy */
+const _campaignFactionIncome_rev23=campaignFactionIncome;
+campaignFactionIncome=function(c,root,fac){campaignRev23Ensure(root);const t=_campaignFactionIncome_rev23(c,root,fac);for(const a of c.diplomacyAgreements||[]){if(a.active===false||!a.pair.includes(fac.id))continue;if(a.type==='trade'){fac.treasury.supply+=1;fac.treasury.materiel+=1;t.supply+=1;t.materiel+=1}else if(a.type==='aid'&&a.fromId!==fac.id){fac.treasury.supply+=1;t.supply+=1}}
+  if(fac.overlordId){const o=campaignFaction(c,fac.overlordId);if(o){const sm=Math.max(0,Math.floor(t.materiel*.2)),ss=Math.max(0,Math.floor(t.supply*.15));fac.treasury.materiel=Math.max(0,fac.treasury.materiel-sm);fac.treasury.supply=Math.max(0,fac.treasury.supply-ss);o.treasury.materiel+=sm;o.treasury.supply+=ss;campaignLog(c,`${fac.name} rendered vassal tribute to ${o.name}: ${ss} Supply and ${sm} Materiel.`,'ai')}}return t};
+
+/* ----- bind new controls after all prior dashboard handlers ----- */
+const _campaignBindDashboard_rev23=campaignBindDashboard;
+campaignBindDashboard=function(root){_campaignBindDashboard_rev23(root);const c=campaignRev23Ensure(root),p=campaignPlayer(c);document.querySelectorAll('[data-campaign-invest]').forEach(b=>b.addEventListener('click',()=>{if(campaignStrategicInvest(root,b.dataset.investSettlement,b.dataset.campaignInvest)){campaignRenderDashboard(root);campaignShowView('colonies')}}));$('campaignTechCeilingBtn')?.addEventListener('click',()=>{if(confirm('Commit the listed resources to a difficult technology-ceiling breakthrough attempt? The resources are consumed even on failure.')){campaignAttemptTechCeiling(root,p,false);campaignPersist(root);campaignRenderDashboard(root)}});document.querySelectorAll('[data-dip-proposal]').forEach(b=>b.addEventListener('click',()=>{const boost=Number(document.querySelector(`[data-dip-boost-for="${b.dataset.faction}"]`)?.value||0);campaignDiplomacyProposal(root,b.dataset.faction,b.dataset.dipProposal,boost);campaignShowView('diplomacy')}));document.querySelectorAll('[data-dip-war]').forEach(b=>b.addEventListener('click',()=>{if(confirm('Declare war and cancel bilateral treaties?'))campaignDeclareWarRev23(root,b.dataset.dipWar);campaignShowView('diplomacy')}));document.querySelectorAll('[data-dip-break]').forEach(b=>b.addEventListener('click',()=>{const t=campaignFaction(c,b.dataset.dipBreak);campaignBreakAgreements(c,p,t);campaignSetRelation(c,p,t,campaignRelation(c,p,t)-15);campaignLog(c,`${p.name} terminated its active agreements with ${t.name}.`,'war');campaignPersist(root);campaignRenderDashboard(root);campaignShowView('diplomacy')}))};
+
+/* Ensure end-turn presentation covers the campaign viewer and clean temporary turn programs after resolution. */
+const _campaignEndTurn_rev23=campaignEndTurn;
+campaignEndTurn=function(root){const c=campaignRev23Ensure(root),before=c?.turn;const out=_campaignEndTurn_rev23(root);const watch=()=>{if(!root?.campaign)return;if(root.campaign._endTurnProcessing){setTimeout(watch,120);return}if(root.campaign.turn!==before){for(const f of root.campaign.factions||[])for(const s of f.settlements||[])if(s.colony?.campaignStrategicInvestment&&s.colony.campaignStrategicInvestment.turn<root.campaign.turn)delete s.colony.campaignStrategicInvestment;campaignPersist(root);campaignShowNextNotice(root)}};setTimeout(watch,120);return out};
+
+const _campaignRulesReferenceHTML_rev23=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev23(root);const add=`<div class="campaign-rule-card"><h4>13. Mobilisation & Fleet Actions</h4><p>Each fleet can perform up to ${CAMPAIGN_FLEET_ACTION_LIMIT} strategic fleet actions per turn. Recruitment is also capped by an empire-wide mobilisation pool generated by all active colonies: population/Size forms the base, recruitment districts are the strongest multiplier, and defence/garrison infrastructure adds reserve capacity.</p></div><div class="campaign-rule-card"><h4>14. Strategic Colony Investment</h4><p>A faction may spend Supply and Influence to fund one temporary programme per settlement per turn, granting +2 Productivity, Order or Piety/Cohesion through that 90-day economy and colony resolution.</p></div><div class="campaign-rule-card"><h4>15. Diplomacy & Technology Ceilings</h4><p>Diplomacy supports non-aggression, access, mutual trade, unilateral aid, guarantees, defensive pacts, alliances, vassalisation, peace and war. Extra Influence can be committed as negotiation leverage. Normal research stops at the current faction ceiling; raising that ceiling requires a Size 5 advanced Research settlement, large strategic expenditure and a difficult breakthrough roll.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
+
+const rb=document.querySelector('.generation-head-actions .badge');if(rb)rb.textContent='rev 23.0 Grand Strategy Diplomacy & Mobilisation';
+document.documentElement.dataset.cartographicaRevision='23';
+})();
+</script>
+
 <script>
 /* iPhone Home-Screen orientation guard: prefer primary portrait and avoid inverted secondary portrait. */
 (function(){
@@ -3987,16 +4181,16 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || location.hos
 <script>
 /* Revision 18 cache migration: purge any pre-r18 Cartographica caches and force the latest service worker. */
 (function(){
-  const REV='22';
+  const REV='23';
   document.documentElement.dataset.cartographicaRevision=REV;
   window.addEventListener('load', async ()=>{
     try{
       if('caches' in window){
         const keys=await caches.keys();
-        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r22-resource-expeditions-colonial-focus-v1/i.test(k)).map(k=>caches.delete(k)));
+        await Promise.all(keys.filter(k=>/cartographica/i.test(k) && !/r23-grand-strategy-diplomacy-mobilisation-v1/i.test(k)).map(k=>caches.delete(k)));
       }
       if('serviceWorker' in navigator){
-        const reg=await navigator.serviceWorker.register('./sw.js?v=22-resource-expeditions-colonial-focus-v1',{updateViaCache:'none'});
+        const reg=await navigator.serviceWorker.register('./sw.js?v=23-grand-strategy-diplomacy-mobilisation-v1',{updateViaCache:'none'});
         try{ await reg.update(); }catch(_){}
       }
     }catch(_){}
