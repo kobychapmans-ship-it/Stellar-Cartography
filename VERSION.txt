@@ -1,4 +1,5 @@
 Administratum Stellar Cartographica
-Revision: 23.7
-Build: 23.7-planetary-territories-v14
-PWA identity retained for in-place update. Offline shell cache: cartographica-r23.7-planetary-territories-v14.
+Revision: 23.8
+Build: 23.8-frontier-contact-expeditions-v15
+PWA identity retained for in-place update.
+Offline shell cache: cartographica-r23.8-frontier-contact-expeditions-v15.

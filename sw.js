@@ -1,5 +1,5 @@
-const CACHE_NAME='cartographica-r23.7-planetary-territories-v14';
-const CANONICAL='./index.html?rev=23.7-planetary-territories-v14';
+const CACHE_NAME='cartographica-r23.8-frontier-contact-expeditions-v15';
+const CANONICAL='./index.html?rev=23.8-frontier-contact-expeditions-v15';
 const SHELL=[CANONICAL,'./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 
 self.addEventListener('install',event=>{
