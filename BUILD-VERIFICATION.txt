@@ -1,18 +1,25 @@
-Stellar Cartography PWA — v24.2.1 Full Planetary Data Verification
+# Build Verification — Revision 24.2.2
 
-Build: 24.2.1-full-planetary-data-v20
+- PASS — revision
+- PASS — bright_borders
+- PASS — highlight
+- PASS — zoom_controls
+- PASS — pinch
+- PASS — inertia
+- PASS — legacy_data
+- PASS — script_0_syntax
+- PASS — script_1_syntax
+- PASS — script_2_syntax
+- PASS — script_3_syntax
+- PASS — sw.js_syntax
+- PASS — sw-v23-4.js_syntax
+- PASS — manifest
 
-PASS — v24.2 fixed-planet / orbital-camera Planetoid renderer retained.
-PASS — Full legacy Planetary Data Sheet is rendered beneath the Planetoid map.
-PASS — Stars of Inequity planetary survey remains present beneath the map.
-PASS — Habitability, atmosphere, climate, landmass, environment and resource data remain present.
-PASS — Full planetary territory/environment records remain present.
-PASS — Native species / inhabitants and sovereignty information remain present.
-PASS — Satellite map/list and moon records remain present.
-PASS — Campaign object claims and settlement records remain present beneath the Planetoid map.
-PASS — Per-territory campaign sovereignty and settlement occupancy summary added beneath the legacy data.
-PASS — Existing inspector controls are rebound in Planetoid view.
-PASS — Embedded JavaScript syntax validation completed with 0 syntax errors.
-PASS — sw.js and compatibility service worker use v20 cache identity.
-PASS — manifest start_url points to v20 canonical build.
-PASS — PWA remains self-contained/offline-capable after first successful online load.
+Key changes:
+- Gold/white territory borders
+- Persistent selected-territory highlight
+- Smooth inertial orbital-camera drag
+- Wheel/trackpad zoom
+- Two-finger pinch zoom and pan
+- + / − / Reset controls
+- Full v24.2.1 planetary data remains beneath the map

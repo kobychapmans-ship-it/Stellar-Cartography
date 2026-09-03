@@ -1,5 +1,5 @@
-const CACHE_NAME='cartographica-r24.2.1-full-planetary-data-v20';
-const CANONICAL='./index.html?rev=24.2.1-full-planetary-data-v20';
+const CACHE_NAME='cartographica-r24.2.2-globe-interaction-v21';
+const CANONICAL='./index.html?rev=24.2.2-globe-interaction-v21';
 const SHELL=[CANONICAL,'./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 self.addEventListener('install',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/cartographica/i.test(k)&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>caches.open(CACHE_NAME)).then(cache=>cache.addAll(SHELL.map(x=>new Request(x,{cache:'reload'})))).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/cartographica/i.test(k)&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});

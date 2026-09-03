@@ -1,16 +1,26 @@
 {
-  "name": "Administratum Stellar Cartographica — Revision 24.2.1",
-  "short_name": "Cartographica R24.2.1",
-  "description": "Revision 24.2.1 preserves the full legacy planetary data sheet, Stars of Inequity survey, territory/environment records, claims, settlements, native sovereignty, satellites and campaign actions beneath the fixed-planet Planetoid map.",
+  "name": "Administratum Stellar Cartographica — Revision 24.2.2",
+  "short_name": "Cartographica R24.2.2",
+  "description": "Revision 24.2.2 improves Planetoid globe readability and interaction with high-contrast territory borders, zoom controls, pinch zoom, inertial orbital-camera movement, scene panning and persistent territory highlighting while preserving the full planetary record.",
   "id": "./?app=cartographica-r23.4-final-offline-v8",
-  "start_url": "./index.html?rev=24.2.1-full-planetary-data-v20",
+  "start_url": "./index.html?rev=24.2.2-globe-interaction-v21",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",
   "theme_color": "#05070a",
   "orientation": "portrait-primary",
   "icons": [
-    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
-    {"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }

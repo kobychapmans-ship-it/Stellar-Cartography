@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="24.2.1" />
+<meta name="cartographica-revision" content="24.2.2" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=24.2.1-full-planetary-data-v20" />
+<link rel="manifest" href="./manifest.webmanifest?v=24.2.2-globe-interaction-v21" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='24.2.1';
-  const BUILD='24.2.1-full-planetary-data-v20';
-  const LABEL='rev 24.2.1 — Full Planetary Record';
-  const TITLE='Administratum Stellar Cartographica — Revision 24.2.1';
+  const REVISION='24.2.2';
+  const BUILD='24.2.2-globe-interaction-v21';
+  const LABEL='rev 24.2.2 — Globe Interaction & Territory Highlight';
+  const TITLE='Administratum Stellar Cartographica — Revision 24.2.2';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 24.2.1</title>
+<title>Administratum Stellar Cartographica — Revision 24.2.2</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -5692,6 +5692,86 @@ const _campaignRulesReferenceHTML_rev2421=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev2421(root);const add=`<div class="campaign-rule-card"><h4>50. Full Planetary Record Preservation</h4><p>The Planetoid layer never replaces the detailed planetary record. The complete legacy data sheet, Stars of Inequity survey, habitability, climate, resources, territories, native life, satellite records, campaign claims, settlements and related actions remain directly below the 3D Planetoid map.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
 const rb2421=document.querySelector('.generation-head-actions .badge');if(rb2421)rb2421.textContent='rev 24.2.1 — Full Planetary Record';document.title='Administratum Stellar Cartographica — Revision 24.2.1';document.documentElement.dataset.cartographicaRevision=REV2421;document.documentElement.dataset.cartographicaBuild=REV2421_BUILD;window.__cartoRevision2421={version:REV2421,build:REV2421_BUILD};
 
+
+/* ===== Revision 24.2.2 — Globe Interaction, Bright Borders & Territory Focus ===== */
+const REV2422='24.2.2';
+const REV2422_BUILD='24.2.2-globe-interaction-v21';
+window.currentTerritoryFocus2422=window.currentTerritoryFocus2422||null;
+const campaignTerritoryOverlayCache2422=new Map();
+function campaignTerritoryOverlay2422(w,R,selectedId){
+  const d=campaignPlanetRaster242(w,R),key=`${w.id}|${d.N}|${selectedId||'-'}|2422`;
+  if(campaignTerritoryOverlayCache2422.has(key))return campaignTerritoryOverlayCache2422.get(key);
+  const N=d.N,off=document.createElement('canvas');off.width=off.height=N;const ox=off.getContext('2d'),im=ox.createImageData(N,N),labs=d.labels;
+  const si=selectedId?d.seeds.findIndex(x=>x.tr.id===selectedId):-1;
+  const at=(x,y)=>x<0||y<0||x>=N||y>=N?-2:labs[y*N+x];
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){
+    const i=y*N+x,lab=labs[i];if(lab<0)continue;let k=i*4;
+    if(lab===si){im.data[k]=255;im.data[k+1]=211;im.data[k+2]=72;im.data[k+3]=48}
+    const border=at(x+1,y)!==lab||at(x-1,y)!==lab||at(x,y+1)!==lab||at(x,y-1)!==lab;
+    if(border){
+      const selected=lab===si||at(x+1,y)===si||at(x-1,y)===si||at(x,y+1)===si||at(x,y-1)===si;
+      const col=selected?[255,249,202,255]:[244,211,91,235];
+      for(let oy=-1;oy<=1;oy++)for(let ox2=-1;ox2<=1;ox2++){
+        const xx=x+ox2,yy=y+oy;if(xx<0||yy<0||xx>=N||yy>=N)continue;const q=(yy*N+xx)*4;
+        im.data[q]=col[0];im.data[q+1]=col[1];im.data[q+2]=col[2];im.data[q+3]=Math.max(im.data[q+3],col[3]);
+      }
+    }
+  }
+  ox.putImageData(im,0,0);campaignTerritoryOverlayCache2422.set(key,off);
+  if(campaignTerritoryOverlayCache2422.size>32){const first=campaignTerritoryOverlayCache2422.keys().next().value;campaignTerritoryOverlayCache2422.delete(first)}
+  return off;
+}
+const _campaignDrawFixedPlanet242_rev2422=campaignDrawFixedPlanet242;
+campaignDrawFixedPlanet242=function(ctx,w,cx,cy,R){
+  const state=_campaignDrawFixedPlanet242_rev2422(ctx,w,cx,cy,R),focus=window.currentTerritoryFocus2422,selected=focus&&focus.parentId===w.id?focus.territoryId:null,ov=campaignTerritoryOverlay2422(w,R,selected);
+  ctx.save();ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.clip();ctx.drawImage(ov,cx-R,cy-R,R*2,R*2);ctx.restore();
+  if(selected){ctx.save();ctx.strokeStyle='rgba(255,245,173,.95)';ctx.lineWidth=2.2;ctx.setLineDash([7,5]);ctx.beginPath();ctx.arc(cx,cy,R+4,0,Math.PI*2);ctx.stroke();ctx.restore()}
+  return state;
+};
+const _selectTerritory_rev2422=selectTerritory;
+selectTerritory=function(parentId,territoryId,sys,switchTab){
+  window.currentTerritoryFocus2422={parentId,territoryId};
+  document.querySelectorAll('[data-planetoid-territory241]').forEach(b=>b.classList.toggle('selected2422',b.dataset.planetoidTerritory241===territoryId));
+  return _selectTerritory_rev2422(parentId,territoryId,sys,window.currentPlanetoid241?false:switchTab);
+};
+function campaignDrawPlanetoidScene2422(canvas,root,sys,focusId){
+  const ctx=canvas.getContext('2d'),moons=campaignPlanetoidMoons241(root),rings=campaignPlanetoidRings241(root),W=canvas.width,H=canvas.height,seed=hashText(`${root.id}|orbital2422`);
+  let angle=.15,targetAngle=.15,tilt=-.08,targetTilt=-.08,zoom=1,targetZoom=1,panX=0,panY=0,targetPanX=0,targetPanY=0,velA=0,velT=0,state=null,moonHits=[],last=performance.now(),moved=false;
+  const pointers=new Map();let pinchStart=null,primary=null;
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  function controls(){return canvas._planetoidControls2422={zoomIn(){targetZoom=clamp(targetZoom*1.15,.52,2.25)},zoomOut(){targetZoom=clamp(targetZoom/1.15,.52,2.25)},reset(){targetAngle=.15;targetTilt=-.08;targetZoom=1;targetPanX=targetPanY=0;velA=velT=0},getZoom(){return targetZoom}}}
+  controls();
+  function draw(now=performance.now()){
+    if(!canvas.isConnected)return;const dt=Math.min(40,now-last);last=now;
+    if(!pointers.size){targetAngle+=velA*dt;targetTilt=clamp(targetTilt+velT*dt,-.92,.92);velA*=Math.pow(.90,dt/16);velT*=Math.pow(.88,dt/16)}
+    angle+=(targetAngle-angle)*.18;tilt+=(targetTilt-tilt)*.18;zoom+=(targetZoom-zoom)*.16;panX+=(targetPanX-panX)*.18;panY+=(targetPanY-panY)*.18;
+    const cx=W*.48+panX,cy=H*.50+panY,baseR=Math.min(W,H)*.285,R=baseR*zoom;campaignDrawStarfield242(ctx,W,H,angle,tilt,seed);
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(tilt*.28);ctx.translate(-cx,-cy);for(let i=moons.length-1;i>=0;i--){const rr=R*(1.62+i*.245);ctx.strokeStyle='rgba(119,154,165,.18)';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(cx,cy,rr,rr*.48,angle*.09,Math.PI,Math.PI*2);ctx.stroke()}ctx.restore();
+    rings.forEach((r,i)=>{const rr=R*(1.13+i*.10);ctx.strokeStyle=r.major?'rgba(196,178,132,.45)':'rgba(164,150,118,.29)';ctx.lineWidth=r.major?7:3;ctx.beginPath();ctx.ellipse(cx,cy,rr,rr*.23,-.12,0,Math.PI*2);ctx.stroke()});
+    state=campaignDrawFixedPlanet242(ctx,root,cx,cy,R);
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(tilt*.28);ctx.translate(-cx,-cy);for(let i=0;i<moons.length;i++){const rr=R*(1.62+i*.245);ctx.strokeStyle='rgba(126,165,176,.27)';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(cx,cy,rr,rr*.48,angle*.09,0,Math.PI);ctx.stroke()}ctx.restore();
+    moonHits=[];moons.forEach((m,i)=>{const rr=R*(1.62+i*.245),phase=(hashText(m.id)%628)/100+angle*(1+i*.055),rx=rr,ry=rr*(.46+tilt*.12),rot=tilt*.24,a=phase;let x=cx+Math.cos(a)*rx*Math.cos(rot)-Math.sin(a)*ry*Math.sin(rot),y=cy+Math.sin(a)*ry*Math.cos(rot)+Math.cos(a)*rx*Math.sin(rot),rad=Math.max(8,Math.min(24,10+(m.profile?.body?.environmentSize==='Vast'?9:m.profile?5:0))),dx=x-cx,dy=y-cy,d=Math.hypot(dx,dy),minD=R+rad+18;if(d<minD){const sc=minD/Math.max(1,d);x=cx+dx*sc;y=cy+dy*sc}ctx.fillStyle=m.profile?campaignPlanetPalette240({id:m.id,name:m.name},m.profile).mid:'#756f64';ctx.strokeStyle=focusId===m.id?'#fff0a3':'#d3bc62';ctx.lineWidth=focusId===m.id?3:1.5;const mg=ctx.createRadialGradient(x-rad*.35,y-rad*.4,rad*.1,x,y,rad);mg.addColorStop(0,'rgba(255,255,255,.34)');mg.addColorStop(.35,ctx.fillStyle);mg.addColorStop(1,'#11161a');ctx.fillStyle=mg;ctx.beginPath();ctx.arc(x,y,rad,0,Math.PI*2);ctx.fill();ctx.stroke();if(m.profile?.territories?.length){ctx.strokeStyle='#f0d56b';ctx.lineWidth=1.3;const n=Math.min(4,m.profile.territories.length);for(let j=1;j<n;j++){ctx.beginPath();ctx.arc(x,y,rad*(.24+j*.14),Math.PI*.12,Math.PI*1.18);ctx.stroke()}}ctx.fillStyle='#d6dfdc';ctx.font='700 9px ui-monospace,monospace';ctx.textAlign='center';ctx.fillText(m.name,x,y+rad+13);moonHits.push({x,y,r:Math.max(19,rad+7),m})});
+    ctx.fillStyle='rgba(218,204,157,.88)';ctx.font='700 10px ui-monospace,monospace';ctx.textAlign='left';ctx.fillText(`DRAG ORBITAL FIELD • PINCH/WHEEL TO ZOOM • ${Math.round(zoom*100)}%`,18,H-18);requestAnimationFrame(draw)
+  }
+  function local(e){const b=canvas.getBoundingClientRect();return{x:(e.clientX-b.left)*canvas.width/b.width,y:(e.clientY-b.top)*canvas.height/b.height}}
+  canvas.onpointerdown=e=>{const q=local(e);pointers.set(e.pointerId,{...q,clientX:e.clientX,clientY:e.clientY});canvas.setPointerCapture?.(e.pointerId);moved=false;if(pointers.size===1){primary=e.pointerId}else if(pointers.size===2){const a=[...pointers.values()];pinchStart={dist:Math.hypot(a[0].clientX-a[1].clientX,a[0].clientY-a[1].clientY),zoom:targetZoom,cx:(a[0].clientX+a[1].clientX)/2,cy:(a[0].clientY+a[1].clientY)/2,panX:targetPanX,panY:targetPanY}}};
+  canvas.onpointermove=e=>{if(!pointers.has(e.pointerId))return;const old=pointers.get(e.pointerId),q=local(e);pointers.set(e.pointerId,{...q,clientX:e.clientX,clientY:e.clientY});if(pointers.size>=2){const a=[...pointers.values()],dist=Math.hypot(a[0].clientX-a[1].clientX,a[0].clientY-a[1].clientY),mx=(a[0].clientX+a[1].clientX)/2,my=(a[0].clientY+a[1].clientY)/2;if(pinchStart){targetZoom=clamp(pinchStart.zoom*(dist/Math.max(30,pinchStart.dist)),.52,2.25);targetPanX=clamp(pinchStart.panX+(mx-pinchStart.cx)*1.15,-W*.28,W*.28);targetPanY=clamp(pinchStart.panY+(my-pinchStart.cy)*1.15,-H*.22,H*.22)}moved=true;return}const dx=e.clientX-old.clientX,dy=e.clientY-old.clientY;if(e.shiftKey||e.buttons===4){targetPanX=clamp(targetPanX+dx*1.1,-W*.28,W*.28);targetPanY=clamp(targetPanY+dy*1.1,-H*.22,H*.22)}else{targetAngle+=dx*.0065;targetTilt=clamp(targetTilt+dy*.0048,-.92,.92);velA=dx*.00028;velT=dy*.00020}if(Math.abs(dx)+Math.abs(dy)>2)moved=true};
+  const up=e=>{pointers.delete(e.pointerId);canvas.releasePointerCapture?.(e.pointerId);if(pointers.size<2)pinchStart=null;if(!pointers.size)primary=null};canvas.onpointerup=up;canvas.onpointercancel=up;
+  canvas.onwheel=e=>{e.preventDefault();const f=Math.exp(-e.deltaY*.0012);targetZoom=clamp(targetZoom*f,.52,2.25)},{passive:false};
+  canvas.onclick=e=>{if(moved){moved=false;return}const q=local(e),mh=moonHits.map(h=>({...h,d:Math.hypot(q.x-h.x,q.y-h.y)})).sort((a,b)=>a.d-b.d)[0];if(mh&&mh.d<mh.r&&mh.m.profile){const sel=document.querySelector('[data-planetoid-focus241]');if(sel)sel.value=mh.m.id;campaignPlanetoidFocusMoon241(root,sys,mh.m.id);return}const tr=state&&campaignOrganicTerritoryFromPoint241(root,state,q.x,q.y);if(tr)selectTerritory(root.id,tr.id,sys,false)};
+  requestAnimationFrame(draw)
+}
+campaignDrawPlanetoidScene241=campaignDrawPlanetoidScene2422;
+function campaignDrawPlanetGlobe2422(canvas,w){const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height,cx=W/2,cy=H/2,baseR=Math.min(W,H)*.40;let zoom=1,targetZoom=1,state=null,last=performance.now();const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));function draw(now=performance.now()){if(!canvas.isConnected)return;last=now;zoom+=(targetZoom-zoom)*.18;ctx.fillStyle='#010306';ctx.fillRect(0,0,W,H);state=campaignDrawFixedPlanet242(ctx,w,cx,cy,baseR*zoom);requestAnimationFrame(draw)}canvas.style.cursor='crosshair';canvas.onwheel=e=>{e.preventDefault();targetZoom=clamp(targetZoom*Math.exp(-e.deltaY*.0012),.65,1.6)},{passive:false};canvas.onclick=e=>{const r=canvas.getBoundingClientRect(),x=(e.clientX-r.left)*canvas.width/r.width,y=(e.clientY-r.top)*canvas.height/r.height,tr=state&&campaignOrganicTerritoryFromPoint241(w,state,x,y);if(tr)selectTerritory(w.id,tr.id,window.currentSystem,false)};requestAnimationFrame(draw)}
+campaignDrawPlanetGlobe240=campaignDrawPlanetGlobe2422;
+const _campaignPlanetoidSceneHTML_rev2422=campaignPlanetoidSceneHTML241;
+campaignPlanetoidSceneHTML241=function(w,sys,focusId){let h=_campaignPlanetoidSceneHTML_rev2422(w,sys,focusId);h=h.replace('<canvas width="1100" height="650"','<canvas width="1100" height="650"');h=h.replace('<div class="planetoid-overlay241">',`<div class="planetoid-controls2422"><button type="button" data-planetoid-zoomout2422 aria-label="Zoom out">−</button><button type="button" data-planetoid-reset2422>Reset</button><button type="button" data-planetoid-zoomin2422 aria-label="Zoom in">＋</button></div><div class="planetoid-overlay241">`);h=h.replace('Black lines = territory / coastline boundaries','Gold / white lines = territory / coastline boundaries');return h};
+const _campaignBindPlanetoid241_rev2422=campaignBindPlanetoid241;
+campaignBindPlanetoid241=function(root,sys,focusId){_campaignBindPlanetoid241_rev2422(root,sys,focusId);const box=document.querySelector('[data-planetoid241]'),cv=box?.querySelector('canvas');box?.querySelector('[data-planetoid-zoomin2422]')?.addEventListener('click',()=>cv?._planetoidControls2422?.zoomIn());box?.querySelector('[data-planetoid-zoomout2422]')?.addEventListener('click',()=>cv?._planetoidControls2422?.zoomOut());box?.querySelector('[data-planetoid-reset2422]')?.addEventListener('click',()=>cv?._planetoidControls2422?.reset())};
+const _campaignRulesReferenceHTML_rev2422=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev2422(root);const add=`<div class="campaign-rule-card"><h4>51. Globe Interaction & Territory Focus</h4><p>Planetoid territory borders are rendered in high-contrast gold/white. Wheel, pinch, and dedicated controls zoom the full orbital scene; dragging uses smoothed inertial movement, two-finger gestures can pan the scene, and selecting a territory keeps the Planetoid view open while highlighting that territory on the globe.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
+const rb2422=document.querySelector('.generation-head-actions .badge');if(rb2422)rb2422.textContent='rev 24.2.2 — Globe Interaction & Territory Highlight';document.title='Administratum Stellar Cartographica — Revision 24.2.2';document.documentElement.dataset.cartographicaRevision=REV2422;document.documentElement.dataset.cartographicaBuild=REV2422_BUILD;window.__cartoRevision2422={version:REV2422,build:REV2422_BUILD};
+
 })();
 
 </script>
@@ -5700,6 +5780,11 @@ const rb2421=document.querySelector('.generation-head-actions .badge');if(rb2421
 
 
 
+
+<style id="rev2422-globe-interaction-css">
+.planetoid-controls2422{position:absolute;right:10px;top:10px;z-index:4;display:flex;gap:5px;align-items:center}.planetoid-controls2422 button{min-width:44px;min-height:38px;padding:5px 9px;border:1px solid rgba(244,211,91,.55);background:rgba(4,7,9,.82);color:#f0d76d;font:800 10px ui-monospace,SFMono-Regular,Menlo,monospace}.planetoid-controls2422 button:hover{background:rgba(244,211,91,.12);border-color:#fff1a5}.planetoid-territory-list241 button.selected2422{border-color:#f4d35b!important;background:rgba(244,211,91,.13)!important;box-shadow:inset 3px 0 #fff2a8}.planetoid-territory-list241 button.selected2422 b{color:#fff1a7}.planetoid-map241 canvas{touch-action:none;will-change:contents}.planetoid-legend241{border-color:rgba(244,211,91,.26)}
+@media(max-width:620px){.planetoid-controls2422{top:auto;bottom:10px;right:auto;left:10px}.planetoid-legend241{bottom:58px}.planetoid-controls2422 button{min-height:42px}}
+</style>
 <style id="rev2421-full-planetary-data-css">
 .planetoid-full-record2421{display:grid;gap:10px;margin-top:10px;border-top:2px solid rgba(185,151,73,.35);padding-top:10px}.planetoid-full-head2421{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;border:1px solid rgba(185,151,73,.26);background:linear-gradient(90deg,rgba(185,151,73,.07),rgba(0,0,0,.15));padding:10px}.planetoid-full-head2421 h3{margin:0;color:#e1cf9d;font-size:14px}.planetoid-full-head2421 p{margin:4px 0 0;color:#929997;font-size:8.5px;line-height:1.45;max-width:860px}.planetoid-data-details2421{border:1px solid rgba(255,255,255,.09);background:rgba(0,0,0,.12)}.planetoid-data-details2421>summary{cursor:pointer;padding:9px;color:#d7c79d;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}.planetoid-data-body2421{padding:0 9px 9px}.planetoid-data-body2421>.inspector-grid{margin-top:0}.planetoid-campaign-record2421{border:1px solid rgba(101,150,172,.25);background:rgba(49,91,109,.045);padding:9px}.planetoid-campaign-record2421>h3{margin:0 0 6px;color:#bad4df;font-size:11px}.planetoid-campaign-territories2421{margin-top:8px;border-top:1px solid rgba(255,255,255,.07);padding-top:8px}.planetoid-campaign-territories2421 h4{margin:0 0 6px;color:#d4c598}.planetoid-campaign-territory-grid2421{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:5px}.planetoid-campaign-territory-grid2421 article{border-left:4px solid var(--claim,#5a6063);background:rgba(0,0,0,.17);padding:7px}.planetoid-campaign-territory-grid2421 b,.planetoid-campaign-territory-grid2421 span,.planetoid-campaign-territory-grid2421 small{display:block}.planetoid-campaign-territory-grid2421 b{color:#d8cfb5;font-size:9px}.planetoid-campaign-territory-grid2421 span{color:#989d99;font-size:7.5px;margin-top:2px}.planetoid-campaign-territory-grid2421 strong{color:#d8c68e}.planetoid-campaign-territory-grid2421 small{color:#838984;font-size:7px;margin-top:3px}@media(max-width:760px){.planetoid-full-head2421{flex-direction:column}.planetoid-campaign-territory-grid2421{grid-template-columns:1fr}}
 </style>

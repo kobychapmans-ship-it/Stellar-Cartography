@@ -1,1 +1,1 @@
-24.2.1-full-planetary-data-v20
+24.2.2-globe-interaction-v21
