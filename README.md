@@ -1,22 +1,9 @@
-# Administratum Stellar Cartographica — Revision 24.1
+# Administratum Stellar Cartographica — Revision 24.2.1
 
-Revision 24.1 adds the dedicated **Sector → Sub-sector → System → Planetoid** navigation layer.
+This revision preserves the complete planetary information stack beneath the Planetoid map. The 3D orbital/territory view remains the top layer, followed by the full legacy Planetary Data Sheet, Stars of Inequity planetary profile, habitability and climate, resources, territorial environments, notable species, native sovereignty, satellite records, campaign claims, settlements and related actions.
 
-## New Planetoid layer
-- Clicking a surveyed planet or true moon enters a full-screen Planetoid Map rather than only opening a small inspector.
-- The main planet is rendered as an interactive orthographic globe with irregular, continent-like territorial regions outlined in black.
-- Settlement markers rise from the actual territory and scale visually with settlement Size.
-- Planetary rings, true moons, lesser moons, captured asteroids and other generated orbital features are shown on survey-relative orbital paths.
-- Selecting a true moon displays its own territorial globe inset while preserving the whole parent planetary system in view.
-- Drag rotates the globe and wheel/trackpad scrolling zooms the Planetoid scene.
-- The existing Territory Map uses the same organic territorial renderer instead of rectangular four-corner cells.
+Deploy every file in this directory to the GitHub Pages repository root.
 
-## Preserved Revision 24.0 systems
-Research-based Technology upgrades, Technology 7–10 apex architecture, claim-aware search, expedition arcade games, raiders, territory battles, native sovereignty, diplomacy, fleet movement, colonies, Decrees, planetary territories and terraforming are retained.
+Canonical launch: `?rev=24.2.1-full-planetary-data-v20`
 
-## GitHub Pages
-Upload all files from this package directly to the repository root and launch:
-
-`?rev=24.1-planetoid-orbital-territories-v18`
-
-The PWA is fully self-contained and remains usable offline after the first successful online launch.
+The service worker caches the full app shell for offline use after the first successful online load.

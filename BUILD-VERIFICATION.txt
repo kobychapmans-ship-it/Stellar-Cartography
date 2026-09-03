@@ -1,40 +1,18 @@
-STELLAR CARTOGRAPHY PWA v24.1 BUILD VERIFICATION
+Stellar Cartography PWA — v24.2.1 Full Planetary Data Verification
 
-Build: ./index.html?rev=24.1-planetoid-orbital-territories-v18
+Build: 24.2.1-full-planetary-data-v20
 
-FEATURE MARKERS
-- v24.1 identity: PASS
-- planetoid hierarchy: PASS
-- organic globe: PASS
-- planetoid scene: PASS
-- moon orbital rendering: PASS
-- ring rendering: PASS
-- settlement projection: PASS
-- v24 tech preserved: PASS
-- v24 arcade preserved: PASS
-- v23.9 raiders preserved: PASS
-- v23.8 territory battles preserved: PASS
-
-JAVASCRIPT SYNTAX
-- script block 0: PASS
-- script block 1: PASS
-- script block 2: PASS
-- script block 3: PASS
-
-SERVICE WORKERS
-- sw.js: PASS
-- sw-v23-4.js: PASS
-
-MANIFEST
-- name: Administratum Stellar Cartographica — Revision 24.1
-- start_url: ./index.html?rev=24.1-planetoid-orbital-territories-v18
-- display: standalone
-
-OFFLINE DESIGN
-- App shell cached on install: index, manifest and icons.
-- Navigation is network-first with cached canonical/index fallback.
-- No external JavaScript/CSS libraries are required by the Planetoid layer.
-
-PERFORMANCE
-- Organic globe raster is capped at 180×180 source samples.
-- Planetoid animation redraw is throttled to approximately 14 fps on the canvas to reduce mobile battery/CPU load.
+PASS — v24.2 fixed-planet / orbital-camera Planetoid renderer retained.
+PASS — Full legacy Planetary Data Sheet is rendered beneath the Planetoid map.
+PASS — Stars of Inequity planetary survey remains present beneath the map.
+PASS — Habitability, atmosphere, climate, landmass, environment and resource data remain present.
+PASS — Full planetary territory/environment records remain present.
+PASS — Native species / inhabitants and sovereignty information remain present.
+PASS — Satellite map/list and moon records remain present.
+PASS — Campaign object claims and settlement records remain present beneath the Planetoid map.
+PASS — Per-territory campaign sovereignty and settlement occupancy summary added beneath the legacy data.
+PASS — Existing inspector controls are rebound in Planetoid view.
+PASS — Embedded JavaScript syntax validation completed with 0 syntax errors.
+PASS — sw.js and compatibility service worker use v20 cache identity.
+PASS — manifest start_url points to v20 canonical build.
+PASS — PWA remains self-contained/offline-capable after first successful online load.

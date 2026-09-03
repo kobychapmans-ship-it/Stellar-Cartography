@@ -1,9 +1,9 @@
 {
-  "name": "Administratum Stellar Cartographica — Revision 24.1",
-  "short_name": "Cartographica R24.1",
-  "description": "Revision 24.1 adds the Sector → Sub-sector → System → Planetoid map layer with organic orthographic territories, orbital moons/rings, settlement structures, and preserves all Revision 24.0 campaign systems.",
+  "name": "Administratum Stellar Cartographica — Revision 24.2.1",
+  "short_name": "Cartographica R24.2.1",
+  "description": "Revision 24.2.1 preserves the full legacy planetary data sheet, Stars of Inequity survey, territory/environment records, claims, settlements, native sovereignty, satellites and campaign actions beneath the fixed-planet Planetoid map.",
   "id": "./?app=cartographica-r23.4-final-offline-v8",
-  "start_url": "./index.html?rev=24.1-planetoid-orbital-territories-v18",
+  "start_url": "./index.html?rev=24.2.1-full-planetary-data-v20",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",
