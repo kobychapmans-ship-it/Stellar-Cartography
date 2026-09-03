@@ -1,26 +1,16 @@
 {
-  "name": "Administratum Stellar Cartographica \u2014 Revision 24.0",
-  "short_name": "Cartographica R24",
-  "description": "Revision 24.0 adds interactive 3D planetary territory globes, deliberate Technology advancement, apex megastructure browsing, claim-aware search and an expanded offline expedition arcade.",
+  "name": "Administratum Stellar Cartographica — Revision 24.1",
+  "short_name": "Cartographica R24.1",
+  "description": "Revision 24.1 adds the Sector → Sub-sector → System → Planetoid map layer with organic orthographic territories, orbital moons/rings, settlement structures, and preserves all Revision 24.0 campaign systems.",
   "id": "./?app=cartographica-r23.4-final-offline-v8",
-  "start_url": "./index.html?rev=24.0-planetary-globe-tech-arcade-v17",
+  "start_url": "./index.html?rev=24.1-planetoid-orbital-territories-v18",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",
   "theme_color": "#05070a",
   "orientation": "portrait-primary",
   "icons": [
-    {
-      "src": "./icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "./icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
   ]
 }

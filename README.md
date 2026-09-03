@@ -1,7 +1,22 @@
-# Administratum Stellar Cartographica — Revision 24.0
+# Administratum Stellar Cartographica — Revision 24.1
 
-Revision 24.0 adds an interactive 3D planetary territory globe for every solid planet and moon, manual Research-to-Technology advancement, stronger/costlier Technology 7–10 system architecture in a dropdown browser, a claim-aware spatial-object finder underneath system maps, and a broad offline expedition arcade with original puzzle and arcade-style mini-games.
+Revision 24.1 adds the dedicated **Sector → Sub-sector → System → Planetoid** navigation layer.
 
-All v23.9 systems remain inherited, including territory sovereignty, native integration, planetside expeditions, raiders/mercenary contracts, moon colonies and Technology 10.
+## New Planetoid layer
+- Clicking a surveyed planet or true moon enters a full-screen Planetoid Map rather than only opening a small inspector.
+- The main planet is rendered as an interactive orthographic globe with irregular, continent-like territorial regions outlined in black.
+- Settlement markers rise from the actual territory and scale visually with settlement Size.
+- Planetary rings, true moons, lesser moons, captured asteroids and other generated orbital features are shown on survey-relative orbital paths.
+- Selecting a true moon displays its own territorial globe inset while preserving the whole parent planetary system in view.
+- Drag rotates the globe and wheel/trackpad scrolling zooms the Planetoid scene.
+- The existing Territory Map uses the same organic territorial renderer instead of rectangular four-corner cells.
 
-Deploy all files in this folder to the repository root. Canonical launch: `?rev=24.0-planetary-globe-tech-arcade-v17`.
+## Preserved Revision 24.0 systems
+Research-based Technology upgrades, Technology 7–10 apex architecture, claim-aware search, expedition arcade games, raiders, territory battles, native sovereignty, diplomacy, fleet movement, colonies, Decrees, planetary territories and terraforming are retained.
+
+## GitHub Pages
+Upload all files from this package directly to the repository root and launch:
+
+`?rev=24.1-planetoid-orbital-territories-v18`
+
+The PWA is fully self-contained and remains usable offline after the first successful online launch.

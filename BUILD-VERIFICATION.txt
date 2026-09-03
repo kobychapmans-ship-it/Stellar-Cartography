@@ -1,30 +1,40 @@
-STELLAR CARTOGRAPHY PWA — BUILD VERIFICATION
-Revision 24.0 — Planetary Globe, Technology & Expedition Arcade
-Build: 24.0-planetary-globe-tech-arcade-v17
+STELLAR CARTOGRAPHY PWA v24.1 BUILD VERIFICATION
 
-PASS — v24 identity
-PASS — 3d globe
-PASS — tech upgrade
-PASS — mega dropdown
-PASS — claim finder
-PASS — arcade suite
-PASS — v23.9 inheritance
-PASS — manifest v24
-PASS — sw.js cache
-PASS — sw-v23-4.js cache
-PASS — script 0 syntax
-PASS — script 1 syntax
-PASS — script 2 syntax
-PASS — script 3 syntax
-PASS — v23.9 compatibility retained
+Build: ./index.html?rev=24.1-planetoid-orbital-territories-v18
 
-Feature notes:
-- Interactive rotating 3D territory globe is generated procedurally for solid planets/moons; territory borders are black and settlement structures scale by colony Size.
-- Research is banked and player Technology advancement is manual via a dedicated Army Technology button; AI may advance automatically when eligible.
-- T7–T10 system architecture retains v23.9 construction mechanics but uses a dropdown browser with substantially increased costs/effects.
-- Claimed objects/territories are searchable in a persistent list below the System map and are also indexed by the Deep Focus Navigator.
-- Expedition recovery rotates through eight offline mini-game families: cipher, memory, maze/pathfinding, reactor, signal lock, skimmer/lander, falling-block alignment and rune recall.
-- The mini-games are original in-package implementations inspired by classic puzzle/arcade mechanics; no external game code or network dependency is used.
-- Existing v23.9 compatibility constants and systems remain present.
+FEATURE MARKERS
+- v24.1 identity: PASS
+- planetoid hierarchy: PASS
+- organic globe: PASS
+- planetoid scene: PASS
+- moon orbital rendering: PASS
+- ring rendering: PASS
+- settlement projection: PASS
+- v24 tech preserved: PASS
+- v24 arcade preserved: PASS
+- v23.9 raiders preserved: PASS
+- v23.8 territory battles preserved: PASS
 
-Overall: PASS
+JAVASCRIPT SYNTAX
+- script block 0: PASS
+- script block 1: PASS
+- script block 2: PASS
+- script block 3: PASS
+
+SERVICE WORKERS
+- sw.js: PASS
+- sw-v23-4.js: PASS
+
+MANIFEST
+- name: Administratum Stellar Cartographica — Revision 24.1
+- start_url: ./index.html?rev=24.1-planetoid-orbital-territories-v18
+- display: standalone
+
+OFFLINE DESIGN
+- App shell cached on install: index, manifest and icons.
+- Navigation is network-first with cached canonical/index fallback.
+- No external JavaScript/CSS libraries are required by the Planetoid layer.
+
+PERFORMANCE
+- Organic globe raster is capped at 180×180 source samples.
+- Planetoid animation redraw is throttled to approximately 14 fps on the canvas to reduce mobile battery/CPU load.
