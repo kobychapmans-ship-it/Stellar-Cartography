@@ -1,21 +1,47 @@
-Administratum Stellar Cartographica — Revision 24.3
-Build: 24.3-static-rendered-planetoids-v22
+STELLAR CARTOGRAPHY — REVISION 24.4 BUILD VERIFICATION
+Build: 24.4-cohesive-armies-v25
 
-Verification summary
-====================
-PASS — All embedded JavaScript blocks parse with node --check.
-PASS — sw.js parses with node --check.
-PASS — sw-v23-4.js compatibility worker parses with node --check.
-PASS — manifest.webmanifest parses as valid JSON and launches the v24.3 build.
-PASS — Chromium UI regression: generated system -> terrestrial world -> Planetoid view.
-PASS — Static rendered Planetoid map displayed as the primary visual layer.
-PASS — Six generated territories displayed in the tested planetary register.
-PASS — Territory selection persisted and highlighted in the register/render.
-PASS — Full legacy planetary record remained beneath the new rendered map.
-PASS — Obsolete .planet-globe240 interactive globe count was zero in the rendered view.
-PASS — Runtime page exceptions during the focused regression test: zero.
-PASS — Existing campaign/runtime source remains present; v24.3 is an additive final layer except that the obsolete interactive globe renderer is intentionally disabled.
+SOURCE EXEMPLARS REVIEWED
+- DG Tulerat campaign.html
+- Full mechanicum + knights.html
 
-Design change
-=============
-The movable 3D globe is retired. Solid planets and true moons use fixed rendered survey portraits with procedural continents, oceans or world-type equivalents, biome terrain, topographic relief, bright territory boundaries, settlement markers and selectable satellite close-ups. The legacy planetary data sheet, Stars of Inequity survey, claims, territories, inhabitants, resources, environment rules, settlements and actions remain below.
+DESIGN RULES IMPLEMENTED
+1. Construct a legal Force Organisation skeleton before spending discretionary points.
+2. Preserve faction-specific FOC minima/maxima, including unusual compulsory slots.
+3. Treat Support Unit-style Troops as ineligible for compulsory Troops when that rule is present.
+4. Budget discretionary points by battlefield role rather than random slot filling.
+5. Analyse enemy faction + actual enemy Task Force composition.
+6. Select units and auto-upgrades against horde, armour, elite, monster/automata, air, siege and mobility threats.
+7. Preserve imported/manual upgrades when refitting; only auto-generated campaign upgrades are replaced.
+8. AI recruitment and pre-battle refits use the same opponent-aware logic.
+9. Generated player forces obey the current empire mobilisation ceiling.
+10. Lords of War remain within the 25% ceiling after generated upgrades.
+
+AUTOMATED BROWSER / GENERATOR TESTS
+- Browser startup revision: 24.4
+- v24.4 army test API initialized: PASS
+- JavaScript page errors during matrix test: 0
+- Matrix: 15 army families × 5 opponent profiles = 75 cases
+- Illegal generated cases: 0
+
+FOC / THREAT SAMPLE TESTS
+- Legion 3000 vs Orks: PASS; legal; horde/mobility doctrine; Sicarans and line/assault bodies selected.
+- Legion 3000 vs Knights: PASS; legal; armour/monster/siege doctrine; Spartans, Contemptors and Typhon selected.
+- Mechanicum 3000 vs Knights: PASS; legal; anti-armour automata upgrades include Multi-melta / Darkfire selections where available.
+- Knights 2000 vs Orks: PASS; faction-specific chart legal.
+- Necron 2000 vs Legion: PASS; non-standard compulsory Fast Attack minima satisfied.
+- Procedural Ork 2000 vs Legion: PASS; Crusade-style chart legal.
+- Legion 6000 vs Orks: PASS; split into two separately legal battlegroups.
+
+POINT CONTROL
+- Generated upgrade trim keeps effective totals at or below approximately 102% of requested target where catalogue package granularity permits.
+- Lord of War generator uses pre-upgrade safety headroom and final FOC validation.
+
+STATIC VALIDATION
+- Embedded JavaScript syntax: PASS
+- Service worker syntax: PASS
+- Manifest revision/start URL consistency: PASS
+- Legacy campaign systems retained: PASS
+
+NOTE
+The source BattleScribe exports are used as composition/upgrading exemplars. The new campaign generator does not copy an exemplar's potentially narrative/non-standard force structure; every newly generated campaign army must pass its configured Force Organisation chart.

@@ -1,3 +1,1 @@
-Revision 24.3
-Build 24.3-static-rendered-planetoids-v22
-Static Rendered Planetoids & Full Legacy Survey
+24.4-cohesive-armies-v25
