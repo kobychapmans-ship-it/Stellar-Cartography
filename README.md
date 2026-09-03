@@ -1,26 +1,55 @@
-# Administratum Stellar Cartographica — Revision 23.6
+# Administratum Stellar Cartographica — Revision 23.7
 
-Revision 23.6 consolidates settlement sovereignty and colony management on top of the stable v23.5.2 in-system navigation runtime.
+**Build:** `23.7-planetary-territories-v14`
 
-## Revision 23.6 additions
+Revision 23.7 extends the stable v23.6 campaign with a planetary strategic layer while retaining the existing fleet, diplomacy, settlement, battle and offline systems.
 
-- Fleet settlements are managed through **Colonies**, not the Fleets tab. Tier III+ fleets appear as mobile settlements and use the normal district/building development web, infrastructure, support, strategic programmes, economy, defence, recruitment and expedition interactions.
-- Fleet development projects that lead to mobile-settlement status are surfaced in Colonies. The Fleets tab remains focused on fleet operations, routing and designation rules.
-- Infrastructure and support installation now explains what each option does, why it is required/recommended and its immediate/ongoing effects. The Colonies UI includes full reference lists.
-- **Orbital Platform** is a selectable settlement archetype when founding. It remains a normal settlement while adding +2 strategic Defence to its system and starting with orbital defensive infrastructure.
-- Planets, moons, asteroids and spatial objects now have persistent local claims. Claim ownership is shown in object information, settlement-founding selectors and campaign intel.
-- Local object claims and strategic claims produce clear success, failure and blocked-action popups, including resource requirements, roll results and foreign-claim restrictions. Losing a claim to an AI faction also produces a notice.
-- In-system settlement lists are grouped by faction in collapsible registers. Fleets are grouped the same way to reduce clutter.
-- Factions receive deterministic, type-appropriate campaign names plus unique identity codes, giving generated campaigns clearer faction identities.
-- Existing v23.5.2 local AU navigation, multi-journey fleet routing, route visualisation, fleet-colony factions and major-threat mechanics remain intact.
-- Existing full diplomacy, allied detachments, expedition districts/caps, Decrees, recruitment/mobilisation limits, AI offensives, technology-ceiling breakthroughs and battle auto-resolve breakdowns remain intact.
+## Revision 23.7 additions
 
-## PWA deployment
+### Faction race identity
+Faction names now carry a compact race/species subtag throughout campaign ownership badges, faction-grouped colony/fleet registers and diplomacy. The campaign-start faction selector also identifies the race beside each faction type. Examples include Human, Astartes, Aeldari, Necron, Ork, Kroot, Rak’Gol and Rangdan.
 
-Upload every file in this package directly to the repository root. GitHub Pages should deploy from `main` / `(root)`.
+### Campaign calendar in years
+The Overview tracks campaign time in quarter-years. Every completed campaign turn is 0.25 years, so five completed turns display **1.25 years elapsed**.
 
-Open once online after deployment:
+### Planetary territory maps
+Every solid planet and moon receives a dedicated Territory Map beneath the system layer. Natural territorial capacity is based on body diameter:
 
-`https://kobychapmans-ship-it.github.io/Stellar-Cartography/?rev=23.6-colony-sovereignty-v13`
+- 1 territory per 1,000 km of diameter.
+- 1 Size-7-capable region per 3,000 km of diameter.
+- 1 Size-10-capable region per 5,000 km of diameter.
+- Size-10 regions form part of the Size-7-capable total.
 
-The application intentionally retains the established Cartographica PWA app ID so an existing Home Screen installation can update in place. The service worker uses a new v23.6 cache, deletes older Cartographica caches during activation and caches the complete application shell for offline use after the first successful online load.
+A roughly 12,000 km world therefore has 12 territories, four regions capable of supporting settlements up to Size 7, and two of those capable of supporting Size 10.
+
+Territories are latitude- and environment-informed. The generator uses the world's climate, habitability, atmosphere, hydrology and geology to produce polar ice, glacial expanses, forests, fertile basins, wetlands, deserts, volcanic provinces, mountains, wastes and similar regions. Clicking a territory opens its full territory inspector.
+
+### Settlement carrying capacity
+Surface settlements are assigned to a specific planetary territory. Multiple Size-5-or-smaller settlements may exist on the same planet. A settlement can only grow above Size 5 when its territory has the appropriate regional capacity, and one large-settlement slot cannot simultaneously support multiple settlements above that ceiling.
+
+### Territory environment and habitation
+The same world-wide and Territory battlefield rules used by the planetary battle generator now feed into settlement conditions. Extreme temperatures, desolation, fertility, virulence, high ground, mountains, wetlands and other conditions can modify effective Productivity, Order and Complacency. They can also generate regional environmental events during normal colony cycles. Appropriate existing infrastructure such as Power or Water can mitigate some events.
+
+### Terraforming
+A faction may terraform a solid claimed planet or moon when it has:
+
+- the local planetary/object claim;
+- at least one Size 5 surface settlement on that world;
+- Technology 4 or higher;
+- the displayed Supply, Materiel, Influence and Command cost.
+
+Terraforming supports up to three campaign stages. Each stage adds engineered territories, expands Size-7/Size-10 carrying capacity, adds +5 Abundance to surveyed resource deposits, and may improve habitability.
+
+## Existing systems retained
+
+Revision 23.7 retains the stable v23.6/v23.5.2 systems: in-system AU fleet navigation, map-click movement, inter-system and Multi-Journey travel, visible routes, fleet designation rules, fleet settlements and fleet-colony factions, major threats, full diplomacy, 0–200 Diplomatic Standing, allied detachments, settlement claims, Orbital Platforms, settlement infrastructure/support explanations, Expedition & Survey districts/caps, Decrees, fleet action limits, recruitment/mobilisation limits, AI warfare, technology-ceiling breakthroughs, battle auto-resolve breakdowns and offline PWA operation.
+
+## Deployment
+
+Upload the contents of this ZIP directly to the GitHub Pages repository root rather than placing the files inside another folder.
+
+Canonical launch URL:
+
+`https://kobychapmans-ship-it.github.io/Stellar-Cartography/?rev=23.7-planetary-territories-v14`
+
+Open it once online after deployment so the Revision 23.7 service worker can install and cache the application shell. The app contains no external JavaScript/CSS runtime dependencies and remains usable offline after the first successful load.

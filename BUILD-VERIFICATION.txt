@@ -1,54 +1,52 @@
-Administratum Stellar Cartographica — Revision 23.6
-Build: 23.6-colony-sovereignty-v13
+Administratum Stellar Cartographica — Revision 23.7
+Build: 23.7-planetary-territories-v14
 
-VERIFICATION SUMMARY
-====================
+STATIC VALIDATION
+- All four embedded index.html JavaScript blocks: node --check PASS
+- sw.js: node --check PASS
+- sw-v23-4.js compatibility worker: node --check PASS
+- manifest.webmanifest JSON parsing: PASS
+- External JavaScript/CSS runtime dependencies: 0
+- PWA cache: cartographica-r23.7-planetary-territories-v14
+- Canonical start URL: ./index.html?rev=23.7-planetary-territories-v14
 
-PASS — All embedded JavaScript parses successfully with Node.js syntax validation.
-PASS — sw.js and sw-v23-4.js parse successfully.
-PASS — manifest.webmanifest is valid JSON.
-PASS — No external JavaScript/CSS runtime dependencies were found in index.html.
-PASS — Revision 23.5.2 In-System Navigation block is byte-for-byte unchanged from the known-good v23.5.2 build.
-      SHA-256: 66e3cbd715b60e35482fcf3cdcbf6080b9ef6cbd0409e7462a0cf9c1c559b5ee
-PASS — Chromium runtime: sector generated and campaign launched with no page exceptions.
-PASS — Faction-appropriate names and stable identity codes generated.
-PASS — Colonies view renders faction-grouped settlement register and fleet-settlement projects.
-PASS — Orbital Platform founding succeeded in browser test, registered a local object claim and provided +2 strategic Defence.
-PASS — Fleet register renders grouped/collapsible by faction and no longer exposes fleet-settlement upgrade buttons in the Fleets tab.
-PASS — Forced Tier III mobile fleet renders as a Colonies-tab settlement with infrastructure/support explanation and full district/building development modal.
-PASS — Campaign End Turn advanced Turn 1 -> Turn 2 with no JavaScript exceptions.
-PASS — All requested v23.6 and prior v23.4/v23.5 feature markers are present.
+BROWSER SMOKE TESTS — Chromium / Playwright
+- Revision title and document identity: 23.7 PASS
+- Generator loaded and completed generation: PASS
+- Page exceptions during generation: 0
+- Territory Map tab generated on a solid world: PASS
+- Campaign faction selector displays race identity: PASS
+- Example selector output: Imperialis Militia & Cults — Human
+- Diameter 12.0k km diagnostic: 12 territories / 4 Size-7-capable / 2 Size-10-capable: PASS
+- Five completed turns diagnostic: 1.25 years: PASS
 
-OFFLINE / PWA
-=============
+CAMPAIGN FUNCTIONAL TESTS
+- Campaign launch: PASS
+- Faction race subtags rendered: PASS
+- Colonies tab planetary-territory selector rendered: PASS
+- Accelerated Size 5 foundation: PASS
+- Founded settlement received a real Territory ID and regional size ceiling: PASS
+- Terraforming requirements recognised local claim + Size 5 settlement + Technology 4+: PASS
+- Terraforming Stage I runtime action: PASS
+- Example terraform result: 10 -> 12 territories, Size-7 regions 3 -> 5, Size-10 regions 2 -> 3
+- Focused founding / terraforming runtime exceptions: 0
 
-- Canonical launch: ./index.html?rev=23.6-colony-sovereignty-v13
-- Cache: cartographica-r23.6-colony-sovereignty-v13
-- Existing Cartographica PWA app identity is retained for in-place upgrades.
-- The service worker purges older Cartographica caches at install/activation and pre-caches the complete application shell.
-- Navigation is network-first with cached v23.6 fallback; static assets are cache-first.
-- Localhost service-worker offline reload could not be exercised in this execution environment because loopback browser navigation is blocked by administrator policy. Service-worker syntax, cache paths, shell completeness and absence of remote runtime dependencies were validated instead.
+REGRESSION / FEATURE CONTINUITY
+- Complete v23.5 Journey Operations + v23.5.2 In-System Navigation block is byte-for-byte unchanged from the v23.6 stable baseline.
+- Full diplomacy: present
+- Allied Detachments: present
+- Decrees: present
+- Expedition & Survey: present
+- Major Threats: present
+- In-System Navigation: present
+- Fleet Settlements: present
+- Orbital Platforms: present
+- Planetary/Object Claims: present
+- Faction Race subtags: present
+- Planetary Territory Map: present
+- Terraforming: present
+- Territory Environment / colony modifiers: present
+- Year-based campaign time: present
 
-REVISION 23.6 FEATURE CHECK
-===========================
-
-- Fleet settlements managed in Colonies: PRESENT
-- Full normal districts/buildings on fleet settlements: PRESENT
-- Infrastructure/support detailed explanations: PRESENT
-- Orbital Platform settlement type: PRESENT
-- Planet/moon/asteroid/spatial-object claims: PRESENT
-- Claim/founding success/failure/block popups: PRESENT
-- Object info claimant display: PRESENT
-- Colony lists grouped by faction: PRESENT
-- Fleet lists grouped by faction: PRESENT
-- Faction-specific generated names + identity codes: PRESENT
-- v23.5.2 AU in-system navigation retained unchanged: PRESENT
-- Multi-Journey routing: PRESENT
-- Major threat table: PRESENT
-- Full diplomacy + allied detachments: PRESENT
-- Expedition districts/caps: PRESENT
-- Decrees: PRESENT
-- Mobilisation/recruitment limits: PRESENT
-- AI offensives: PRESENT
-- Technology ceiling breakthrough: PRESENT
-- Detailed battle auto-resolve: PRESENT
+OFFLINE PWA
+The Revision 23.7 service worker pre-caches the canonical application page, plain index.html, manifest and icons, clears older Cartographica caches during install/activation, and uses network-first navigation with a cached v23.7 fallback. The runtime has zero external JavaScript/CSS dependencies.

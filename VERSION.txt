@@ -1,4 +1,4 @@
 Administratum Stellar Cartographica
-Revision: 23.6
-Build: 23.6-colony-sovereignty-v13
-Focus: colony sovereignty + fleet settlements + claims + orbital platforms + faction identity + offline PWA
+Revision: 23.7
+Build: 23.7-planetary-territories-v14
+PWA identity retained for in-place update. Offline shell cache: cartographica-r23.7-planetary-territories-v14.

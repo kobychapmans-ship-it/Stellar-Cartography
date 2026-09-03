@@ -1,5 +1,5 @@
-const CACHE_NAME='cartographica-r23.6-colony-sovereignty-v13';
-const CANONICAL='./index.html?rev=23.6-colony-sovereignty-v13';
+const CACHE_NAME='cartographica-r23.7-planetary-territories-v14';
+const CANONICAL='./index.html?rev=23.7-planetary-territories-v14';
 const SHELL=[CANONICAL,'./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 
 self.addEventListener('install',event=>{

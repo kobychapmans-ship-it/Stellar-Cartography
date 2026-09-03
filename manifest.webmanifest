@@ -1,9 +1,9 @@
 {
-  "name": "Administratum Stellar Cartographica — Revision 23.6",
-  "short_name": "Cartographica R23.6",
-  "description": "Stable Revision 23.6 with fleet settlements in the Colonies layer, explained infrastructure and support effects, orbital platforms, planetary/object claims, explicit claim and settlement feedback, faction-grouped colonies and fleets, faction identity naming, plus all prior fleet navigation, diplomacy, expeditions, Decrees, mobilisation, threats and offline play.",
+  "name": "Administratum Stellar Cartographica — Revision 23.7",
+  "short_name": "Cartographica R23.7",
+  "description": "Revision 23.7 adds faction race subtags, quarter-year campaign dating, full planetary territory maps, diameter-based settlement carrying capacity, territory habitation/environment effects and random events, and staged terraforming, while retaining all prior v23.6 campaign and offline PWA systems.",
   "id": "./?app=cartographica-r23.4-final-offline-v8",
-  "start_url": "./index.html?rev=23.6-colony-sovereignty-v13",
+  "start_url": "./index.html?rev=23.7-planetary-territories-v14",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",
