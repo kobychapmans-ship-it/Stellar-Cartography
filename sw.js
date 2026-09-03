@@ -1,5 +1,5 @@
-const CACHE_NAME='cartographica-r23.8-frontier-contact-expeditions-v15';
-const CANONICAL='./index.html?rev=23.8-frontier-contact-expeditions-v15';
+const CACHE_NAME='cartographica-r23.9-planetside-expeditions-raiders-megastructures-v16';
+const CANONICAL='./index.html?rev=23.9-planetside-expeditions-raiders-megastructures-v16';
 const SHELL=[CANONICAL,'./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 
 self.addEventListener('install',event=>{
@@ -22,18 +22,13 @@ self.addEventListener('activate',event=>{
 
 self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET') return;
-  const u=new URL(event.request.url), scope=new URL(self.registration.scope);
-  const nav=event.request.mode==='navigate' && u.origin===scope.origin && (u.pathname===scope.pathname || u.pathname.endsWith('/index.html'));
+  const u=new URL(event.request.url),scope=new URL(self.registration.scope);
+  const nav=event.request.mode==='navigate'&&u.origin===scope.origin&&(u.pathname===scope.pathname||u.pathname.endsWith('/index.html'));
   if(nav){
     event.respondWith(
       fetch(event.request,{cache:'no-store'})
         .then(r=>{
-          if(r&&r.ok){
-            caches.open(CACHE_NAME).then(c=>{
-              c.put(CANONICAL,r.clone());
-              c.put('./index.html',r.clone());
-            });
-          }
+          if(r&&r.ok)caches.open(CACHE_NAME).then(c=>Promise.all([c.put(CANONICAL,r.clone()),c.put('./index.html',r.clone())]));
           return r;
         })
         .catch(()=>caches.match(CANONICAL).then(r=>r||caches.match('./index.html')))

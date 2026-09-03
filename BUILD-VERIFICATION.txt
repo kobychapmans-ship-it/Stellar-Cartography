@@ -1,72 +1,109 @@
-Administratum Stellar Cartographica — Revision 23.8
-Build: 23.8-frontier-contact-expeditions-v15
+ADMINISTRATUM STELLAR CARTOGRAPHICA — REVISION 23.9 BUILD VERIFICATION
+=====================================================================
+Revision: 23.9
+Build: 23.9-planetside-expeditions-raiders-megastructures-v16
+
+STABLE CORE PRESERVATION
+------------------------
+The Revision 23.8 campaign/runtime core was compared byte-for-byte from the main strict-mode IIFE through the v23.8 exported API boundary.
+Original v23.8 core SHA-256:
+eb542601ba1cabad87fbd648b35b4f73807e077113ce0bb774ec6becf833a866
+v23.9 inherited core SHA-256:
+eb542601ba1cabad87fbd648b35b4f73807e077113ce0bb774ec6becf833a866
+Result: PASS — identical.
 
 STATIC VALIDATION
-- Embedded index.html JavaScript syntax: PASS
-- sw.js syntax: PASS
-- sw-v23-4.js compatibility worker syntax: PASS
-- manifest.webmanifest JSON parsing: PASS
-- External JavaScript/CSS runtime dependencies: 0
-- PWA cache: cartographica-r23.8-frontier-contact-expeditions-v15
-- Canonical start URL: ./index.html?rev=23.8-frontier-contact-expeditions-v15
+-----------------
+- All embedded index.html JavaScript blocks: node --check PASS
+- sw.js: node --check PASS
+- sw-v23-4.js compatibility worker: node --check PASS
+- manifest.webmanifest JSON parse: PASS
+- Final index.html SHA-256: 9dcf74d25e93c07d77c9f09e1a7ca55398dc71869d5959147bba4bbf73ab1f0e
+- Final sw.js SHA-256: 4bc7b273962f917821d7927516fe022918b75b8f07cfa6815a8aa9f7e487b3ac
 
-BROWSER RUNTIME — CHROMIUM / PLAYWRIGHT
-- Revision identity displayed as 23.8: PASS
-- Sector generation: PASS
-- Campaign launcher: PASS
-- Campaign launch: PASS
-- Colonies view: PASS
-- Diplomacy view with uncontacted factions hidden: PASS
-- Fleet view / stable navigation UI: PASS
-- Battles view / Territory Battle panel: PASS
-- Runtime exceptions during main UI smoke tests: 0
+BROWSER RUNTIME TEST
+--------------------
+Test engine: Chromium, full rendered HTML runtime.
+Seed: REV239-FINAL
+Generated theatre:
+- 1 sub-sector
+- 3 systems
+- 5 stars
+- 21 bodies
+- 7 generated features
 
-REVISION 23.8 FEATURE TESTS
-- Individual claims on multiple territories of the same world: PASS
-- Two different factions holding separate territories on one world: PASS
-- Native inhabitants block sovereignty until integrated/defeated: PASS
-- Influence-based native integration: PASS
-- Expedition recovery mini-game opens on a valid deposit: PASS
-- Expedition puzzle overlay rendered: PASS
-- Hierarchical faction/system/object colony UI: PASS
-- Hierarchical faction/system/local-location fleet UI: PASS
-- Contact-limited diplomacy UI: PASS
-- Strategic Command network calculation available: PASS
-- Fleet troop-capacity enforcement present on translation, local movement and allied reinforcement paths: PASS
-- Expanded local-location catalogue retained from stable in-system navigation: PASS
+Identity:
+- Title: Administratum Stellar Cartographica — Revision 23.9
+- document revision: 23.9
+- build: 23.9-planetside-expeditions-raiders-megastructures-v16
 
-TERRITORY BATTLE RESOLVER — FINAL REGRESSION TEST
-Test setup:
-- Attacker held Territory I.
-- Defender held Territory II and Territory III on the same planet.
-- Star-system strategic ownership was recorded before battle.
-- A Territory Battle was declared specifically for Territory II.
-- Auto-resolve was invoked through the rendered battle control.
-- Attacker combat strength was raised in the deterministic test harness to guarantee an attacker victory.
+Planetside Adventure Expedition:
+- Attempt from a different/unreached system: correctly BLOCKED
+- Target world: Drusus II Tertius
+- Assigned planetary region: Territory I
+- Task Force deployment to territory: PASS
+- Expedition roll: 79 + 24 = 103 vs 49
+- Expedition completed and thematic reward awarded: PASS
 
-Result:
-- Battle status changed Pending -> Resolved: PASS
-- Attacker won: PASS
-- Target Territory II transferred defender -> attacker: PASS
-- Defender retained unrelated Territory III: PASS
-- Attacker retained its original Territory I: PASS
-- Star-system owner remained unchanged: PASS
-- Auto-resolve breakdown marked whole-system capture false: PASS
-- Runtime exceptions: 0
+Territory-map visual markers:
+- Surface settlement territory marker generated: PASS
+- Orbital DEF platform marker generated outside globe: PASS
 
-TURN-RESOLUTION REGRESSION
-- Full campaign Turn 1 -> Turn 2 processing: PASS
-- Player Command refreshed correctly: PASS
-- AI/economy/contact processing completed: PASS
-- Runtime exceptions: 0
+Technology 10:
+- Technology ceiling: 10
+- Test faction reached Technology 10 after supplied breakthrough state: PASS
+- T10 label: Apex Megastructure / Transdimensional Architecture
 
-OFFLINE PWA VALIDATION
-- Service-worker install cache simulation: PASS
-- Exact v23.8 cache created: PASS
-- Canonical application shell cached: PASS
-- Simulated network failure returns cached canonical index: PASS
-- Service worker deletes older Cartographica caches during install/activation: PASS
-- Runtime external JS/CSS dependencies: 0
+System Architecture:
+- Heliophagic Collector Swarm construction: PASS
+- Stellar Energy Enclosure construction: PASS
+- Combined verified output effects: +26 Supply / +13 Materiel per economy turn
+- Megastructure register persisted both constructions: PASS
 
-NOTE
-The execution environment blocks browser navigation to localhost with ERR_BLOCKED_BY_ADMINISTRATOR, so the worker was validated with a service-worker lifecycle/cache simulation rather than a localhost Chromium navigation. Browser runtime testing of the application itself was completed with the full HTML loaded in Chromium.
+Raider / Mercenary system:
+- Forced verification spawn: PASS
+- Spawned strength: 501 points (inside required 500–3,000 range)
+- Example generated origin: Necron
+- State: independent Active raider band
+- End-turn raider processor ran on Turn 2: PASS
+- Separate Mercenary & Raider Contacts panel rendered: PASS
+- Safe Conduct contract executed through the rendered Diplomacy UI: PASS
+- Separate targeted raid test stripped 12 total loot/resource value with no runtime exception: PASS
+- Spawn probability in production path is explicitly 0.005 per turn (0.5%).
+
+Moon colonisation:
+- Verification moon deliberately attached to a GAS GIANT parent
+- Gas-giant moon recognised by settlement catalogue: PASS
+- Diameter model: 1.6 thousand km
+- First surface foundation: PASS
+- Settlement marked as moon settlement: PASS
+- Maximum permitted Size: 5
+- Second surface foundation attempt: correctly BLOCKED
+- Surface settlement capacity: 1/1
+
+Turn processing:
+- Turn 1 -> Turn 2 completed: PASS
+- Revision 23.9 raider processor recorded Turn 2: PASS
+- Browser page errors: 0
+- Browser console errors/warnings from campaign runtime: 0
+
+PWA / OFFLINE TEST
+------------------
+The final service worker was executed in a service-worker simulation with an in-memory CacheStorage implementation and local package resources.
+- Install event: PASS
+- Revision 23.9 shell cache created: PASS
+- Old Cartographica cache purge path: valid
+- Cached canonical application shell: PASS
+- Network disabled after installation: simulated
+- Offline navigation fallback returned HTTP 200 cached index.html: PASS
+- Offline response contained Revision 23.9 runtime and v23.9 feature layer: PASS
+
+Offline cache name:
+cartographica-r23.9-planetside-expeditions-raiders-megastructures-v16
+
+Canonical PWA start URL:
+./index.html?rev=23.9-planetside-expeditions-raiders-megastructures-v16
+
+FINAL STATUS
+------------
+PASS — package approved for GitHub Pages / PWA testing.

@@ -1,5 +1,5 @@
 Administratum Stellar Cartographica
-Revision: 23.8
-Build: 23.8-frontier-contact-expeditions-v15
-PWA identity retained for in-place update.
-Offline shell cache: cartographica-r23.8-frontier-contact-expeditions-v15.
+Revision: 23.9
+Build: 23.9-planetside-expeditions-raiders-megastructures-v16
+PWA identity retained for in-place update from the stable v23.x application.
+Offline shell cache: cartographica-r23.9-planetside-expeditions-raiders-megastructures-v16.
