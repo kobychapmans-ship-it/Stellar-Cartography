@@ -1,13 +1,9 @@
-# Administratum Stellar Cartographica — Revision 24.2.2
+# Administratum Stellar Cartographica — Revision 24.3
 
-This build refines the Planetoid map interaction without removing any campaign or planetary data.
+Revision 24.3 replaces the movable planetary globe with fixed, fully rendered planetoid survey portraits. Each solid planet or true moon receives procedural continents, oceans or world-type equivalents, biome terrain, topographic relief, bright territory boundaries and settlement markers. Satellites can be selected to open their own full rendered map. The complete legacy planetary survey, territory register, claims, settlements, environment rules, resources and actions remain underneath.
 
-- High-contrast gold/white territory boundaries.
-- Selected territory remains highlighted on the globe and in the territory list.
-- Smooth inertial orbital-camera movement.
-- Mouse-wheel and trackpad zoom.
-- Two-finger pinch zoom and pan.
-- Dedicated + / − / Reset controls for mobile.
-- Full planetary data sheet and all previous v24.2.1 systems remain available below the map.
+Deploy all files in this directory to the repository root. Launch once online at:
 
-Deploy the files at repository root and launch `?rev=24.2.2-globe-interaction-v21`.
+`?rev=24.3-static-rendered-planetoids-v22`
+
+The service worker then caches the application for offline use.

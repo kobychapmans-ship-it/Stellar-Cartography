@@ -1,25 +1,21 @@
-# Build Verification — Revision 24.2.2
+Administratum Stellar Cartographica — Revision 24.3
+Build: 24.3-static-rendered-planetoids-v22
 
-- PASS — revision
-- PASS — bright_borders
-- PASS — highlight
-- PASS — zoom_controls
-- PASS — pinch
-- PASS — inertia
-- PASS — legacy_data
-- PASS — script_0_syntax
-- PASS — script_1_syntax
-- PASS — script_2_syntax
-- PASS — script_3_syntax
-- PASS — sw.js_syntax
-- PASS — sw-v23-4.js_syntax
-- PASS — manifest
+Verification summary
+====================
+PASS — All embedded JavaScript blocks parse with node --check.
+PASS — sw.js parses with node --check.
+PASS — sw-v23-4.js compatibility worker parses with node --check.
+PASS — manifest.webmanifest parses as valid JSON and launches the v24.3 build.
+PASS — Chromium UI regression: generated system -> terrestrial world -> Planetoid view.
+PASS — Static rendered Planetoid map displayed as the primary visual layer.
+PASS — Six generated territories displayed in the tested planetary register.
+PASS — Territory selection persisted and highlighted in the register/render.
+PASS — Full legacy planetary record remained beneath the new rendered map.
+PASS — Obsolete .planet-globe240 interactive globe count was zero in the rendered view.
+PASS — Runtime page exceptions during the focused regression test: zero.
+PASS — Existing campaign/runtime source remains present; v24.3 is an additive final layer except that the obsolete interactive globe renderer is intentionally disabled.
 
-Key changes:
-- Gold/white territory borders
-- Persistent selected-territory highlight
-- Smooth inertial orbital-camera drag
-- Wheel/trackpad zoom
-- Two-finger pinch zoom and pan
-- + / − / Reset controls
-- Full v24.2.1 planetary data remains beneath the map
+Design change
+=============
+The movable 3D globe is retired. Solid planets and true moons use fixed rendered survey portraits with procedural continents, oceans or world-type equivalents, biome terrain, topographic relief, bright territory boundaries, settlement markers and selectable satellite close-ups. The legacy planetary data sheet, Stars of Inequity survey, claims, territories, inhabitants, resources, environment rules, settlements and actions remain below.
