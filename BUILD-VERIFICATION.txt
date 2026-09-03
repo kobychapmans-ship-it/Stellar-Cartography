@@ -1,109 +1,30 @@
-ADMINISTRATUM STELLAR CARTOGRAPHICA — REVISION 23.9 BUILD VERIFICATION
-=====================================================================
-Revision: 23.9
-Build: 23.9-planetside-expeditions-raiders-megastructures-v16
+STELLAR CARTOGRAPHY PWA — BUILD VERIFICATION
+Revision 24.0 — Planetary Globe, Technology & Expedition Arcade
+Build: 24.0-planetary-globe-tech-arcade-v17
 
-STABLE CORE PRESERVATION
-------------------------
-The Revision 23.8 campaign/runtime core was compared byte-for-byte from the main strict-mode IIFE through the v23.8 exported API boundary.
-Original v23.8 core SHA-256:
-eb542601ba1cabad87fbd648b35b4f73807e077113ce0bb774ec6becf833a866
-v23.9 inherited core SHA-256:
-eb542601ba1cabad87fbd648b35b4f73807e077113ce0bb774ec6becf833a866
-Result: PASS — identical.
+PASS — v24 identity
+PASS — 3d globe
+PASS — tech upgrade
+PASS — mega dropdown
+PASS — claim finder
+PASS — arcade suite
+PASS — v23.9 inheritance
+PASS — manifest v24
+PASS — sw.js cache
+PASS — sw-v23-4.js cache
+PASS — script 0 syntax
+PASS — script 1 syntax
+PASS — script 2 syntax
+PASS — script 3 syntax
+PASS — v23.9 compatibility retained
 
-STATIC VALIDATION
------------------
-- All embedded index.html JavaScript blocks: node --check PASS
-- sw.js: node --check PASS
-- sw-v23-4.js compatibility worker: node --check PASS
-- manifest.webmanifest JSON parse: PASS
-- Final index.html SHA-256: 9dcf74d25e93c07d77c9f09e1a7ca55398dc71869d5959147bba4bbf73ab1f0e
-- Final sw.js SHA-256: 4bc7b273962f917821d7927516fe022918b75b8f07cfa6815a8aa9f7e487b3ac
+Feature notes:
+- Interactive rotating 3D territory globe is generated procedurally for solid planets/moons; territory borders are black and settlement structures scale by colony Size.
+- Research is banked and player Technology advancement is manual via a dedicated Army Technology button; AI may advance automatically when eligible.
+- T7–T10 system architecture retains v23.9 construction mechanics but uses a dropdown browser with substantially increased costs/effects.
+- Claimed objects/territories are searchable in a persistent list below the System map and are also indexed by the Deep Focus Navigator.
+- Expedition recovery rotates through eight offline mini-game families: cipher, memory, maze/pathfinding, reactor, signal lock, skimmer/lander, falling-block alignment and rune recall.
+- The mini-games are original in-package implementations inspired by classic puzzle/arcade mechanics; no external game code or network dependency is used.
+- Existing v23.9 compatibility constants and systems remain present.
 
-BROWSER RUNTIME TEST
---------------------
-Test engine: Chromium, full rendered HTML runtime.
-Seed: REV239-FINAL
-Generated theatre:
-- 1 sub-sector
-- 3 systems
-- 5 stars
-- 21 bodies
-- 7 generated features
-
-Identity:
-- Title: Administratum Stellar Cartographica — Revision 23.9
-- document revision: 23.9
-- build: 23.9-planetside-expeditions-raiders-megastructures-v16
-
-Planetside Adventure Expedition:
-- Attempt from a different/unreached system: correctly BLOCKED
-- Target world: Drusus II Tertius
-- Assigned planetary region: Territory I
-- Task Force deployment to territory: PASS
-- Expedition roll: 79 + 24 = 103 vs 49
-- Expedition completed and thematic reward awarded: PASS
-
-Territory-map visual markers:
-- Surface settlement territory marker generated: PASS
-- Orbital DEF platform marker generated outside globe: PASS
-
-Technology 10:
-- Technology ceiling: 10
-- Test faction reached Technology 10 after supplied breakthrough state: PASS
-- T10 label: Apex Megastructure / Transdimensional Architecture
-
-System Architecture:
-- Heliophagic Collector Swarm construction: PASS
-- Stellar Energy Enclosure construction: PASS
-- Combined verified output effects: +26 Supply / +13 Materiel per economy turn
-- Megastructure register persisted both constructions: PASS
-
-Raider / Mercenary system:
-- Forced verification spawn: PASS
-- Spawned strength: 501 points (inside required 500–3,000 range)
-- Example generated origin: Necron
-- State: independent Active raider band
-- End-turn raider processor ran on Turn 2: PASS
-- Separate Mercenary & Raider Contacts panel rendered: PASS
-- Safe Conduct contract executed through the rendered Diplomacy UI: PASS
-- Separate targeted raid test stripped 12 total loot/resource value with no runtime exception: PASS
-- Spawn probability in production path is explicitly 0.005 per turn (0.5%).
-
-Moon colonisation:
-- Verification moon deliberately attached to a GAS GIANT parent
-- Gas-giant moon recognised by settlement catalogue: PASS
-- Diameter model: 1.6 thousand km
-- First surface foundation: PASS
-- Settlement marked as moon settlement: PASS
-- Maximum permitted Size: 5
-- Second surface foundation attempt: correctly BLOCKED
-- Surface settlement capacity: 1/1
-
-Turn processing:
-- Turn 1 -> Turn 2 completed: PASS
-- Revision 23.9 raider processor recorded Turn 2: PASS
-- Browser page errors: 0
-- Browser console errors/warnings from campaign runtime: 0
-
-PWA / OFFLINE TEST
-------------------
-The final service worker was executed in a service-worker simulation with an in-memory CacheStorage implementation and local package resources.
-- Install event: PASS
-- Revision 23.9 shell cache created: PASS
-- Old Cartographica cache purge path: valid
-- Cached canonical application shell: PASS
-- Network disabled after installation: simulated
-- Offline navigation fallback returned HTTP 200 cached index.html: PASS
-- Offline response contained Revision 23.9 runtime and v23.9 feature layer: PASS
-
-Offline cache name:
-cartographica-r23.9-planetside-expeditions-raiders-megastructures-v16
-
-Canonical PWA start URL:
-./index.html?rev=23.9-planetside-expeditions-raiders-megastructures-v16
-
-FINAL STATUS
-------------
-PASS — package approved for GitHub Pages / PWA testing.
+Overall: PASS

@@ -1,5 +1,1 @@
-Administratum Stellar Cartographica
-Revision: 23.9
-Build: 23.9-planetside-expeditions-raiders-megastructures-v16
-PWA identity retained for in-place update from the stable v23.x application.
-Offline shell cache: cartographica-r23.9-planetside-expeditions-raiders-megastructures-v16.
+24.0-planetary-globe-tech-arcade-v17

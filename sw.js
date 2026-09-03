@@ -1,5 +1,5 @@
-const CACHE_NAME='cartographica-r23.9-planetside-expeditions-raiders-megastructures-v16';
-const CANONICAL='./index.html?rev=23.9-planetside-expeditions-raiders-megastructures-v16';
+const CACHE_NAME='cartographica-r24.0-planetary-globe-tech-arcade-v17';
+const CANONICAL='./index.html?rev=24.0-planetary-globe-tech-arcade-v17';
 const SHELL=[CANONICAL,'./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 
 self.addEventListener('install',event=>{
