@@ -1,6 +1,39 @@
-# Administratum Stellar Cartographica — Revision 24.6
-## Settlement Governance, Occupation & Expedition Economy
+# Administratum Stellar Cartographica — Revision 24.7
+## Deep-Time Campaigns & Battlefleet Operations
 
+Build: `24.7-deep-time-battlefleet-v28`
+
+Revision 24.7 extends the v24.6 settlement-governance campaign with a sector-history start mode and a dedicated void-war layer.
+
+### Campaign chronology and autonomous prehistory
+- The campaign launcher now includes a chronology choice beside faction/start setup.
+- **Normal** starts player control at **Turn 0**.
+- **Deep-Time** exposes linked slider and number controls from **100 to 1000 turns**.
+- Deep-Time runs the campaign AI through economy, settlement maintenance, expansion, recruitment, fleet movement, wars, consequences and sector events before player handover.
+- Established-polity starts participate in the historical simulation and are handed to the player in their evolved state.
+- Emerging-expedition starts remain outside the sector simulation and arrive only after prehistory, preventing the player's expedition from being consumed by the AI before play begins.
+- Longer histories can create additional procedural polities and periodically consolidate runaway campaign records so very long starts remain practical.
+
+### Strategic attack movement
+- Fleet movement and attack orders can target any strategic system, not only an adjacent territorial border.
+- Distance continues to determine supply and transit time.
+- The order panel now identifies major controlled systems near the direct translation corridor as context, but intervening political ownership is not a hard movement wall.
+- Ground invasions only proceed after the attacking fleet has established local void access.
+
+### Fleet engagements
+- Hostile fleets at an attack destination create a persistent **Fleet Engagement** before the invasion lands.
+- Player-involved engagements pause for a decision: **Auto-resolve**, or play a Battlefleet Gothic tabletop battle and report Attacker Victory, Defender Victory or Draw.
+- AI-vs-AI fleet battles auto-resolve without interrupting play.
+- Auto-resolve uses faction doctrine, strategic fleet class, role, command quality, gunnery, lance emphasis, ordnance, boarding, resilience, speed, veteran experience and existing fleet damage.
+- Fleet damage persists between engagements and therefore affects later strategic naval strength.
+- Victorious attackers continue their invasion transit; defenders and draws repulse the attacking movement.
+
+### Faction naval identities
+Every existing Cartographica campaign faction receives its own naval doctrine. Canonical Warhammer-aligned factions use the nearest Battlefleet Gothic fleet family as inspiration, while Cartographica-specific factions receive analogue doctrines rather than copied ship profiles. Fleet cards show doctrine, strategic style, typical vessel categories, suggested tabletop battle size and the strategic combat profile used by auto-resolve.
+
+The implementation is deliberately an abstraction layer: it does not reproduce Battlefleet Gothic ship data sheets or copyrighted fleet-list text. It uses the uploaded Remastered rulebook/fleet-book concepts as design inspiration for movement, command, weapons emphases, fleet identity and campaign persistence.
+
+## Previous revision — 24.6 Settlement Governance
 Build: `24.6-settlement-governance-v27`
 
 Revision 24.6 builds on v24.5 Territory Operations with a campaign-maintenance and long-game usability pass aimed at turns 30+.
