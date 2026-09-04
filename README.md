@@ -107,3 +107,13 @@ Upload the files in this directory to the repository root and launch with the re
 `?rev=24.6-settlement-governance-v27`
 
 The application remains PWA/offline capable after the first successful online load.
+
+## Revision 24.8 — Autonomous Economy, Hard Fleet Lift & Full Rosters
+
+This revision addresses three campaign-scale issues found during extended-start playtesting.
+
+- **AI district economy:** AI factions now reserve a portion of Supply/Materiel for development and attempt district construction before their expansion phase, then invest again after their normal turn when resources remain. Tall, Balanced and Wide strategies use different priorities, with productive Industry, Resource Exploitation and Logistics chains deliberately weighted to improve long-run income.
+- **Hard fleet troop lift:** Embarkation is rejected before a fleet can exceed its troop-lift points. The player receives a full-capacity notice explaining the used/capacity/requested values and must increase lift, disembark/reorganise, or use another fleet. Legacy and deep-history overloaded fleets are automatically repaired by disembarking excess task forces at the fleet's current location.
+- **Expanded army pools:** Canonical faction pools have been broadened across HQ, Troops, Elites, Fast Attack, Heavy Support, Dedicated Transport and Lord of War roles. Lords of War are now explicit candidates for sufficiently large forces instead of being absent from most pools. Existing Force Organisation, technology, local support and points restrictions continue to govern legality.
+
+Build identity: `24.8-ai-district-lift-full-roster-v30-tested`.

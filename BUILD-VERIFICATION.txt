@@ -1,29 +1,16 @@
-Administratum Stellar Cartographica — Revision 24.7
-Build: 24.7-deep-time-battlefleet-v29-tested
+Stellar Cartographica Revision 24.8
+Build key: 24.8-ai-district-lift-full-roster-v30-tested
 
-CLEAN INTEGRATION FIX
-- v24.6 and v24.7 extension layers are integrated within the core runtime lexical scope.
-- Legacy v24.5/v24.6 active title/badge/build identity writes are disabled.
-- Service-worker/cache identity bumped from v28 to v29-tested.
+Verification performed on the packaged source:
+1. Extracted/working source inspected independently of the prior release archive.
+2. Every inline JavaScript block passed Node syntax validation.
+3. Service worker passed Node syntax validation.
+4. Web manifest passed JSON parsing.
+5. Active revision/title/cache identifiers checked for Revision 24.8.
+6. AI district construction verified to wrap the active AI-turn path with both pre- and post-spending passes.
+7. Both embarkation entry points verified to reject troop lift overflow before mutation.
+8. Automatic legacy/deep-history overload repair verified on fleet-state, fleet-coverage, roster-integration, consolidation and render paths.
+9. Full embedded faction catalogue expansion includes explicit Lord of War entries and active generator scoring support.
+10. Final release ZIP tested with unzip -t.
 
-STATIC VALIDATION
-- 4 inline JavaScript blocks extracted from final index.html: all passed node --check.
-- sw.js passed node --check.
-- manifest.webmanifest parsed as valid JSON.
-- ZIP archive integrity checked after packaging.
-
-INTERACTIVE CHROMIUM/CDP REGRESSION TESTS
-- All final inline scripts executed with no exceptions.
-- Runtime identity: Revision 24.7 / 24.7-deep-time-battlefleet-v29-tested.
-- Campaign launcher exposes Normal Turn 0 and Deep-Time controls, slider/number range 100–1000.
-- Normal launch reached Turn 0 / Player phase with no runtime errors.
-- Fleet layer generated a faction-specific Provincial Battlefleet profile and BFG points.
-- Strategic command HTML exposed non-adjacent/cross-system target choices.
-- A hostile fleet engagement was created and auto-resolved; persistent void damage was applied.
-- Established-polity Deep-Time simulation completed at Turn 100 with Player phase restored and no runtime errors.
-- Established-polity Deep-Time simulation completed at Turn 1000 with Player phase restored, nine evolved faction records in the test seed, and no runtime errors.
-- Turn 1000 test runtime in the container: 16.78 seconds.
-- Campaign state serialized to JSON and re-parsed at Turn 100 and Turn 1000.
-
-PERFORMANCE NOTE
-- Deep-Time starts use at most 250 detailed historical simulation steps. For starts above 250 turns, each step represents multiple historical turns and positive economic income is scaled to the represented interval. This retains AI expansion/development while avoiding multi-minute Turn 1000 startup times.
+Browser note: this execution environment blocks Chromium navigation to local and localhost content by administrator policy. No interactive-browser pass is claimed for this revision.

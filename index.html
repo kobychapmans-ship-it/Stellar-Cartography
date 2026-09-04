@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="24.7" />
+<meta name="cartographica-revision" content="24.8" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=24.7-deep-time-battlefleet-v29-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=24.8-ai-district-lift-full-roster-v30-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='24.7';
-  const BUILD='24.7-deep-time-battlefleet-v29-tested';
-  const LABEL='rev 24.7 — Deep-Time & Battlefleet Operations';
-  const TITLE='Administratum Stellar Cartographica — Revision 24.7';
+  const REVISION='24.8';
+  const BUILD='24.8-ai-district-lift-full-roster-v30-tested';
+  const LABEL='rev 24.8 — Autonomous Economy & Full Rosters';
+  const TITLE='Administratum Stellar Cartographica — Revision 24.8';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 24.7</title>
+<title>Administratum Stellar Cartographica — Revision 24.8</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -5840,7 +5840,7 @@ window.__cartoRevision246={version:REV246,build:REV246_BUILD,nativePlan:soiPlanN
 
 /* ===== Revision 24.7: Deep-Time Campaigns & Battlefleet Operations ===== */
 const REV247='24.7';
-const REV247_BUILD='24.7-deep-time-battlefleet-v29-tested';
+const REV247_BUILD='24.8-ai-district-lift-full-roster-v30-tested';
 const REV247_FLEET_RULES=2;
 
 /* BFG-inspired strategic identities. These are campaign abstractions, not reproductions of ship profiles. */
@@ -5987,7 +5987,7 @@ const css=document.createElement('style');css.id='rev247-styles';css.textContent
 document.querySelectorAll('.source-note').forEach(n=>{if(n.textContent.includes('Sector Campaign')&&!n.textContent.includes('Battlefleet Operations'))n.innerHTML+=`<br/><br/><b>Battlefleet Operations:</b> Revision 24.7 adds a strategic void-war layer inspired by Battlefleet Gothic Remastered: faction-specific fleet identities, command quality, direct-fire emphasis, lance/ordnance/boarding biases, durable versus agile fleet styles, persistent fleet damage, and separate fleet engagements before invasions. It deliberately stores campaign abstractions and closest fleet-list analogues instead of reproducing copyrighted ship profiles. Deep-Time campaign starts can simulate 100–1000 autonomous turns before player handover.`});
 window.__cartoRevision247={version:REV247,build:REV247_BUILD,navalDoctrines:CAMPAIGN_NAVAL_DOCTRINES247,navalProfile:campaignNavalProfile247,autoResolveNaval:campaignAutoResolveNaval247,simulatePrehistory:campaignSimulatePrehistory247};
 window.__cartoTest247={initialize:(root,opts)=>campaignInitialize(root,opts),player:c=>campaignPlayer(c),ensureFleetState:root=>campaignEnsureFleetState(root),ensureNaval:root=>campaignEnsureAllNavalIdentities247(root),normaliseTurnZero:root=>campaignNormaliseTurnZero247(root),simulatePrehistory:campaignSimulatePrehistory247,navalBattle:campaignNavalBattle247,autoResolveNaval:campaignAutoResolveNaval247,resolveNaval:campaignResolveNaval247,record:(root,id)=>campaignRecord(root,id),systemRecords:root=>campaignSystemRecords(root),commandHTML:(root,c)=>campaignCommandHTML(root,c),renderDashboard:root=>campaignRenderDashboard(root)};
-const rb=document.querySelector('.generation-head-actions .badge');if(rb)rb.textContent='rev 24.7 — Deep-Time & Battlefleet Operations';document.title='Administratum Stellar Cartographica — Revision 24.7';document.documentElement.dataset.cartographicaRevision=REV247;document.documentElement.dataset.cartographicaBuild=REV247_BUILD;document.documentElement.dataset.cartographicaCleanBuild='true';
+const rb=document.querySelector('.generation-head-actions .badge');if(rb)rb.textContent='rev 24.8 — Autonomous Economy & Full Rosters';document.title='Administratum Stellar Cartographica — Revision 24.8';document.documentElement.dataset.cartographicaRevision='24.8';document.documentElement.dataset.cartographicaBuild='24.8-ai-district-lift-full-roster-v30-tested';document.documentElement.dataset.cartographicaCleanBuild='true';
 
 /* ===== End integrated extension layers ===== */
 
@@ -6090,6 +6090,185 @@ body.campaign-dev-open #campaignDashboard.campaign-panel{z-index:16010}
   window.addEventListener('pageshow',tryLock,{passive:true});
   document.addEventListener('pointerdown',tryLock,{passive:true,once:true});
   tryLock();
+
+
+/* ===== Revision 24.8: Autonomous District Economy, Hard Fleet Lift & Full Roster Pool ===== */
+const REV248='24.8';
+const REV248_BUILD='24.8-ai-district-lift-full-roster-v30-tested';
+
+/* ---------- Full-roster catalogue expansion ----------
+   The original embedded HH1 layer intentionally used compact representative lists.
+   This revision broadens every canonical generator pool across the normal FOC roles,
+   including apex/Lord of War choices, while retaining the existing condensed package model. */
+function rev248UnitExists(key,name){return !!HH1_BSDATA[key]?.units?.some(x=>x.name===name)}
+function rev248Add(key,unit){if(HH1_BSDATA[key]&&!rev248UnitExists(key,unit.name))HH1_BSDATA[key].units.push(unit)}
+function rev248Inf(key,name,role,base,min,max,extra,stat,type,wargear,rules,weapons){rev248Add(key,hh1Inf(name,role,base,min,max,extra,stat,type,wargear,rules||[],weapons||[],HH1_BSDATA[key]?.source||'Expanded embedded roster'))}
+function rev248Veh(key,name,role,base,bs,f,s,r,hp,type,wargear,rules,weapons){rev248Add(key,hh1Veh(name,role,base,bs,f,s,r,hp,type,wargear,rules||[],weapons||[],HH1_BSDATA[key]?.source||'Expanded embedded roster'))}
+const R248_HUM=[3,3,3,3,1,3,1,7,'5+'],R248_AUX=[3,3,3,3,1,3,1,8,'4+'],R248_SM=[4,4,4,4,1,4,1,8,'3+'],R248_MECH=[3,4,4,5,2,3,1,8,'3+'],R248_CUST=[5,5,5,5,2,5,3,9,'2+'],R248_ELD=[3,4,3,3,1,5,1,8,'4+'],R248_NEC=[4,4,4,4,1,2,1,10,'4+'];
+/* Militia & Cults */
+rev248Inf('militia','Discipline Master Cadre','HQ',45,1,3,25,R248_HUM,'Infantry (Character)','Command and discipline equipment',['Militia Discipline'],['Laspistol']);
+rev248Inf('militia','Rogue Psyker Coven','HQ',70,3,10,18,R248_HUM,'Infantry (Psyker)','Improvised force weapons and psychic disciplines',[],['Laspistol']);
+rev248Inf('militia','Reconnaissance Squad','Elites',60,5,10,8,R248_HUM,'Infantry','Long rifles, camouflage and auspex',['Scout'],['Ranger Long Rifle']);
+rev248Inf('militia','Medicae Detachment','Elites',55,3,6,12,R248_HUM,'Infantry','Field medicae gear',['Feel No Pain (5+)'],['Laspistol']);
+rev248Inf('militia','Rapier Weapons Battery','Elites',55,1,3,45,R248_HUM,'Artillery','Crew-served support weapons',[],['Autocannon']);
+rev248Veh('militia','Arvus Lighter','Fast Attack',55,3,10,10,10,2,'Vehicle (Flyer, Transport)','Light transport aircraft',[],['Heavy Stubber']);
+rev248Veh('militia','Thunderbolt Fighter','Fast Attack',150,3,11,11,10,3,'Vehicle (Flyer)','Autocannon and lascannon armament',[],['Autocannon','Lascannon']);
+rev248Veh('militia','Carnodon Strike Squadron','Fast Attack',95,3,12,11,10,3,'Vehicle (Tank)','Flexible light tank weapons',[],['Autocannon']);
+rev248Veh('militia','Gorgon Heavy Transport','Heavy Support',250,3,14,13,12,6,'Vehicle (Super-heavy Transport)','Mass infantry transport and defensive weapons',[],['Heavy Bolter']);
+rev248Veh('militia','Macharius Heavy Tank','Lord of War',410,3,14,13,12,8,'Vehicle (Super-heavy Tank)','Twin battle cannon and secondary battery',[],['Battle Cannon','Heavy Bolter']);
+rev248Veh('militia','Baneblade Super-heavy Tank','Lord of War',525,3,14,13,12,9,'Vehicle (Super-heavy Tank)','Baneblade cannon and extensive secondary weapons',[],['Battle Cannon','Demolisher Cannon','Lascannon']);
+rev248Veh('militia','Stormlord Super-heavy Transport','Lord of War',500,3,14,13,12,9,'Vehicle (Super-heavy Tank, Transport)','Vulcan mega-bolter and mass transport capacity',[],['Heavy Bolter']);
+/* Solar Auxilia */
+rev248Inf('solar','Auxilia Veletaris Command Section','HQ',85,5,10,12,R248_AUX,'Infantry','Void armour and command weapons',['Stubborn','Void Hardened'],['Volkite Charger']);
+rev248Inf('solar','Charonite Ogryn Section','Elites',135,3,10,35,[4,3,5,5,3,2,3,8,'4+'],'Infantry (Bulky)','Power axes and reinforced void armour',['Bulky'],['Power Axe']);
+rev248Inf('solar','Auxilia Rapier Battery','Elites',60,1,3,50,R248_AUX,'Artillery','Laser destroyer or quad launcher',[],['Lascannon']);
+rev248Veh('solar','Carnodon Strike Squadron','Fast Attack',95,3,12,11,10,3,'Vehicle (Tank)','Flexible strike tank armament',[],['Autocannon']);
+rev248Veh('solar','Lightning Strike Fighter','Fast Attack',150,3,11,11,10,3,'Vehicle (Flyer)','High-speed interceptor and strike weapons',[],['Lascannon']);
+rev248Veh('solar','Thunderbolt Fighter','Fast Attack',160,3,11,11,10,3,'Vehicle (Flyer)','Autocannon and lascannon batteries',[],['Autocannon','Lascannon']);
+rev248Veh('solar','Valdor Tank Hunter','Heavy Support',240,3,14,13,12,6,'Vehicle (Super-heavy Tank)','Neutron laser projector',[],['Lascannon']);
+rev248Veh('solar','Auxilia Artillery Battery','Heavy Support',150,3,12,10,10,3,'Vehicle (Tank)','Basilisk/Medusa-pattern artillery',[],['Battle Cannon']);
+for(const [n,c] of [['Baneblade Super-heavy Tank',525],['Stormblade Super-heavy Tank',475],['Shadowsword Titan-hunter',455],['Stormsword Siege Tank',480],['Stormlord Assault Transport',500]])rev248Veh('solar',n,'Lord of War',c,3,14,13,12,9,'Vehicle (Super-heavy Tank)','Solar Auxilia super-heavy battle engine',[],['Battle Cannon','Lascannon']);
+/* Legiones Astartes */
+rev248Inf('legion','Legion Command Squad','HQ',125,3,5,25,R248_SM,'Infantry','Legion command wargear and standards',['Legiones Astartes'],['Boltgun','Power Sword']);
+rev248Inf('legion','Legion Techmarine Covenant','Elites',90,1,3,45,R248_SM,'Infantry (Character)','Servo-arms and specialist weapons',['Legiones Astartes'],['Boltgun']);
+rev248Inf('legion','Legion Apothecarion Detachment','Elites',90,1,3,45,R248_SM,'Infantry (Character)','Narthecium and power armour',['Legiones Astartes','Feel No Pain (5+)'],['Bolt Pistol']);
+rev248Inf('legion','Legion Destroyer Squad','Elites',150,5,10,20,R248_SM,'Infantry','Rad and phosphex weapons',['Legiones Astartes'],['Bolt Pistol']);
+rev248Inf('legion','Legion Seeker Squad','Elites',125,5,10,18,R248_SM,'Infantry','Special issue ammunition and targeters',['Legiones Astartes'],['Boltgun']);
+rev248Inf('legion','Legion Reconnaissance Squad','Troops',100,5,10,15,R248_SM,'Infantry','Recon armour and sniper weapons',['Legiones Astartes','Scout'],['Ranger Long Rifle']);
+rev248Inf('legion','Legion Breacher Siege Squad','Troops',175,10,20,12,R248_SM,'Infantry','Boarding shields and bolters',['Legiones Astartes'],['Boltgun']);
+rev248Inf('legion','Legion Tactical Support Squad','Troops',125,5,10,20,R248_SM,'Infantry','Special-weapon squad',['Legiones Astartes','Support Unit'],['Plasma Gun']);
+rev248Inf('legion','Legion Heavy Support Squad','Heavy Support',125,5,10,25,R248_SM,'Infantry','Heavy weapon squad',['Legiones Astartes','Relentless'],['Lascannon']);
+rev248Veh('legion','Legion Rapier Weapons Battery','Elites',60,4,10,10,10,2,'Artillery','Quad launcher / laser destroyer support',[],['Lascannon']);
+rev248Veh('legion','Contemptor-Cortus Dreadnought','Elites',135,4,13,12,10,3,'Vehicle (Walker)','Dreadnought weapon systems',['Fleet'],['Autocannon']);
+rev248Veh('legion','Deredeo Dreadnought','Heavy Support',185,5,13,12,11,3,'Vehicle (Walker)','Long-range heavy weapons',[],['Autocannon','Lascannon']);
+rev248Veh('legion','Leviathan Siege Dreadnought','Heavy Support',270,5,13,13,12,4,'Vehicle (Walker)','Siege claws, grav-flux and heavy weapons',[],['Demolisher Cannon']);
+rev248Veh('legion','Legion Land Speeder Squadron','Fast Attack',50,4,10,10,10,2,'Vehicle (Fast, Skimmer)','Mobile heavy weapons',['Fast'],['Heavy Bolter']);
+rev248Veh('legion','Javelin Attack Speeder Squadron','Fast Attack',75,4,11,11,10,2,'Vehicle (Fast, Skimmer)','Missile and lascannon options',['Fast'],['Lascannon']);
+rev248Veh('legion','Legion Jetbike Sky Hunter Squadron','Fast Attack',105,4,11,11,10,2,'Jetbike','Jetbike-mounted heavy weapons',['Legiones Astartes'],['Heavy Bolter']);
+rev248Veh('legion','Storm Eagle Assault Gunship','Fast Attack',210,4,12,12,10,4,'Vehicle (Flyer, Transport)','Assault transport and missiles',[],['Lascannon']);
+rev248Veh('legion','Xiphon Interceptor','Fast Attack',205,4,11,11,10,3,'Vehicle (Flyer)','Interceptor lascannons and missiles',[],['Lascannon']);
+rev248Veh('legion','Fire Raptor Gunship','Heavy Support',220,4,12,12,10,4,'Vehicle (Flyer)','Heavy gunship batteries',[],['Autocannon','Heavy Bolter']);
+rev248Veh('legion','Land Raider Proteus','Heavy Support',200,4,14,14,14,4,'Vehicle (Tank, Transport)','Twin lascannons and transport capacity',[],['Lascannon']);
+rev248Veh('legion','Vindicator Siege Tank','Heavy Support',120,4,13,11,10,3,'Vehicle (Tank)','Demolisher cannon',[],['Demolisher Cannon']);
+rev248Veh('legion','Whirlwind Scorpius','Heavy Support',115,4,13,11,10,3,'Vehicle (Tank)','Rocket artillery',[],['Missile Launcher']);
+rev248Veh('legion','Sicaran Venator Tank Destroyer','Heavy Support',190,4,13,12,12,3,'Vehicle (Fast Tank)','Neutron beam laser',[],['Lascannon']);
+for(const [n,c] of [['Cerberus Heavy Tank Destroyer',395],['Fellblade Super-heavy Tank',525],['Falchion Super-heavy Tank Destroyer',525],['Glaive Super-heavy Special Weapons Tank',625],['Mastodon Heavy Assault Transport',700],['Thunderhawk Gunship',685]])rev248Veh('legion',n,'Lord of War',c,4,14,13,12,9,'Vehicle (Super-heavy)','Legion apex war machine / assault asset',['Legiones Astartes'],['Lascannon','Heavy Bolter']);
+/* Mechanicum Taghmata */
+rev248Inf('mechanicum','Tech-Priest Auxilia','HQ',65,3,10,12,R248_MECH,'Infantry','Tech-priest cadres and servo-automata',['Cybernetica Cortex'],['Volkite Charger']);
+rev248Inf('mechanicum','Myrmidon Destructor Host','Heavy Support',150,3,10,45,R248_MECH,'Infantry','Heavy Mechanicum weapons',['Relentless'],['Plasma Gun']);
+rev248Inf('mechanicum','Ursarax Cohort','Fast Attack',145,3,9,45,[4,3,5,5,3,3,3,8,'4+'],'Jump Infantry','Power fists and volkite incinerators',['Bulky'],['Volkite Charger']);
+rev248Inf('mechanicum','Scyllax Guardian-automata Covenant','Elites',105,4,16,20,[3,3,4,5,2,3,2,8,'4+'],'Infantry (Cybernetic)','Guardian automata weapons',['Cybernetica Cortex'],['Heavy Stubber']);
+rev248Inf('mechanicum','Domitar Battle-automata Maniple','Elites',175,1,5,175,[4,3,7,7,4,3,3,8,'3+'],'Monstrous Creature','Graviton hammers and missile systems',['Cybernetica Cortex'],['Missile Launcher']);
+rev248Inf('mechanicum','Arlatax Battle-automata Maniple','Fast Attack',180,1,3,180,[5,3,7,7,4,4,4,8,'3+'],'Monstrous Creature','Jump-capable assault automata',['Cybernetica Cortex','Fleet'],['Autocannon']);
+rev248Veh('mechanicum','Triaros Armoured Conveyor','Dedicated Transport',135,4,14,12,12,4,'Vehicle (Tank, Transport)','Armoured mass conveyor and shock ram',[],['Heavy Bolter']);
+rev248Veh('mechanicum','Krios Venator Tank Destroyer','Heavy Support',150,4,13,12,10,3,'Vehicle (Fast Tank)','Pulsar-fusil / neutron weapons',[],['Lascannon']);
+rev248Veh('mechanicum','Karacnos Assault Tank','Heavy Support',225,4,14,13,12,5,'Vehicle (Tank)','Mortar battery and shock weapons',[],['Battle Cannon']);
+rev248Veh('mechanicum','Macrocarid Explorator','Heavy Support',250,4,14,14,13,5,'Vehicle (Tank, Transport)','Explorator command tank and heavy weapons',[],['Lascannon']);
+rev248Veh('mechanicum','Ordinatus Ulator','Lord of War',600,4,14,13,12,8,'Vehicle (Super-heavy)','Sonic destructor engine',[],['Demolisher Cannon']);
+rev248Veh('mechanicum','Ordinatus Sagittar','Lord of War',625,4,14,13,12,8,'Vehicle (Super-heavy)','Macro-scale energy weapon',[],['Lascannon']);
+/* Questoris Knights */
+for(const [n,c,role] of [['Knight Paladin',375,'Troops'],['Knight Errant',370,'Troops'],['Knight Styrix',405,'Elites'],['Knight Magaera',400,'Elites'],['Knight Lancer',400,'Fast Attack'],['Knight Castigator',420,'Fast Attack'],['Knight Acheron',415,'Heavy Support'],['Knight Atrapos',435,'Heavy Support'],['Acastus Knight Porphyrion',625,'Lord of War']])rev248Veh('knights',n,role,c,4,13,12,12,6,'Vehicle (Super-heavy Walker)','Questoris/Acastus Knight armament',[],['Lascannon']);
+/* Talons of the Emperor */
+rev248Inf('talons','Shield-Captain','HQ',125,1,1,0,R248_CUST,'Infantry (Character)','Custodian wargear and guardian weaponry',[],['Power Sword']);
+rev248Inf('talons','Sentinel Guard Squad','Troops',175,3,5,55,R248_CUST,'Infantry','Praesidium shields and sentinel blades',[],['Power Sword']);
+rev248Inf('talons','Sagittarum Guard Squad','Troops',175,3,5,55,R248_CUST,'Infantry','Adrathic/bolt calivers',[],['Boltgun']);
+rev248Inf('talons','Hetaeron Guard Squad','Elites',225,3,5,70,R248_CUST,'Infantry','Elite Custodian close combat arms',[],['Power Sword']);
+rev248Inf('talons','Aquilon Terminator Squad','Elites',225,3,6,70,R248_CUST,'Infantry (Terminator)','Solarite gauntlets and heavy weapons',['Relentless'],['Power Sword']);
+rev248Inf('talons','Sisters of Silence Prosecutor Cadre','Troops',85,5,10,12,[4,4,3,3,1,4,1,9,'3+'],'Infantry','Bolters and psyk-out grenades',[],['Boltgun']);
+rev248Inf('talons','Sisters of Silence Vigilator Cadre','Elites',95,5,10,14,[4,4,3,3,1,4,2,9,'3+'],'Infantry','Executioner greatblades',[],['Power Sword']);
+rev248Inf('talons','Sisters of Silence Witchseeker Cadre','Fast Attack',100,5,10,15,[4,4,3,3,1,4,1,9,'3+'],'Infantry','Flamers and psyk-out grenades',[],['Flamer']);
+rev248Veh('talons','Contemptor-Achillus Dreadnought','Elites',250,5,13,12,11,4,'Vehicle (Walker)','Achillus spear and heavy weapons',[],['Lascannon']);
+rev248Veh('talons','Contemptor-Galatus Dreadnought','Elites',235,5,13,12,11,4,'Vehicle (Walker)','Galatus warblade and shield',[],['Power Sword']);
+rev248Veh('talons','Pallas Grav-attack Squadron','Fast Attack',95,5,12,11,10,3,'Vehicle (Fast, Skimmer)','Arachnus weapons',[],['Lascannon']);
+rev248Veh('talons','Agamatus Jetbike Squadron','Fast Attack',180,5,12,11,10,3,'Jetbike','Adrathic and las-pulsar weapons',[],['Lascannon']);
+rev248Veh('talons','Caladius Grav-tank','Heavy Support',215,5,13,12,11,4,'Vehicle (Fast, Skimmer)','Arachnus accelerator cannon',[],['Autocannon']);
+rev248Veh('talons','Coronus Grav-carrier','Dedicated Transport',180,5,13,12,11,4,'Vehicle (Skimmer, Transport)','Armoured grav transport',[],['Lascannon']);
+rev248Veh('talons','Orion Assault Dropship','Lord of War',500,5,13,13,12,8,'Vehicle (Super-heavy Flyer, Transport)','Heavy assault dropship',[],['Lascannon','Heavy Bolter']);
+rev248Veh('talons','Ares Gunship','Lord of War',550,5,13,13,12,8,'Vehicle (Super-heavy Flyer)','Heavy gunship and bombards',[],['Lascannon','Demolisher Cannon']);
+/* Craftworld Asuryani */
+rev248Inf('craftworld','Autarch','HQ',95,1,1,0,[4,5,3,3,3,6,3,10,'3+'],'Infantry (Character)','Aspect wargear and command equipment',['Fleet'],['Power Sword']);
+rev248Inf('craftworld','Warlock Conclave','HQ',70,1,10,35,R248_ELD,'Infantry (Psyker)','Witchblades and psychic powers',['Fleet'],['Power Sword']);
+rev248Inf('craftworld','Ranger Squad','Troops',60,5,10,12,R248_ELD,'Infantry','Ranger long rifles and camouflage',['Scout','Infiltrate'],['Ranger Long Rifle']);
+for(const [n,w] of [['Howling Banshees','Power Sword'],['Striking Scorpions','Power Sword'],['Fire Dragons','Melta'],['Dark Reapers','Missile Launcher']])rev248Inf('craftworld',n,n==='Dark Reapers'?'Heavy Support':'Elites',80,5,10,16,R248_ELD,'Infantry','Aspect armour and specialist weapons',['Fleet'],[w]);
+rev248Inf('craftworld','Wraithguard','Elites',160,5,10,32,[4,4,5,6,1,4,1,10,'3+'],'Infantry','Wraithcannons',[],['Lascannon']);
+rev248Inf('craftworld','Wraithblades','Elites',160,5,10,32,[4,4,5,6,1,4,1,10,'3+'],'Infantry','Ghostswords / axes',[],['Power Sword']);
+rev248Inf('craftworld','Warp Spiders','Fast Attack',95,5,10,19,[3,4,3,3,1,5,1,9,'3+'],'Jump Infantry','Death spinners',['Fleet'],['Heavy Bolter']);
+rev248Inf('craftworld','Swooping Hawks','Fast Attack',80,5,10,16,R248_ELD,'Jump Infantry','Lasblasters and grenade packs',['Fleet'],['Lasgun']);
+rev248Inf('craftworld','Shining Spears','Fast Attack',105,3,9,35,R248_ELD,'Jetbike','Laser lances',['Fleet'],['Lascannon']);
+rev248Veh('craftworld','Vyper Squadron','Fast Attack',50,4,10,10,10,2,'Vehicle (Fast, Skimmer)','Heavy weapon platform',[],['Scatter Laser']);
+rev248Veh('craftworld','Wave Serpent','Dedicated Transport',110,4,12,12,10,3,'Vehicle (Fast, Skimmer, Transport)','Serpent shield and heavy weapons',[],['Scatter Laser']);
+rev248Veh('craftworld','Fire Prism','Heavy Support',125,4,12,12,10,3,'Vehicle (Fast, Skimmer)','Prism cannon',[],['Lascannon']);
+rev248Veh('craftworld','Night Spinner','Heavy Support',115,4,12,12,10,3,'Vehicle (Fast, Skimmer)','Doomweaver artillery',[],['Heavy Bolter']);
+rev248Veh('craftworld','War Walker Squadron','Heavy Support',70,4,10,10,10,2,'Vehicle (Walker)','Paired heavy weapons',[],['Scatter Laser']);
+rev248Inf('craftworld','Wraithlord','Heavy Support',120,1,1,0,[4,4,10,8,3,4,4,10,'3+'],'Monstrous Creature','Heavy weapons and ghostglaive',[],['Lascannon','Power Sword']);
+rev248Inf('craftworld','Avatar of Khaine','HQ',195,1,1,0,[10,5,6,6,5,10,5,10,'3+'],'Monstrous Creature (Character)','Wailing Doom',[],['Power Sword']);
+rev248Inf('craftworld','Wraithknight','Lord of War',295,1,1,0,[4,4,10,8,6,5,4,10,'3+'],'Gargantuan Creature','Heavy wraith weapons',[],['Lascannon']);
+/* Necron */
+rev248Inf('necron','Necron Overlord','HQ',100,1,1,0,[4,4,5,5,3,2,3,10,'3+'],'Infantry (Character)','Warscythe and resurrection technology',['Reanimation Protocols'],['Power Sword']);
+rev248Inf('necron','Cryptek','HQ',65,1,5,35,R248_NEC,'Infantry (Character)','Cryptek artefacts and staffs',['Reanimation Protocols'],['Lascannon']);
+rev248Inf('necron','Immortal Phalanx','Troops',85,5,10,17,[4,4,4,4,1,2,1,10,'3+'],'Infantry','Gauss blasters / tesla carbines',['Reanimation Protocols'],['Gauss Flayer']);
+rev248Inf('necron','Flayed One Pack','Elites',65,5,20,13,R248_NEC,'Infantry','Flayer claws',['Reanimation Protocols'],['Power Sword']);
+rev248Inf('necron','Lychguard','Elites',125,5,10,25,[4,4,5,5,1,2,2,10,'3+'],'Infantry','Warscythes or sword/shield',['Reanimation Protocols'],['Power Sword']);
+rev248Inf('necron','Triarch Praetorians','Elites',140,5,10,28,[4,4,5,5,1,2,2,10,'3+'],'Jump Infantry','Rod of covenant',['Reanimation Protocols'],['Lascannon']);
+rev248Inf('necron','Deathmarks','Elites',90,5,10,18,R248_NEC,'Infantry','Synaptic disintegrators',['Reanimation Protocols'],['Ranger Long Rifle']);
+rev248Inf('necron','Canoptek Wraiths','Fast Attack',120,3,6,40,[4,4,6,5,2,2,3,10,'3+'],'Beasts','Phase claws',[],['Power Sword']);
+rev248Inf('necron','Canoptek Scarab Swarms','Fast Attack',60,3,9,20,[2,2,3,3,3,2,4,10,'6+'],'Swarm','Entropic mandibles',[],['Power Sword']);
+rev248Inf('necron','Tomb Blade Squadron','Fast Attack',90,3,9,30,R248_NEC,'Jetbike','Gauss/tesla weapons',['Reanimation Protocols'],['Gauss Flayer']);
+rev248Inf('necron','Destroyer Cult','Fast Attack',120,3,6,40,[4,4,5,5,2,2,2,10,'3+'],'Jet Pack Infantry','Gauss cannons',['Reanimation Protocols'],['Lascannon']);
+rev248Veh('necron','Ghost Ark','Dedicated Transport',105,4,13,13,11,4,'Vehicle (Skimmer, Transport)','Gauss arrays and repair systems',[],['Gauss Flayer']);
+rev248Veh('necron','Doomsday Ark','Heavy Support',170,4,13,13,11,4,'Vehicle (Skimmer)','Doomsday cannon',[],['Lascannon']);
+rev248Veh('necron','Annihilation Barge','Heavy Support',120,4,13,13,11,3,'Vehicle (Skimmer)','Tesla destructor',[],['Autocannon']);
+rev248Veh('necron','Triarch Stalker','Heavy Support',125,4,13,13,11,3,'Vehicle (Walker)','Heat ray / heavy gauss',[],['Lascannon']);
+rev248Veh('necron','Monolith','Heavy Support',200,4,14,14,14,4,'Vehicle (Heavy, Skimmer)','Particle whip and portal',[],['Lascannon']);
+rev248Veh('necron','Night Scythe','Fast Attack',130,4,11,11,11,3,'Vehicle (Flyer, Transport)','Tesla destructor',[],['Autocannon']);
+rev248Veh('necron','Doom Scythe','Heavy Support',160,4,11,11,11,3,'Vehicle (Flyer)','Death ray and tesla weapons',[],['Lascannon']);
+rev248Veh('necron','Obelisk','Lord of War',300,4,14,14,14,6,'Vehicle (Super-heavy, Skimmer)','Tesla spheres and gravitic pulse',[],['Autocannon']);
+rev248Veh('necron','Tesseract Vault','Lord of War',550,4,14,14,14,9,'Vehicle (Super-heavy, Skimmer)','C\'tan-powered reality weapons',[],['Lascannon']);
+/* Rebuild mixed Compliance roster after both source pools have been expanded. */
+if(HH1_BSDATA.darkcompliance)HH1_BSDATA.darkcompliance.units=[...HH1_BSDATA.legion.units.map(x=>structuredClone(x)),...HH1_BSDATA.militia.units.filter(x=>x.role!=='HQ').map(x=>structuredClone(x))];
+
+/* Encourage, but do not force, apex assets when the selected points level can legally support them. */
+const _campaignUnitStrategicScore244_rev248=campaignUnitStrategicScore244;
+campaignUnitStrategicScore244=function(t,threat){let s=_campaignUnitStrategicScore244_rev248(t,threat);if(t?.role==='Lord of War')s+=.95+Math.max(0,Number(threat?.siege||0))*.6;return s};
+
+/* ---------- AI district construction ---------- */
+function campaignAIDistrictCandidate248(root,fac,s,strategy){const web=campaignEnsureDevelopmentWeb(s.colony),cap=campaignSettlementSlotCount(s.colony),pref=strategy==='tall'?['industry','resources','research','logistics','habitation','defence','recruitment']:strategy==='wide'?['resources','logistics','industry','habitation','defence','recruitment','research']:['industry','resources','logistics','research','habitation','recruitment','defence'],cands=[];
+  for(let i=0;i<Math.min(cap,web.slots.length);i++){const sl=web.slots[i];if(!sl.chain){for(const chain of pref){const q=campaignDevEligibility(root,fac,s,i,chain,1,null);if(q.ok)cands.push({s,i,chain,tier:1,path:null,q,score:100-pref.indexOf(chain)*6})}}else if(sl.tier<5){const tier=sl.tier+1,b=CAMPAIGN_BUILDING_CHAINS[sl.chain],paths=tier<3?[null]:sl.path?[sl.path]:Object.keys(b?.paths||{});for(const path of paths){const q=campaignDevEligibility(root,fac,s,i,sl.chain,tier,path);if(!q.ok)continue;let sc=80+tier*7+(pref.includes(sl.chain)?30-pref.indexOf(sl.chain)*4:0);if(['industry','resources'].includes(sl.chain))sc+=25;if(sl.chain==='logistics')sc+=12;cands.push({s,i,chain:sl.chain,tier,path,q,score:sc})}}}
+  return cands.sort((a,b)=>b.score-a.score)[0]||null}
+function campaignAIBuildDistrict248(root,fac,strategy){const rows=(fac.settlements||[]).filter(s=>s.status!=='Destroyed'&&!s.mobile236&&Number(s.colony?.size||0)>0),cands=[];for(const s of rows){if(campaignSettlementStress246(root,fac,s)>22)continue;const q=campaignAIDistrictCandidate248(root,fac,s,strategy);if(q)cands.push(q)}if(!cands.length)return false;cands.sort((a,b)=>b.score-a.score);const x=cands[0],q=x.q,reserveS=strategy==='wide'?5:8,reserveM=strategy==='wide'?6:10;if((fac.treasury.supply||0)-q.cost.supply<reserveS||(fac.treasury.materiel||0)-q.cost.materiel<reserveM||(fac.treasury.influence||0)<q.cost.influence||(fac.command||0)<q.cost.command)return false;fac.treasury.supply-=q.cost.supply;fac.treasury.materiel-=q.cost.materiel;fac.treasury.influence-=q.cost.influence;fac.command-=q.cost.command;const web=campaignEnsureDevelopmentWeb(x.s.colony),sl=web.slots[x.i];if(x.tier===1){sl.chain=x.chain;sl.path=null}if(x.tier>=3&&!sl.path)sl.path=x.path;sl.tier=x.tier;campaignApplyDevelopmentInstant(root,x.s,q.node);x.s.colony.pfValue=soiColonyPF(x.s.colony);campaignLog(root.campaign,`${fac.name} invested in ${q.node.name} at ${x.s.locationName} (Tier ${roman(x.tier)} ${CAMPAIGN_BUILDING_CHAINS[x.chain]?.label||x.chain}).`,'ai');return true}
+function campaignAIDistrictProgramme248(root,fac,phase='post'){if(!fac?.ai)return 0;const strategy=campaignAIStrategy246(fac),settlements=(fac.settlements||[]).filter(s=>s.status!=='Destroyed'&&!s.mobile236).length;if(!settlements)return 0;let target=phase==='pre'?1:strategy==='tall'?3:strategy==='wide'?2:2,targetByScale=Math.min(target,Math.max(1,Math.ceil(settlements/3))),n=0;for(let i=0;i<targetByScale;i++)if(campaignAIBuildDistrict248(root,fac,strategy))n++;else break;return n}
+const _campaignAITurn_rev248=campaignAITurn;
+campaignAITurn=function(root,fac){if(fac?.ai){/* Spend on productive districts before expansion can drain the treasury. */campaignAIDistrictProgramme248(root,fac,'pre')}const out=_campaignAITurn_rev248(root,fac);if(fac?.ai){/* A second pass uses this turn's income and any remaining Command. */campaignAIDistrictProgramme248(root,fac,'post')}return out};
+
+/* ---------- Fleet lift hard invariant ---------- */
+function campaignFleetFullPopup248(root,fleet,required,used=null){const cap=campaignFleetCapacity(fleet),u=used==null?campaignFleetCargoPoints(root?.campaign,campaignPlayer(root?.campaign),fleet):used,need=Math.max(0,Number(required||0));const text=`${fleet.name} is full.\n\nTroop lift: ${u.toLocaleString()} / ${cap.toLocaleString()} pts\nRequested embarkation: ${need.toLocaleString()} pts\n\nUpgrade this fleet's lift capacity, disembark/reorganise troops, or commission/use a new fleet for the additional force.`;if(typeof campaignQueueNotice==='function'&&root?.campaign)campaignQueueNotice(root,'Fleet Troop Capacity Reached',text);else try{alert(text)}catch(_){ }return false}
+function campaignRepairFleetLift248(root,fac,fleet,notify=false){if(!fleet)return 0;fleet.cargoTaskForceIds=Array.from(new Set(fleet.cargoTaskForceIds||[]));let used=0,kept=[],dropped=[];for(const id of fleet.cargoTaskForceIds){const tf=(fac.taskForces||[]).find(x=>x.id===id);if(!tf)continue;const pts=campaignTaskForcePoints(tf),cap=campaignFleetCapacity(fleet);if(used+pts<=cap){kept.push(id);used+=pts;tf.fleetId=fleet.id;tf.status=tf.status==='Destroyed'?tf.status:'Embarked'}else{dropped.push(tf);if(tf.fleetId===fleet.id)tf.fleetId=null;tf.systemId=fleet.currentId||tf.systemId;tf.status=tf.status==='Destroyed'?tf.status:'Ready'}}fleet.cargoTaskForceIds=kept;if(dropped.length&&notify&&!fac.ai)campaignQueueNotice(root,'Fleet Overload Corrected',`${fleet.name} exceeded its ${campaignFleetCapacity(fleet).toLocaleString()} pt lift capacity. ${dropped.map(x=>x.name).join(', ')} ${dropped.length===1?'was':'were'} disembarked automatically. Use another fleet or increase lift capacity before embarking again.`);return dropped.length}
+function campaignRepairAllFleetLift248(root,notify=false){const c=root?.campaign;if(!c)return 0;let n=0;for(const fac of c.factions||[])for(const fleet of fac.fleets||[])n+=campaignRepairFleetLift248(root,fac,fleet,notify);return n}
+const _campaignEmbarkForce_rev248=campaignEmbarkForce;
+campaignEmbarkForce=function(root,fac,fleet,tf){if(!fleet||!tf)return false;const used=campaignFleetCargoPoints(root.campaign,fac,fleet),pts=campaignTaskForcePoints(tf);if(used+pts>campaignFleetCapacity(fleet))return campaignFleetFullPopup248(root,fleet,pts,used);const ok=_campaignEmbarkForce_rev248(root,fac,fleet,tf);if(ok)campaignRepairFleetLift248(root,fac,fleet,true);return ok};
+const _campaignEmbarkTaskForce245_rev248=campaignEmbarkTaskForce245;
+campaignEmbarkTaskForce245=function(root,fac,tfId,fleetId){const tf=(fac.taskForces||[]).find(x=>x.id===tfId),fleet=(fac.fleets||[]).find(x=>x.id===fleetId);if(tf&&fleet){const used=campaignFleetCargoPoints238(root.campaign,fleet),pts=campaignTaskForcePoints(tf);if(used+pts>campaignFleetCapacity(fleet))return campaignFleetFullPopup248(root,fleet,pts,used)}const ok=_campaignEmbarkTaskForce245_rev248(root,fac,tfId,fleetId);if(ok&&fleet)campaignRepairFleetLift248(root,fac,fleet,true);return ok};
+const _campaignEnsureFleetState_rev248=campaignEnsureFleetState;
+campaignEnsureFleetState=function(root){const out=_campaignEnsureFleetState_rev248(root);campaignRepairAllFleetLift248(root,false);return out};
+const _campaignEnsureFleetCoverage_rev248=campaignEnsureFleetCoverage;
+campaignEnsureFleetCoverage=function(root,fac){const out=_campaignEnsureFleetCoverage_rev248(root,fac);for(const fleet of fac?.fleets||[])campaignRepairFleetLift248(root,fac,fleet,false);return out};
+const _campaignConsolidatePrehistory247_rev248=campaignConsolidatePrehistory247;
+campaignConsolidatePrehistory247=function(root){const out=_campaignConsolidatePrehistory247_rev248(root);campaignRepairAllFleetLift248(root,false);return out};
+const _campaignIntegrateRoster_rev248=campaignIntegrateRoster;
+campaignIntegrateRoster=function(root,...args){const out=_campaignIntegrateRoster_rev248(root,...args);campaignRepairAllFleetLift248(root,true);return out};
+/* Existing saves are repaired immediately after the dashboard/runtime touches fleet state. */
+const _campaignRenderDashboard_rev248=campaignRenderDashboard;
+campaignRenderDashboard=function(root){if(root?.campaign)campaignRepairAllFleetLift248(root,false);return _campaignRenderDashboard_rev248(root)};
+
+/* Clear roster-generation language: selection uses the full embedded pool, not a reduced shortlist. */
+const _campaignForceManagerHTML_rev248=campaignForceManagerHTML;
+campaignForceManagerHTML=function(root,c){let h=_campaignForceManagerHTML_rev248(root,c),p=campaignPlayer(c),templates=campaignFactionTemplates(p?.key);const lows=templates.filter(x=>x.role==='Lord of War').length,note=`<div class="campaign-roster-note"><b>Full roster pool active:</b> ${templates.length} unit packages are available to the generator for ${esc(p?.name||'this faction')}, including ${lows} Lord of War / apex choice${lows===1?'':'s'}. Force Organisation, points, local technology and settlement support still determine what can actually be selected.</div>`;return h.replace('<section class="campaign-army-planner244">','<section class="campaign-army-planner244">'+note)};
+
+const _campaignRulesReferenceHTML_rev248=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev248(root);const add=`<div class="campaign-rule-card"><h4>55. Autonomous District Economy</h4><p>AI powers now reserve resources for district construction before expansion spending and run a second investment pass afterward. Tall, Balanced and Wide strategies prioritise different mixes, but Industry, Resource Exploitation and Logistics are all deliberately developed so mature AI economies accelerate rather than sitting on empty district slots.</p></div><div class="campaign-rule-card"><h4>56. Hard Fleet Troop Lift</h4><p>A fleet can never retain more embarked ground-force points than its current troop capacity. Embarkation that would exceed the limit is rejected with a capacity notice. Legacy or deep-history overloads are automatically disembarked at the fleet's current location, requiring a larger/upgraded fleet or another transport formation.</p></div><div class="campaign-rule-card"><h4>57. Full Army Roster Pool</h4><p>Canonical faction generators now draw from the expanded embedded roster across HQ, Troops, Elites, Fast Attack, Heavy Support, Dedicated Transport and Lord of War roles. Lords of War are no longer omitted from the candidate pool; normal Force Organisation, technology, local support and the 25% HH1 ceiling still apply.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
+
+const rb248=document.querySelector('.generation-head-actions .badge');if(rb248)rb248.textContent='rev 24.8 — Autonomous Economy & Full Rosters';document.title='Administratum Stellar Cartographica — Revision 24.8';document.documentElement.dataset.cartographicaRevision=REV248;document.documentElement.dataset.cartographicaBuild=REV248_BUILD;
+window.__cartoRevision248={version:REV248,build:REV248_BUILD,repairFleetLift:campaignRepairAllFleetLift248,aiDistrictProgramme:campaignAIDistrictProgramme248,rosterCounts:Object.fromEntries(Object.entries(HH1_BSDATA).map(([k,v])=>[k,{units:v.units?.length||0,lords:(v.units||[]).filter(x=>x.role==='Lord of War').length}])),fleetAudit:(root)=>{const c=root?.campaign,out=[];for(const fac of c?.factions||[])for(const f of fac.fleets||[])out.push({faction:fac.name,fleet:f.name,used:campaignFleetCargoPoints(c,fac,f),cap:campaignFleetCapacity(f),ok:campaignFleetCargoPoints(c,fac,f)<=campaignFleetCapacity(f)});return out},districtAudit:(root)=>{const out=[];for(const fac of root?.campaign?.factions||[]){let settlements=0,slots=0,used=0,tiers=0;for(const s of fac.settlements||[]){if(s.status==='Destroyed'||s.mobile236)continue;settlements++;const w=campaignEnsureDevelopmentWeb(s.colony),cap=campaignSettlementSlotCount(s.colony);slots+=cap;for(const x of w.slots.slice(0,cap))if(x.chain){used++;tiers+=Number(x.tier)||0}}out.push({faction:fac.name,ai:fac.ai,strategy:fac.ai?campaignAIStrategy246(fac):'player',settlements,slots,used,tiers})}return out}};
 
 
 

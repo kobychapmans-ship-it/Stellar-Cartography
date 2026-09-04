@@ -1,17 +1,17 @@
-Stellar Cartographica v24.7 — v29-tested regression summary
+STELLAR CARTOGRAPHICA REVISION 24.8 VALIDATION REPORT
+Build: 24.8-ai-district-lift-full-roster-v30-tested
 
-PASS: clean script execution
-PASS: correct 24.7 build/title/badge identity
-PASS: campaign chronology UI (Normal + Deep-Time, 100–1000)
-PASS: Turn 0 normal campaign launch
-PASS: faction-specific naval doctrine/BFG points
-PASS: cross-system strategic fleet targeting
-PASS: fleet engagement creation
-PASS: fleet auto-resolve and persistent fleet damage
-PASS: 100-turn established-polity prehistory
-PASS: 1000-turn established-polity prehistory (16.78s container runtime)
-PASS: campaign state JSON serialization/reparse
-PASS: service-worker syntax and cache-key validation
-PASS: manifest JSON validation
+PASS — All 4 inline JavaScript blocks parse with Node --check.
+PASS — Service worker parses with Node --check.
+PASS — manifest.webmanifest parses as valid JSON.
+PASS — Revision identity is consistently 24.8 / v30-tested in index, manifest, service worker and VERSION.txt.
+PASS — AI development integration is inside the main runtime scope and wraps the active AI turn.
+PASS — AI development uses pre-turn and post-turn investment passes and strategy-specific district priorities.
+PASS — Direct fleet embarkation checks used troop points + requested points against capacity before changing cargo state.
+PASS — Task-force embarkation checks used troop points + requested points against capacity before changing cargo state.
+PASS — Fleet-state, fleet-coverage, roster-integration, deep-history consolidation and dashboard paths all run overload repair.
+PASS — Overload repair disembarks excess task forces at the fleet's current location rather than leaving impossible cargo values.
+PASS — Expanded embedded canonical rosters include explicit Lord of War candidates and the generator's active template pool is no longer a separate reduced shortlist.
+PASS — Service-worker cache key is unique to Revision 24.8 and old Cartographica caches are purged during activation.
 
-The principal regression fixed in this build was scope isolation: v24.6/v24.7 had been appended outside the original private runtime, so newer integrations could not access core functions and failed before fully loading.
+ENVIRONMENT LIMITATION — The available Chromium environment blocks local/file and localhost navigation under administrator policy. Therefore a fresh interactive browser regression could not be truthfully marked as passed in this container. The package was validated by syntax, manifest/cache validation, source-path invariant checks and archive integrity testing.
