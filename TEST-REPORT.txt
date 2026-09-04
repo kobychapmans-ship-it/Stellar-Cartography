@@ -1,0 +1,17 @@
+Stellar Cartographica v24.7 — v29-tested regression summary
+
+PASS: clean script execution
+PASS: correct 24.7 build/title/badge identity
+PASS: campaign chronology UI (Normal + Deep-Time, 100–1000)
+PASS: Turn 0 normal campaign launch
+PASS: faction-specific naval doctrine/BFG points
+PASS: cross-system strategic fleet targeting
+PASS: fleet engagement creation
+PASS: fleet auto-resolve and persistent fleet damage
+PASS: 100-turn established-polity prehistory
+PASS: 1000-turn established-polity prehistory (16.78s container runtime)
+PASS: campaign state JSON serialization/reparse
+PASS: service-worker syntax and cache-key validation
+PASS: manifest JSON validation
+
+The principal regression fixed in this build was scope isolation: v24.6/v24.7 had been appended outside the original private runtime, so newer integrations could not access core functions and failed before fully loading.

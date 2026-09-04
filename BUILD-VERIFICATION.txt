@@ -1,18 +1,29 @@
 Administratum Stellar Cartographica — Revision 24.7
-Build: 24.7-deep-time-battlefleet-v28
+Build: 24.7-deep-time-battlefleet-v29-tested
 
-Validation completed:
-- All 6 inline JavaScript blocks extracted from index.html and passed `node --check`.
-- sw.js passed `node --check`.
-- manifest.webmanifest parsed successfully as JSON.
-- Required Revision 24.7 feature markers verified in index.html:
-  campaign chronology controls, 100–1000 turn slider, naval battle system,
-  fleet auto-resolve controls, strategic non-adjacent targeting, and build identity.
-- Static build metadata (HTML bootstrap, manifest, service worker, VERSION) updated to v24.7.
-- Release archive tested with ZIP integrity check after packaging.
+CLEAN INTEGRATION FIX
+- v24.6 and v24.7 extension layers are integrated within the core runtime lexical scope.
+- Legacy v24.5/v24.6 active title/badge/build identity writes are disabled.
+- Service-worker/cache identity bumped from v28 to v29-tested.
 
-Browser-runner note:
-- A local headless Chromium `--dump-dom` smoke test was attempted. Chromium loaded but did not terminate within the bounded test window in this container, matching the behaviour observed with the prior self-contained build. Because the runner did not return a clean completion signal, this is not recorded as a passed interactive browser regression test.
+STATIC VALIDATION
+- 4 inline JavaScript blocks extracted from final index.html: all passed node --check.
+- sw.js passed node --check.
+- manifest.webmanifest parsed as valid JSON.
+- ZIP archive integrity checked after packaging.
 
-Design/reference note:
-- The naval layer is an original strategic abstraction inspired by the user-provided Battlefleet Gothic Remastered rulebook and fleet book. It does not embed or reproduce source PDFs, artwork, full fleet-list text, or exact ship profiles.
+INTERACTIVE CHROMIUM/CDP REGRESSION TESTS
+- All final inline scripts executed with no exceptions.
+- Runtime identity: Revision 24.7 / 24.7-deep-time-battlefleet-v29-tested.
+- Campaign launcher exposes Normal Turn 0 and Deep-Time controls, slider/number range 100–1000.
+- Normal launch reached Turn 0 / Player phase with no runtime errors.
+- Fleet layer generated a faction-specific Provincial Battlefleet profile and BFG points.
+- Strategic command HTML exposed non-adjacent/cross-system target choices.
+- A hostile fleet engagement was created and auto-resolved; persistent void damage was applied.
+- Established-polity Deep-Time simulation completed at Turn 100 with Player phase restored and no runtime errors.
+- Established-polity Deep-Time simulation completed at Turn 1000 with Player phase restored, nine evolved faction records in the test seed, and no runtime errors.
+- Turn 1000 test runtime in the container: 16.78 seconds.
+- Campaign state serialized to JSON and re-parsed at Turn 100 and Turn 1000.
+
+PERFORMANCE NOTE
+- Deep-Time starts use at most 250 detailed historical simulation steps. For starts above 250 turns, each step represents multiple historical turns and positive economic income is scaled to the represented interval. This retains AI expansion/development while avoiding multi-minute Turn 1000 startup times.

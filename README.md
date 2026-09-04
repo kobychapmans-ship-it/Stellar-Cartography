@@ -1,9 +1,16 @@
 # Administratum Stellar Cartographica — Revision 24.7
 ## Deep-Time Campaigns & Battlefleet Operations
 
-Build: `24.7-deep-time-battlefleet-v28`
+Build: `24.7-deep-time-battlefleet-v29-tested`
 
 Revision 24.7 extends the v24.6 settlement-governance campaign with a sector-history start mode and a dedicated void-war layer.
+
+## Clean integration / tested build v29
+- Revision 24.6 settlement-governance and Revision 24.7 deep-time/battlefleet code are now integrated inside the core runtime scope instead of being loaded as isolated scripts. This fixes the regression where the newer layers could not access core campaign/world functions and the PWA appeared to fall back to an older revision.
+- Active legacy v24.5/v24.6 title and badge overwrites are disabled.
+- The cache/build key is `24.7-deep-time-battlefleet-v29-tested`, forcing a distinct service-worker cache from the earlier v28 package.
+- Deep-Time starts use up to 250 detailed historical simulation steps. Starts above 250 turns compress multiple historical turns into each step while scaling positive income, keeping Turn 1000 practical without simply changing the displayed turn number.
+- Browser-harness regression tests passed for Turn 0 launch, campaign chronology controls, BFG-inspired fleet identity, cross-system strategic targets, fleet-battle creation and auto-resolve, 100-turn established-polity prehistory, 1000-turn established-polity prehistory, and campaign JSON serialization.
 
 ### Campaign chronology and autonomous prehistory
 - The campaign launcher now includes a chronology choice beside faction/start setup.

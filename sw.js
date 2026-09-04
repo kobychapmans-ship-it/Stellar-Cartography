@@ -1,5 +1,5 @@
-const CACHE_NAME='cartographica-r24.7-deep-time-battlefleet-v28';
-const CANONICAL='./?rev=24.7-deep-time-battlefleet-v28';
+const CACHE_NAME='cartographica-r24.7-deep-time-battlefleet-v29-tested';
+const CANONICAL='./?rev=24.7-deep-time-battlefleet-v29-tested';
 const SHELL=[CANONICAL,'./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 self.addEventListener('install',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/cartographica/i.test(k)&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>caches.open(CACHE_NAME)).then(c=>c.addAll(SHELL.map(x=>new Request(x,{cache:'reload'})))).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/cartographica/i.test(k)&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));

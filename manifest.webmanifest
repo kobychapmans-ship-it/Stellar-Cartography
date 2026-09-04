@@ -3,7 +3,7 @@
   "short_name": "Cartographica R24.7",
   "description": "Revision 24.7 adds Turn 0 or 100–1000 turn Deep-Time campaign starts, autonomous prehistory for established polities, strategic fleet attacks across non-adjacent territories, persistent fleet engagements with tabletop-report or auto-resolve resolution, and faction-specific Battlefleet Gothic-inspired naval doctrines.",
   "id": "./?app=cartographica-r24.7-deep-time-battlefleet",
-  "start_url": "./?rev=24.7-deep-time-battlefleet-v28",
+  "start_url": "./?rev=24.7-deep-time-battlefleet-v29-tested",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",
