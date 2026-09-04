@@ -1,44 +1,44 @@
-Administratum Stellar Cartographica — Revision 24.5
+Administratum Stellar Cartographica — Revision 24.6
 BUILD VERIFICATION
 ==================
 
-Build: 24.5-territory-operations-v26
+Build: 24.6-settlement-governance-v27
 
 Static validation
 -----------------
-PASS — All embedded JavaScript blocks pass `node --check`.
+PASS — All embedded JavaScript blocks pass `node --check` after the v24.6 integration.
 PASS — `sw.js` passes `node --check`.
 PASS — `manifest.webmanifest` parses as valid JSON.
-PASS — Manifest start URL, HTML bootstrap, VERSION.txt and service-worker cache use the same v26 build identity.
+PASS — HTML bootstrap identity, VERSION.txt, manifest start URL and service-worker cache use the same v27 build identity.
+PASS — Revision 24.6 script exports its native-settlement, occupation, consequence-risk, AI-maintenance and resource-automation helpers through `window.__cartoRevision246` for runtime inspection.
 
-Browser/runtime regression (headless Chromium using complete self-contained HTML)
--------------------------------------------------------------------------------
-PASS — Application loads as Revision 24.5 with zero page/runtime errors.
-PASS — Generated system launches a campaign successfully.
-PASS — Technology Upgrade button exists and works: test Research 999 -> 991 while permanent `techBonus` advanced 0 -> 1.
-PASS — Military Research button explicitly displays `+1d6 Research (8M / 3I / 1C)` in the zero-colony-bonus test case.
-PASS — Apex System Architecture is rendered as a collapsible details section.
-PASS — Apex section remained open after a dashboard rerender / manual-save action.
-PASS — Overview territory-claim workspace rendered.
-PASS — Territory claim modal rendered 10 individual territories in the test world.
-PASS — Ground Task Force disembarkation completed into a selected territory.
-PASS — Occupying force generated a +2 claim bonus in its occupied territory.
-PASS — Gas-giant synthetic regression generated two Atmospheric Gas deposits and exposed `Gas Harvesting Platform` as the settlement mode.
-PASS — Full End Turn advanced campaign Turn 1 -> Turn 2 with zero runtime exceptions.
+Revision 24.6 integration checks
+--------------------------------
+PASS — Individual settlement cards are wrapped in persistent `<details>` controls.
+PASS — Option-bearing campaign containers with direct H3/H4/H5 headings are eligible for persistent collapse; Turn 30+ defaults them closed unless the player saved another state.
+PASS — Ground movement has a final v24.6 override and document-level delegated handling, including current-territory/no-Supply protection.
+PASS — Occupation bonus is point-scaled and feeds the existing territory-claim hook; effective settlement Order is augmented by local occupation.
+PASS — World population generation creates native settlement networks and campaign initialization seeds them as pre-campaign settlements.
+PASS — Surface founding is rejected on already inhabited or already settled objects while orbital infrastructure remains allowed.
+PASS — Player-selected Infrastructure and Support controls are present in settlement governance.
+PASS — Settlement consequence risk includes hostility, Order, Complacency, Piety/Cohesion, infrastructure backlog, stagnation and rebellion, with active rebellion/suppression logic.
+PASS — AI factions receive Tall/Balanced/Wide strategy and reserve real Command for settlement maintenance after their normal strategic actions.
+PASS — Tier IV/V Resource Exploitation provides automated extraction and plentiful deposits receive improved manual extraction economics.
+PASS — Expedition rewards and approach logic are replaced by the v24.6 strategic-scale reward system.
 
-Gas-giant catalogue regression
-------------------------------
-The inherited location enumerator explicitly filtered SOI gas giants. Revision 24.5 wraps the final location catalogue and reintroduces generated gas giants as `Gas Giant` strategic locations before campaign site records are constructed. This is required for harvesting/settlement UI to function on naturally generated gas giants.
+Browser/runtime note
+--------------------
+A full headless Chromium regression was attempted in this build environment, but the large self-contained PWA did not terminate cleanly under the available headless runner. No runtime PASS is claimed from that attempt. The release therefore relies on syntax validation plus direct static integration checks above; interactive browser play-testing is still recommended after deployment, especially for imported legacy saves.
 
 Compatibility retained
 ----------------------
-- v24.4 cohesive player/AI army generation and Force Organisation validation
-- territory claims / native sovereignty / territory battles
+- v24.5 territory-first claims and native sovereignty
+- territory battles and ground deployment
 - fleet movement and multi-journey routing
-- moon settlement rules
-- raider forces and mercenary diplomacy
-- expeditions and expedition arcade
-- Decrees, mobilisation, recruitment caps and detailed battle auto-resolve
-- remnant-compatible legacy planetary survey
+- gas-giant harvesting platforms
+- remnant settlements and investigations
+- cohesive player/AI army generation and Force Organisation validation
+- diplomacy, decrees, recruitment caps and battle auto-resolve
+- expedition arcade and existing settlement development web
 
 No external JS/CSS runtime dependency was added.
