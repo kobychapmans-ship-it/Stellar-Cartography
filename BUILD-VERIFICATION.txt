@@ -1,47 +1,44 @@
-STELLAR CARTOGRAPHY — REVISION 24.4 BUILD VERIFICATION
-Build: 24.4-cohesive-armies-v25
+Administratum Stellar Cartographica — Revision 24.5
+BUILD VERIFICATION
+==================
 
-SOURCE EXEMPLARS REVIEWED
-- DG Tulerat campaign.html
-- Full mechanicum + knights.html
+Build: 24.5-territory-operations-v26
 
-DESIGN RULES IMPLEMENTED
-1. Construct a legal Force Organisation skeleton before spending discretionary points.
-2. Preserve faction-specific FOC minima/maxima, including unusual compulsory slots.
-3. Treat Support Unit-style Troops as ineligible for compulsory Troops when that rule is present.
-4. Budget discretionary points by battlefield role rather than random slot filling.
-5. Analyse enemy faction + actual enemy Task Force composition.
-6. Select units and auto-upgrades against horde, armour, elite, monster/automata, air, siege and mobility threats.
-7. Preserve imported/manual upgrades when refitting; only auto-generated campaign upgrades are replaced.
-8. AI recruitment and pre-battle refits use the same opponent-aware logic.
-9. Generated player forces obey the current empire mobilisation ceiling.
-10. Lords of War remain within the 25% ceiling after generated upgrades.
+Static validation
+-----------------
+PASS — All embedded JavaScript blocks pass `node --check`.
+PASS — `sw.js` passes `node --check`.
+PASS — `manifest.webmanifest` parses as valid JSON.
+PASS — Manifest start URL, HTML bootstrap, VERSION.txt and service-worker cache use the same v26 build identity.
 
-AUTOMATED BROWSER / GENERATOR TESTS
-- Browser startup revision: 24.4
-- v24.4 army test API initialized: PASS
-- JavaScript page errors during matrix test: 0
-- Matrix: 15 army families × 5 opponent profiles = 75 cases
-- Illegal generated cases: 0
+Browser/runtime regression (headless Chromium using complete self-contained HTML)
+-------------------------------------------------------------------------------
+PASS — Application loads as Revision 24.5 with zero page/runtime errors.
+PASS — Generated system launches a campaign successfully.
+PASS — Technology Upgrade button exists and works: test Research 999 -> 991 while permanent `techBonus` advanced 0 -> 1.
+PASS — Military Research button explicitly displays `+1d6 Research (8M / 3I / 1C)` in the zero-colony-bonus test case.
+PASS — Apex System Architecture is rendered as a collapsible details section.
+PASS — Apex section remained open after a dashboard rerender / manual-save action.
+PASS — Overview territory-claim workspace rendered.
+PASS — Territory claim modal rendered 10 individual territories in the test world.
+PASS — Ground Task Force disembarkation completed into a selected territory.
+PASS — Occupying force generated a +2 claim bonus in its occupied territory.
+PASS — Gas-giant synthetic regression generated two Atmospheric Gas deposits and exposed `Gas Harvesting Platform` as the settlement mode.
+PASS — Full End Turn advanced campaign Turn 1 -> Turn 2 with zero runtime exceptions.
 
-FOC / THREAT SAMPLE TESTS
-- Legion 3000 vs Orks: PASS; legal; horde/mobility doctrine; Sicarans and line/assault bodies selected.
-- Legion 3000 vs Knights: PASS; legal; armour/monster/siege doctrine; Spartans, Contemptors and Typhon selected.
-- Mechanicum 3000 vs Knights: PASS; legal; anti-armour automata upgrades include Multi-melta / Darkfire selections where available.
-- Knights 2000 vs Orks: PASS; faction-specific chart legal.
-- Necron 2000 vs Legion: PASS; non-standard compulsory Fast Attack minima satisfied.
-- Procedural Ork 2000 vs Legion: PASS; Crusade-style chart legal.
-- Legion 6000 vs Orks: PASS; split into two separately legal battlegroups.
+Gas-giant catalogue regression
+------------------------------
+The inherited location enumerator explicitly filtered SOI gas giants. Revision 24.5 wraps the final location catalogue and reintroduces generated gas giants as `Gas Giant` strategic locations before campaign site records are constructed. This is required for harvesting/settlement UI to function on naturally generated gas giants.
 
-POINT CONTROL
-- Generated upgrade trim keeps effective totals at or below approximately 102% of requested target where catalogue package granularity permits.
-- Lord of War generator uses pre-upgrade safety headroom and final FOC validation.
+Compatibility retained
+----------------------
+- v24.4 cohesive player/AI army generation and Force Organisation validation
+- territory claims / native sovereignty / territory battles
+- fleet movement and multi-journey routing
+- moon settlement rules
+- raider forces and mercenary diplomacy
+- expeditions and expedition arcade
+- Decrees, mobilisation, recruitment caps and detailed battle auto-resolve
+- remnant-compatible legacy planetary survey
 
-STATIC VALIDATION
-- Embedded JavaScript syntax: PASS
-- Service worker syntax: PASS
-- Manifest revision/start URL consistency: PASS
-- Legacy campaign systems retained: PASS
-
-NOTE
-The source BattleScribe exports are used as composition/upgrading exemplars. The new campaign generator does not copy an exemplar's potentially narrative/non-standard force structure; every newly generated campaign army must pass its configured Force Organisation chart.
+No external JS/CSS runtime dependency was added.

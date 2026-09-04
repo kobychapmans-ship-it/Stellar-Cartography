@@ -1,45 +1,48 @@
-# Administratum Stellar Cartographica — Revision 24.4
-## Cohesive Army Doctrine
+# Administratum Stellar Cartographica — Revision 24.5
+## Territory Operations & Campaign UX
 
-Revision 24.4 replaces the old random-legal army fill with a Force Organisation aware, threat-responsive army planner for both player and AI campaign forces.
+Build: `24.5-territory-operations-v26`
 
-### Army construction
-- Builds compulsory Force Organisation slots before discretionary selections.
-- Respects each faction's actual chart minima/maxima, including non-standard compulsory slots.
-- Validates each battlegroup/detachment separately on large armies.
-- Enforces the Lord of War 25% ceiling with headroom for upgrades.
-- Keeps generated selections as distinct formations so duplicate squads do not collapse into one apparent FOC slot.
-- Uses deliberate role budgets for line troops, command, specialists, mobility, armour and heavy support instead of a random pool.
+Revision 24.5 keeps the v24.4 cohesive army generator and adds a territory-first political/ground operations pass.
 
-### Threat response
-Generated and refitted forces assess the expected enemy for:
-- horde / mass infantry
-- armour
-- elite infantry
-- monsters / automata
-- air threats
-- siege assets
-- mobility
+### Territory-first claims
+- The old Overview `Claim Adjacent` control is removed from the normal player workflow.
+- Planet/moon claims open a territory chooser showing every region, biome, current claimant and occupation modifier.
+- Planet/object claim buttons and map-click claims route through the same territorial chooser where territories exist.
+- Claim success/failure, blocked native sovereignty, foreign claims, insufficient resources and occupying-force modifiers all use explicit notices.
 
-The planner then favours appropriate unit packages and upgrade options. Examples include high-volume guns and mobile line elements into hordes; melta, graviton, haywire, lances and heavy armour into vehicle/knight forces; and plasma/power weapon specialists into elite targets.
+### Ground operations
+- Embarked Task Forces can disembark into a specific planetary territory.
+- Deployed armies are marked on territory maps and generate a deployment notice.
+- A deployed force gives +2 to the claim roll in its occupied territory and +1 elsewhere on the same object.
+- Ground forces may move one territory per campaign turn for 1 Supply and may re-embark when an eligible fleet has capacity.
+- Planetside-adventure deployment now shares the same physical ground-force state.
 
-### Player tools
-The Army / Detachments tab now includes a Cohesive Army Generator with:
-- Expected Opponent
-- Counter-Doctrine
-- Target Points
-- Generate New Force
-- Refit Selected Force
+### Technology and UI
+- Technology advancement uses permanent Technology rather than temporary colony bonuses when checking upgrade eligibility.
+- The Upgrade Technology button consumes the displayed Research threshold and advances the permanent tier.
+- Military Research explicitly states its yield: `1d6 + research-infrastructure bonus` Research for 8 Materiel, 3 Influence and 1 Command.
+- Open campaign details/dropdowns persist across dashboard rerenders.
+- Apex System Architecture is collapsible and remembers its open state.
 
-New forces obey the empire mobilisation ceiling. Imported BattleScribe forces are never automatically rewritten; manual/imported upgrades are retained during a refit.
+### Gas giants
+- Gas giants are now included in the campaign location catalogue.
+- They generate 2–3 atmospheric deposits, mainly Hydrogen/Helium, Helium-3, methane/volatiles, noble-gas catalysts or exotic atmospheric compounds.
+- Gas giants cannot host normal surface colonies. They use a Gas Harvesting Platform / atmospheric station settlement instead.
 
-### AI behaviour
-AI factions use the same cohesive generator. When at war they identify their strongest enemy, tailor new recruitment to that opposition, and can refit the force that is about to fight rather than carrying a generic loadout into every battle.
+### Remnant settlements
+- In Campaign Mode, the legacy planet-side `Add Colony / Settlement` bar is removed from object pages.
+- Existing settlements remain visible.
+- Worlds can generate Ghost Colonies, Lost Mining Enclaves, Pre-Imperial Settlements, Xenos Habitation Ruins, Derelict Research Stations or War-Torn Refuges.
+- Deployed forces may investigate them for encounters, Materiel, Research, Influence or new resource caches.
 
-### PWA
-Build: `24.4-cohesive-armies-v25`
+### Fleet intelligence
+- Foreign fleets use high-contrast faction-coloured directional markers in strategic scenes.
+- System-map foreign fleets and raider bands receive explicit arrow markers; raiders use hostile red markers.
 
-Deploy all files in this directory to the repository root, then open:
-`?rev=24.4-cohesive-armies-v25`
+### Deployment
+Upload the files in this directory to the repository root and launch:
 
-The PWA remains self-contained and offline-capable after the first successful online load.
+`https://kobychapmans-ship-it.github.io/Stellar-Cartography/?rev=24.5-territory-operations-v26`
+
+The application remains self-contained and PWA/offline capable after the first successful online load.

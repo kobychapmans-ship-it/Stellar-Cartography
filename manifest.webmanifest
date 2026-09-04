@@ -1,9 +1,9 @@
 {
-  "name": "Administratum Stellar Cartographica — Revision 24.4",
-  "short_name": "Cartographica R24.4",
-  "description": "Revision 24.4 adds cohesive Force Organisation compliant, threat-aware army generation and opponent-specific refits for player and AI forces while retaining all campaign systems.",
+  "name": "Administratum Stellar Cartographica — Revision 24.5",
+  "short_name": "Cartographica R24.5",
+  "description": "Revision 24.5 adds territory-first claims, reliable Research technology advancement, persistent-open campaign UI, explicit research yields, collapsible Apex Architecture, hostile fleet/raider markers, gas-giant harvesting stations, remnant settlements, and ground-force territory operations.",
   "id": "./?app=cartographica-r23.4-expeditions-decrees-allied-detachments",
-  "start_url": "./?rev=24.4-cohesive-armies-v25",
+  "start_url": "./?rev=24.5-territory-operations-v26",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",
