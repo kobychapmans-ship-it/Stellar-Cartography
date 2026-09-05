@@ -1,2 +1,2 @@
-Stellar Cartographica v26.1
-Build: 26.1-deeptime-complete-t2-1000-v45-tested
+Stellar Cartographica v26.2
+Build: 26.2-fleet-settlements-foundation-site-economies-v46-tested

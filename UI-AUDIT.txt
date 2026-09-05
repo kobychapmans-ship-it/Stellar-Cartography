@@ -1,35 +1,45 @@
-STELLAR CARTOGRAPHICA v26.0 TEST REPORT
-Build: 26.0-combat-claims-save-fleet-lifecycle-v44-tested
+STELLAR CARTOGRAPHICA v26.2 TEST REPORT
+Build: 26.2-fleet-settlements-foundation-site-economies-v46-tested
 
-PASS — all embedded JavaScript blocks and service worker pass syntax validation.
-PASS — manifest validates as Revision 26.0.
-PASS — all literal button IDs and button data-action families have matching interaction paths after the shared map-control framework is accounted for.
+PASS — 4 embedded JavaScript blocks pass Node syntax validation.
+PASS — service worker passes Node syntax validation.
+PASS — manifest parses as Revision 26.2 with a fresh cache/start identity.
+PASS — 105 literal button IDs audited with no unmatched IDs after the shared map-control framework is accounted for.
+PASS — 105 button data-action/metadata families audited with no unmatched action families.
 
-CAMPAIGN SAVE EXPORT
-PASS — campaign JSON serialization path validated.
-PASS — mocked browser fallback successfully generated a JSON download click.
-UPDATED — iOS/PWA export prefers the native share/save sheet with a real JSON File; normal download and new-tab fallback remain available.
+FLEET SETTLEMENTS
+PASS — Tier III player conversion sets a pending mobile-settlement state instead of materialising a settlement immediately.
+PASS — pending Tier III fleets are excluded from mobile-settlement enumeration until End Turn completes.
+PASS — End Turn finalisation creates the mobile colony and initialises its development/infrastructure state.
+PASS — mobile settlements render a dedicated Level 1–10 infrastructure/support planner.
+PASS — mobile infrastructure/support controls resolve via campaignFindSettlement236 instead of fixed-settlement-only lookup.
+PASS — mobile settlement district purchases resolve the fleet proxy rather than fac.settlements[].
+PASS — Fleet-Colony polity benefits are visible in Overview: 20% cheaper fleet-settlement development, 15% cheaper fleet commissioning, +5% campaign fleet speed, and +1 Supply/turn per active mobile settlement.
 
-FLEET COMBAT / LIFECYCLE
-PASS — direct fleet target discovery exposes foreign fleets co-located in the same system.
-PASS — direct fleet engagement uses a stationary/co-located aftermath rather than invasion breakthrough movement.
-PASS — repair quote and repair state transition tested on a 40%-damaged Expeditionary Fleet.
-PASS — 0% Hull destruction removes the fleet and its embarked Task Forces.
-PASS — Tier-0 Expeditionary Vessel seeding tested for both player and AI factions.
+FOUNDATION DEPTH
+PASS — player foundation packages expose Size 1, 2, 3, 4 and 5.
+PASS — additional Supply/Materiel/Command costs rise with foundation Size.
+PASS — the created settlement is initialised at the selected Size and receives matching colony/infrastructure initialisation.
 
-GROUND COMBAT
-PASS — a deployed army discovered a hostile target in another territory on the same world.
-PASS — declaring the cross-territory battle consumed 1 Supply + 1 Command and created a pending planetary territory battle.
-UPDATED — Overview and planetary ground-operation panels expose direct ground-battle controls.
+RESOURCE EXTRACTION
+PASS — resource recovery mode persists at campaign level.
+PASS — Mixed Recovery, Sequence Analysis, Cogitator Checksum and Signal Amplification are selectable before extraction.
+PASS — selected non-mixed modes force the corresponding puzzle family without changing resource rewards or extraction difficulty.
 
-TERRITORY CLAIMS / PARTIAL WORLDS
-UPDATED — planetary map and Territory-tab modal claims use one delegated claim-and-refresh path.
-UPDATED — partially claimed planets display territory-by-territory ownership.
-UPDATED — settlement founding checks the selected territory, so an unrelated foreign claim elsewhere on the same planet no longer blocks an unclaimed/friendly region.
-PASS — v25.9 exact-territory fleet disembarkation remains integrated.
+SITE-SPECIFIC DISTRICTS
+PASS — Orbital Defence Platforms gain the Orbital Defence Platform Systems chain.
+PASS — Gas Harvesting Platforms gain the Atmospheric Harvesting Complex chain.
+PASS — Fleet Settlements gain the Fleet Settlement Infrastructure chain.
+PASS — eligibility prevents those chains being constructed at the wrong site type.
+PASS — custom demographic-momentum and site-defence district effects are aggregated into campaign development/defence calculations.
 
-DEEP TIME
-PASS — the independent v25.7 stack-safe Deep-Time engine remains integrated.
+SITE DEFENCE
+PASS — the rules reference is consolidated around Effective Site Defence = fortifications + settlement defence + orbital/fleet defence.
+PASS — existing auto-resolve mechanics remain: up to +3 defender roll and +300 equivalent strategic power per Effective Defence level.
 
-LIMITATION
-The container Chromium environment is not reliable for local file/localhost click-through. Runtime-critical state transitions were therefore tested directly with the exact v26.0 functions in Node harnesses, plus a complete static interaction audit.
+REGRESSION
+PASS — v26.1 T2–T1000 independent Deep-Time scheduler remains present.
+PASS — v26.0 combat/claims/fleet-lifecycle and v25.9 territory-specific ground operations remain in the runtime.
+
+BROWSER LIMITATION
+The container browser environment remains unsuitable for a reliable local-file/localhost full click-through. Release validation therefore uses syntax validation, interaction-path auditing and direct state-path inspection on this exact package; no interactive browser run is falsely claimed.

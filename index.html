@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="26.1" />
+<meta name="cartographica-revision" content="26.2" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=26.1-deeptime-complete-t2-1000-v45-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=26.2-fleet-settlements-foundation-site-economies-v46-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='26.1';
-  const BUILD='26.1-deeptime-complete-t2-1000-v45-tested';
-  const LABEL='rev 26.1 — Complete Deep-Time T2–T1000';
-  const TITLE='Administratum Stellar Cartographica — Revision 26.1';
+  const REVISION='26.2';
+  const BUILD='26.2-fleet-settlements-foundation-site-economies-v46-tested';
+  const LABEL='rev 26.2 — Fleet Settlements & Site Economies';
+  const TITLE='Administratum Stellar Cartographica — Revision 26.2';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 26.1</title>
+<title>Administratum Stellar Cartographica — Revision 26.2</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -652,6 +652,14 @@ html.carto-orientation-lock body:after{content:'';display:none}
 </style>
 <style id="rev260-css">
 .campaign-combat-command260{margin:10px 0;padding:10px;border:1px solid rgba(168,82,69,.35);background:rgba(113,53,45,.07);grid-column:1/-1}.campaign-combat-command260 h4,.campaign-combat-command260 h5{margin:0 0 6px;color:#d9b4aa}.campaign-combat-command260 p,.campaign-combat-command260 small{color:#99938d;font-size:8px;line-height:1.45}.campaign-ground-cross260{margin-top:9px;padding:9px;border:1px solid rgba(168,82,69,.28);background:rgba(113,53,45,.05)}.campaign-ground-cross260 h4{margin:0 0 7px;color:#d9b4aa}.campaign-ground-attack260{display:grid;grid-template-columns:minmax(130px,.8fr) minmax(180px,1.5fr) auto;gap:6px;align-items:center;margin:5px 0}.campaign-ground-attack260 b{font-size:8px;color:#c9c1ad}.campaign-ground-attack260 select,.campaign-ground-attack260 button{width:100%}@media(max-width:720px){.campaign-ground-attack260{grid-template-columns:1fr}.campaign-combat-command260 .campaign-command-grid{grid-template-columns:1fr}}
+</style>
+<style id="rev262-css">
+.campaign-fleet-polity-benefits262{border-color:rgba(126,106,166,.38)!important;background:rgba(91,72,130,.07)!important}
+.campaign-mobile-infra262{grid-column:1/-1;border:1px solid rgba(110,153,173,.25);padding:7px;margin:6px 0;background:rgba(62,105,126,.055)}
+.campaign-mobile-infra262 b,.campaign-mobile-infra262 span,.campaign-mobile-infra262 small{display:block}.campaign-mobile-infra262 b{color:#c7dce5}.campaign-mobile-infra262 span{color:#b5bdba;font-size:8px;margin-top:2px}.campaign-mobile-infra262 small{color:#838d8d;font-size:7px;margin-top:2px}
+.campaign-fleet-project236.pending262{border-color:rgba(185,151,73,.42);background:rgba(185,151,73,.05)}
+.resource-game-label262{display:block;margin-top:7px;color:#9d967f;font-size:7px;text-transform:uppercase}.resource-game-select262{width:100%;margin-top:3px;min-height:34px}
+.campaign-defence-reference262 p{max-width:1000px}
 </style>
 </head>
 <body>
@@ -7565,6 +7573,307 @@ const _campaignRulesReferenceHTML_rev261=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev261(root),add=`<div class="campaign-rule-card"><h4>79. Deep-Time Range</h4><p>Deep-Time may begin at any Turn from 2 through 1000. Starts up to Turn 20 simulate one exact historical epoch per requested turn; longer histories use a bounded number of macro epochs while still ending on the exact requested turn.</p></div><div class="campaign-rule-card"><h4>80. Deep-Time Feature Compatibility</h4><p>The historical engine now processes the current settlement, district, infrastructure, territory-claim, diplomacy, recruitment, fleet growth, Tier-0 expeditionary-vessel, repair/destruction, fleet-war, ground-war and rebellion systems through bounded AI equivalents. Player-facing render, notice, export and battle-modal handlers are never recursively invoked during history.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
 window.__cartoRevision261={version:REV261,build:REV261_BUILD,simulatePrehistory:(...args)=>campaignSimulatePrehistory261(...args),lifecycle:campaignDeepTimeLifecycle261};
 const rb261=document.querySelector('.generation-head-actions .badge');if(rb261)rb261.textContent='rev 26.1 — Complete Deep-Time T2–T1000';document.title='Administratum Stellar Cartographica — Revision 26.1';document.documentElement.dataset.cartographicaRevision=REV261;document.documentElement.dataset.cartographicaBuild=REV261_BUILD;
+
+
+/* ===== Revision 26.2 — Fleet Settlements, Foundation Depth & Site Economies ===== */
+const REV262='26.2';
+const REV262_BUILD='26.2-fleet-settlements-foundation-site-economies-v46-tested';
+
+/* ---------- Fleet settlement lifecycle: Tier III becomes active only after End Turn ---------- */
+const _campaignFleetIsMobileSettlement235_rev262=campaignFleetIsMobileSettlement235;
+campaignFleetIsMobileSettlement235=function(fleet){return _campaignFleetIsMobileSettlement235_rev262(fleet)&&!fleet?.pendingMobileSettlement262};
+
+const _campaignEnsureMobileColony235_rev262=campaignEnsureMobileColony235;
+campaignEnsureMobileColony235=function(fleet){
+  if(fleet?.pendingMobileSettlement262)return null;
+  const col=_campaignEnsureMobileColony235_rev262(fleet);
+  if(col){
+    col.infrastructure=col.infrastructure||[];
+    col.supportUpgrades=col.supportUpgrades||[];
+    try{campaignEnsureDevelopmentWeb(col)}catch(_){}
+    try{campaignEnsureInfrastructureLevels253(col)}catch(_){}
+    col.mobileFleetSettlement262=true;
+  }
+  return col;
+};
+
+function campaignFinalizePendingFleetSettlements262(root){
+  const c=root?.campaign;if(!c)return 0;let n=0;
+  for(const fac of c.factions||[])for(const fleet of fac.fleets||[]){
+    if(!fleet.pendingMobileSettlement262)continue;
+    fleet.pendingMobileSettlement262=false;
+    fleet.mobileSettlementActivatedTurn262=c.turn;
+    const col=_campaignEnsureMobileColony235_rev262(fleet);
+    if(col){
+      col.mobileFleetSettlement262=true;
+      col.infrastructure=col.infrastructure||[];
+      col.supportUpgrades=col.supportUpgrades||[];
+      try{campaignEnsureDevelopmentWeb(col)}catch(_){}
+      try{campaignEnsureInfrastructureLevels253(col)}catch(_){}
+    }
+    n++;
+    campaignLog(c,`${fleet.name} completed its Mobile Colony Core conversion at the turn boundary.`,'gain');
+    if(fac.id===c.playerFactionId)campaignQueueNotice(root,'Fleet Settlement Activated',`${fleet.name} has completed its Tier III conversion and is now an active mobile settlement.\n\nIts infrastructure, districts and support are available in the Colonies tab.`);
+  }
+  return n;
+}
+const _campaignEndTurn_rev262=campaignEndTurn;
+campaignEndTurn=function(root){
+  const before=root?.campaign?.turn,out=_campaignEndTurn_rev262(root),c=root?.campaign;
+  let tries=0;
+  const finish=()=>{if(!root?.campaign)return;if((root.campaign._endTurnProcessing||root.campaign.turn===before)&&tries++<180)return setTimeout(finish,100);if(root.campaign.turn!==before){campaignFinalizePendingFleetSettlements262(root);campaignPersist(root);campaignRenderDashboard(root)}};
+  setTimeout(finish,120);return out;
+};
+
+/* Player fleet-development purchases use discounted actual costs for Fleet-Colony polities.
+   Tier III is queued until End Turn rather than creating the settlement immediately. */
+function campaignFleetPolityBenefits262(fac){
+  const active=!!fac?.fleetColonyFaction235;
+  return active?{developmentDiscount:.20,commissionDiscount:.15,speedBonus:.05,mobileSupply:1}:{developmentDiscount:0,commissionDiscount:0,speedBonus:0,mobileSupply:0};
+}
+const _campaignFleetDevelopmentCheck235_rev262=campaignFleetDevelopmentCheck235;
+campaignFleetDevelopmentCheck235=function(root,fac,fleet){
+  const q=_campaignFleetDevelopmentCheck235_rev262(root,fac,fleet);if(!q?.ok)return q;
+  const b=campaignFleetPolityBenefits262(fac),cost={...q.cost};
+  if(b.developmentDiscount){
+    cost.supply=Math.max(0,Math.ceil(cost.supply*(1-b.developmentDiscount)));
+    cost.materiel=Math.max(0,Math.ceil(cost.materiel*(1-b.developmentDiscount)));
+    cost.influence=Math.max(0,Math.ceil(cost.influence*(1-b.developmentDiscount)));
+  }
+  if((fac.treasury.supply||0)<cost.supply||(fac.treasury.materiel||0)<cost.materiel||(fac.treasury.influence||0)<cost.influence)return{ok:false,reason:'Fleet-Colony discounted cost still exceeds available resources.',next:q.next,cost};
+  return{...q,cost,polityDiscount262:b.developmentDiscount};
+};
+const _campaignUpgradeFleetDevelopment235_rev262=campaignUpgradeFleetDevelopment235;
+campaignUpgradeFleetDevelopment235=function(root,fac,fleet){
+  const q=campaignFleetDevelopmentCheck235(root,fac,fleet);if(!q.ok){campaignQueueNotice(root,'Fleet Settlement Development Unavailable',q.reason);return false}
+  fac.treasury.supply-=q.cost.supply;fac.treasury.materiel-=q.cost.materiel;fac.treasury.influence-=q.cost.influence;fac.command-=q.cost.command;
+  fleet.developmentTier235=q.next;fleet.developmentTurn235=root.campaign.turn;
+  if(q.next===3){
+    fleet.pendingMobileSettlement262=true;
+    campaignLog(root.campaign,`${fleet.name} began Mobile Colony Core conversion. Settlement activation is scheduled for the next End Turn.`,'gain');
+    campaignQueueNotice(root,'Fleet Settlement Conversion Started',`${fleet.name} reached Tier III.\n\nThe mobile settlement is NOT active yet. It will be created when you click End Turn and the 90-day cycle completes.`);
+  }else{
+    const col=campaignEnsureMobileColony235(fleet);if(col){try{campaignEnsureDevelopmentWeb(col)}catch(_){}try{campaignEnsureInfrastructureLevels253(col)}catch(_){}}
+    campaignQueueNotice(root,'Fleet Settlement Development',`${fleet.name} advanced to Tier ${q.next}: ${CAMPAIGN_FLEET_DEV_TIERS_235[q.next].label}.`);
+  }
+  campaignPersist(root);campaignRenderDashboard(root);campaignShowView('colonies');return true;
+};
+
+/* Mobile settlement development purchases resolve the proxy rather than fixed settlements only. */
+const _campaignPurchaseDevelopment_rev262=campaignPurchaseDevelopment;
+campaignPurchaseDevelopment=function(root,facId,settlementId,slotIndex,chain,tier,path){
+  if(!String(settlementId||'').startsWith('fleet:'))return _campaignPurchaseDevelopment_rev262(root,facId,settlementId,slotIndex,chain,tier,path);
+  const c=root?.campaign,fac=campaignFaction(c,facId),s=campaignFindSettlement236(root,fac,settlementId);
+  if(!c||!fac||!s||fac.id!==c.playerFactionId)return false;
+  const q=campaignDevEligibility(root,fac,s,slotIndex,chain,tier,path);if(!q.ok){campaignQueueNotice(root,'Fleet Settlement Construction Blocked',q.reasons?.join('; ')||'Requirements not met.');return false}
+  fac.treasury.supply-=q.cost.supply;fac.treasury.materiel-=q.cost.materiel;fac.treasury.influence-=q.cost.influence;fac.command=Math.max(0,fac.command-q.cost.command);
+  const slot=campaignEnsureDevelopmentWeb(s.colony).slots[slotIndex];if(tier===1){slot.chain=chain;slot.path=null}if(tier>=3&&!slot.path)slot.path=path;slot.tier=tier;campaignApplyDevelopmentInstant(root,s,q.node);
+  campaignLog(c,`${fac.name} completed ${q.node.name} aboard ${s.locationName}.`,'gain');campaignPersist(root);campaignRenderDashboard(root);return true;
+};
+
+/* Visible Fleet-Colony polity benefits. */
+const _campaignCommissionFleet_rev262=campaignCommissionFleet;
+campaignCommissionFleet=function(root,fac,classKey,roleKey,nodeId){
+  const b=campaignFleetPolityBenefits262(fac);if(!b.commissionDiscount)return _campaignCommissionFleet_rev262(root,fac,classKey,roleKey,nodeId);
+  const cl=CAMPAIGN_FLEET_CLASSES[classKey];if(!cl)return false;const normal=cl.cost,discounted=Math.max(1,Math.ceil(normal*(1-b.commissionDiscount)));
+  if((fac.treasury.materiel||0)<discounted||(fac.command||0)<1)return false;
+  fac.treasury.materiel-=discounted;fac.command--;const fleet=campaignFleetMake(root,fac,classKey,roleKey,nodeId);fac.fleets.push(fleet);root.campaign.selectedFleetId=fleet.id;
+  campaignLog(root.campaign,`${fac.name} commissioned ${fleet.name} for ${discounted} Materiel (Fleet-Colony polity discount).`,'gain');return true;
+};
+const _campaignFleetSpeed_rev262=campaignFleetSpeed;
+campaignFleetSpeed=function(root,fleet){let v=_campaignFleetSpeed_rev262(root,fleet),ref=root?.campaign&&campaignAllFleetRefs(root.campaign).find(x=>x.fleet.id===fleet?.id);if(ref?.fac?.fleetColonyFaction235)v*=1.05;return v};
+const _campaignFleetSettlementIncome235_rev262=campaignFleetSettlementIncome235;
+campaignFleetSettlementIncome235=function(fleet){const q=_campaignFleetSettlementIncome235_rev262(fleet),ref=window.currentSector?.campaign&&campaignAllFleetRefs(window.currentSector.campaign).find(x=>x.fleet.id===fleet?.id);if(ref?.fac?.fleetColonyFaction235)q.supply+=1;return q};
+
+const _campaignOverviewHTML_rev262=campaignOverviewHTML;
+campaignOverviewHTML=function(root,c){let h=_campaignOverviewHTML_rev262(root,c),p=campaignPlayer(c);if(!p)return h;const card=`<div class="campaign-card campaign-fleet-polity-benefits262"><h4>Fleet-Polity Benefits</h4><p><b>${p.fleetColonyFaction235?'ACTIVE':'Not adopted'}</b>${p.fleetColonyFaction235?` • 20% cheaper fleet-settlement development • 15% cheaper fleet commissioning • +5% campaign fleet speed • +1 Supply/turn per active mobile settlement`:'. Develop a Tier III mobile settlement, then adopt Fleet-Colony polity in the Colonies tab.'}</p></div>`;return h.replace('<div class="campaign-grid">','<div class="campaign-grid">'+card)};
+
+/* ---------- Foundation packages: choose initial Size 1–5 ---------- */
+const CAMPAIGN_FOUNDATION_SIZE_EXTRA_262={
+  1:{supply:0,materiel:0,command:0,label:'Size 1 — Outpost'},
+  2:{supply:2,materiel:3,command:0,label:'Size 2 — Established Colony'},
+  3:{supply:5,materiel:6,command:0,label:'Size 3 — Developed Settlement'},
+  4:{supply:8,materiel:10,command:1,label:'Size 4 — Major Settlement'},
+  5:{supply:10,materiel:14,command:1,label:'Size 5 — Regional Centre'}
+};
+function campaignFoundationTargetSize262(c){const m=String(c?.settlementFoundationPlan||'size1').match(/size([1-5])/);return m?Number(m[1]):1}
+const _campaignFoundationCost236_rev262=campaignFoundationCost236;
+campaignFoundationCost236=function(root,fac,nodeId,locationId){
+  const c=root.campaign,old=c.settlementFoundationPlan;c.settlementFoundationPlan='standard';let q;try{q=_campaignFoundationCost236_rev262(root,fac,nodeId,locationId)}finally{c.settlementFoundationPlan=old}
+  if(!q)return q;const size=campaignFoundationTargetSize262(c),e=CAMPAIGN_FOUNDATION_SIZE_EXTRA_262[size];return{...q,targetSize262:size,accelerated:false,total:{...q.total,supply:q.total.supply+e.supply,materiel:q.total.materiel+e.materiel,command:q.total.command+e.command}};
+};
+const _campaignFoundSettlement_rev262=campaignFoundSettlement;
+campaignFoundSettlement=function(root,fac,nodeId,locationId,ai=false){
+  if(ai)return _campaignFoundSettlement_rev262(root,fac,nodeId,locationId,ai);
+  const before=new Set((fac.settlements||[]).map(x=>x.id)),size=campaignFoundationTargetSize262(root.campaign),ok=_campaignFoundSettlement_rev262(root,fac,nodeId,locationId,false);if(!ok)return false;
+  const st=(fac.settlements||[]).find(x=>!before.has(x.id));if(st){
+    const col=st.colony,old=Math.max(1,Number(col.size)||1);col.size=size;col.foundationTargetSize262=size;col.acceleratedFoundation=size>1;
+    if(size>old){const d=size-old;col.complacency=(col.complacency||0)+Math.ceil(d*.8);col.productivity=(col.productivity||0)+Math.ceil(d*.5);col.order=(col.order||0)+Math.ceil(d*.45);col.piety=(col.piety||0)+Math.floor(d*.3)}
+    col.pfValue=soiColonyPF(col);try{campaignEnsureDevelopmentWeb(col)}catch(_){}try{campaignEnsureInfrastructureLevels253(col)}catch(_){}
+  }return true;
+};
+const _campaignFounderHTML236_rev262=campaignFounderHTML236;
+campaignFounderHTML236=function(root,c,p){
+  let h=_campaignFounderHTML236_rev262(root,c,p),size=campaignFoundationTargetSize262(c),opts=Object.entries(CAMPAIGN_FOUNDATION_SIZE_EXTRA_262).map(([k,v])=>`<option value="size${k}" ${Number(k)===size?'selected':''}>${esc(v.label)}${Number(k)>1?` (+${v.supply}S / +${v.materiel}M${v.command?` / +${v.command}C`:''})`:''}</option>`).join('');
+  h=h.replace(/<label>Foundation package<\/label><select id="campaignColonyFoundPackage">[\s\S]*?<\/select>/,`<label>Foundation size</label><select id="campaignColonyFoundPackage">${opts}</select>`);
+  h=h.replace(/Standard foundation|Accelerated Size 5/g,`Size ${size} foundation`);
+  return h;
+};
+
+/* ---------- Resource-extraction game choice ---------- */
+const CAMPAIGN_EXTRACTION_GAMES_262={
+ mixed:{label:'Mixed Recovery',desc:'Rotates between all recovery puzzle types.'},
+ sequence:{label:'Sequence Analysis',desc:'Number-sequence pattern puzzles only.'},
+ checksum:{label:'Cogitator Checksum',desc:'Arithmetic checksum puzzles only.'},
+ signal:{label:'Signal Amplification',desc:'Multiplication/amplification pattern puzzles only.'}
+};
+const _campaignResourceOpsHTML_rev262=campaignResourceOpsHTML;
+campaignResourceOpsHTML=function(root,sys,locationId,label){
+  let h=_campaignResourceOpsHTML_rev262(root,sys,locationId,label);if(!h)return h;
+  const mode=root?.campaign?.resourceExtractionGame262||'mixed',select=`<label class="resource-game-label262">Recovery game</label><select class="resource-game-select262" data-resource-game262>${Object.entries(CAMPAIGN_EXTRACTION_GAMES_262).map(([k,v])=>`<option value="${k}" ${k===mode?'selected':''}>${esc(v.label)} — ${esc(v.desc)}</option>`).join('')}</select>`;
+  return h.replace(/(<button class="ghost" type="button" data-campaign-resource-extract=")/g,select+'$1');
+};
+const _campaignStartExpedition238_rev262=campaignStartExpedition238;
+campaignStartExpedition238=function(root,fac,nodeId,locationId,index){const g=campaignExpeditionGame238(root,fac,nodeId,locationId,index);if(!g)return false;g.gameMode262=root?.campaign?.resourceExtractionGame262||'mixed';campaignRenderExpedition238(g);return true};
+const _campaignExpeditionPuzzle238_rev262=campaignExpeditionPuzzle238;
+campaignExpeditionPuzzle238=function(g){
+  if(!g?.gameMode262||g.gameMode262==='mixed')return _campaignExpeditionPuzzle238_rev262(g);
+  const n=g.step,seed=(g.seed+n*7919)>>>0,type=g.gameMode262==='sequence'?0:g.gameMode262==='checksum'?1:2;let prompt,correct,choices=[];
+  if(type===0){const start=2+(seed%6),delta=2+g.diff,vals=[start,start+delta,start+delta*2,start+delta*3];correct=vals[3]+delta;prompt=`Sequence analysis: ${vals.join(' • ')} • ?`;choices=[correct,correct+delta,correct-1,correct+2]}
+  else if(type===1){const a=2+(seed%5),b=3+((seed>>>4)%5),m=2+Math.min(3,g.diff);correct=(a+b)*m;prompt=`Cogitator checksum: (${a} + ${b}) × ${m} = ?`;choices=[correct,correct+m,Math.max(1,correct-m),a+b+m]}
+  else{const a=1+(seed%8),factor=g.diff>=4?3:2,vals=[a,a*factor,a*factor*factor];correct=vals[2]*factor;prompt=`Signal amplification: ${vals.join(' → ')} → ?`;choices=[correct,correct+factor,correct-factor,vals[2]+factor]}
+  choices=choices.filter((x,i,a)=>x>0&&a.indexOf(x)===i);choices.sort((a,b)=>((hashText(`${g.seed}|${n}|${a}`)&255)-(hashText(`${g.seed}|${n}|${b}`)&255)));return{prompt,correct,choices}
+};
+document.addEventListener('change',e=>{const sel=e.target.closest?.('[data-resource-game262]');if(sel&&window.currentSector?.campaign){window.currentSector.campaign.resourceExtractionGame262=sel.value;campaignPersist(window.currentSector)}},true);
+
+/* ---------- Site-specific district chains ---------- */
+if(typeof CAMPAIGN_BUILDING_CHAINS==='object'){
+  CAMPAIGN_BUILDING_CHAINS.orbitalDefence262={label:'Orbital Defence Platform Systems',icon:'◉',color:'#6685a3',siteOnly262:'orbital',summary:'Dedicated station weapons, sensor grids and hardened command systems unique to Orbital Defence Platforms.',common:{1:{name:'Point-Defence Grid',reward:'+1 effective site defence.',effect:{siteDefence262:1}},2:{name:'Auspex & Tracking Spine',reward:'+1 site defence and local technology.',effect:{siteDefence262:1,localTechBonus:1}}},paths:{bastion:{label:'Fortress Bastion',tiers:{3:{name:'Monitor Batteries',reward:'+2 site defence.',effect:{siteDefence262:2}},4:{name:'Lance Bastion Ring',reward:'+2 defence and naval fire-control.',effect:{siteDefence262:2,commandSupport:1}},5:{name:'Orbital Fortress Nexus',reward:'+3 defence and command support.',effect:{siteDefence262:3,commandSupport:2}}}},interdiction:{label:'Interdiction Net',tiers:{3:{name:'Minefield Control',reward:'+1 defence and interception support.',effect:{siteDefence262:1}},4:{name:'System Interdiction Array',reward:'+2 defence.',effect:{siteDefence262:2}},5:{name:'Kill-Zone Command Web',reward:'+2 defence and +1 Influence.',effect:{siteDefence262:2,influenceBonus:1}}}}}};
+  CAMPAIGN_BUILDING_CHAINS.gasHarvest262={label:'Atmospheric Harvesting Complex',icon:'≋',color:'#7596a2',siteOnly262:'gas',summary:'Gas-scoop, separation and cryogenic industry unique to Gas Harvesting Platforms.',common:{1:{name:'Atmospheric Scoop Banks',reward:'+1 Supply.',effect:{supplyBonus:1}},2:{name:'Cryogenic Separation Plant',reward:'+1 Supply and +1 Materiel.',effect:{supplyBonus:1,materielBonus:1}}},paths:{fuel:{label:'Fuel Harvesting',tiers:{3:{name:'Helium-3 Refinery',reward:'+2 Supply.',effect:{supplyBonus:2}},4:{name:'System Fuel Depot',reward:'+3 Supply.',effect:{supplyBonus:3}},5:{name:'Strategic Propellant Nexus',reward:'+4 Supply and +1 Influence.',effect:{supplyBonus:4,influenceBonus:1}}}},exotic:{label:'Exotic Atmospherics',tiers:{3:{name:'Trace Compound Harvesters',reward:'+2 Materiel.',effect:{materielBonus:2}},4:{name:'High-Pressure Fractionation',reward:'+3 Materiel.',effect:{materielBonus:3}},5:{name:'Exotic Gas Industrial Core',reward:'+4 Materiel and +1 tech.',effect:{materielBonus:4,localTechBonus:1}}}}}};
+  CAMPAIGN_BUILDING_CHAINS.fleetHabitat262={label:'Fleet Settlement Infrastructure',icon:'◆',color:'#806d9c',siteOnly262:'fleet',summary:'Mobile habitat, refit and logistics systems unique to Fleet Settlements.',common:{1:{name:'Population Deck Expansion',reward:'+2 demographic momentum.',effect:{growthMomentum262:2}},2:{name:'Mobile Utility Spine',reward:'+1 Supply and +1 Productivity.',effect:{supplyBonus:1},statGain:{productivity:1}}},paths:{habitat:{label:'Migratory Habitat',tiers:{3:{name:'Civic Habitat Ring',reward:'+3 growth momentum and +1 Complacency.',effect:{growthMomentum262:3},statGain:{complacency:1}},4:{name:'Migratory Enclave Decks',reward:'+4 growth momentum.',effect:{growthMomentum262:4}},5:{name:'Fleet-City Habitation Core',reward:'+5 growth momentum and +1 Influence.',effect:{growthMomentum262:5,influenceBonus:1}}}},yards:{label:'Mobile Refit Yards',tiers:{3:{name:'Fleet Service Yards',reward:'+1 Materiel from mobile service capacity.',effect:{materielBonus:1}},4:{name:'Capital Refit Spine',reward:'+2 Materiel and +1 command support.',effect:{materielBonus:2,commandSupport:1}},5:{name:'Grand Migratory Shipyard',reward:'+3 Materiel and +2 command support.',effect:{materielBonus:3,commandSupport:2}}}}}};
+}
+const _campaignDevEligibility_rev262=campaignDevEligibility;
+campaignDevEligibility=function(root,fac,s,slotIndex,chain,tier,path){
+  const q=_campaignDevEligibility_rev262(root,fac,s,slotIndex,chain,tier,path),def=CAMPAIGN_BUILDING_CHAINS[chain],kind=def?.siteOnly262;
+  if(kind){
+    const ok=kind==='fleet'?!!s.mobile236:kind==='gas'?!!s.gasHarvestStation245:kind==='orbital'?!!s.orbitalPlatform236&&!s.gasHarvestStation245:false;
+    if(!ok)return{...q,ok:false,reasons:[...(q.reasons||[]),`${def.label} is unique to ${kind==='fleet'?'Fleet Settlements':kind==='gas'?'Gas Harvesting Platforms':'Orbital Defence Platforms'}.`]};
+  }
+  return q;
+};
+
+const _campaignDevEffects_rev262=campaignDevEffects;
+campaignDevEffects=function(col){
+  const out=_campaignDevEffects_rev262(col);
+  out.growthMomentum262=0;out.siteDefence262=0;
+  const web=campaignEnsureDevelopmentWeb(col);if(!web)return out;
+  const add=e=>{if(!e)return;out.growthMomentum262+=Number(e.growthMomentum262||0);out.siteDefence262+=Number(e.siteDefence262||0)};
+  for(const slot of web.slots||[]){
+    if(!slot.chain||!slot.tier)continue;
+    for(let t=1;t<=Math.min(2,slot.tier);t++)add(campaignDevNode(slot.chain,t)?.effect);
+    for(let t=3;t<=slot.tier;t++)add(campaignDevNode(slot.chain,t,slot.path)?.effect);
+  }
+  return out;
+};
+
+const _campaignSettlementDevelopment251_rev262=campaignSettlementDevelopment251;
+campaignSettlementDevelopment251=function(c){const q=_campaignSettlementDevelopment251_rev262(c),e=campaignDevEffects(c);if(e?.growthMomentum262){q.positive+=e.growthMomentum262;q.net=Math.max(-25,Math.min(25,q.net+e.growthMomentum262));q.reasons.push(`+${e.growthMomentum262} fleet-habitat development`)}return q};
+const _campaignSystemDefence_rev262=campaignSystemDefence;
+campaignSystemDefence=function(c,sysId,facId){let d=_campaignSystemDefence_rev262(c,sysId,facId),root=window.currentSector,fac=campaignFaction(c,facId);if(root&&fac)for(const x of campaignAllSettlementRecords236(root).filter(x=>x.fac.id===facId&&x.s.systemId===sysId))d+=Number(campaignDevEffects(x.s.colony).siteDefence262||0);return d};
+
+/* ---------- Consolidated Site Defence explanation ---------- */
+const _campaignSystemsHTML_rev262=campaignSystemsHTML;
+campaignSystemsHTML=function(root,c){
+  let h=_campaignSystemsHTML_rev262(root,c);
+  const old=/<section class="campaign-defence-reference">[\s\S]*?<\/section>/;
+  const ref=`<section class="campaign-defence-reference campaign-defence-reference262"><h4>Site Defence — One Number, Three Sources</h4><div class="campaign-defence-grid"><div><span>1. Fortifications</span><b>Fortify orders, 0–6</b></div><div><span>2. Settlement Defence</span><b>Settlement Size / defence districts</b></div><div><span>3. Orbital Defence</span><b>Platforms, Navy support, fleet-settlement defence</b></div><div><span>Effective Defence</span><b>All three combined</b></div></div><p><b>Site Defence</b> now means the final strategic defensive strength of the location. The row shows permanent Fortifications separately from <b>Effective Defence</b>. Auto-resolve uses up to +3 from Effective Defence on the defender roll and +300 strategic power per effective level. You do not need to add these sources manually; the game combines them automatically. On tabletop, represent the result with suitable fortifications, prepared positions, orbital fire support or defensive terrain.</p></section>`;
+  return h.replace(old,ref);
+};
+
+/* ---------- UI descriptions / bindings ---------- */
+const _campaignFleetProjectCard236_rev262=campaignFleetProjectCard236;
+campaignFleetProjectCard236=function(root,fac,fleet){
+  const t=campaignFleetDevelopmentTier235(fleet),next=CAMPAIGN_FLEET_DEV_TIERS_235[t+1],q=next?campaignFleetDevelopmentCheck235(root,fac,fleet):null;
+  if(fleet.pendingMobileSettlement262)return `<article class="campaign-fleet-project236 pending262"><div><span class="badge">FLEET SETTLEMENT PROJECT</span><h5>${esc(fleet.name)}</h5><p>Tier III conversion funded. The settlement will become active only when the current turn ends.</p></div><b>Pending End Turn activation</b></article>`;
+  if(!next)return _campaignFleetProjectCard236_rev262(root,fac,fleet);
+  const d=q?.polityDiscount262?` • Fleet-Polity discount ${Math.round(q.polityDiscount262*100)}%`:'';return `<article class="campaign-fleet-project236"><div><span class="badge">FLEET SETTLEMENT PROJECT</span><h5>${esc(fleet.name)}</h5><p>Tier ${t} — ${esc(CAMPAIGN_FLEET_DEV_TIERS_235[t].label)}.${d}</p></div><button class="ghost" data-fleet-develop-colony236="${esc(fleet.id)}" ${q?.ok?'':'disabled'}>Upgrade to ${esc(next.label)} — ${q?.cost?.supply??next.cost.supply}S / ${q?.cost?.materiel??next.cost.materiel}M / ${q?.cost?.influence??next.cost.influence}I / ${q?.cost?.command??next.cost.command}C</button>${!q?.ok?`<small>${esc(q?.reason||'')}</small>`:''}</article>`;
+};
+const _campaignSettlementCard236_rev262=campaignSettlementCard236;
+campaignSettlementCard236=function(root,fac,s,own){
+  let h=_campaignSettlementCard236_rev262(root,fac,s,own);if(!s.mobile236)return h;
+  const lv=campaignInfrastructureLevels253(s.colony),infra=Object.entries(lv).filter(([,v])=>v>0).map(([k,v])=>`${k.replace(' Infrastructure','')} L${v}`).join(' • ')||'No upgraded infrastructure yet';
+  h=h.replace(/<div class="campaign-mobile-colony235">/,`<div class="campaign-mobile-infra262"><b>Fleet Infrastructure</b><span>${esc(infra)}</span><small>Infrastructure and district construction are fully available aboard active fleet settlements.</small></div><div class="campaign-mobile-colony235">`);
+  return h;
+};
+
+const _campaignBindDashboard_rev262=campaignBindDashboard;
+campaignBindDashboard=function(root){
+  _campaignBindDashboard_rev262(root);const c=root?.campaign;
+  $('campaignColonyFoundPackage')?.addEventListener('change',e=>{c.settlementFoundationPlan=e.target.value;campaignPersist(root);campaignRenderDashboard(root);campaignShowView('colonies')});
+};
+
+const _campaignRulesReferenceHTML_rev262=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev262(root),add=`<div class="campaign-rule-card"><h4>81. Fleet Settlement Activation</h4><p>Funding Tier III no longer creates a settlement immediately. It creates a pending Mobile Colony Core conversion. The settlement becomes active only when End Turn completes. Once active, it has the full infrastructure, support and district systems used by fixed colonies.</p></div><div class="campaign-rule-card"><h4>82. Fleet-Polity Benefits</h4><p>Adopting Fleet-Colony polity grants 20% cheaper fleet-settlement development, 15% cheaper fleet commissioning, +5% campaign fleet speed and +1 Supply per turn from each active mobile settlement. Unique Fleet Settlement Infrastructure districts can improve mobile habitation, Materiel output and fleet command support further.</p></div><div class="campaign-rule-card"><h4>83. Foundation Size</h4><p>New settlements may be founded directly at Size 1, 2, 3, 4 or 5. Larger foundations cost progressively more Supply, Materiel and, at the highest sizes, additional Command.</p></div><div class="campaign-rule-card"><h4>84. Site-Specific Districts</h4><p>Orbital Defence Platforms, Gas Harvesting Platforms and Fleet Settlements each have a unique district chain alongside the normal settlement chains.</p></div><div class="campaign-rule-card"><h4>85. Resource Recovery Game</h4><p>Before launching resource recovery, choose Mixed Recovery, Sequence Analysis, Cogitator Checksum or Signal Amplification. The selected game persists between expeditions so you can prepare for the puzzle style you prefer.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
+
+
+/* ===== v26.2 amendment — fleet infrastructure/support controls ===== */
+const _campaignInfrastructurePlannerHTML246_rev262=campaignInfrastructurePlannerHTML246;
+campaignInfrastructurePlannerHTML246=function(s,own){
+  if(!own)return'';
+  if(!s?.mobile236)return _campaignInfrastructurePlannerHTML246_rev262(s,own);
+  const c=s.colony;
+  campaignInfrastructureLevels253(c);
+  const levels=campaignInfrastructureLevels253(c),cap=Math.max(1,Math.min(10,Number(c.size)||1));
+  const infraOptions=SOI_INFRA.map(name=>{
+    const cur=levels[name]||0,next=Math.min(cap,cur+1),cost=campaignInfrastructureUpgradeCost253(c,name);
+    return `<option value="${esc(name)}">${esc(name)} — L${cur}/${cap}${cur<cap?` → L${next} (${cost.toLocaleString()}M)`:' — MAX'}</option>`;
+  }).join('');
+  const support=SOI_SUPPORT||[];
+  const supportOptions=support.map(x=>{
+    const name=typeof x==='string'?x:(x.name||x.label||String(x)),cost=typeof x==='string'?6:(x.cost||6);
+    return `<option value="${esc(name)}">${esc(name)} — ${Number(cost).toLocaleString()}M</option>`;
+  }).join('');
+  const selectedInfra=SOI_INFRA[0]||'',firstCost=campaignInfrastructureUpgradeCost253(c,selectedInfra);
+  return `<section class="campaign-infrastructure-planner campaign-fleet-infrastructure262">
+    <div class="campaign-infrastructure-head"><div><h4>Fleet Infrastructure & Support Planner</h4><p>Mobile settlements use the same Level 1–10 infrastructure system as fixed settlements. Maximum infrastructure level is capped by Fleet Settlement Size (${cap}).</p></div><span class="badge">MOBILE SETTLEMENT</span></div>
+    <div class="campaign-infrastructure-grid">
+      <div>
+        <label>Infrastructure network</label>
+        <select data-fleet-infra-choice262="${esc(s.id)}">${infraOptions}</select>
+        <button class="ghost" type="button" data-fleet-infra-build262="${esc(s.id)}">Upgrade Selected Infrastructure — from ${firstCost.toLocaleString()}M</button>
+      </div>
+      <div>
+        <label>Support installation</label>
+        <select data-fleet-support-choice262="${esc(s.id)}">${supportOptions}</select>
+        <button class="ghost" type="button" data-fleet-support-build262="${esc(s.id)}">Install Selected Support</button>
+      </div>
+    </div>
+    <small>Fleet infrastructure contributes to Productivity, Order, Complacency and Cohesion just like planetary infrastructure. Fleet-specific district chains can add additional mobile benefits.</small>
+  </section>`;
+};
+
+document.addEventListener('click',e=>{
+  const ib=e.target.closest?.('[data-fleet-infra-build262]'),sb=e.target.closest?.('[data-fleet-support-build262]');
+  if(!ib&&!sb)return;
+  const root=window.currentSector,p=root?.campaign&&campaignPlayer(root.campaign);
+  if(!root||!p)return;
+  e.preventDefault();e.stopImmediatePropagation();
+  const id=(ib||sb).getAttribute(ib?'data-fleet-infra-build262':'data-fleet-support-build262');
+  const st=campaignFindSettlement236(root,p,id);
+  if(!st){campaignQueueNotice(root,'Fleet Settlement Unavailable','The selected mobile settlement could not be resolved.');return}
+  if(ib){
+    const sel=document.querySelector(`[data-fleet-infra-choice262="${CSS.escape(id)}"]`),name=sel?.value;
+    if(!name)return;
+    if(campaignChooseInfrastructure246(root,p,st,name)){campaignPersist(root);campaignRenderDashboard(root);campaignShowView('colonies')}
+  }else{
+    const sel=document.querySelector(`[data-fleet-support-choice262="${CSS.escape(id)}"]`),name=sel?.value;
+    if(!name)return;
+    if(campaignChooseSupport246(root,p,st,name)){campaignPersist(root);campaignRenderDashboard(root);campaignShowView('colonies')}
+  }
+},true);
+
+window.__cartoRevision262={version:REV262,build:REV262_BUILD,finalizeFleetSettlements:campaignFinalizePendingFleetSettlements262,polityBenefits:campaignFleetPolityBenefits262};
+const rb262=document.querySelector('.generation-head-actions .badge');if(rb262)rb262.textContent='rev 26.2 — Fleet Settlements & Site Economies';document.title='Administratum Stellar Cartographica — Revision 26.2';document.documentElement.dataset.cartographicaRevision=REV262;document.documentElement.dataset.cartographicaBuild=REV262_BUILD;
 
 
 })();

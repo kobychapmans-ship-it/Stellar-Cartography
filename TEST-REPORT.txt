@@ -1,42 +1,45 @@
-STELLAR CARTOGRAPHICA v26.1 DEEP-TIME COMPATIBILITY REPORT
-Build: 26.1-deeptime-complete-t2-1000-v45-tested
+STELLAR CARTOGRAPHICA v26.2 TEST REPORT
+Build: 26.2-fleet-settlements-foundation-site-economies-v46-tested
 
-CHRONOLOGY RANGE
-PASS — Deep-Time selector accepts every integer Turn from T2 through T1000.
-PASS — T2, T3, T5, T10 and T20 use exactly one bounded historical epoch per requested turn.
-PASS — T21–T100 use 10 bounded macro epochs; T101–T250 use 14; T251–T500 use 18; T501–T1000 use 24.
-PASS — scheduler matrix verified exact final turn for 14 start ages × Existing/Emerging modes (28 simulations): T2, T3, T5, T10, T20, T21, T50, T99, T100, T101, T250, T500, T750 and T1000.
-PASS — no scheduler test reported a stack recovery.
+PASS — 4 embedded JavaScript blocks pass Node syntax validation.
+PASS — service worker passes Node syntax validation.
+PASS — manifest parses as Revision 26.2 with a fresh cache/start identity.
+PASS — 105 literal button IDs audited with no unmatched IDs after the shared map-control framework is accounted for.
+PASS — 105 button data-action/metadata families audited with no unmatched action families.
 
-CURRENT FEATURE COMPATIBILITY INSIDE DEEP TIME
-PASS — settlement civic maintenance and recovery.
-PASS — demographic Size momentum and historical settlement founding.
-PASS — districts and infrastructure investment/upgrading.
-PASS — system expansion and partial planetary territorial claims.
-PASS — faction-archetype diplomacy and war state.
-PASS — army recruitment and strategic-trait-aware abstract ground warfare.
-PASS — fleet construction, class growth, refits and mobile fleet settlements.
-PASS — every active faction is ensured a Tier-0 Expeditionary Vessel.
-PASS — role/doctrine-aware abstract fleet warfare uses current naval profiles.
-PASS — persistent fleet Hull damage is accumulated during history.
-PASS — damaged stationary fleets can spend historical Supply/Materiel to repair.
-PASS — fleets reaching 0% Hull are permanently destroyed with embarked forces, using v26.0 fleet lifecycle rules.
-PASS — active rebellions can be historically suppressed by available armies.
-PASS — current fleet-lift audits and destroyed-fleet culling run during history/handover.
-PASS — player-established polities receive final settlement/fleet/lifecycle management before handover.
+FLEET SETTLEMENTS
+PASS — Tier III player conversion sets a pending mobile-settlement state instead of materialising a settlement immediately.
+PASS — pending Tier III fleets are excluded from mobile-settlement enumeration until End Turn completes.
+PASS — End Turn finalisation creates the mobile colony and initialises its development/infrastructure state.
+PASS — mobile settlements render a dedicated Level 1–10 infrastructure/support planner.
+PASS — mobile infrastructure/support controls resolve via campaignFindSettlement236 instead of fixed-settlement-only lookup.
+PASS — mobile settlement district purchases resolve the fleet proxy rather than fac.settlements[].
+PASS — Fleet-Colony polity benefits are visible in Overview: 20% cheaper fleet-settlement development, 15% cheaper fleet commissioning, +5% campaign fleet speed, and +1 Supply/turn per active mobile settlement.
 
-STACK / OBJECT-GROWTH TESTING
-PASS — independent v25.7 macro-history engine remains the simulation base; the older nested Deep-Time wrapper chain is not re-entered.
-PASS — v26.1 current-feature layer is iterative and never calls player-facing render, modal, export/share, notice-heavy battle creation or campaign-save handlers during an epoch.
-PASS — stress harness ran 720 feature-lifecycle passes (30 factions × 24 T1000-style epochs) with 6 fleets, 4 armies and 10 settlements per faction and completed without call-stack overflow.
-PASS — stress run exercised 324 abstract naval battles, 311 abstract ground battles and 990 territorial claim mutations while fleet destruction/repair and rebellion logic remained active.
-PASS — transient state remains compacted after every historical epoch.
+FOUNDATION DEPTH
+PASS — player foundation packages expose Size 1, 2, 3, 4 and 5.
+PASS — additional Supply/Materiel/Command costs rise with foundation Size.
+PASS — the created settlement is initialised at the selected Size and receives matching colony/infrastructure initialisation.
 
-PACKAGE VALIDATION
-PASS — all embedded JavaScript blocks pass Node syntax validation.
-PASS — service worker passes syntax validation and uses a fresh v26.1 cache key.
-PASS — manifest parses and identifies Revision 26.1.
-PASS — final ZIP archive integrity validated.
+RESOURCE EXTRACTION
+PASS — resource recovery mode persists at campaign level.
+PASS — Mixed Recovery, Sequence Analysis, Cogitator Checksum and Signal Amplification are selectable before extraction.
+PASS — selected non-mixed modes force the corresponding puzzle family without changing resource rewards or extraction difficulty.
+
+SITE-SPECIFIC DISTRICTS
+PASS — Orbital Defence Platforms gain the Orbital Defence Platform Systems chain.
+PASS — Gas Harvesting Platforms gain the Atmospheric Harvesting Complex chain.
+PASS — Fleet Settlements gain the Fleet Settlement Infrastructure chain.
+PASS — eligibility prevents those chains being constructed at the wrong site type.
+PASS — custom demographic-momentum and site-defence district effects are aggregated into campaign development/defence calculations.
+
+SITE DEFENCE
+PASS — the rules reference is consolidated around Effective Site Defence = fortifications + settlement defence + orbital/fleet defence.
+PASS — existing auto-resolve mechanics remain: up to +3 defender roll and +300 equivalent strategic power per Effective Defence level.
+
+REGRESSION
+PASS — v26.1 T2–T1000 independent Deep-Time scheduler remains present.
+PASS — v26.0 combat/claims/fleet-lifecycle and v25.9 territory-specific ground operations remain in the runtime.
 
 BROWSER LIMITATION
-The container Chromium installation blocks localhost/file navigation with ERR_BLOCKED_BY_ADMINISTRATOR. Full Safari/Chromium UI launch testing cannot be truthfully performed here. The history scheduler and feature layer were therefore exercised through exact-function Node harnesses plus static integration validation. DEEPTIME-MATRIX.json and DEEPTIME-STRESS.json are included in the package.
+The container browser environment remains unsuitable for a reliable local-file/localhost full click-through. Release validation therefore uses syntax validation, interaction-path auditing and direct state-path inspection on this exact package; no interactive browser run is falsely claimed.

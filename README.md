@@ -126,3 +126,13 @@ The audit also found and fixed a genuine infinite recursion affecting developed 
 - The independent v25.7 stack-safe engine remains the base. v26.1 adds a bounded feature-compatibility layer for current territorial claims, fleet repairs and 0%-Hull destruction, Tier-0 expeditionary vessels, abstract role/doctrine-aware void wars, strategic-trait-aware ground wars and active-rebellion suppression.
 - Existing settlement maintenance, demographic growth/decline, districts, infrastructure, historical settlement founding, diplomacy, recruitment, fleet construction/refit/mobile settlements and faction archetypes continue to run inside Deep Time.
 - Deep-Time deliberately does not invoke player-facing export/share, modal, render, notice or detailed pending-battle UI handlers during history; their game effects are represented by compact historical equivalents to keep Safari call depth and object growth bounded.
+
+
+## Revision 26.2 — Fleet Settlements & Site Economies
+- Tier III fleet-settlement conversion is now pending until the player completes End Turn; the mobile settlement does not exist before that turn boundary.
+- Active fleet settlements use the full Level 1–10 infrastructure/support system and the normal district-development web.
+- Fleet-Colony polity has visible benefits: 20% cheaper fleet-settlement development, 15% cheaper fleet commissioning, +5% campaign fleet speed, and +1 Supply/turn per active mobile settlement.
+- New settlements can be founded directly at Size 1, 2, 3, 4, or 5 for progressively larger resource packages.
+- Resource recovery can be set to Mixed Recovery, Sequence Analysis, Cogitator Checksum, or Signal Amplification before extraction.
+- Added unique district chains for Orbital Defence Platforms, Gas Harvesting Platforms, and Fleet Settlements.
+- Site Defence is presented as one effective defensive value assembled automatically from fortifications, settlement depth, and orbital/fleet defence.
