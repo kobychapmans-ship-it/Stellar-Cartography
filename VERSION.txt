@@ -1,2 +1,2 @@
-Stellar Cartographica v25.9
-Build: 25.9-ground-operations-ui-audit-v43-tested
+Stellar Cartographica v26.1
+Build: 26.1-deeptime-complete-t2-1000-v45-tested

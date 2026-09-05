@@ -109,3 +109,20 @@ The audit also found and fixed a genuine infinite recursion affecting developed 
 - Removed the dead legacy `Use Fleet Movement Plot` button. Current Journey Planner and in-system navigation controls are authoritative.
 - Removed the Campaign Colonies `Advance Extra 90 Days` shortcut because settlement time already advances through the campaign turn cycle.
 - Added a release-time interaction audit for campaign buttons and data-action families.
+
+
+## Revision 26.0 — Combat, Claims & Fleet Lifecycle
+- Direct fleet-on-fleet engagement button for co-located fleets.
+- Overview and planetary inspector ground-battle controls for attacks across territories on the same world/moon.
+- Campaign Save export now prefers the iOS/PWA share/save sheet, with JSON download and new-tab fallbacks.
+- Fleets can be fully repaired for Materiel + Supply while stationary; 0% Hull means permanent destruction and loss of embarked troops.
+- Territory claim buttons use one delegated handler from planetary inspectors and the Territory-tab claim modal.
+- Partially claimed planets remain valid in the claim/settlement founder; the selected territory determines whether foundation is legal.
+- Every faction receives a Tier-0 Expeditionary Vessel so any polity has a fleet-settlement development path.
+
+
+## Revision 26.1 — Complete Deep-Time T2–T1000
+- Deep-Time chronology accepts every integer turn from T2 through T1000. T2–T20 execute one exact bounded epoch per requested turn; longer histories use 10–24 macro epochs and still finish on the exact requested turn.
+- The independent v25.7 stack-safe engine remains the base. v26.1 adds a bounded feature-compatibility layer for current territorial claims, fleet repairs and 0%-Hull destruction, Tier-0 expeditionary vessels, abstract role/doctrine-aware void wars, strategic-trait-aware ground wars and active-rebellion suppression.
+- Existing settlement maintenance, demographic growth/decline, districts, infrastructure, historical settlement founding, diplomacy, recruitment, fleet construction/refit/mobile settlements and faction archetypes continue to run inside Deep Time.
+- Deep-Time deliberately does not invoke player-facing export/share, modal, render, notice or detailed pending-battle UI handlers during history; their game effects are represented by compact historical equivalents to keep Safari call depth and object growth bounded.

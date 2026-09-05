@@ -1,218 +1,170 @@
 [
   {
-    "case": [
-      "subsector",
-      250,
-      "craftworld",
-      "existing"
-    ],
-    "elapsed": 3.05,
-    "dialogs": [],
-    "errors": [],
-    "data": {
-      "turn": 250,
-      "phase": "Player",
-      "systems": 8,
-      "factions": 6,
-      "stack": 0,
-      "independent": true,
-      "settlements": 1,
-      "managed": 1,
-      "mobile": 2,
-      "fleets": 3,
-      "strong": 1
-    }
+    "t": 2,
+    "mode": "existing",
+    "steps": 2,
+    "lifecycle": 29
   },
   {
-    "case": [
-      "subsector",
-      1000,
-      "mechanicum",
-      "existing"
-    ],
-    "elapsed": 3.55,
-    "dialogs": [],
-    "errors": [],
-    "data": {
-      "turn": 1000,
-      "phase": "Player",
-      "systems": 8,
-      "factions": 6,
-      "stack": 0,
-      "independent": true,
-      "settlements": 2,
-      "managed": 2,
-      "mobile": 0,
-      "fleets": 6,
-      "strong": 6
-    }
+    "t": 2,
+    "mode": "emerging",
+    "steps": 2,
+    "lifecycle": 26
   },
   {
-    "case": [
-      "subsector",
-      500,
-      "ork",
-      "existing"
-    ],
-    "elapsed": 3.0,
-    "dialogs": [],
-    "errors": [],
-    "data": {
-      "turn": 500,
-      "phase": "Player",
-      "systems": 8,
-      "factions": 5,
-      "stack": 0,
-      "independent": true,
-      "settlements": 6,
-      "managed": 6,
-      "mobile": 0,
-      "fleets": 4,
-      "strong": 2
-    }
+    "t": 3,
+    "mode": "existing",
+    "steps": 3,
+    "lifecycle": 43
   },
   {
-    "case": [
-      "sector",
-      250,
-      "legion",
-      "emerging"
-    ],
-    "elapsed": 10.99,
-    "dialogs": [],
-    "errors": [],
-    "data": {
-      "turn": 250,
-      "phase": "Player",
-      "systems": 41,
-      "factions": 11,
-      "stack": 0,
-      "independent": true,
-      "settlements": 0,
-      "managed": 0,
-      "mobile": 0,
-      "fleets": 1,
-      "strong": 0
-    }
+    "t": 3,
+    "mode": "emerging",
+    "steps": 3,
+    "lifecycle": 39
   },
   {
-    "case": [
-      "sector",
-      1000,
-      "craftworld",
-      "existing"
-    ],
-    "elapsed": 16.79,
-    "dialogs": [],
-    "errors": [],
-    "data": {
-      "turn": 1000,
-      "phase": "Player",
-      "systems": 41,
-      "factions": 14,
-      "stack": 0,
-      "independent": true,
-      "settlements": 22,
-      "managed": 22,
-      "mobile": 10,
-      "fleets": 10,
-      "strong": 8
-    }
+    "t": 5,
+    "mode": "existing",
+    "steps": 5,
+    "lifecycle": 71
   },
   {
-    "case": [
-      "sector",
-      500,
-      "ork",
-      "existing"
-    ],
-    "elapsed": 12.35,
-    "dialogs": [],
-    "errors": [],
-    "data": {
-      "turn": 500,
-      "phase": "Player",
-      "systems": 41,
-      "factions": 12,
-      "stack": 0,
-      "independent": true,
-      "settlements": 3,
-      "managed": 3,
-      "mobile": 0,
-      "fleets": 3,
-      "strong": 2
-    }
+    "t": 5,
+    "mode": "emerging",
+    "steps": 5,
+    "lifecycle": 65
   },
   {
-    "case": [
-      "sector",
-      1000,
-      "legion",
-      "existing"
-    ],
-    "elapsed": 15.67,
-    "dialogs": [],
-    "errors": [],
-    "data": {
-      "turn": 1000,
-      "phase": "Player",
-      "systems": 41,
-      "factions": 14,
-      "stack": 0,
-      "independent": true,
-      "settlements": 1,
-      "managed": 1,
-      "mobile": 6,
-      "fleets": 6,
-      "strong": 6
-    }
+    "t": 10,
+    "mode": "existing",
+    "steps": 10,
+    "lifecycle": 141
   },
   {
-    "case": [
-      "sector",
-      1000,
-      "mechanicum",
-      "existing"
-    ],
-    "elapsed": 15.24,
-    "dialogs": [],
-    "errors": [],
-    "data": {
-      "turn": 1000,
-      "phase": "Player",
-      "systems": 41,
-      "factions": 14,
-      "stack": 0,
-      "independent": true,
-      "settlements": 2,
-      "managed": 2,
-      "mobile": 0,
-      "fleets": 6,
-      "strong": 6
-    }
+    "t": 10,
+    "mode": "emerging",
+    "steps": 10,
+    "lifecycle": 130
   },
   {
-    "case": [
-      "sector",
-      1000,
-      "ork",
-      "existing"
-    ],
-    "elapsed": 15.0,
-    "dialogs": [],
-    "errors": [],
-    "data": {
-      "turn": 1000,
-      "phase": "Player",
-      "systems": 41,
-      "factions": 14,
-      "stack": 0,
-      "independent": true,
-      "settlements": 3,
-      "managed": 3,
-      "mobile": 0,
-      "fleets": 6,
-      "strong": 6
-    }
+    "t": 20,
+    "mode": "existing",
+    "steps": 20,
+    "lifecycle": 281
+  },
+  {
+    "t": 20,
+    "mode": "emerging",
+    "steps": 20,
+    "lifecycle": 260
+  },
+  {
+    "t": 21,
+    "mode": "existing",
+    "steps": 10,
+    "lifecycle": 141
+  },
+  {
+    "t": 21,
+    "mode": "emerging",
+    "steps": 10,
+    "lifecycle": 130
+  },
+  {
+    "t": 50,
+    "mode": "existing",
+    "steps": 10,
+    "lifecycle": 141
+  },
+  {
+    "t": 50,
+    "mode": "emerging",
+    "steps": 10,
+    "lifecycle": 130
+  },
+  {
+    "t": 99,
+    "mode": "existing",
+    "steps": 10,
+    "lifecycle": 141
+  },
+  {
+    "t": 99,
+    "mode": "emerging",
+    "steps": 10,
+    "lifecycle": 130
+  },
+  {
+    "t": 100,
+    "mode": "existing",
+    "steps": 10,
+    "lifecycle": 141
+  },
+  {
+    "t": 100,
+    "mode": "emerging",
+    "steps": 10,
+    "lifecycle": 130
+  },
+  {
+    "t": 101,
+    "mode": "existing",
+    "steps": 14,
+    "lifecycle": 197
+  },
+  {
+    "t": 101,
+    "mode": "emerging",
+    "steps": 14,
+    "lifecycle": 182
+  },
+  {
+    "t": 250,
+    "mode": "existing",
+    "steps": 14,
+    "lifecycle": 197
+  },
+  {
+    "t": 250,
+    "mode": "emerging",
+    "steps": 14,
+    "lifecycle": 182
+  },
+  {
+    "t": 500,
+    "mode": "existing",
+    "steps": 18,
+    "lifecycle": 253
+  },
+  {
+    "t": 500,
+    "mode": "emerging",
+    "steps": 18,
+    "lifecycle": 234
+  },
+  {
+    "t": 750,
+    "mode": "existing",
+    "steps": 24,
+    "lifecycle": 337
+  },
+  {
+    "t": 750,
+    "mode": "emerging",
+    "steps": 24,
+    "lifecycle": 312
+  },
+  {
+    "t": 1000,
+    "mode": "existing",
+    "steps": 24,
+    "lifecycle": 337
+  },
+  {
+    "t": 1000,
+    "mode": "emerging",
+    "steps": 24,
+    "lifecycle": 312
   }
 ]
