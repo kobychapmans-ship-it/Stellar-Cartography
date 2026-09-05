@@ -9,16 +9,16 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=25.3.1-deeptime-fleet-coverage-hotfix-v37-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=25.4-archetype-empires-diplomacy-v38-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
   const REVISION='25.3.1';
-  const BUILD='25.3.1-deeptime-fleet-coverage-hotfix-v37-tested';
-  const LABEL='rev 25.3.1 — Deep-Time Fleet Hotfix';
-  const TITLE='Administratum Stellar Cartographica — Revision 25.3.1';
+  const BUILD='25.4-archetype-empires-diplomacy-v38-tested';
+  const LABEL='rev 25.4 — Archetype Empires & Diplomacy';
+  const TITLE='Administratum Stellar Cartographica — Revision 25.4';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 25.3.1</title>
+<title>Administratum Stellar Cartographica — Revision 25.4</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -6406,7 +6406,7 @@ const style250=document.createElement('style');style250.id='rev250-css';style250
 @media(max-width:760px){.campaign-governance246{padding:10px!important}.campaign-governance-grid246{grid-template-columns:repeat(2,minmax(0,1fr))!important}.campaign-infra-grid246{grid-template-columns:1fr!important}.campaign-infra-grid246 select,.campaign-infra-grid246 button{font-size:12px!important;min-height:42px!important}.campaign-rebellion246 b{font-size:15px;line-height:1.15}.campaign-rebellion246 span{font-size:10px!important;line-height:1.35}.campaign-governance246 p,.campaign-governance246 small,.campaign-civic-upkeep250{font-size:10px!important;line-height:1.45}.campaign-governance246 h5,.campaign-infra-planner246 h5{font-size:15px!important}}
 `;document.head.appendChild(style250);
 
-/* v25.0 mechanics retained; visible revision identity is controlled by the v25.3.1 bootstrap. */
+/* v25.0 mechanics retained; visible revision identity is controlled by the v25.4 bootstrap. */
 window.__cartoRevision250={version:REV250,build:REV250_BUILD,civicTargets:campaignCivicTargets250,civicSupport:campaignCivicSupportScores250,applyCivicUpkeep:campaignApplyCivicUpkeep250,rebellionCap:campaignRebellionPointCap250,spawnRebellion:campaignSpawnRebellion246,resolveRebellion:campaignResolveActiveRebellion246,secession:campaignCreateRebelFaction250,recruitRequirements:campaignUnitRecruitRequirements,governanceHTML:campaignSettlementGovernanceHTML246};
 
 /* Source note and revision identity. */
@@ -6590,7 +6590,7 @@ campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev2
 window.__cartoRevision251={version:REV251,build:REV251_BUILD,development:campaignSettlementDevelopment251,armyProfile:campaignArmyStrategicProfile251,battleModifier:campaignBattleStrategicModifier251};
 const rb251=document.querySelector('.generation-head-actions .badge');if(rb251)rb251.textContent='rev 25.2 — Stack-Safe Full-Sector Deep Time';
 document.title='Administratum Stellar Cartographica — Revision 25.2';
-document.documentElement.dataset.cartographicaRevision='25.3.1';
+document.documentElement.dataset.cartographicaRevision='25.4';
 document.documentElement.dataset.cartographicaBuild=REV251_BUILD;
 
 
@@ -6824,8 +6824,100 @@ campaignFleetCardHTML=function(root,c,fac,fleet,owned){let h=_campaignFleetCardH
 const _campaignRulesReferenceHTML_rev253=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev253(root),add=`<div class="campaign-rule-card"><h4>65. Infrastructure Levels</h4><p>Each of the five infrastructure networks can be upgraded repeatedly from Level 1 to Level 10. Settlement Size is the infrastructure level cap. Every level provides an incremental direct benefit and stronger recurring civic upkeep; completing any legal infrastructure upgrade satisfies an outstanding population-development infrastructure requirement.</p></div><div class="campaign-rule-card"><h4>66. Unit Strategic Drill-down</h4><p>Army and detachment cards are collapsible. Every unit package exposes its own Mobility, Reconnaissance, Firepower, Armour, Assault, Siege, Air Power, Air Defence, Logistics, Morale and Titanic contribution.</p></div><div class="campaign-rule-card"><h4>67. Deep-Time Naval Growth</h4><p>Historic AI polities now commission additional fleets as their territory, settlements and age grow. Existing fleets can advance through larger fleet classes and ten refit levels, improving void strength, troop lift and strategic speed while paying Materiel from the historic economy.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
 
+
+
+/* ==========================================================================
+   Revision 25.4 — Archetype Empires, Autonomous Diplomacy & Deep-Time Polities
+   ========================================================================== */
+const REV254='25.4';
+const REV254_BUILD='25.4-archetype-empires-diplomacy-v38-tested';
+
+const CAMPAIGN_ARCHETYPES254={
+  militia:{style:'frontier',settlementDensity:1.15,war:.28,diplomacy:.72,industry:.75,fleet:.70,research:.45,army:.65,desc:'Frontier empire-builders: claim, settle, trade and raise broad local armies.'},
+  solar:{style:'disciplined',settlementDensity:.95,war:.38,diplomacy:.68,industry:.80,fleet:.85,research:.45,army:.72,desc:'Disciplined strategic powers: logistics, defensible colonies, professional armies and battlefleets.'},
+  legion:{style:'crusade',settlementDensity:.62,war:.78,diplomacy:.30,industry:.48,fleet:.88,research:.42,army:.95,desc:'Crusading expeditionary powers: war, fleet reach and elite military concentration over civilian sprawl.'},
+  mechanicum:{style:'forge',settlementDensity:.88,war:.30,diplomacy:.62,industry:1,research:1,fleet:.78,army:.55,desc:'Forge empires: resources, industry, research, infrastructure and technically advanced fleets.'},
+  knights:{style:'household',settlementDensity:.65,war:.55,diplomacy:.62,industry:.68,fleet:.42,research:.35,army:.92,desc:'Household domains: a small number of developed holdings supporting powerful martial forces.'},
+  talons:{style:'custodian',settlementDensity:.45,war:.38,diplomacy:.70,industry:.58,fleet:.74,research:.62,army:.90,desc:'Strategic guardians: compact secure domains, alliances and overwhelming response forces.'},
+  craftworld:{style:'aeldari',settlementDensity:.50,war:.40,diplomacy:.68,industry:.62,fleet:.94,research:.92,army:.72,desc:'Selective Aeldari domains: relic/resource priorities, diplomacy, advanced development and highly mobile fleets.'},
+  necron:{style:'dynastic',settlementDensity:.72,war:.82,diplomacy:.22,industry:.90,fleet:.88,research:.82,army:.90,desc:'Dynastic reclamation: restore ancient nodes, expand relentlessly and suppress intruders.'},
+  darkcompliance:{style:'conquest',settlementDensity:.78,war:.86,diplomacy:.22,industry:.68,fleet:.82,research:.45,army:.98,desc:'Conquest polity: military expansion, enforced compliance and exploitation of conquered systems.'},
+  rangdan:{style:'subversive',settlementDensity:1.10,war:.75,diplomacy:.25,industry:.70,fleet:.78,research:.58,army:.92,desc:'Parasitic expansion: dense footholds, subversion, puppet holdings and aggressive territorial growth.'},
+  ork:{style:'waaagh',settlementDensity:1.25,war:1,diplomacy:.05,industry:.62,fleet:.74,research:.18,army:1,desc:'Waaagh economy: settle where useful, turn resources into more war, and always seek another enemy.'},
+  kroot:{style:'kindred',settlementDensity:.68,war:.48,diplomacy:.78,industry:.40,fleet:.72,research:.38,army:.72,desc:'Mobile kindreds: selective settlements, trade and opportunistic wars around prey and resources.'},
+  rakgol:{style:'raider',settlementDensity:.48,war:.95,diplomacy:.08,industry:.40,fleet:.92,research:.28,army:.94,desc:'Predatory raiders: minimal civic investment, violent expansion and strong raiding fleets.'},
+  human:{style:'polity',settlementDensity:1.0,war:.28,diplomacy:.78,industry:.72,fleet:.62,research:.52,army:.58,desc:'Independent polity: balanced empire-building, trade and defensive military growth.'},
+  xenos:{style:'xenos',settlementDensity:.82,war:.42,diplomacy:.55,industry:.62,fleet:.68,research:.62,army:.66,desc:'Adaptive xenos polity: balanced development shaped by local opportunities.'}
+};
+function campaignArchetype254(fac){return CAMPAIGN_ARCHETYPES254[fac?.key]||CAMPAIGN_ARCHETYPES254.xenos}
+function campaignFactionLiveSettlements254(fac){return (fac?.settlements||[]).filter(s=>s.status!=='Destroyed'&&!s.mobile236)}
+function campaignFactionSettlementSystems254(fac){return new Set(campaignFactionLiveSettlements254(fac).map(s=>s.systemId))}
+function campaignEmpireTargetSettlements254(fac){const a=campaignArchetype254(fac),territory=Math.max(1,(fac.territory||[]).length),tech=typeof campaignFactionTech==='function'?campaignFactionTech(fac).tier:3;return Math.max(1,Math.min(60,Math.ceil(territory*a.settlementDensity)+Math.floor(Math.max(0,tech-4)/3)))}
+function campaignHistoricalFoundSettlements254(root,fac,representedTurns=1,turn=0){
+  if(!fac||fac.prehistoryDormant247)return 0;const c=root.campaign,a=campaignArchetype254(fac),live=campaignFactionLiveSettlements254(fac),target=campaignEmpireTargetSettlements254(fac);if(live.length>=target)return 0;
+  let attempts=Math.min(4,Math.max(1,Math.ceil(representedTurns/35))),built=0;const occupied=campaignFactionSettlementSystems254(fac),territory=[...(fac.territory||[])];
+  territory.sort((x,y)=>{const hx=x===fac.homeSystemId?-10:0,hy=y===fac.homeSystemId?-10:0;return (occupied.has(x)?20:0)+hx-(occupied.has(y)?20:0)-hy});
+  for(const sid of territory){if(built>=attempts||campaignFactionLiveSettlements254(fac).length>=target)break;const rec=campaignRecord(root,sid);if(!rec)continue;const locs=campaignLocationProfiles(rec.sys)||[];
+    for(const loc of locs){if(built>=attempts)break;let q=null;try{q=campaignSettlementFoundingAllowed246(root,sid,loc.id,'settlement')}catch(_){q={ok:true}}if(q&&!q.ok)continue;
+      fac.command=Math.max(1,Number(fac.command)||Number(fac.maxCommand)||3);const before=fac.settlements.length;let ok=false;try{ok=campaignFoundSettlement(root,fac,sid,loc.id,true)}catch(_){}if(ok&&fac.settlements.length>before){const st=fac.settlements[fac.settlements.length-1];st.deepTimeFounded254=true;st.foundedTurn=Math.max(0,turn);built++;fac._histIncome252=null;break}
+    }
+  }
+  return built
+}
+function campaignArchetypeWarTarget254(root,fac){const c=root.campaign,others=(c.factions||[]).filter(o=>o.id!==fac.id&&!o.prehistoryDormant247);if(!others.length)return null;const border=new Set();for(const sid of fac.territory||[])for(const n of campaignNeighbors(root,sid)){const o=campaignOwner(c,n.id);if(o&&o.id!==fac.id)border.add(o.id)}return others.sort((a,b)=>{const ab=border.has(a.id)?-40:0,bb=border.has(b.id)?-40:0;return ab-bb+campaignRelation(c,fac,a)-campaignRelation(c,fac,b)})[0]}
+function campaignArchetypeDiplomacy254(root,fac,representedTurns=1,force=false){
+  if(!fac||fac.prehistoryDormant247)return false;const c=root.campaign,a=campaignArchetype254(fac),others=(c.factions||[]).filter(o=>o.id!==fac.id&&!o.prehistoryDormant247);if(!others.length)return false;let acted=false;
+  const wars=others.filter(o=>campaignRelationState(campaignRelation(c,fac,o))==='War');const warCap=fac.key==='ork'?Math.min(3,others.length):fac.key==='rakgol'?Math.min(2,others.length):a.war>=.8?2:1;
+  if((fac.key==='ork'&&wars.length<warCap)||(a.war>=.75&&wars.length<warCap&&campaignRandom(c,`archetype war ${fac.id} ${c.turn}`)<Math.min(.9,a.war*(representedTurns>=10?.9:.45)))){
+    const t=campaignArchetypeWarTarget254(root,fac);if(t&&campaignRelationState(campaignRelation(c,fac,t))!=='War'){try{campaignBreakAgreements(c,fac,t)}catch(_){}campaignSetRelation(c,fac,t,-75);campaignLog(c,`${fac.name} adopted its ${a.style} strategic posture and entered open war with ${t.name}.`,'war');acted=true}
+  }
+  if(fac.key==='ork'||fac.key==='rakgol')return acted;
+  const dipAttempts=Math.min(3,Math.max(1,Math.ceil(representedTurns/50)));for(let i=0;i<dipAttempts;i++){if(campaignRandom(c,`archetype diplomacy ${fac.id} ${i}`)>a.diplomacy)continue;try{if(campaignAIDiplomacy(root,fac)){acted=true;continue}}catch(_){}
+    const candidates=others.filter(o=>campaignRelationState(campaignRelation(c,fac,o))!=='War').sort((x,y)=>campaignRelation(c,fac,y)-campaignRelation(c,fac,x));const t=candidates[0];if(!t)continue;let rel=campaignRelation(c,fac,t);const drift=a.diplomacy>=.7?8:a.diplomacy>=.5?4:2;campaignSetRelation(c,fac,t,Math.min(80,rel+drift));if(rel>=10&&typeof campaignAgreement==='function'&&!campaignAgreement(c,fac,t,'trade'))try{campaignAddAgreement(c,fac,t,'trade')}catch(_){}acted=true}
+  return acted
+}
+function campaignArchetypeInfrastructure254(root,fac,representedTurns=1){
+  const a=campaignArchetype254(fac),rows=campaignFactionLiveSettlements254(fac);if(!rows.length)return 0;let n=0,attempts=Math.min(4,Math.max(1,Math.ceil(representedTurns/30)));rows.sort((x,y)=>Number(y.colony?.size||0)-Number(x.colony?.size||0));
+  for(const s of rows){if(n>=attempts)break;const col=s.colony,cap=Math.max(1,Math.min(10,Number(col?.size)||1)),levels=campaignInfrastructureLevels253(col),choices=SOI_INFRA.filter(k=>(levels[k]||0)<cap);if(!choices.length)continue;choices.sort((x,y)=>{const score=k=>k==='Power Infrastructure'?a.industry*3:k==='Transport Infrastructure'?a.fleet*2:k==='Communications Infrastructure'?a.diplomacy*2:k==='Food Production and Distribution Infrastructure'?a.settlementDensity*2:1;return score(y)-score(x)||(levels[x]||0)-(levels[y]||0)});const name=choices[0],cost=campaignInfrastructureUpgradeCost253(col,name);if((fac.treasury?.materiel||0)<cost+4)continue;try{if(campaignUpgradeInfrastructure253(root,fac,s,name,false))n++}catch(_){}
+  }return n
+}
+function campaignArchetypeResearch254(root,fac,representedTurns=1){const a=campaignArchetype254(fac);if(a.research<.5||(fac.treasury?.materiel||0)<12||(fac.treasury?.influence||0)<2)return false;const spend=Math.min(Math.floor((fac.treasury.materiel||0)*.12),Math.max(2,Math.ceil(representedTurns/20)));if(spend<2)return false;fac.treasury.materiel-=spend;fac.researchProgress=(Number(fac.researchProgress)||0)+Math.round(spend*(2+a.research*2));return true}
+function campaignArchetypeSpend254(root,fac,representedTurns=1,turn=null){
+  if(!fac||fac.prehistoryDormant247)return;const c=root.campaign,a=campaignArchetype254(fac),t=turn==null?c.turn:turn;fac.command=Math.max(Number(fac.command)||0,Math.min(Number(fac.maxCommand)||3,2+Math.ceil(representedTurns/50)));
+  /* Civilian empire-building comes before military spending. */
+  campaignHistoricalFoundSettlements254(root,fac,representedTurns,t);campaignArchetypeInfrastructure254(root,fac,representedTurns);
+  const strat=campaignAIStrategy246(fac),live=campaignFactionLiveSettlements254(fac),districtAttempts=Math.min(4,Math.max(1,Math.ceil(representedTurns/35)));for(let i=0;i<districtAttempts&&live.length;i++){try{campaignAIBuildDistrict248(root,fac,strat)}catch(_){} }
+  campaignArchetypeResearch254(root,fac,representedTurns);
+  /* Martial archetypes intentionally reserve more of the remaining economy for armies/fleets. */
+  const recruitAttempts=a.army>=.85?Math.min(3,Math.max(1,Math.ceil(representedTurns/40))):Math.min(2,Math.max(0,Math.ceil(representedTurns/70)));for(let i=0;i<recruitAttempts;i++)try{campaignHistoricalRecruit252(root,fac,t+i)}catch(_){}
+  try{campaignDeepTimeFleetProgression253(root,fac,t,Math.max(1,Math.round(representedTurns*(.55+a.fleet*.65))))}catch(_){}
+  campaignArchetypeDiplomacy254(root,fac,representedTurns);
+}
+
+/* General-play AI: after the established AI turn chain, spend leftovers according to racial archetype. */
+const _campaignAITurn_rev254=campaignAITurn;
+campaignAITurn=function(root,fac){const out=_campaignAITurn_rev254(root,fac);if(fac?.ai&&!root?.campaign?._deepTimeRunning252){try{campaignArchetypeSpend254(root,fac,1,root.campaign.turn)}catch(_){} }return out};
+
+/* Deep Time: all active polities, including the chosen established player polity before handover,
+   get empire-building, fleet investment and diplomacy in every bounded historical epoch. */
+const _campaignAdvanceHistoricEpoch252_rev254=campaignAdvanceHistoricEpoch252;
+campaignAdvanceHistoricEpoch252=async function(root,startTurn,representedTurns){const out=await _campaignAdvanceHistoricEpoch252_rev254(root,startTurn,representedTurns),c=root.campaign,turn=Math.min(1000,startTurn+representedTurns),ordered=[...(c.factions||[])].sort((a,b)=>(b.id===c.playerFactionId)-(a.id===c.playerFactionId));for(const fac of ordered){if(fac.prehistoryDormant247)continue;const span=fac.id===c.playerFactionId?Math.max(representedTurns,Math.round(representedTurns*1.25)):representedTurns;try{campaignArchetypeSpend254(root,fac,span,turn)}catch(e){campaignLog(c,`${fac.name} historical archetype action recovered from ${e?.message||e}.`,'ai')}}try{campaignRepairAllFleetLift248(root,false)}catch(_){}return out};
+
+/* Exact short-history path receives the same behaviour, not just scalable 100+ turn starts. */
+const _campaignAdvanceHistoricTurn252_rev254=campaignAdvanceHistoricTurn252;
+campaignAdvanceHistoricTurn252=async function(root,turnIndex){const out=await _campaignAdvanceHistoricTurn252_rev254(root,turnIndex);if(!campaignScalableHistory252(root,turnIndex+1)){for(const fac of root.campaign.factions||[]){if(fac.prehistoryDormant247)continue;if((turnIndex+1)%3===0)try{campaignArchetypeSpend254(root,fac,3,turnIndex+1)}catch(_){}}}return out};
+
+const _campaignOverviewHTML_rev254=campaignOverviewHTML;
+campaignOverviewHTML=function(root,c){let h=_campaignOverviewHTML_rev254(root,c),p=campaignPlayer(c);if(!p)return h;const a=campaignArchetype254(p),tag=`<div class="campaign-rule-card campaign-archetype254"><h4>Faction Behaviour: ${esc(a.style.toUpperCase())}</h4><p>${esc(a.desc)}</p><small>During Deep Time an established player faction is fully autonomous until handover: it claims and settles territory, invests in districts/infrastructure, builds and refits fleets, recruits armies and conducts diplomacy using this archetype.</small></div>`;return h.replace('<div class="campaign-reference-note">',tag+'<div class="campaign-reference-note">')};
+
+const _campaignRulesReferenceHTML_rev254=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev254(root),add=`<div class="campaign-rule-card"><h4>68. Autonomous Faction Archetypes</h4><p>Every AI polity has a persistent economic and diplomatic archetype derived from its faction identity. Deep-Time and ordinary AI turns spend resources on settlements, districts, infrastructure, research, armies and fleets in different proportions. Established player polities use the same autonomous logic until handover.</p></div><div class="campaign-rule-card"><h4>69. Historical Diplomacy</h4><p>Deep-Time factions actively change relations and create trade, non-aggression, defensive and alliance relationships where their archetype permits. Martial factions seek wars; Orks deliberately maintain active wars whenever viable opponents exist.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
+
+window.__cartoRevision254={version:REV254,build:REV254_BUILD,archetype:campaignArchetype254,spend:campaignArchetypeSpend254,diplomacy:campaignArchetypeDiplomacy254,foundSettlements:campaignHistoricalFoundSettlements254};
+const rb254=document.querySelector('.generation-head-actions .badge');if(rb254)rb254.textContent='rev 25.4 — Archetype Empires & Diplomacy';document.title='Administratum Stellar Cartographica — Revision 25.4';document.documentElement.dataset.cartographicaRevision=REV254;document.documentElement.dataset.cartographicaBuild=REV254_BUILD;
+
 window.__cartoRevision253={version:REV253,build:REV253_BUILD,infrastructureLevels:campaignInfrastructureLevels253,upgradeInfrastructure:campaignUpgradeInfrastructure253,unitTraits:campaignUnitStrategicTraits251,fleetProgression:campaignDeepTimeFleetProgression253};
-const rb253=document.querySelector('.generation-head-actions .badge');if(rb253)rb253.textContent='rev 25.3.1 — Deep-Time Fleet Hotfix';document.title='Administratum Stellar Cartographica — Revision 25.3.1';document.documentElement.dataset.cartographicaRevision=REV253;document.documentElement.dataset.cartographicaBuild=REV253_BUILD;
+const rb253=document.querySelector('.generation-head-actions .badge');if(rb253)rb253.textContent='rev 25.4 — Archetype Empires & Diplomacy';document.title='Administratum Stellar Cartographica — Revision 25.4';document.documentElement.dataset.cartographicaRevision=REV254;document.documentElement.dataset.cartographicaBuild=REV254_BUILD;
 
 })();
 

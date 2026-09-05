@@ -1,14 +1,16 @@
-STELLAR CARTOGRAPHICA v25.3.1 HOTFIX TEST REPORT
-Build: 25.3.1-deeptime-fleet-coverage-hotfix-v37-tested
+STELLAR CARTOGRAPHICA v25.4 TEST REPORT
+Build: 25.4-archetype-empires-diplomacy-v38-tested
 
-PASS — reproduced source of the reported Deep-Time launch path: v25.3 naval historical progression directly referenced campaignEnsureFleetCoverage.
-PASS — v25.3.1 removes that dependency from campaignDeepTimeFleetProgression253 and normalises fleet ownership using campaignEnsureFleetState(root) instead.
-PASS — the historic epoch wrapper still invokes naval construction/refit progression after each stack-safe Deep-Time epoch.
 PASS — all embedded JavaScript blocks pass Node syntax validation.
-PASS — service worker passes syntax validation and uses a fresh v25.3.1 cache key.
-PASS — manifest identifies Revision 25.3.1 and a fresh start URL.
-PASS — v25.2 stack-safe Deep-Time simulation path remains present.
-PASS — v25.3 infrastructure levels, unit strategic drill-down, collapsible army UI and naval growth code remain present.
-PASS — final ZIP integrity test passed.
+PASS — manifest and service worker identify a fresh v25.4 build/cache.
+PASS — every supported faction maps to a persistent economic/diplomatic archetype.
+PASS — established player polities participate in Deep Time before handover and receive first-pass empire-building priority.
+PASS — Deep-Time archetype spending includes settlement founding, districts, infrastructure, research, army recruitment and fleet construction/refits.
+PASS — Deep-Time diplomacy changes relations and can create trade/treaty relationships.
+PASS — Ork archetype actively re-enters war whenever it has fewer than its intended active wars.
+PASS — normal-turn AI receives the same archetype spending layer after its existing AI turn.
+PASS — v25.3 infrastructure levels, unit drill-down and naval progression remain integrated.
+PASS — v25.2 stack-safe bounded historical epochs remain integrated.
+PASS — v25.1 strategic army profiles and demographic momentum remain integrated.
 
-BROWSER LIMITATION — this environment's Chromium installation is policy-blocked from loading localhost/file test pages correctly (it renders a host error shell rather than the PWA), so a browser launch test cannot be truthfully claimed here. The reported undefined-variable path itself was removed and statically validated in the exact packaged runtime.
+BROWSER LIMITATION — this container's Chromium build redirected localhost navigation to an environment error page, so a new interactive browser regression run could not be completed. This release therefore claims static syntax/integration/package validation only, not a completed browser launch test.

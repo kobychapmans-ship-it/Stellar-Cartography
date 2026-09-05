@@ -69,3 +69,7 @@ Revision 25.2 cannot and does not attempt to increase Safari/Chromium's fixed Ja
 
 ## Revision 25.3.1 — Deep-Time Fleet Coverage Hotfix
 Deep-Time naval progression no longer directly calls the fragile `campaignEnsureFleetCoverage` helper. It now normalises fleet ownership through the stable `campaignEnsureFleetState` path before historic fleet construction/refits, fixing Safari launch failures reporting “Can’t find variable: campaignEnsureFleetCoverage”.
+
+
+## Revision 25.4 — Archetype Empires & Diplomacy
+Deep-Time established player polities now remain fully autonomous until handover. Every faction uses a racial/faction archetype to prioritise settlement founding, districts, infrastructure, research, armies, fleets and diplomacy. Orks actively seek and maintain wars; industrial, defensive, opportunistic and diplomatic factions spend resources differently.

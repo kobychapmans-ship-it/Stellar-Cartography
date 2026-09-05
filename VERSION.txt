@@ -1,2 +1,2 @@
-Stellar Cartographica v25.3.1
-Build: 25.3.1-deeptime-fleet-coverage-hotfix-v37-tested
+Stellar Cartographica v25.4
+Build: 25.4-archetype-empires-diplomacy-v38-tested
