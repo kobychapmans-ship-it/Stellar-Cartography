@@ -9,16 +9,16 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=25.4-archetype-empires-diplomacy-v38-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=25.5-fleet-polities-historical-foundations-hull-growth-v39-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
   const REVISION='25.3.1';
-  const BUILD='25.4-archetype-empires-diplomacy-v38-tested';
-  const LABEL='rev 25.4 — Archetype Empires & Diplomacy';
-  const TITLE='Administratum Stellar Cartographica — Revision 25.4';
+  const BUILD='25.5-fleet-polities-historical-foundations-hull-growth-v39-tested';
+  const LABEL='rev 25.5 — Fleet Polities & Historical Foundations';
+  const TITLE='Administratum Stellar Cartographica — Revision 25.5';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 25.4</title>
+<title>Administratum Stellar Cartographica — Revision 25.5</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -637,6 +637,9 @@ html.carto-orientation-lock body:after{content:'';display:none}
 </style>
 <style id="rev253-css">
 .campaign-strategic-investment{grid-column:1/-1!important;width:100%!important;max-width:100%!important;justify-self:stretch!important;margin:10px auto!important;box-sizing:border-box}.campaign-invest-grid{width:100%;grid-template-columns:repeat(3,minmax(0,1fr))!important}.campaign-infra-planner253{grid-column:1/-1!important;width:100%!important;box-sizing:border-box}.campaign-infra-levels253{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:5px;margin:8px 0}.campaign-infra-levels253 span{display:block;border:1px solid rgba(255,255,255,.07);padding:5px;color:#97917f;font-size:7px}.campaign-infra-levels253 b{display:block;color:#d4c69e;font-size:8px}.campaign-unit-click253{cursor:pointer}.campaign-unit-strategic253{grid-column:1/-1;margin-top:5px;border-top:1px solid rgba(103,148,173,.2);padding-top:5px}.campaign-unit-strategic253>summary{cursor:pointer;color:#a8c3cb;font-size:8px}.campaign-unit-traits253{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:4px;margin-top:5px}.campaign-unit-traits253 span{border:1px solid rgba(255,255,255,.06);padding:4px}.campaign-unit-traits253 b,.campaign-unit-traits253 i{display:block;font-size:7px}.campaign-unit-traits253 b{color:#929b9a}.campaign-unit-traits253 i{color:#d5ddd9;font-style:normal;font-weight:700}.campaign-unit-traits253 em{display:block;height:2px;background:#25292c;margin-top:3px}.campaign-unit-traits253 u{display:block;height:100%;background:#799eaa;text-decoration:none}.campaign-detachment253,.campaign-force253{border:1px solid rgba(255,255,255,.08);margin:6px 0;padding:6px}.campaign-detachment253>summary,.campaign-force253>summary{cursor:pointer;color:#d8cfb7}.campaign-force-summary253{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px}.campaign-fleet-refit253{font-size:7px;border:1px solid rgba(103,148,173,.28);color:#aac5ce;padding:3px 5px;margin-right:4px}.campaign-fleet-head>span{display:inline-block}.campaign-fleet-head>div+span{margin-left:auto}@media(max-width:600px){.campaign-invest-grid{grid-template-columns:1fr!important}.campaign-strategic-investment{margin-left:0!important;margin-right:0!important}.campaign-infra-levels253{grid-template-columns:1fr 1fr}.campaign-unit-traits253{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<style id="rev255-css">
+.campaign-fleet-hulls255{margin:6px 0;padding:7px;border:1px solid rgba(109,145,177,.25);background:rgba(44,75,101,.07);display:grid;gap:2px}.campaign-fleet-hulls255 b{color:#c4d8e5;font-size:9px;text-transform:uppercase}.campaign-fleet-hulls255 span{color:#d6d7d0;font-size:9px}.campaign-fleet-hulls255 small{color:#8fa0a8;font-size:7.5px}.campaign-fleet-hulls255.inspector{grid-column:1/-1}.campaign-fleet-polity255{border-color:rgba(108,159,190,.38)!important}
 </style>
 </head>
 <body>
@@ -6827,10 +6830,10 @@ campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev2
 
 
 /* ==========================================================================
-   Revision 25.4 — Archetype Empires, Autonomous Diplomacy & Deep-Time Polities
+   Revision 25.5 — Archetype Empires, Autonomous Diplomacy & Deep-Time Polities
    ========================================================================== */
 const REV254='25.4';
-const REV254_BUILD='25.4-archetype-empires-diplomacy-v38-tested';
+const REV254_BUILD='25.5-fleet-polities-historical-foundations-hull-growth-v39-tested';
 
 const CAMPAIGN_ARCHETYPES254={
   militia:{style:'frontier',settlementDensity:1.15,war:.28,diplomacy:.72,industry:.75,fleet:.70,research:.45,army:.65,desc:'Frontier empire-builders: claim, settle, trade and raise broad local armies.'},
@@ -6914,10 +6917,99 @@ const _campaignRulesReferenceHTML_rev254=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev254(root),add=`<div class="campaign-rule-card"><h4>68. Autonomous Faction Archetypes</h4><p>Every AI polity has a persistent economic and diplomatic archetype derived from its faction identity. Deep-Time and ordinary AI turns spend resources on settlements, districts, infrastructure, research, armies and fleets in different proportions. Established player polities use the same autonomous logic until handover.</p></div><div class="campaign-rule-card"><h4>69. Historical Diplomacy</h4><p>Deep-Time factions actively change relations and create trade, non-aggression, defensive and alliance relationships where their archetype permits. Martial factions seek wars; Orks deliberately maintain active wars whenever viable opponents exist.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
 
 window.__cartoRevision254={version:REV254,build:REV254_BUILD,archetype:campaignArchetype254,spend:campaignArchetypeSpend254,diplomacy:campaignArchetypeDiplomacy254,foundSettlements:campaignHistoricalFoundSettlements254};
-const rb254=document.querySelector('.generation-head-actions .badge');if(rb254)rb254.textContent='rev 25.4 — Archetype Empires & Diplomacy';document.title='Administratum Stellar Cartographica — Revision 25.4';document.documentElement.dataset.cartographicaRevision=REV254;document.documentElement.dataset.cartographicaBuild=REV254_BUILD;
+const rb254=document.querySelector('.generation-head-actions .badge');if(rb254)rb254.textContent='rev 25.5 — Fleet Polities & Historical Foundations';document.title='Administratum Stellar Cartographica — Revision 25.5';document.documentElement.dataset.cartographicaRevision=REV254;document.documentElement.dataset.cartographicaBuild=REV254_BUILD;
+
+
+
+/* ==========================================================================
+   Revision 25.5 — Fleet Polities, Historical Foundations & Naval Hull Growth
+   ========================================================================== */
+const REV255='25.5';
+const REV255_BUILD='25.5-fleet-polities-historical-foundations-hull-growth-v39-tested';
+const CAMPAIGN_FLEET_POLITY_KEYS255=new Set(['legion','craftworld','kroot','rakgol','talons']);
+function campaignIsFleetPolity255(fac){return !!fac&&(CAMPAIGN_FLEET_POLITY_KEYS255.has(fac.key)||fac.fleetColonyFaction235===true)}
+function campaignFleetPolityBias255(fac){if(fac?.key==='legion')return{fixed:.34,mobile:1.25,hull:1.30};if(fac?.key==='craftworld')return{fixed:.26,mobile:1.45,hull:1.38};if(fac?.key==='kroot')return{fixed:.32,mobile:1.2,hull:1.05};if(fac?.key==='rakgol')return{fixed:.18,mobile:1.0,hull:1.30};if(fac?.key==='talons')return{fixed:.22,mobile:.8,hull:1.18};return{fixed:1,mobile:.35,hull:1}}
+
+/* Deep-Time historical foundations deliberately do not use the player-facing site lockouts.
+   They represent settlements that could have been founded at any point during the represented history. */
+function campaignHistoricalFoundation255(root,fac,turn=0,representedTurns=1){
+  if(!fac||fac.prehistoryDormant247)return 0;fac.settlements=fac.settlements||[];const c=root.campaign,a=campaignArchetype254(fac),bias=campaignFleetPolityBias255(fac),territory=[...(fac.territory||[])];if(!territory.length&&fac.homeSystemId)territory.push(fac.homeSystemId);if(!territory.length)return 0;
+  const live=(fac.settlements||[]).filter(x=>x.status!=='Destroyed'&&!x.mobile236),baseTarget=campaignEmpireTargetSettlements254(fac),target=Math.max(1,Math.ceil(baseTarget*bias.fixed));if(live.length>=target)return 0;
+  const attempts=Math.min(5,Math.max(1,Math.ceil(representedTurns/28))),need=Math.min(attempts,target-live.length);let built=0;
+  const occupied=new Set(live.map(x=>`${x.systemId}|${x.locationId}`));const order=[...territory].sort((x,y)=>(x===fac.homeSystemId?-2:0)-(y===fac.homeSystemId?-2:0));
+  for(let i=0;i<order.length&&built<need;i++){
+    const sid=order[i],rec=campaignRecord(root,sid);if(!rec)continue;const locs=campaignLocationProfiles(rec.sys)||[];if(!locs.length)continue;
+    for(let n=0;n<locs.length&&built<need;n++){
+      const loc=locs[(n+Math.abs(hashText(`${fac.id}|${sid}|${turn}`)))%locs.length],key=`${sid}|${loc.id}`;if(occupied.has(key))continue;
+      const supplyCost=4+Math.min(8,Math.max(0,Math.floor((live.length+built)/3))),matCost=2+Math.min(8,Math.floor((live.length+built)/4));if((fac.treasury?.supply||0)<supplyCost||(fac.treasury?.materiel||0)<matCost)break;
+      const ck=CAMPAIGN_FACTION_META[fac.key]?.colony||'xenos';let colony=null;try{colony=withSeededRng(`${c.seed}|HIST255|${fac.id}|${sid}|${loc.id}|${turn}`,()=>soiColonyProfile(loc.p,soiSuggestedColonyType(loc.p),true,ck,'Deep-Time historical foundation'))}catch(_){}if(!colony)continue;
+      colony.size=Math.max(1,Math.min(6,Number(colony.size)||1));colony.deepTimeHistorical255=true;try{campaignEnsureDevelopmentWeb(colony)}catch(_){}try{campaignEnsureInfrastructureLevels253(colony)}catch(_){}
+      const st={id:`cs-h255-${hashText(`${fac.id}|${sid}|${loc.id}|${turn}|${live.length+built}`).toString(36)}`,factionId:fac.id,systemId:sid,locationId:loc.id,locationName:loc.name,locationKind:loc.kind,colony,status:'Active',foundedTurn:Math.max(0,turn-representedTurns+1),occupiedBy:null,deepTimeFounded255:true};
+      fac.settlements.push(st);occupied.add(key);fac.treasury.supply-=supplyCost;fac.treasury.materiel-=matCost;fac.stats=fac.stats||{};fac.stats.coloniesFounded=(fac.stats.coloniesFounded||0)+1;fac.presence=fac.presence||[];if(!fac.presence.includes(sid))fac.presence.push(sid);if(c.systems?.[sid]){c.systems[sid].presenceFactionIds=c.systems[sid].presenceFactionIds||[];if(!c.systems[sid].presenceFactionIds.includes(fac.id))c.systems[sid].presenceFactionIds.push(fac.id)}
+      try{campaignEnsureClaims236(root)[campaignClaimKey236(sid,loc.id)]={factionId:fac.id,turn,source:'Deep-Time historical foundation'}}catch(_){}campaignLog(c,`${fac.name} established ${colony.displayType||colony.type} at ${loc.name} during Deep Time.`,'ai');built++;
+    }
+  }
+  return built
+}
+
+function campaignEnsureFleetHull255(f){
+  const idx=Math.max(0,CAMPAIGN_FLEET_CLASS_ORDER253.indexOf(f.classKey));if(!Number.isFinite(f.capitalShips255))f.capitalShips255=Math.max(0,idx-1);if(!Number.isFinite(f.escortShips255))f.escortShips255=2+idx*2;if(!Number.isFinite(f.supportShips255))f.supportShips255=1+Math.floor(idx/2);if(!Number.isFinite(f.hullInvestment255))f.hullInvestment255=0;if(!Number.isFinite(f.hullSpent255))f.hullSpent255=0;return f
+}
+function campaignFleetHullScore255(f){campaignEnsureFleetHull255(f);return f.capitalShips255*5+f.escortShips255*1.5+f.supportShips255*.75}
+function campaignAIExpandFleetHull255(root,fac,f,turn,representedTurns=1,bias=1){
+  campaignEnsureFleetHull255(f);const wealth=fac.treasury?.materiel||0;if(wealth<3)return false;const budget=Math.min(Math.floor(wealth*.20*bias),Math.max(3,Math.ceil(representedTurns/12)*3));if(budget<3)return false;fac.treasury.materiel-=budget;f.hullInvestment255+=budget;f.hullSpent255+=budget;let changed=false;
+  while(f.hullInvestment255>=6){f.hullInvestment255-=6;if((f.escortShips255||0)<Math.max(6,(f.capitalShips255||0)*4+4))f.escortShips255++;else f.supportShips255++;changed=true}
+  const baseIdx=Math.max(0,CAMPAIGN_FLEET_CLASS_ORDER253.indexOf(f.classKey)),capitalTarget=Math.max(0,baseIdx-1)+Math.floor(f.hullSpent255/24);while(f.capitalShips255<capitalTarget){f.capitalShips255++;changed=true}
+  const score=campaignFleetHullScore255(f),thresholds=[0,7,13,20,30,43,60];let desired=0;for(let i=0;i<thresholds.length;i++)if(score>=thresholds[i])desired=i;let idx=Math.max(0,CAMPAIGN_FLEET_CLASS_ORDER253.indexOf(f.classKey));if(desired>idx){const next=CAMPAIGN_FLEET_CLASS_ORDER253[Math.min(desired,CAMPAIGN_FLEET_CLASS_ORDER253.length-1)],cargo=campaignFleetCargoPoints(root.campaign,fac,f);if(campaignFleetCapacity({...f,classKey:next})>=cargo){f.classKey=next;f.historicalHullUpgradeTurn255=turn;changed=true}}
+  return changed
+}
+
+function campaignFleetSettlementTarget255(fac,turn=0){const bias=campaignFleetPolityBias255(fac),territory=Math.max(1,(fac.territory||[]).length);return campaignIsFleetPolity255(fac)?Math.max(1,Math.min(10,Math.ceil((territory/3+turn/240)*bias.mobile))):Math.max(0,fac.fleetColonyFaction235?Math.ceil(territory/6):0)}
+function campaignAIAdvanceFleetSettlement255(root,fac,fleet,turn,representedTurns=1){
+  if(!campaignIsFleetPolity255(fac)||!fleet)return false;campaignEnsureFleetHull255(fleet);let changed=false;const bias=campaignFleetPolityBias255(fac),idx=CAMPAIGN_FLEET_CLASS_ORDER253.indexOf(fleet.classKey);
+  if(idx<3){for(let k=0;k<Math.min(3,Math.max(1,Math.ceil(representedTurns/40)));k++)changed=campaignAIExpandFleetHull255(root,fac,fleet,turn,representedTurns,bias.hull)||changed}
+  const desiredTier=turn>=650?5:turn>=320?4:turn>=70?3:turn>=25?2:1;let tier=campaignFleetDevelopmentTier235(fleet),steps=Math.min(3,Math.max(1,Math.ceil(representedTurns/45)));
+  while(tier<desiredTier&&steps-->0){const next=tier+1,def=CAMPAIGN_FLEET_DEV_TIERS_235[next];if(!def)break;if(next>=3&&campaignFleetClass(fleet).capacity<12000){campaignAIExpandFleetHull255(root,fac,fleet,turn,representedTurns,bias.hull);if(campaignFleetClass(fleet).capacity<12000){const promote='expeditionary',cost=Math.max(10,Math.ceil(CAMPAIGN_FLEET_CLASSES[promote].cost*.55));if((fac.treasury?.materiel||0)>=cost){fac.treasury.materiel-=cost;fleet.classKey=promote;fleet.historicalHullUpgradeTurn255=turn;campaignEnsureFleetHull255(fleet);changed=true}}if(campaignFleetClass(fleet).capacity<12000)break}const q=def.cost||{supply:0,materiel:0,influence:0,command:0};if((fac.treasury?.supply||0)<q.supply||(fac.treasury?.materiel||0)<q.materiel||(fac.treasury?.influence||0)<q.influence)break;fac.treasury.supply-=q.supply;fac.treasury.materiel-=q.materiel;fac.treasury.influence-=q.influence;fleet.developmentTier235=next;fleet.developmentTurn235=turn;tier=next;changed=true;const col=campaignEnsureMobileColony235(fleet);if(col){try{campaignEnsureDevelopmentWeb(col)}catch(_){}try{campaignEnsureInfrastructureLevels253(col)}catch(_){}}
+    campaignLog(root.campaign,`${fac.name} developed ${fleet.name} into ${def.label} during Deep Time.`,'ai')}
+  if(campaignFleetIsMobileSettlement235(fleet))fac.fleetColonyFaction235=true;return changed
+}
+function campaignMaintainFleetSettlements255(root,fac,turn,representedTurns=1){
+  let n=0;const strat=campaignAIStrategy246(fac);for(const fleet of fac.fleets||[]){if(!campaignFleetIsMobileSettlement235(fleet))continue;const st=campaignMobileSettlementProxy236(root,fac,fleet);if(!st)continue;if(Number.isFinite(fleet._mobileHistoryLast255))st._historyLast252=fleet._mobileHistoryLast255;try{campaignApplyAggregatedSettlement252(root,fac,st,turn,false);fleet._mobileHistoryLast255=turn}catch(_){}const attempts=Math.min(3,Math.max(1,Math.ceil(representedTurns/45)));for(let i=0;i<attempts;i++){try{campaignAIConstruct246(root,fac,st,strat)}catch(_){}const col=st.colony,cap=Math.max(1,Math.min(10,Number(col?.size)||1)),levels=campaignInfrastructureLevels253(col),choices=SOI_INFRA.filter(x=>(levels[x]||0)<cap);if(choices.length){choices.sort((a,b)=>(levels[a]||0)-(levels[b]||0));const name=choices[0],cost=campaignInfrastructureUpgradeCost253(col,name);if((fac.treasury?.materiel||0)>=cost)try{campaignUpgradeInfrastructure253(root,fac,st,name,true)}catch(_){}}}n++}return n
+}
+function campaignFleetPolityDeepTime255(root,fac,turn,representedTurns=1){
+  if(!fac||fac.prehistoryDormant247)return;fac.fleets=fac.fleets||[];campaignEnsureFleetState(root);const bias=campaignFleetPolityBias255(fac),target=campaignFleetSettlementTarget255(fac,turn);
+  /* First spend on real hulls/classes, then on mobile settlement capability. */
+  const sorted=[...(fac.fleets||[])].sort((a,b)=>campaignFleetDevelopmentTier235(b)-campaignFleetDevelopmentTier235(a)||campaignFleetHullScore255(b)-campaignFleetHullScore255(a));for(const f of sorted.slice(0,Math.min(sorted.length,Math.max(2,Math.ceil(representedTurns/25))))){campaignAIExpandFleetHull255(root,fac,f,turn,representedTurns,bias.hull);campaignAIAdvanceFleetSettlement255(root,fac,f,turn,representedTurns)}
+  let mobile=(fac.fleets||[]).filter(campaignFleetIsMobileSettlement235).length;if(mobile<target){const candidates=(fac.fleets||[]).filter(f=>!campaignFleetIsMobileSettlement235(f)).sort((a,b)=>campaignFleetHullScore255(b)-campaignFleetHullScore255(a));for(const f of candidates){if(mobile>=target)break;if(campaignAIAdvanceFleetSettlement255(root,fac,f,turn,representedTurns)&&campaignFleetIsMobileSettlement235(f))mobile++}}
+  campaignMaintainFleetSettlements255(root,fac,turn,representedTurns)
+}
+
+/* Give fixed historical settlement founding a guaranteed fallback and make fleet-polity construction primary. */
+const _campaignHistoricalFoundSettlements254_rev255=campaignHistoricalFoundSettlements254;
+campaignHistoricalFoundSettlements254=function(root,fac,representedTurns=1,turn=0){let n=0;try{n=_campaignHistoricalFoundSettlements254_rev255(root,fac,representedTurns,turn)||0}catch(_){}if(!n)n+=campaignHistoricalFoundation255(root,fac,turn,representedTurns);return n};
+const _campaignArchetypeSpend254_rev255=campaignArchetypeSpend254;
+campaignArchetypeSpend254=function(root,fac,representedTurns=1,turn=null){const t=turn==null?root.campaign.turn:turn;/* guarantee empire-building before military leftovers */campaignHistoricalFoundation255(root,fac,t,representedTurns);if(campaignIsFleetPolity255(fac))campaignFleetPolityDeepTime255(root,fac,t,representedTurns);_campaignArchetypeSpend254_rev255(root,fac,representedTurns,t);if(campaignIsFleetPolity255(fac))campaignFleetPolityDeepTime255(root,fac,t,representedTurns)};
+
+/* Hull growth is real fleet growth: it contributes to combat and lift in addition to class/refit. */
+const _campaignFleetNaval_rev255=campaignFleetNaval;
+campaignFleetNaval=function(f){campaignEnsureFleetHull255(f);return _campaignFleetNaval_rev255(f)+Math.floor((f.capitalShips255||0)/3)+Math.floor((f.escortShips255||0)/8)};
+const _campaignFleetCapacity_rev255=campaignFleetCapacity;
+campaignFleetCapacity=function(f){campaignEnsureFleetHull255(f);return Math.round(_campaignFleetCapacity_rev255(f)+(f.supportShips255||0)*350+(f.capitalShips255||0)*450)};
+const _campaignFleetCardHTML_rev255=campaignFleetCardHTML;
+campaignFleetCardHTML=function(root,c,fac,fleet,owned){campaignEnsureFleetHull255(fleet);let h=_campaignFleetCardHTML_rev255(root,c,fac,fleet,owned),mobile=campaignFleetIsMobileSettlement235(fleet),extra=`<div class="campaign-fleet-hulls255"><b>Fleet Hulls</b><span>${fleet.capitalShips255||0} capital • ${fleet.escortShips255||0} escort • ${fleet.supportShips255||0} support</span><small>${mobile?`Mobile Settlement Tier ${campaignFleetDevelopmentTier235(fleet)} — ${esc(campaignEnsureMobileColony235(fleet)?.displayType||'Fleet Colony')}`:'Conventional fleet formation'}</small></div>`;return h.replace('</div>',`</div>${extra}`,1)};
+const _campaignFleetInspectorHTML_rev255=campaignFleetInspectorHTML;
+campaignFleetInspectorHTML=function(root,c){let h=_campaignFleetInspectorHTML_rev255(root,c),fac=campaignFaction(c,c.inspectedFleetFactionId),fleet=fac?.fleets?.find(f=>f.id===c.inspectedFleetId);if(!fleet){const p=campaignPlayer(c);fleet=(p?.fleets||[]).find(f=>f.id===c.selectedFleetId)||p?.fleets?.[0]}if(!fleet)return h;campaignEnsureFleetHull255(fleet);const mobile=campaignFleetIsMobileSettlement235(fleet),x=`<div class="campaign-fleet-hulls255 inspector"><b>Historical Hull Establishment</b><span>${fleet.capitalShips255||0} capital ships • ${fleet.escortShips255||0} escorts • ${fleet.supportShips255||0} support vessels</span><small>${mobile?`Mobile polity: Tier ${campaignFleetDevelopmentTier235(fleet)} ${esc(campaignEnsureMobileColony235(fleet)?.displayType||'Fleet Colony')}`:'Not yet a mobile settlement'}</small></div>`;return h.replace('<h4 style="margin:7px 0 4px">Embarked Ground Forces</h4>',x+'<h4 style="margin:7px 0 4px">Embarked Ground Forces</h4>')};
+
+const _campaignOverviewHTML_rev255=campaignOverviewHTML;
+campaignOverviewHTML=function(root,c){let h=_campaignOverviewHTML_rev255(root,c),p=campaignPlayer(c);if(!p)return h;const mobile=(p.fleets||[]).filter(campaignFleetIsMobileSettlement235).length,fixed=(p.settlements||[]).filter(s=>s.status!=='Destroyed').length,card=`<div class="campaign-rule-card campaign-fleet-polity255"><h4>Empire Establishment</h4><p>${campaignIsFleetPolity255(p)?'Fleet-based polity doctrine active. ':''}${fixed} fixed settlements • ${mobile} mobile fleet settlements • ${(p.fleets||[]).length} fleets.</p><small>Deep Time now spends resources on actual fleet hull expansion, class growth and mobile settlements as well as refits. Fleet settlements use the normal settlement development, district, infrastructure and civic systems.</small></div>`;return h.replace('<div class="campaign-reference-note">',card+'<div class="campaign-reference-note">')};
+const _campaignRulesReferenceHTML_rev255=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev255(root),add=`<div class="campaign-rule-card"><h4>70. Historical Foundations</h4><p>Deep-Time polities use a historical foundation path rather than only the player-facing colony-site restrictions. This lets established factions actually populate controlled systems over centuries while still paying Supply and Materiel.</p></div><div class="campaign-rule-card"><h4>71. Fleet Polities</h4><p>Legion/Astartes, Craftworld, Kroot, Rak'Gol and other fleet-colony polities prioritise mobile settlement development. Tier III+ fleets are normal managed settlements whose demographics, districts, infrastructure, civic upkeep, recruitment and income move with the fleet.</p></div><div class="campaign-rule-card"><h4>72. Naval Hull Establishment</h4><p>Deep-Time naval spending now adds capital ships, escorts and support vessels. Hull investment advances actual fleet class, Void Rating and troop lift; refit level is a separate secondary progression rather than the only visible naval growth.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
+
+window.__cartoRevision255={version:REV255,build:REV255_BUILD,fleetPolity:campaignIsFleetPolity255,historicalFoundation:campaignHistoricalFoundation255,fleetSettlement:campaignAIAdvanceFleetSettlement255,hullGrowth:campaignAIExpandFleetHull255};
+const rb255=document.querySelector('.generation-head-actions .badge');if(rb255)rb255.textContent='rev 25.5 — Fleet Polities & Historical Foundations';document.title='Administratum Stellar Cartographica — Revision 25.5';document.documentElement.dataset.cartographicaRevision=REV255;document.documentElement.dataset.cartographicaBuild=REV255_BUILD;
 
 window.__cartoRevision253={version:REV253,build:REV253_BUILD,infrastructureLevels:campaignInfrastructureLevels253,upgradeInfrastructure:campaignUpgradeInfrastructure253,unitTraits:campaignUnitStrategicTraits251,fleetProgression:campaignDeepTimeFleetProgression253};
-const rb253=document.querySelector('.generation-head-actions .badge');if(rb253)rb253.textContent='rev 25.4 — Archetype Empires & Diplomacy';document.title='Administratum Stellar Cartographica — Revision 25.4';document.documentElement.dataset.cartographicaRevision=REV254;document.documentElement.dataset.cartographicaBuild=REV254_BUILD;
+const rb253=document.querySelector('.generation-head-actions .badge');if(rb253)rb253.textContent='rev 25.5 — Fleet Polities & Historical Foundations';document.title='Administratum Stellar Cartographica — Revision 25.5';document.documentElement.dataset.cartographicaRevision=REV254;document.documentElement.dataset.cartographicaBuild=REV254_BUILD;
 
 })();
 

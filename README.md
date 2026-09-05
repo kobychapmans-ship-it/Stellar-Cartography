@@ -71,5 +71,12 @@ Revision 25.2 cannot and does not attempt to increase Safari/Chromium's fixed Ja
 Deep-Time naval progression no longer directly calls the fragile `campaignEnsureFleetCoverage` helper. It now normalises fleet ownership through the stable `campaignEnsureFleetState` path before historic fleet construction/refits, fixing Safari launch failures reporting “Can’t find variable: campaignEnsureFleetCoverage”.
 
 
-## Revision 25.4 — Archetype Empires & Diplomacy
+## Revision 25.5 — Archetype Empires & Diplomacy
 Deep-Time established player polities now remain fully autonomous until handover. Every faction uses a racial/faction archetype to prioritise settlement founding, districts, infrastructure, research, armies, fleets and diplomacy. Orks actively seek and maintain wars; industrial, defensive, opportunistic and diplomatic factions spend resources differently.
+
+
+## Revision 25.5 — Fleet Polities & Historical Foundations
+Deep Time now uses a historical foundation fallback for fixed settlements and treats Legion/Astartes, Craftworld and other mobile archetypes as true fleet polities. Their fleets spend Materiel on actual capital/escort/support hull growth and class advancement, can become Tier III+ mobile settlements, and those mobile settlements receive normal demographic, civic, district and infrastructure progression.
+
+### v25.5 validation
+The v25.5 release was statically checked for historical fixed-settlement foundations, mobile fleet-settlement progression, normal settlement maintenance for mobile colonies, and real hull/class naval growth distinct from refit levels. The available Chromium process did not finish a bounded headless load, so an interactive browser pass is not claimed.

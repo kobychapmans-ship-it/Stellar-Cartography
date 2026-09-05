@@ -1,2 +1,2 @@
-Stellar Cartographica v25.4
-Build: 25.4-archetype-empires-diplomacy-v38-tested
+Stellar Cartographica v25.5
+Build: 25.5-fleet-polities-historical-foundations-hull-growth-v39-tested

@@ -1,16 +1,17 @@
-STELLAR CARTOGRAPHICA v25.4 TEST REPORT
-Build: 25.4-archetype-empires-diplomacy-v38-tested
+STELLAR CARTOGRAPHICA v25.5 TEST REPORT
+Build: 25.5-fleet-polities-historical-foundations-hull-growth-v39-tested
 
 PASS — all embedded JavaScript blocks pass Node syntax validation.
-PASS — manifest and service worker identify a fresh v25.4 build/cache.
-PASS — every supported faction maps to a persistent economic/diplomatic archetype.
-PASS — established player polities participate in Deep Time before handover and receive first-pass empire-building priority.
-PASS — Deep-Time archetype spending includes settlement founding, districts, infrastructure, research, army recruitment and fleet construction/refits.
-PASS — Deep-Time diplomacy changes relations and can create trade/treaty relationships.
-PASS — Ork archetype actively re-enters war whenever it has fewer than its intended active wars.
-PASS — normal-turn AI receives the same archetype spending layer after its existing AI turn.
-PASS — v25.3 infrastructure levels, unit drill-down and naval progression remain integrated.
-PASS — v25.2 stack-safe bounded historical epochs remain integrated.
-PASS — v25.1 strategic army profiles and demographic momentum remain integrated.
+PASS — service worker passes Node syntax validation and uses a fresh v25.5 cache identity.
+PASS — manifest parses as valid JSON and identifies Revision 25.5.
+PASS — Deep-Time historical foundation fallback can create fixed settlements without relying exclusively on player-facing site restrictions.
+PASS — established player polity remains included in v25.4 autonomous Deep-Time archetype spending before handover.
+PASS — Legion/Astartes, Craftworld, Kroot, Rak'Gol and Talons archetypes are recognised as fleet-polity candidates.
+PASS — fleet-polity Deep-Time spending develops Mobile Colony Core / Migratory Enclave / Fleet-City tiers when resources and age permit.
+PASS — Tier III+ mobile fleet settlements are passed through aggregated demographic/civic settlement development during Deep Time.
+PASS — mobile settlements receive district construction attempts and repeatable infrastructure upgrades capped by settlement Size.
+PASS — Deep-Time naval growth now records capital ships, escorts and support hulls separately from refit level.
+PASS — hull investment can advance actual fleet class and contributes to Void Rating and troop-lift capacity.
+PASS — v25.4 archetype diplomacy, v25.3 fleet refits, v25.2 stack-safe historical epochs, v25.1 strategic armies, v25.0 secession and unified faction rosters remain present.
 
-BROWSER LIMITATION — this container's Chromium build redirected localhost navigation to an environment error page, so a new interactive browser regression run could not be completed. This release therefore claims static syntax/integration/package validation only, not a completed browser launch test.
+LIMITATION — the available container Chromium process did not complete a headless localhost DOM load within the bounded 20-second test window. No interactive Chromium pass is claimed; static JavaScript, integration-path, manifest, service-worker and package-integrity validation were completed on this exact release.
