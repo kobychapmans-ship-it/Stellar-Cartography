@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="26.2" />
+<meta name="cartographica-revision" content="26.3" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -15,10 +15,10 @@
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='26.2';
-  const BUILD='26.2-fleet-settlements-foundation-site-economies-v46-tested';
-  const LABEL='rev 26.2 — Fleet Settlements & Site Economies';
-  const TITLE='Administratum Stellar Cartographica — Revision 26.2';
+  const REVISION='26.3';
+  const BUILD='26.3-era-anchors-minor-polities-faction-civilisations-v47-tested';
+  const LABEL='rev 26.3 — Era Anchors & Living Polities';
+  const TITLE='Administratum Stellar Cartographica — Revision 26.3';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -661,7 +661,15 @@ html.carto-orientation-lock body:after{content:'';display:none}
 .resource-game-label262{display:block;margin-top:7px;color:#9d967f;font-size:7px;text-transform:uppercase}.resource-game-select262{width:100%;margin-top:3px;min-height:34px}
 .campaign-defence-reference262 p{max-width:1000px}
 </style>
-</head>
+<style id="rev263-css">
+.campaign-era-priority263{border:1px solid rgba(210,177,92,.38);background:rgba(130,97,36,.07);padding:9px;margin-bottom:10px}.campaign-era-priority263 label{color:#e3cf91!important}
+.campaign-era-banner263{border:1px solid rgba(210,177,92,.34);padding:9px;margin-bottom:9px;background:rgba(130,97,36,.06)}.campaign-era-banner263 b,.campaign-era-banner263 span{display:block}.campaign-era-banner263 span{font-size:8px;color:#aaa18c;margin-top:3px}
+.colony-generation-note263{padding:9px;border:1px dashed rgba(185,151,73,.28);margin:8px 0;color:#aaa18c}
+.campaign-local-settlement-card.minor263{border-color:rgba(105,145,110,.35);background:rgba(70,110,75,.055)}.minor-settlement263{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-top:1px solid rgba(255,255,255,.05);font-size:8px}.minor-settlement263 span{color:#969d94}
+</style>
+<style id="rev263-infra-css">
+.faction-infra-guide263{margin:7px 0;border:1px solid rgba(255,255,255,.07);padding:6px}.faction-infra-guide263 summary{cursor:pointer;color:#c8b98e}.faction-infra-guide263 span{display:block;padding:4px 0;border-top:1px solid rgba(255,255,255,.04);font-size:7px;color:#8e968f}.faction-infra-guide263 span b{display:block;color:#c8c1aa;font-size:8px}
+</style></head>
 <body>
 <div class="app">
   <header class="topbar">
@@ -691,7 +699,7 @@ html.carto-orientation-lock body:after{content:'';display:none}
         <details class="section" open>
           <summary>Generation Scale</summary>
           <div class="section-inner">
-            <div class="field"><label>Cartographic scale</label><select id="generationScale"><option value="system" selected>Single Star System</option><option value="subsector">Full Sub-sector (2–8 systems)</option><option value="sector">Full Sector (typically 2–10 sub-sectors)</option></select></div>
+            <div class="campaign-era-priority263"><div class="field"><label>Campaign Era</label><select id="era"><option value="30k">Great Crusade / Horus Heresy (30k)</option><option value="40k" selected>Imperium / Current Era (40k)</option><option value="neutral">Other / Gothic Sci-Fi</option></select></div><div class="hint">Era is chosen first because it controls which canonical locations and historical anchors can be seeded into the generated theatre.</div></div><div class="field"><label>Cartographic scale</label><select id="generationScale"><option value="system" selected>Single Star System</option><option value="subsector">Full Sub-sector (2–8 systems)</option><option value="sector">Full Sector (typically 2–10 sub-sectors)</option></select></div>
 
             <div class="field"><label>Sub-sector name override</label><input id="subsectorName" placeholder="Auto-generated; standalone Sub-sector mode" /></div>
             <div class="row">
@@ -712,10 +720,14 @@ html.carto-orientation-lock body:after{content:'';display:none}
             </div>
             <div class="field"><label>Sector conflict density</label><select id="conflictDensity"><option value="none">None</option><option value="low">Low</option><option value="standard" selected>Standard</option><option value="high">High</option><option value="warzone">Major war zone</option></select></div>
             <div class="row">
-              <div class="field"><label>Galactic Segmentum</label><select id="segmentum"><option>Segmentum Solar</option><option selected>Segmentum Obscurus</option><option>Segmentum Pacificus</option><option>Segmentum Tempestus</option><option>Segmentum Ultima</option><option>Halo / Fringe Space</option><option>Unregistered Galactic Volume</option></select></div>
+              <div class="field"><label>Galactic Segmentum</label><select id="segmentum"><option value="Segmentum Solar">Segmentum Solar / Terra</option><option selected>Segmentum Obscurus</option><option>Segmentum Pacificus</option><option>Segmentum Tempestus</option><option>Segmentum Ultima</option><option>Halo / Fringe Space</option><option>Unregistered Galactic Volume</option></select></div>
               <div class="field"><label>Canonical / campaign region anchor</label><input id="sectorAnchor" placeholder="e.g. Calixis Sector, Gothic Sector, Halo Stars" /></div>
             </div>
 
+            <div class="section-divider">Era-specific universe anchors</div>
+            <label class="check"><input id="loreLocations263" type="checkbox" checked />Seed era-appropriate named locations into the generated theatre when the selected Segmentum supports them.</label>
+            <div class="field"><label>Canonical location density</label><select id="loreLocationDensity263"><option value="light">Light — major anchors only</option><option value="standard" selected>Standard — major worlds and selected secondary sites</option><option value="dense">Dense — use as many relevant anchors as generated systems permit</option></select></div>
+            <div class="hint">30k mode prioritises Primarch/home worlds, Legion-associated sites and the Sol System. In Segmentum Solar, Sol is always the first canonical anchor when this option is enabled. Canonical names are attached to generated strategic coordinates; the generator does not claim the local light-year geometry is an exact Games Workshop galactic coordinate.</div>
             <label class="check"><input id="voidFeatures" type="checkbox" checked />Generate astronomical bodies, wreckage, installations and other void contacts.</label>
             <label class="check"><input id="warpFeatures" type="checkbox" checked />Allow Warp disturbances, rifts and immaterial hazards.</label>
             <label class="check"><input id="rareVoidFeatures" type="checkbox" checked />Allow very rare setting objects and strategic xenos macro-contacts.</label>
@@ -728,7 +740,6 @@ html.carto-orientation-lock body:after{content:'';display:none}
           <div class="section-inner">
             <div class="field"><label>Seed</label><input id="seed" value="M31-0001" /></div>
             <div class="row">
-              <div class="field"><label>Era</label><select id="era"><option value="30k">Great Crusade / Heresy (30k)</option><option value="40k" selected>Imperium (40k)</option><option value="neutral">Gothic Sci-Fi</option></select></div>
               <div class="field"><label>Naming convention</label><select id="naming"><option value="highgothic" selected>High Gothic</option><option value="mechanicum">Mechanicum Registry</option><option value="expeditionary">Expeditionary Compliance</option><option value="xenos">Xenos Lexicon</option><option value="mixed">Mixed Fringe</option></select></div>
             </div>
             <div class="field"><label>System name override</label><input id="systemName" placeholder="Auto-generated" /></div>
@@ -1875,7 +1886,7 @@ function whBattleHTML(w,p){const b=p.battle;if(!b)return '<div class="hint">Warh
 soiPopulationAdventureHTML=function(w,p){if(!p||p.isGas)return '';return `<div class="soi-panel population-panel"><div class="soi-head"><h4>Inhabitants // Civilisation Survey</h4><span class="badge source-badge">Chapter I</span></div><div class="soi-body">${soiInhabitantHTML(p)}</div></div><div class="soi-panel battle-panel"><div class="soi-head"><h4>Warhammer Planetary War Zone</h4><span class="badge battle-badge">30k / 40k</span></div><div class="soi-body">${whBattleHTML(w,p)}</div></div><div class="soi-panel adventure-panel"><div class="soi-head"><h4>Planetside Adventures</h4><span class="badge source-badge">Chapter II</span></div><div class="soi-body">${soiAdventuresHTML(w,p)}</div></div><div class="soi-panel colony-panel"><div class="soi-head"><h4>Population & Colonial Structure</h4><span class="badge source-badge">Chapter III</span></div><div class="soi-body">${soiColonyHTML(w,p)}</div></div>`};
 const _soiBindPopulationEvents_preBattles=soiBindPopulationEvents;soiBindPopulationEvents=function(sys){_soiBindPopulationEvents_preBattles(sys);document.querySelectorAll('[data-reroll-warhost]').forEach(btn=>btn.addEventListener('click',()=>{const w=soiFindInteractiveWorld(sys,btn.dataset.rerollWarhost);if(!w?.soi?.battle||!w.soi.inhabitant)return;const b=w.soi.battle;b.templates=whFactionTemplates(w.soi,b.phenotype);b.force=whBuildForce(b.templates,b.targetPoints);soiRefreshWorldInspector(sys,w.id)}));document.querySelectorAll('[data-reroll-battle]').forEach(btn=>btn.addEventListener('click',()=>{const w=soiFindInteractiveWorld(sys,btn.dataset.rerollBattle);if(!w?.soi?.battle)return;w.soi.battle.scenario=whScenario(w.soi,w.soi.battle);soiRefreshWorldInspector(sys,w.id)}))};
 
-function getConfig(){return {seed:val('seed').trim()||String(Date.now()),era:val('era'),naming:val('naming'),generationScale:val('generationScale'),subsectorName:val('subsectorName').trim(),subsectorCount:val('subsectorCount'),subsectorRadius:val('subsectorRadius'),voidDensity:val('voidDensity'),sectorName:val('sectorName').trim(),sectorSubsectorCount:val('sectorSubsectorCount'),sectorSpan:val('sectorSpan'),sectorRogueSystems:val('sectorRogueSystems'),sectorVoidDensity:val('sectorVoidDensity'),conflictDensity:val('conflictDensity'),segmentum:val('segmentum'),sectorAnchor:val('sectorAnchor').trim(),voidFeatures:checked('voidFeatures'),warpFeatures:checked('warpFeatures'),rareVoidFeatures:checked('rareVoidFeatures'),systemName:val('systemName').trim(),systemLocation:val('systemLocation').trim(),systemType:val('systemType'),orbitCount:val('orbitCount'),primaryClass:val('primaryClass'),primaryDecimal:val('primaryDecimal'),primarySize:val('primarySize'),companionClass:val('companionClass'),companionOrbit:val('companionOrbit'),multiRestrictions:checked('multiRestrictions'),rulesMode:val('rulesMode'),contentDoctrine:val('contentDoctrine'),captured:checked('captured'),satellites:checked('satellites'),minerals:checked('minerals'),imperialClass:checked('imperialClass'),loreOverlay:checked('loreOverlay'),soiEnabled:checked('soiEnabled'),soiSystemFeatures:checked('soiSystemFeatures'),soiPlanetCreation:checked('soiPlanetCreation'),soiEnvironments:checked('soiEnvironments'),soiNativeSpecies:checked('soiNativeSpecies'),soiInhabitants:checked('soiInhabitants'),soiAdventures:checked('soiAdventures'),soiAdventureCount:val('soiAdventureCount'),soiBattles:checked('soiBattles'),soiBattleRuleset:val('soiBattleRuleset'),soiBattleSize:val('soiBattleSize'),soiColonies:checked('soiColonies'),soiEnvironmentDetail:val('soiEnvironmentDetail')}}
+function getConfig(){return {seed:val('seed').trim()||String(Date.now()),era:val('era'),naming:val('naming'),generationScale:val('generationScale'),subsectorName:val('subsectorName').trim(),subsectorCount:val('subsectorCount'),subsectorRadius:val('subsectorRadius'),voidDensity:val('voidDensity'),sectorName:val('sectorName').trim(),sectorSubsectorCount:val('sectorSubsectorCount'),sectorSpan:val('sectorSpan'),sectorRogueSystems:val('sectorRogueSystems'),sectorVoidDensity:val('sectorVoidDensity'),conflictDensity:val('conflictDensity'),segmentum:val('segmentum'),sectorAnchor:val('sectorAnchor').trim(),voidFeatures:checked('voidFeatures'),warpFeatures:checked('warpFeatures'),rareVoidFeatures:checked('rareVoidFeatures'),loreLocations263:checked('loreLocations263'),loreLocationDensity263:val('loreLocationDensity263'),systemName:val('systemName').trim(),systemLocation:val('systemLocation').trim(),systemType:val('systemType'),orbitCount:val('orbitCount'),primaryClass:val('primaryClass'),primaryDecimal:val('primaryDecimal'),primarySize:val('primarySize'),companionClass:val('companionClass'),companionOrbit:val('companionOrbit'),multiRestrictions:checked('multiRestrictions'),rulesMode:val('rulesMode'),contentDoctrine:val('contentDoctrine'),captured:checked('captured'),satellites:checked('satellites'),minerals:checked('minerals'),imperialClass:checked('imperialClass'),loreOverlay:checked('loreOverlay'),soiEnabled:checked('soiEnabled'),soiSystemFeatures:checked('soiSystemFeatures'),soiPlanetCreation:checked('soiPlanetCreation'),soiEnvironments:checked('soiEnvironments'),soiNativeSpecies:checked('soiNativeSpecies'),soiInhabitants:checked('soiInhabitants'),soiAdventures:checked('soiAdventures'),soiAdventureCount:val('soiAdventureCount'),soiBattles:checked('soiBattles'),soiBattleRuleset:val('soiBattleRuleset'),soiBattleSize:val('soiBattleSize'),soiColonies:checked('soiColonies'),soiEnvironmentDetail:val('soiEnvironmentDetail')}}
 function generateSystemData(inputCfg,seedOverride=null,nameOverride=undefined,locationOverride=undefined){
   const previousRNG=RNG,previousLOG=LOG,cfg={...inputCfg};cfg.seed=seedOverride||cfg.seed;if(nameOverride!==undefined)cfg.systemName=nameOverride;if(locationOverride!==undefined)cfg.systemLocation=locationOverride;
   RNG=makeRng(cfg.seed);LOG=[];LOG.push(`Seed: ${cfg.seed}`);let type=cfg.systemType;if(type==='auto'){const r=roll(10,'System type');type=r<=5?'solitary':'triple';if(type==='triple')LOG.push('Multiple result resolved as triple system because the guide notes most known multiple systems are triple; Binary remains a manual override.')}
@@ -2551,7 +2562,7 @@ function debrisSettlementProfile(obj,kind='Debris Locus'){if(obj.settlementProfi
 function settleableElement(e){return ['Asteroid Belt','Asteroid Cluster','Derelict Station','Starship Graveyard','Dust Cloud'].includes(e?.type)}
 function colonyExpandSystem(sys,cfg){if(!sys?.soi||cfg?.soiColonies===false)return;withSeededRng(`${cfg.seed||sys.config?.seed||sys.name}::MULTI-COLONIES`,()=>{const r=()=>RNG();for(const w of whAllPlanets(sys))colonyExpandProfile(w.soi,cfg,r);if(cfg?.soiVoidColonies!==false){for(const w of sys.worlds||[])if(w.type==='Asteroid Belt'){const p=debrisSettlementProfile(w,'Asteroid Belt');colonyExpandProfile(p,cfg,r)}for(const e of sys.soi?.elements||[])if(settleableElement(e)){const p=debrisSettlementProfile(e,e.type);colonyExpandProfile(p,cfg,r)}}})}
 function colonyCardHTML(targetId,c,p,targetKind='world'){const meta=colonyFactionMeta(c.factionKey),spec=SOI_COLONY_TYPES[c.type],active=c.status!=='Prospect',cls=`faction-${c.factionKey||'imperial'}`;return `<div class="colony-card faction-colony ${cls}"><div class="adventure-head"><b>${esc(c.displayType||c.type)}</b><span class="badge">${active?'ACTIVE':'PROSPECT'}</span></div><div class="colony-factionline"><span class="rangdan-tag" style="${c.factionKey==='rangdan'?'':'border-color:rgba(185,151,73,.4);color:#d5c18a;background:rgba(100,82,45,.16)'}">${esc(meta.label)}</span><span class="colony-reason">${esc(c.settlementReason||'Colonial settlement')}</span></div>${soiColonyStatusHTML(c)}<div class="adv-line"><span>Core Chapter III Type</span><strong>${esc(c.type)}</strong></div><div class="adv-line"><span>Founding Cost</span><strong>${esc(spec.cost)} PF-equivalent (rolled ${c.creationCost})</strong></div><div class="adv-line"><span>Starting Upgrade</span><strong>${esc(c.startingUpgrade)}</strong></div><div class="adv-line"><span>Leader</span><strong>${esc(c.leader?.title||'Representative')} • ${esc(c.leader?.representativeType||'Representative')} • PF modifier ${(c.leader?.bonus??0)>=0?'+':''}${c.leader?.bonus??0} • ${esc(c.leader?.personality||'—')}</strong></div><div class="adv-line"><span>World / Site Advantage</span><strong>Optional +1 ${esc(c.worldAdvantage?.stat||'Characteristic')} — ${esc(c.worldAdvantage?.reason||'strategic settlement location')}</strong></div><div class="adv-line"><span>Infrastructure Need</span><strong>${esc(c.requiredInfrastructure||'Current hard infrastructure sufficient')}</strong></div><div class="adv-line"><span>Built Infrastructure</span><strong>${esc((c.infrastructure||[]).join(', ')||'Founding infrastructure only')}</strong></div><div class="adv-line"><span>Support Upgrades</span><strong>${esc((c.supportUpgrades||[]).map(x=>colonySupportDisplay(c,x)).join(', ')||'None')} (${(c.supportUpgrades||[]).length}/${c.size} slots)</strong></div><div class="adv-line"><span>Suggested Support</span><strong>${esc(colonySupportDisplay(c,c.suggestedSupport))}</strong></div><p>${esc(c.special)}</p><div class="hint">${esc(c.contractTerms||'')}</div>${c.events?.length?`<div class="event-list">${c.events.map(e=>`<span class="${e.kind==='Calamity'?'calamity':'fortune'}"><b>${esc(e.kind)}:</b> ${esc(e.text)}</span>`).join('')}</div>`:''}<div class="adventure-actions">${active?`<button class="ghost" type="button" data-colony-action="advance" data-colony-target="${targetKind}" data-colony-owner="${esc(targetId)}" data-colony-id="${esc(c.id)}">Advance 90 Days</button>`:`<button class="ghost" type="button" data-colony-action="activate" data-colony-target="${targetKind}" data-colony-owner="${esc(targetId)}" data-colony-id="${esc(c.id)}">Found / Activate</button>`}${active&&c.requiredInfrastructure?`<button class="ghost" type="button" data-colony-action="build" data-colony-target="${targetKind}" data-colony-owner="${esc(targetId)}" data-colony-id="${esc(c.id)}">Build Infrastructure</button>`:''}${active&&c.suggestedSupport?`<button class="ghost" type="button" data-colony-action="support" data-colony-target="${targetKind}" data-colony-owner="${esc(targetId)}" data-colony-id="${esc(c.id)}">Install Support</button>`:''}<button class="ghost" type="button" data-colony-action="reroll" data-colony-target="${targetKind}" data-colony-owner="${esc(targetId)}" data-colony-id="${esc(c.id)}">Reroll Settlement</button></div></div>`}
-function colonyStackHTML(targetId,p,targetKind='world',locationLabel='planetary locus'){if(!p)return'';const active=p.colonies||[],pros=p.colonialProspects||[];return `<div class="colony-location-note"><b>${active.length} active settlement${active.length===1?'':'s'} • ${pros.length} prospect${pros.length===1?'':'s'}</b><br/>This ${esc(locationLabel)} can contain simultaneous resident, expeditionary, refugee, military, xenos or subversive settlements. Separate colony records retain the same Chapter III mechanical chassis.</div><div class="colony-addbar"><button class="ghost" type="button" data-colony-action="add" data-colony-target="${targetKind}" data-colony-owner="${esc(targetId)}">＋ Add Colony / Settlement</button><button class="ghost" type="button" data-colony-action="addProspect" data-colony-target="${targetKind}" data-colony-owner="${esc(targetId)}">＋ Add Colonial Prospect</button></div><div class="colony-stack">${active.map(c=>colonyCardHTML(targetId,c,p,targetKind)).join('')}${pros.map(c=>colonyCardHTML(targetId,c,p,targetKind)).join('')||(!active.length?'<div class="hint">No active or prospective settlement records yet.</div>':'')}</div><div class="colony-core-note"><b>Core rules preserved:</b> Research, Mining & Industry, Ecclesiastical and Agricultural remain the mechanical colony archetypes. Faction labels reskin Piety and support institutions without changing Size, Complacency, Productivity, Order, growth, calamity/fortune or PF Value calculations.</div>`}
+function colonyStackHTML(targetId,p,targetKind='world',locationLabel='planetary locus'){if(!p)return'';const active=p.colonies||[],pros=p.colonialProspects||[];return `<div class="colony-location-note"><b>${active.length} active settlement${active.length===1?'':'s'} • ${pros.length} prospect${pros.length===1?'':'s'}</b><br/>This ${esc(locationLabel)} can contain simultaneous resident, expeditionary, refugee, military, xenos or subversive settlements. Separate colony records retain the same Chapter III mechanical chassis.</div><div class="colony-addbar"><button class="ghost" type="button" data-colony-action="add" data-colony-target="${targetKind}" data-colony-owner="${esc(targetId)}">Legacy Population Record</button><button class="ghost" type="button" data-colony-action="addProspect" data-colony-target="${targetKind}" data-colony-owner="${esc(targetId)}">Legacy Prospect Record</button></div><div class="colony-stack">${active.map(c=>colonyCardHTML(targetId,c,p,targetKind)).join('')}${pros.map(c=>colonyCardHTML(targetId,c,p,targetKind)).join('')||(!active.length?'<div class="hint">No active or prospective settlement records yet.</div>':'')}</div><div class="colony-core-note"><b>Core rules preserved:</b> Research, Mining & Industry, Ecclesiastical and Agricultural remain the mechanical colony archetypes. Faction labels reskin Piety and support institutions without changing Size, Complacency, Productivity, Order, growth, calamity/fortune or PF Value calculations.</div>`}
 soiColonyHTML=function(w,p){if(!p)return'<div class="hint">No settlement profile.</div>';if(!p.colonies)p.colonies=[];if(!p.colonialProspects)p.colonialProspects=[];return colonyStackHTML(w.id,p,'world',w._moonParent?'moon':'world')};
 function colonyTarget(sys,kind,id){if(kind==='element'){const e=sys.soi?.elements?.find(x=>x.id===id);return e?{p:debrisSettlementProfile(e,e.type),refresh:()=>selectSoiElement(e.id,sys,false)}:null}if(kind==='asteroid'){const w=findWorldById(sys,id);return w?{p:debrisSettlementProfile(w,'Asteroid Belt'),refresh:()=>selectWorld(w.id,sys,false)}:null}const w=soiFindInteractiveWorld(sys,id);return w?.soi?{p:w.soi,refresh:()=>soiRefreshWorldInspector(sys,w.id)}:null}
 function colonyById(p,id){return (p.colonies||[]).find(c=>c.id===id)||(p.colonialProspects||[]).find(c=>c.id===id)}
@@ -8044,6 +8055,317 @@ body.campaign-dev-open #campaignDashboard.campaign-panel{z-index:16010}
 (function(){
   window.addEventListener('error',e=>{try{window.__cartoRuntimeErrors=window.__cartoRuntimeErrors||[];window.__cartoRuntimeErrors.push(String(e.message||e.error||'runtime error'))}catch(_){}});
   window.addEventListener('unhandledrejection',e=>{try{window.__cartoRuntimeErrors=window.__cartoRuntimeErrors||[];window.__cartoRuntimeErrors.push(String(e.reason||'unhandled rejection'))}catch(_){}});
+
+/* ===== Revision 26.3 — Era Anchors, Living Minor Polities & Faction Civilisations ===== */
+const REV263='26.3',REV263_BUILD='26.3-era-anchors-minor-polities-faction-civilisations-v47-tested';
+
+/* ---------- Era-specific named locations ----------
+   Jambonium is used as the placement/reference model: locations have broad galactic placement,
+   and the source itself distinguishes placement confidence. We therefore anchor names to the
+   generated theatre without pretending our local LY coordinates are canonical coordinates. */
+const CAMPAIGN_LORE_LOCATIONS_263=[
+ {name:'Sol',segmentum:'Segmentum Solar',era:['30k','40k'],kind:'Cradle System',priority:100,worlds:['Terra','Luna','Mars'],tags:['Imperium','Sol System']},
+ {name:'Cthonia',segmentum:'Segmentum Solar',era:['30k'],kind:'Primarch / Legion Homeworld',priority:96,tags:['Horus','Luna Wolves','Sons of Horus']},
+ {name:'Davin',segmentum:'Segmentum Solar',era:['30k'],kind:'Heresy Campaign World',priority:92,worlds:["Davin's Moon"],tags:['Luna Wolves','Sons of Horus','Horus']},
+ {name:'Inwit',segmentum:'Segmentum Solar',era:['30k','40k'],kind:'Primarch Homeworld',priority:90,tags:['Rogal Dorn','Imperial Fists']},
+ {name:'Fenris',segmentum:'Segmentum Obscurus',era:['30k','40k'],kind:'Primarch Homeworld',priority:98,tags:['Leman Russ','Space Wolves']},
+ {name:'Prospero',segmentum:'Segmentum Ultima',era:['30k'],kind:'Primarch Homeworld',priority:97,tags:['Magnus','Thousand Sons']},
+ {name:'Caliban',segmentum:'Segmentum Obscurus',era:['30k'],kind:'Primarch Homeworld',priority:95,tags:["Lion El'Jonson",'Dark Angels']},
+ {name:'Chemos',segmentum:'Segmentum Ultima',era:['30k'],kind:'Primarch Homeworld',priority:91,tags:['Fulgrim',"Emperor's Children"]},
+ {name:'Olympia',segmentum:'Segmentum Ultima',era:['30k'],kind:'Primarch Homeworld',priority:91,tags:['Perturabo','Iron Warriors']},
+ {name:'Chogoris',segmentum:'Segmentum Ultima',era:['30k','40k'],kind:'Primarch Homeworld',priority:91,tags:['Jaghatai Khan','White Scars']},
+ {name:'Baal',segmentum:'Segmentum Ultima',era:['30k','40k'],kind:'Primarch / Chapter Homeworld',priority:96,worlds:['Baal Primus','Baal Secundus'],tags:['Sanguinius','Blood Angels']},
+ {name:'Medusa',segmentum:'Segmentum Obscurus',era:['30k','40k'],kind:'Primarch / Chapter Homeworld',priority:91,tags:['Ferrus Manus','Iron Hands']},
+ {name:'Macragge',segmentum:'Segmentum Ultima',era:['30k','40k'],kind:'Primarch / Realm Capital',priority:98,tags:['Roboute Guilliman','Ultramarines','Ultramar']},
+ {name:'Colchis',segmentum:'Segmentum Pacificus',era:['30k'],kind:'Primarch Homeworld',priority:91,tags:['Lorgar','Word Bearers']},
+ {name:'Nocturne',segmentum:'Segmentum Ultima',era:['30k','40k'],kind:'Primarch / Chapter Homeworld',priority:92,tags:['Vulkan','Salamanders']},
+ {name:'Deliverance',segmentum:'Segmentum Solar',era:['30k','40k'],kind:'Primarch / Legion Homeworld',priority:90,tags:['Corvus Corax','Raven Guard']},
+ {name:'Nuceria',segmentum:'Segmentum Ultima',era:['30k'],kind:'Primarch World',priority:89,tags:['Angron','World Eaters']},
+ {name:'Barbarus',segmentum:'Segmentum Obscurus',era:['30k'],kind:'Primarch Homeworld',priority:91,tags:['Mortarion','Death Guard']},
+ {name:'Nostramo',segmentum:'Segmentum Ultima',era:['30k'],kind:'Primarch Homeworld',priority:91,tags:['Konrad Curze','Night Lords']},
+ {name:'Cadia',segmentum:'Segmentum Obscurus',era:['40k'],kind:'Fortress World / Cadian Gate',priority:98,tags:['Imperium','Cadian Gate']},
+ {name:'Armageddon',segmentum:'Segmentum Solar',era:['40k'],kind:'Major Imperial War World',priority:95,tags:['Imperium','Orks']},
+ {name:'Cypra Mundi',segmentum:'Segmentum Obscurus',era:['40k'],kind:'Segmentum Naval Headquarters',priority:94,tags:['Imperial Navy','Segmentum Obscurus']},
+ {name:'Ryza',segmentum:'Segmentum Ultima',era:['40k'],kind:'Forge World',priority:91,tags:['Adeptus Mechanicus']},
+ {name:'Mordian',segmentum:'Segmentum Obscurus',era:['40k'],kind:'Imperial World',priority:88,tags:['Imperial Guard']},
+ {name:'Vigilus',segmentum:'Segmentum Obscurus',era:['40k'],kind:'Strategic Imperial World',priority:88,tags:['Imperium','Nachmund Gauntlet']}
+];
+function campaignLoreCandidates263(cfg){
+  if(!cfg?.loreLocations263||cfg.era==='neutral')return[];
+  let a=CAMPAIGN_LORE_LOCATIONS_263.filter(x=>x.era.includes(cfg.era)&&(x.segmentum===cfg.segmentum||cfg.segmentum==='Unregistered Galactic Volume'));
+  a.sort((x,y)=>y.priority-x.priority);
+  const n=cfg.loreLocationDensity263==='light'?Math.min(3,a.length):cfg.loreLocationDensity263==='dense'?a.length:Math.min(7,a.length);
+  return a.slice(0,n);
+}
+function campaignApplyLoreAnchors263(root){
+  const cfg=root?.config||{},cands=campaignLoreCandidates263(cfg),records=campaignSystemRecords(root);if(!cands.length||!records.length)return 0;
+  let used=new Set(),n=0;
+  for(const lore of cands){
+    const pool=records.filter(r=>!used.has(r.sys));if(!pool.length)break;
+    const idx=(hashText(`${cfg.seed}|LORE263|${lore.name}`)>>>0)%pool.length,r=pool[idx],sys=r.sys;used.add(sys);
+    sys.generatedName263=sys.name;sys.name=lore.name;sys.canonicalAnchor263={...lore,reference:'Jambonium 40K Interactive Map / setting reference',coordinatePolicy:'name anchored to generated local coordinate'};
+    if(Array.isArray(lore.worlds)&&lore.worlds.length){
+      const bodies=(sys.worlds||[]).filter(w=>!['Empty Orbit','Unresolved Orbit'].includes(w.type));
+      lore.worlds.forEach((name,i)=>{if(bodies[i]){bodies[i].generatedName263=bodies[i].name;bodies[i].name=name;bodies[i].canonicalAnchor263=true}});
+    }
+    n++;
+  }
+  root.loreAnchors263=cands.slice(0,n);root.summary=root.summary||{};root.summary.loreAnchors263=n;
+  return n;
+}
+const _generateSector_rev263=generateSector;
+generateSector=function(cfg=getConfig()){const root=_generateSector_rev263(cfg);if(campaignApplyLoreAnchors263(root)){root.config={...root.config,...cfg};renderSector(root)}return root};
+const _generateSubsector_rev263=generateSubsector;
+generateSubsector=function(cfg=getConfig()){const root=_generateSubsector_rev263(cfg);if(root&&cfg.loreLocations263){root.config={...root.config,...cfg};const wrap={...root,subsectors:[root],rogueSystems:[],config:{...cfg},summary:root.summary||{}};campaignApplyLoreAnchors263(wrap);renderSubsector(root)}return root};
+
+/* ---------- Territory boons as well as hazards ---------- */
+const _campaignTerritoryEnvironment237_rev263=campaignTerritoryEnvironment237;
+let _territoryEnvGuard263=false;
+campaignTerritoryEnvironment237=function(tr,p){
+  _territoryEnvGuard263=true;let e;try{e=_campaignTerritoryEnvironment237_rev263(tr,p)}finally{_territoryEnvGuard263=false}const world=String(p?.type||p?.classification||p?.habitability?.result||''),traits=tr?.traits||[],biome=String(tr?.biome237||'');
+  e.boons263=[];e.battleBoons263=[];
+  const add=(stat,n,label,battle)=>{e.modifiers[stat]=(e.modifiers[stat]||0)+n;e.boons263.push(`${label}: +${n} ${stat}`);if(battle)e.battleBoons263.push(battle)};
+  if(/Paradise/i.test(world)){add('complacency',2,'Paradise abundance','Abundant Terrain: Infantry may re-roll one failed Run roll per turn; defenders controlling a natural resource objective gain +1 VP at game end.');add('order',1,'Low scarcity')}
+  if(traits.includes('Fertile'))add('productivity',1,'Exceptional fertility','Foraging & Local Supply: once per battle, one Infantry unit may re-roll a failed Morale test while within area terrain.');
+  if(/Temperate Forest|Fertile Basin|Coastal Shelf|Island Arc/i.test(biome))add('complacency',1,'Favourable biosphere','Favourable Ground: non-vehicle units gain +1 to their first Difficult Terrain roll each turn.');
+  if(traits.includes('High Ground')||tr?.base==='Mountain')e.battleBoons263.push('Prepared Heights: a defender deployed on elevated terrain gains +1 to its cover save against shooting from lower elevation, to a maximum of 3+.');
+  if(/Ruined|Ancient|Warzone/i.test(`${biome} ${(tr?.landmarks||[]).join(' ')}`))e.battleBoons263.push('Salvage Ground: each side may nominate one objective as a salvage cache; holding it at game end is worth +1 VP.');
+  return e;
+};
+const _whTerritoryRules_rev263=whTerritoryRules;
+whTerritoryRules=function(tr,p){const out=_whTerritoryRules_rev263(tr,p);if(_territoryEnvGuard263)return out;const e=campaignTerritoryEnvironment237(tr,p);for(const text of e.battleBoons263||[])out.push({name:'Territory Advantage',text});return out};
+
+/* ---------- Legacy Chapter III prospect/founding controls removed ----------
+   Generated records remain useful as population seeds, but are no longer player founding buttons. */
+colonyStackHTML=function(targetId,p,targetKind='world',locationLabel='planetary locus'){
+  if(!p)return'';const active=p.colonies||[],pros=p.colonialProspects||[];
+  const cards=active.map(c=>colonyCardHTML(targetId,c,p,targetKind)).join('');
+  const prospects=pros.length?`<div class="colony-generation-note263"><b>${pros.length} generated population prospect${pros.length===1?'':'s'} retained as world-generation data.</b><br/>These are no longer manually founded from the astronomical inspector. Campaign settlement founding, fleet settlements and orbital/platform systems are the authoritative player construction routes.</div>`:'';
+  return `<div class="colony-location-note"><b>${active.length} generated / existing settlement${active.length===1?'':'s'}</b><br/>Population density is now generated with the world. Native settlements can begin as lightweight minor polities rather than immediately consuming a full campaign-faction slot.</div>${prospects}<div class="colony-stack">${cards||'<div class="hint">No established generated settlement on this object.</div>'}</div>`;
+};
+
+/* ---------- Lightweight minor polities ----------
+   Small native networks are detached from the full faction pool. They grow slowly and promote
+   to a full autonomous faction only after any settlement reaches Size 4. */
+function campaignMinorPolityKey263(root,rec,w){return`minor263-${(hashText(`${root.campaign.seed}|${rec.id}|${w.id}`)>>>0).toString(36)}`}
+function campaignDemoteSmallNativePolities263(root){
+  const c=root?.campaign;if(!c)return 0;c.minorPolities263=c.minorPolities263||[];let moved=0;
+  for(const rec of campaignSystemRecords(root)||[])for(const dw of deepNavWorlds(rec.sys)||[]){
+    const w=dw?.world,p=w?.soi;if(!p?.inhabitant||p.isGas)continue;const locationId=`world:${w.id}`,sites=soiPlanNativeSettlements246(w);
+    if(!sites.length||sites.some(x=>Number(x.size)>=4))continue;
+    const key=campaignKeyFromWorld(p)||'xenos',existing=c.minorPolities263.find(x=>x.systemId===rec.id&&x.locationId===locationId);if(existing)continue;
+    const mp={id:campaignMinorPolityKey263(root,rec,w),name:`${p.inhabitant.species||'Native'} Polity of ${w.name}`,factionKey:key,species:p.inhabitant.species||'Unknown',systemId:rec.id,locationId,locationName:w.name,territoryIds:[],settlements:sites.map((x,i)=>({id:`${x.id}-minor`,name:x.name,size:Math.min(3,Math.max(1,Number(x.size)||2)),development263:0,order:Math.max(1,Math.ceil(x.size*.8)),productivity:Math.max(1,Math.ceil(x.size*.7)),complacency:Math.max(1,Math.ceil(x.size*.8)),culture:x.culture,territoryIndex:i})),createdTurn:0,status:'Minor Polity',promoteAtSize:4};
+    const fac=c.factions.find(f=>f.key===key);if(fac){
+      const removed=(fac.settlements||[]).filter(s=>s.generatedWorldSettlement246&&s.systemId===rec.id&&s.locationId===locationId);
+      if(removed.length){fac.settlements=fac.settlements.filter(s=>!removed.includes(s));moved+=removed.length}
+      if(!fac.settlements.length&&!fac.territory.length&&!fac.taskForces?.length&&!fac.fleets?.length&&fac.ai)c.factions=c.factions.filter(f=>f!==fac);
+    }
+    const trs=campaignEnsureWorldTerritories237(w);mp.settlements.forEach((st,i)=>{const tr=trs[i%Math.max(1,trs.length)];if(tr){st.territoryId=tr.id;mp.territoryIds.push(tr.id)}});
+    c.minorPolities263.push(mp);
+  }return moved;
+}
+function campaignPromoteMinorPolity263(root,mp){
+  const c=root.campaign;if(!mp||mp.promotedFactionId)return null;let fac=campaignMakeFaction(mp.factionKey,c.factions.length,true,mp.name);fac.minorPolityOrigin263=mp.id;fac.homeSystemId=mp.systemId;fac.presence=[mp.systemId];fac.treasury={supply:14,materiel:12,influence:4};fac.command=2;fac.maxCommand=2;c.factions.push(fac);
+  c.systems[mp.systemId].presenceFactionIds=c.systems[mp.systemId].presenceFactionIds||[];if(!c.systems[mp.systemId].presenceFactionIds.includes(fac.id))c.systems[mp.systemId].presenceFactionIds.push(fac.id);
+  const rec=campaignRecord(root,mp.systemId),loc=campaignLocationProfiles(rec.sys).find(x=>x.id===mp.locationId);
+  for(const st of mp.settlements){const col=withSeededRng(`${c.seed}|PROMOTE263|${mp.id}|${st.id}`,()=>soiColonyProfile(loc?.p||{},soiSuggestedColonyType(loc?.p||{}),true,CAMPAIGN_FACTION_META[fac.key]?.colony||'xenos','Minor polity maturation'));col.size=st.size;col.order=st.order;col.productivity=st.productivity;col.complacency=st.complacency;col.generatedNative246=true;col.pfValue=soiColonyPF(col);const s={id:`cs-promote263-${hashText(st.id).toString(36)}`,factionId:fac.id,systemId:mp.systemId,locationId:mp.locationId,locationName:mp.locationName,locationKind:'World',settlementName246:st.name,colony:col,status:'Active',foundedTurn:c.turn,occupiedBy:null,generatedWorldSettlement246:true,territoryId237:st.territoryId};fac.settlements.push(s);if(st.territoryId)campaignSetTerritoryClaim238(root,mp.systemId,mp.locationId,st.territoryId,fac,'Minor polity maturation')}
+  mp.status='Realised Faction';mp.promotedFactionId=fac.id;mp.promotedTurn=c.turn;campaignLog(c,`${mp.name} matured beyond local-polity scale and entered the strategic faction pool after reaching Size 4.`,'gain');return fac;
+}
+function campaignAdvanceMinorPolities263(root){
+  const c=root?.campaign;if(!c)return 0;let promotions=0;
+  for(const mp of c.minorPolities263||[]){if(mp.promotedFactionId)continue;for(const st of mp.settlements||[]){const gain=1+((hashText(`${c.seed}|MINOR263|${c.turn}|${st.id}`)>>>0)%3);st.development263=(st.development263||0)+gain+Math.max(0,st.productivity-1);const threshold=22+st.size*10;if(st.size<4&&st.development263>=threshold){st.development263-=threshold;st.size++;st.order=Math.min(5,st.order+1);st.productivity=Math.min(5,st.productivity+1)}}if(mp.settlements.some(s=>s.size>=4)){campaignPromoteMinorPolity263(root,mp);promotions++}}return promotions;
+}
+const _campaignInitialize_rev263=campaignInitialize;
+campaignInitialize=function(root,opts={}){const c=_campaignInitialize_rev263(root,opts);campaignDemoteSmallNativePolities263(root);campaignPersist(root);return c};
+
+function campaignAdvanceMinorPolitiesDeep263(root,turns){
+  const c=root?.campaign;if(!c)return 0;let promotions=0;
+  for(const mp of c.minorPolities263||[]){if(mp.promotedFactionId)continue;for(const st of mp.settlements||[]){
+    st.development263=(st.development263||0)+Math.max(1,Math.round(turns/6))*(1+Math.max(0,st.productivity-1));
+    while(st.size<4&&st.development263>=22+st.size*10){st.development263-=22+st.size*10;st.size++;st.order=Math.min(5,st.order+1);st.productivity=Math.min(5,st.productivity+1)}
+  }if(mp.settlements.some(x=>x.size>=4)){campaignPromoteMinorPolity263(root,mp);promotions++}}
+  return promotions;
+}
+const _campaignSimulatePrehistory261_rev263=campaignSimulatePrehistory261;
+campaignSimulatePrehistory261=async function(root,turns,player,mode){const out=await _campaignSimulatePrehistory261_rev263(root,turns,player,mode);campaignAdvanceMinorPolitiesDeep263(root,Math.max(2,Math.min(1000,Number(turns)||2)));campaignPersist(root);return out};
+campaignSimulatePrehistory257=campaignSimulatePrehistory261;campaignSimulatePrehistory247=campaignSimulatePrehistory261;
+
+const _campaignEndTurn_rev263=campaignEndTurn;
+campaignEndTurn=function(root){const before=root?.campaign?.turn,out=_campaignEndTurn_rev263(root),poll=()=>{if(!root?.campaign)return;if(root.campaign._endTurnProcessing||root.campaign.turn===before)return setTimeout(poll,120);campaignAdvanceMinorPolities263(root);campaignPersist(root);campaignRenderDashboard(root)};setTimeout(poll,160);return out};
+
+/* Show lightweight native populations without turning them into full faction cards. */
+const _campaignObjectSettlementHTML_rev263=campaignObjectSettlementHTML;
+campaignObjectSettlementHTML=function(root,sys,locationId,label){
+  let h=_campaignObjectSettlementHTML_rev263(root,sys,locationId,label),c=root?.campaign,recs=campaignSystemRecords(root).filter(r=>r.sys===sys),ids=new Set(recs.map(r=>r.id)),m=(c?.minorPolities263||[]).filter(x=>ids.has(x.systemId)&&x.locationId===locationId&&!x.promotedFactionId);
+  if(!m.length)return h;const cards=m.map(mp=>`<div class="campaign-local-settlement-card minor263"><h5>${esc(mp.name)} • MINOR POLITY</h5><div class="ls-meta">Lightweight native polity • does not occupy a full faction slot until Size 4</div>${mp.settlements.map(st=>`<div class="minor-settlement263"><b>${esc(st.name)}</b><span>Size ${st.size} • development ${st.development263}/${22+st.size*10}</span></div>`).join('')}</div>`).join('');
+  return h.replace('</div></section>',cards+'</div></section>');
+};
+
+/* ---------- Faction-specific civilisation districts ---------- */
+const CAMPAIGN_FACTION_DISTRICTS_263={
+ legion:{label:'Legion Fortress-Monastery',common:{1:{name:'Legion Armoury Precinct',reward:'+1 Order; Astartes musters receive local command support.',effect:{commandSupport:1},statGain:{order:1}},2:{name:'Gene-Vault & Reclusiam',reward:'+1 local tech and cohesion.',effect:{localTechBonus:1},statGain:{piety:1}}},paths:{crusade:{label:'Crusade Citadel',tiers:{3:{name:'Expeditionary Arming Halls',reward:'Troops/Elites require less local Size.',effect:{roleSizeDiscount:{Troops:1,Elites:1}}},4:{name:'Legion Fleet Liaison',reward:'+2 command support.',effect:{commandSupport:2}},5:{name:'Primarchal War Citadel',reward:'+2 local tech, +2 command support.',effect:{localTechBonus:2,commandSupport:2}}}}}},
+ mechanicum:{label:'Forge Enclave',common:{1:{name:'Sacred Manufactorum',reward:'+2 Materiel.',effect:{materielBonus:2}},2:{name:'Noospheric Fabricator Grid',reward:'+1 tech, +1 Materiel.',effect:{localTechBonus:1,materielBonus:1}}},paths:{forge:{label:'Forge World Complex',tiers:{3:{name:'Macro-Fabrication Vaults',reward:'+3 Materiel.',effect:{materielBonus:3}},4:{name:'Cybernetica Assembly Nexus',reward:'+2 tech.',effect:{localTechBonus:2}},5:{name:'Archmagos Forge Nexus',reward:'+5 Materiel, +2 tech.',effect:{materielBonus:5,localTechBonus:2}}}}}},
+ ork:{label:'Ork Scrap-City',common:{1:{name:'Mek Scrap Yard',reward:'+2 Materiel, +1 recruitment support.',effect:{materielBonus:2,recruitSupplyDiscount:.05}},2:{name:'Burna & Kustom Workshop',reward:'+1 tech and faster mass musters.',effect:{localTechBonus:1,recruitSupplyDiscount:.08}}},paths:{waaagh:{label:'Waaagh! City',tiers:{3:{name:'Boyz Barrack-Habs',reward:'Troops require less local Size.',effect:{roleSizeDiscount:{Troops:1}}},4:{name:'Big Mek Industrial Sprawl',reward:'+4 Materiel.',effect:{materielBonus:4}},5:{name:'Waaagh! Capital',reward:'+3 command support, +4 Materiel.',effect:{commandSupport:3,materielBonus:4}}}}}},
+ craftworld:{label:'Aeldari Infinity Enclave',common:{1:{name:'Webway Transit Shrine',reward:'+1 Influence and logistics support.',effect:{influenceBonus:1,commandSupport:1}},2:{name:'Bonesinger Conclave',reward:'+2 local tech.',effect:{localTechBonus:2}}},paths:{path:{label:'Path Enclave',tiers:{3:{name:'Aspect Shrine District',reward:'Elites require less Size.',effect:{roleSizeDiscount:{Elites:1}}},4:{name:'Infinity Circuit Nexus',reward:'+2 Influence, +1 tech.',effect:{influenceBonus:2,localTechBonus:1}},5:{name:'Seer Council Precinct',reward:'+3 Influence, +2 tech.',effect:{influenceBonus:3,localTechBonus:2}}}}}},
+ necron:{label:'Dynastic Tomb Complex',common:{1:{name:'Reanimation Crypts',reward:'+1 defence, +1 tech.',effect:{siteDefence262:1,localTechBonus:1}},2:{name:'Canoptek Fabrication Vault',reward:'+2 Materiel, +1 defence.',effect:{materielBonus:2,siteDefence262:1}}},paths:{dynasty:{label:'Awakened Dynasty',tiers:{3:{name:'Warrior Phalanx Vaults',reward:'+2 defence.',effect:{siteDefence262:2}},4:{name:'Dolmen Transit Nexus',reward:'+2 command support.',effect:{commandSupport:2}},5:{name:'Phaeronic Crown Complex',reward:'+3 defence, +3 tech.',effect:{siteDefence262:3,localTechBonus:3}}}}}},
+ rangdan:{label:'Rangdan Host-Nexus',common:{1:{name:'Host Cultivation Warrens',reward:'+1 recruitment and +1 Influence.',effect:{recruitSupplyDiscount:.06,influenceBonus:1}},2:{name:'Subversion Synapse',reward:'+2 Influence and cohesion.',effect:{influenceBonus:2},statGain:{piety:1}}},paths:{host:{label:'Host Assimilation',tiers:{3:{name:'Facsimile Foundries',reward:'+2 Materiel and recruitment.',effect:{materielBonus:2,recruitMaterielDiscount:.06}},4:{name:'Puppet Administration Web',reward:'+3 Influence.',effect:{influenceBonus:3}},5:{name:'Rangdan Dominion Nexus',reward:'+3 Influence, +2 command.',effect:{influenceBonus:3,commandSupport:2}}}}}},
+ militia:{label:'Provincial Civic Complex',common:{1:{name:'Levy Hall',reward:'Cheaper Troops recruitment.',effect:{recruitSupplyDiscount:.08}},2:{name:'Provincial Arsenal',reward:'+1 Materiel and Order.',effect:{materielBonus:1},statGain:{order:1}}},paths:{mass:{label:'Mass Mobilisation',tiers:{3:{name:'Regimental Cantonments',reward:'Troops require less Size.',effect:{roleSizeDiscount:{Troops:1}}},4:{name:'Planetary Defence Bureau',reward:'+2 defence.',effect:{siteDefence262:2}},5:{name:'Sector Muster Capital',reward:'+2 command and +2 Supply.',effect:{commandSupport:2,supplyBonus:2}}}}}}
+};
+
+Object.assign(CAMPAIGN_FACTION_DISTRICTS_263,{
+ solar:{label:'Solar Auxilia Cohort Precinct',common:{1:{name:'Cohort Barracks Grid',reward:'+1 Order and cheaper line musters.',effect:{recruitSupplyDiscount:.06},statGain:{order:1}},2:{name:'Armoured Logistics Depot',reward:'+2 Supply and transport access.',effect:{supplyBonus:2,roleSizeDiscount:{'Dedicated Transport':1}}}},paths:{cohort:{label:'Cohort War District',tiers:{3:{name:'Veletaris Training Blocks',reward:'Elites require less Size.',effect:{roleSizeDiscount:{Elites:1}}},4:{name:'Armoured Tercio Depot',reward:'+2 Materiel, +1 command.',effect:{materielBonus:2,commandSupport:1}},5:{name:'Solar Cohort Commandery',reward:'+3 Supply, +2 command.',effect:{supplyBonus:3,commandSupport:2}}}}}},
+ knights:{label:'Knight Household Domain',common:{1:{name:'Sacristan Crawler Yards',reward:'+2 Materiel.',effect:{materielBonus:2}},2:{name:'Household Keep',reward:'+1 defence and cohesion.',effect:{siteDefence262:1},statGain:{piety:1}}},paths:{house:{label:'Knightly Demesne',tiers:{3:{name:'Armiger Muster Court',reward:'Heavy assets require less local Size.',effect:{roleSizeDiscount:{'Heavy Support':1}}},4:{name:'High King’s Armoury',reward:'+2 tech, +2 Materiel.',effect:{localTechBonus:2,materielBonus:2}},5:{name:'Great Household Citadel',reward:'+3 defence, +2 command.',effect:{siteDefence262:3,commandSupport:2}}}}}},
+ talons:{label:'Talons Vigil Complex',common:{1:{name:'Silent Watch Bastion',reward:'+2 defence.',effect:{siteDefence262:2}},2:{name:'Auric Armoury',reward:'+2 local tech.',effect:{localTechBonus:2}}},paths:{vigil:{label:'Imperial Vigil',tiers:{3:{name:'Null-Maiden Precinct',reward:'+1 defence and Influence.',effect:{siteDefence262:1,influenceBonus:1}},4:{name:'Custodian Transit Vault',reward:'+2 command support.',effect:{commandSupport:2}},5:{name:'Auric Strategic Citadel',reward:'+4 defence, +3 tech.',effect:{siteDefence262:4,localTechBonus:3}}}}}},
+ darkcompliance:{label:'Dark Compliance Citadel',common:{1:{name:'Compliance Barracks',reward:'Cheaper Troops and +1 Order.',effect:{recruitSupplyDiscount:.07},statGain:{order:1}},2:{name:'Overseer’s Arsenal',reward:'+2 Materiel, +1 Influence.',effect:{materielBonus:2,influenceBonus:1}}},paths:{dominion:{label:'Conquest Dominion',tiers:{3:{name:'Subject Levy Pens',reward:'Troops require less Size.',effect:{roleSizeDiscount:{Troops:1}}},4:{name:'Tithe Extraction Bureau',reward:'+3 Materiel, +2 Influence.',effect:{materielBonus:3,influenceBonus:2}},5:{name:'Warmaster’s Compliance Nexus',reward:'+3 command, +3 Influence.',effect:{commandSupport:3,influenceBonus:3}}}}}},
+ kroot:{label:'Kroot Kindred Preserve',common:{1:{name:'Hunting Grounds',reward:'+1 Supply and recruitment.',effect:{supplyBonus:1,recruitSupplyDiscount:.05}},2:{name:'Shaper Council Roost',reward:'+1 tech and cohesion.',effect:{localTechBonus:1},statGain:{piety:1}}},paths:{kindred:{label:'Great Kindred',tiers:{3:{name:'Genetic Trophy Preserve',reward:'+2 local tech.',effect:{localTechBonus:2}},4:{name:'Warsphere Provisioning Camp',reward:'+3 Supply.',effect:{supplyBonus:3}},5:{name:'Great Shaper Enclave',reward:'+2 tech, +2 command.',effect:{localTechBonus:2,commandSupport:2}}}}}},
+ rakgol:{label:'Rak’Gol Ravager Enclave',common:{1:{name:'Rad-Scrap Pits',reward:'+2 Materiel.',effect:{materielBonus:2}},2:{name:'Cybernetic Splicing Den',reward:'+1 tech and recruitment.',effect:{localTechBonus:1,recruitMaterielDiscount:.05}}},paths:{ravage:{label:'Ravager Nest',tiers:{3:{name:'Marauder Brood Warrens',reward:'Troops require less Size.',effect:{roleSizeDiscount:{Troops:1}}},4:{name:'Howler Foundry',reward:'+3 Materiel, +1 tech.',effect:{materielBonus:3,localTechBonus:1}},5:{name:'Extermination Nexus',reward:'+2 command, +2 defence.',effect:{commandSupport:2,siteDefence262:2}}}}}},
+ xenos:{label:'Xenos Cultural Nexus',common:{1:{name:'Native Artisan Quarter',reward:'+1 Materiel and Supply.',effect:{materielBonus:1,supplyBonus:1}},2:{name:'Species Knowledge Enclave',reward:'+1 local tech and Influence.',effect:{localTechBonus:1,influenceBonus:1}}},paths:{ascendant:{label:'Ascendant Polity',tiers:{3:{name:'Regional Muster Complex',reward:'+1 recruitment support.',effect:{recruitSupplyDiscount:.06}},4:{name:'Planetary Cultural Nexus',reward:'+2 Influence, +1 tech.',effect:{influenceBonus:2,localTechBonus:1}},5:{name:'Xenos Hegemony Centre',reward:'+2 command, +2 Influence.',effect:{commandSupport:2,influenceBonus:2}}}}}},
+ human:{label:'Independent Civic State',common:{1:{name:'Free Settlement Forum',reward:'+1 Influence and Complacency.',effect:{influenceBonus:1},statGain:{complacency:1}},2:{name:'Independent Industrial Guilds',reward:'+2 Materiel.',effect:{materielBonus:2}}},paths:{state:{label:'Independent State',tiers:{3:{name:'Citizen Defence League',reward:'+1 defence, cheaper Troops.',effect:{siteDefence262:1,recruitSupplyDiscount:.05}},4:{name:'Free Trade Directorate',reward:'+2 Supply, +2 Influence.',effect:{supplyBonus:2,influenceBonus:2}},5:{name:'Sovereign Planetary Assembly',reward:'+2 command, +3 Influence.',effect:{commandSupport:2,influenceBonus:3}}}}}}
+});
+
+for(const [fk,d] of Object.entries(CAMPAIGN_FACTION_DISTRICTS_263)){const key=`faction263_${fk}`;CAMPAIGN_BUILDING_CHAINS[key]={...d,icon:'✦',color:'#9a7b4d',factionOnly263:fk,summary:`Unique ${CAMPAIGN_FACTION_META[fk]?.label||fk} civilisation district.`}}
+const _campaignDevEligibility_rev263=campaignDevEligibility;
+campaignDevEligibility=function(root,fac,s,slotIndex,chain,tier,path){const q=_campaignDevEligibility_rev263(root,fac,s,slotIndex,chain,tier,path),d=CAMPAIGN_BUILDING_CHAINS[chain];if(d?.factionOnly263&&fac?.key!==d.factionOnly263)return{...q,ok:false,reasons:[...(q.reasons||[]),`Unique to ${CAMPAIGN_FACTION_META[d.factionOnly263]?.label||d.factionOnly263}.`]};return q};
+const _campaignBuildingPaletteHTML_rev263=campaignBuildingPaletteHTML;
+campaignBuildingPaletteHTML=function(root,fac,s,readonly=false){let h=_campaignBuildingPaletteHTML_rev263(root,fac,s,readonly);return h.replace('Pick a physical district for the next open slot.','Pick a physical district for the next open slot. Your faction also has a unique civilisation chain that other factions cannot construct.')};
+
+/* ---------- Rules / starter era display ---------- */
+const _campaignLauncherHTML_rev263=campaignLauncherHTML;
+campaignLauncherHTML=function(root){let h=_campaignLauncherHTML_rev263(root),era=root?.config?.era||'40k',anchors=(root?.loreAnchors263||[]).map(x=>x.name).join(', ');return h.replace('<div class="campaign-hero">',`<div class="campaign-era-banner263"><b>ERA: ${era==='30k'?'GREAT CRUSADE / HORUS HERESY':era==='40k'?'WARHAMMER 40,000':'OTHER / GOTHIC SCI-FI'}</b>${anchors?`<span>Named anchors in this theatre: ${esc(anchors)}</span>`:''}</div><div class="campaign-hero">`)};
+const _campaignRulesReferenceHTML_rev263=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev263(root),add=`<div class="campaign-rule-card"><h4>86. Era & Canonical Anchors</h4><p>Era is selected before generation scale. When canonical anchors are enabled, the generator seeds relevant named locations into generated strategic nodes. 30k prioritises Primarch/Legion worlds and Heresy sites; Segmentum Solar prioritises Sol. Names are lore anchors, while local light-year coordinates remain campaign-generated rather than falsely claiming exact canonical coordinates. The location catalogue is primarily modelled on the Jambonium interactive 30k/40k map and its confidence-aware placement approach.</p></div><div class="campaign-rule-card"><h4>87. Living Minor Polities</h4><p>Small generated native cultures begin as lightweight Minor Polities rather than full AI factions. Their Size 1–3 settlements accumulate development slowly without fleets, diplomacy or full AI turns. When any settlement reaches Size 4, the polity is promoted into the normal faction pool with settlements, presence, resources and autonomous behaviour.</p></div><div class="campaign-rule-card"><h4>88. Territory Advantages</h4><p>Territories can now provide positive strategic and tabletop effects as well as hazards. Paradise, fertile, temperate, high-ground and salvage-rich regions can improve Complacency, Productivity, Order or battlefield positioning/objectives.</p></div><div class="campaign-rule-card"><h4>89. Faction Civilisation Districts</h4><p>Major faction archetypes receive exclusive district chains: Legion Fortress-Monasteries, Mechanicum Forge Enclaves, Ork Scrap-Cities, Aeldari Infinity Enclaves, Necron Tomb Complexes, Rangdan Host-Nexuses and Militia Provincial Complexes. These alter economy, recruitment, technology, defence and command rather than being cosmetic names.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
+
+window.__cartoRevision263={version:REV263,build:REV263_BUILD,lore:CAMPAIGN_LORE_LOCATIONS_263,minorAdvance:campaignAdvanceMinorPolities263};
+document.title='Administratum Stellar Cartographica — Revision 26.3';document.documentElement.dataset.cartographicaRevision=REV263;document.documentElement.dataset.cartographicaBuild=REV263_BUILD;
+
+
+/* ===== v26.3 amendment — faction-exclusive infrastructure networks ===== */
+if(typeof campaignEnsureInfrastructureLevels253!=='function'){
+  function campaignEnsureInfrastructureLevels253(col){return campaignInfrastructureLevels253(col)}
+}
+const CAMPAIGN_BASE_INFRA_263=[...SOI_INFRA];
+const CAMPAIGN_FACTION_INFRA_263={
+ legion:[
+  {name:'Legion Armoury Network',civic:{order:1,productivity:1},desc:'Armouries, serf logistics and wargear distribution improve Order and Productivity.'},
+  {name:'Gene-Vault & Reclusiam Infrastructure',civic:{piety:2,order:1},desc:'Gene-seed vaults, chapels and Apothecarion networks strengthen Cohesion and Order.'}
+ ],
+ mechanicum:[
+  {name:'Noospheric Data Infrastructure',civic:{productivity:2,piety:1},desc:'Noospheric administration improves Productivity and doctrinal Cohesion.'},
+  {name:'Sacred Forge Conduits',civic:{productivity:2,order:1},desc:'Dedicated plasma, motive-force and fabrication conduits strongly improve industrial Productivity.'}
+ ],
+ ork:[
+  {name:'Mek Scrapway Network',civic:{productivity:2,order:1},desc:'Ramshackle scrap roads and Mek distribution accelerate war production despite rough civic conditions.'},
+  {name:'Fungus & Squig Warrens',civic:{complacency:2,productivity:1},desc:'Self-sustaining Orkoid food and population warrens support growth and basic settlement stability.'}
+ ],
+ craftworld:[
+  {name:'Wraithbone Utility Matrix',civic:{productivity:1,complacency:1,piety:1},desc:'Psychoreactive utilities provide balanced civic support without heavy industrial sprawl.'},
+  {name:'Webway Transit Infrastructure',civic:{order:1,productivity:1,piety:1},desc:'Webway-linked transit and Path coordination improve mobility, order and cohesion.'}
+ ],
+ necron:[
+  {name:'Canoptek Maintenance Lattice',civic:{order:2,productivity:1},desc:'Canoptek maintenance systems preserve order and repair dormant infrastructure.'},
+  {name:'Tesseract Power Grid',civic:{productivity:3},desc:'Ancient power matrices heavily improve Productivity with little concern for civilian comfort.'}
+ ],
+ rangdan:[
+  {name:'Host Synapse Network',civic:{order:1,piety:2},desc:'Host-control and puppet coordination strengthen obedience and ideological cohesion.'},
+  {name:'Facsimile Biomass Infrastructure',civic:{productivity:2,complacency:1},desc:'Adaptive biomass and imitation-industry networks improve production and living support.'}
+ ],
+ militia:[
+  {name:'Provincial Tithe Network',civic:{order:1,productivity:1},desc:'Local tax, ration and labour systems improve order and production.'},
+  {name:'Citizen Levy Infrastructure',civic:{order:2,complacency:1},desc:'Local defence, civic halls and mobilisation offices stabilise frontier populations.'}
+ ],
+ solar:[
+  {name:'Cohort Logistics Grid',civic:{productivity:2,order:1},desc:'Disciplined Auxilia supply infrastructure supports heavy military and industrial throughput.'},
+  {name:'Void-Habitat Supply Infrastructure',civic:{complacency:1,productivity:1,order:1},desc:'Standardised life-support and ration systems provide balanced settlement support.'}
+ ],
+ knights:[
+  {name:'Sacristan Maintenance Network',civic:{productivity:2,piety:1},desc:'Sacristan workshops and reactor shrines support Knight engines and technical culture.'},
+  {name:'Household Feudal Infrastructure',civic:{order:2,piety:1},desc:'Keeps, oaths, roads and demesne obligations reinforce Order and Household Cohesion.'}
+ ],
+ talons:[
+  {name:'Auric Vault Network',civic:{order:2,productivity:1},desc:'Highly secure logistical and strategic vaults maximise controlled military support.'},
+  {name:'Null-Ward Infrastructure',civic:{order:1,piety:2},desc:'Silent Sisterhood and anti-warp precincts strongly reinforce ideological and psychic security.'}
+ ],
+ darkcompliance:[
+  {name:'Compliance Tithe Network',civic:{productivity:2,order:1},desc:'Extractive administration channels conquered labour and goods into military production.'},
+  {name:'Subject Labour Infrastructure',civic:{productivity:2,complacency:-1,order:1},desc:'Coerced labour drives output at the cost of local contentment.'}
+ ],
+ kroot:[
+  {name:'Kindred Hunting Infrastructure',civic:{productivity:1,complacency:1,piety:1},desc:'Hunting ranges and kinship networks sustain population and cultural cohesion.'},
+  {name:'Warsphere Provisioning Network',civic:{productivity:2,order:1},desc:'Mobile provisioning and salvage routes support migration and fleet-linked settlements.'}
+ ],
+ rakgol:[
+  {name:'Rad-Scrap Infrastructure',civic:{productivity:2,complacency:-1},desc:'Dangerous but productive salvage networks favour material output over habitability.'},
+  {name:'Cybernetic Splicing Network',civic:{productivity:1,order:1,piety:1},desc:'Cybernetic maintenance and ritual modification support hierarchy and war-readiness.'}
+ ],
+ xenos:[
+  {name:'Native Adaptive Infrastructure',civic:{productivity:1,complacency:1},desc:'Species-specific infrastructure adapts to local biology and environment.'},
+  {name:'Cultural Exchange Network',civic:{order:1,piety:1,complacency:1},desc:'Shared civic spaces and knowledge networks reinforce cohesion and order.'}
+ ],
+ human:[
+  {name:'Free Trade Infrastructure',civic:{productivity:2,complacency:1},desc:'Independent commercial networks improve production and civilian prosperity.'},
+  {name:'Civic Services Network',civic:{order:1,complacency:2},desc:'Civilian institutions and municipal services stabilise independent settlements.'}
+ ] 
+};
+for(const defs of Object.values(CAMPAIGN_FACTION_INFRA_263))for(const d of defs)if(!SOI_INFRA.includes(d.name))SOI_INFRA.push(d.name);
+
+function campaignFactionInfraDefs263(fac){return CAMPAIGN_FACTION_INFRA_263[fac?.key]||CAMPAIGN_FACTION_INFRA_263.xenos}
+function campaignInfrastructureAllowed263(fac,name){
+  if(CAMPAIGN_BASE_INFRA_263.includes(name))return true;
+  return campaignFactionInfraDefs263(fac).some(x=>x.name===name);
+}
+const _campaignInfrastructureIncrement253_rev263=campaignInfrastructureIncrement253;
+campaignInfrastructureIncrement253=function(col,name,level){
+  _campaignInfrastructureIncrement253_rev263(col,name,level);
+  let def=null;for(const defs of Object.values(CAMPAIGN_FACTION_INFRA_263)){def=defs.find(x=>x.name===name);if(def)break}
+  if(!def)return;
+  const scale=1+Math.floor((Math.max(1,level)-1)/3);
+  for(const [k,v] of Object.entries(def.civic||{}))col[k]=(col[k]||0)+Number(v||0)*scale;
+  if(level>=10){col.order=(col.order||0)+1;col.productivity=(col.productivity||0)+1}
+};
+const _campaignUpgradeInfrastructure253_rev263=campaignUpgradeInfrastructure253;
+campaignUpgradeInfrastructure253=function(root,fac,s,name,free=false){
+  if(!campaignInfrastructureAllowed263(fac,name)){
+    if(!free)campaignQueueNotice(root,'Infrastructure Restricted',`${name} is not part of ${fac?.name||'this faction'}’s civilisation infrastructure.`);
+    return false;
+  }
+  return _campaignUpgradeInfrastructure253_rev263(root,fac,s,name,free);
+};
+const _campaignCivicSupportScores250_rev263=campaignCivicSupportScores250;
+campaignCivicSupportScores250=function(s){
+  const score=_campaignCivicSupportScores250_rev263(s),root=window.currentSector,fac=root?.campaign&&campaignFaction(root.campaign,s?.factionId),levels=campaignInfrastructureLevels253(s?.colony||{});
+  for(const d of campaignFactionInfraDefs263(fac)){const lv=Number(levels[d.name]||0);if(lv<=0)continue;const half=Math.ceil(lv/2);for(const [k,v] of Object.entries(d.civic||{}))if(k in score)score[k]+=Math.max(0,Number(v||0))*half}
+  return score
+};
+function campaignInfrastructureOptions263(fac){return [...CAMPAIGN_BASE_INFRA_263,...campaignFactionInfraDefs263(fac).map(x=>x.name)]}
+function campaignInfrastructureDescription263(fac,name){
+  for(const d of campaignFactionInfraDefs263(fac))if(d.name===name)return d.desc;
+  return 'Standard interstellar settlement infrastructure.'
+}
+const _campaignInfrastructurePlannerHTML246_rev263=campaignInfrastructurePlannerHTML246;
+campaignInfrastructurePlannerHTML246=function(s,own){
+  if(!own)return'';
+  const root=window.currentSector,fac=root?.campaign&&campaignFaction(root.campaign,s?.factionId);
+  if(!fac)return _campaignInfrastructurePlannerHTML246_rev263(s,own);
+  const col=s.colony,levels=campaignInfrastructureLevels253(col),cap=Math.max(1,Math.min(10,Number(col.size)||1)),req=col.requiredInfrastructure;
+  const names=campaignInfrastructureOptions263(fac),inf=names.map(name=>{
+    const lv=levels[name]||0,blocked=lv>=cap||lv>=10,cost=campaignInfrastructureUpgradeCost253(col,name),tag=CAMPAIGN_BASE_INFRA_263.includes(name)?'Standard':`${CAMPAIGN_FACTION_META[fac.key]?.label||fac.key} unique`;
+    return `<option value="${esc(name)}" ${blocked?'disabled':''}>${esc(name)} — L${lv}/${cap} — ${esc(tag)}${name===req?' — growth requirement':''}${blocked?' — capped':` → L${lv+1} (${cost}M)`}</option>`
+  }).join('');
+  const sup=SOI_SUPPORT.map(x=>`<option value="${esc(x)}">${esc(x)}${x===col.suggestedSupport?' — suggested':''}</option>`).join('');
+  const unique=campaignFactionInfraDefs263(fac).map(d=>`<span><b>${esc(d.name)}</b>${esc(d.desc)}</span>`).join('');
+  return `<div class="campaign-infra-planner246 campaign-infra-planner253 faction-infra263"><h5>${s.mobile236?'Fleet ':''}Infrastructure & Support Planner</h5><small>${req?`Population development currently requires further infrastructure. Any valid infrastructure upgrade satisfies the immediate requirement.`:'Infrastructure upgrades from Level 1–10, capped by settlement Size. Faction-exclusive networks provide different civic outcomes.'}</small><details class="faction-infra-guide263"><summary>${esc(CAMPAIGN_FACTION_META[fac.key]?.label||fac.name)} unique infrastructure</summary>${unique}</details><div class="campaign-infra-levels253">${names.map(x=>`<span><b>${esc(x.replace(' Infrastructure',''))}</b> L${levels[x]||0}/${cap}</span>`).join('')}</div><div class="campaign-infra-grid246"><select data-infra-choice246="${esc(s.id)}">${inf}</select><button class="ghost" type="button" data-infra-build246="${esc(s.id)}">Upgrade Selected Infrastructure</button><select data-support-choice246="${esc(s.id)}">${sup}</select><button class="ghost" type="button" data-support-build246="${esc(s.id)}">Install Selected — 6M</button></div></div>`;
+};
+const _campaignAIConstruct246_rev263=campaignAIConstruct246;
+campaignAIConstruct246=function(root,fac,s,strategy){
+  const out=_campaignAIConstruct246_rev263(root,fac,s,strategy),col=s?.colony;if(!col||s.status==='Destroyed')return out;
+  const cap=Math.max(1,Math.min(10,Number(col.size)||1)),levels=campaignInfrastructureLevels253(col),unique=campaignFactionInfraDefs263(fac).map(x=>x.name).filter(n=>(levels[n]||0)<cap);
+  if(unique.length&&campaignRandom(root.campaign,`unique-infra263|${fac.id}|${s.id}|${root.campaign.turn}`)<.22){
+    unique.sort((a,b)=>(levels[a]||0)-(levels[b]||0));const n=unique[0],cost=campaignInfrastructureUpgradeCost253(col,n);
+    if((fac.treasury.materiel||0)>=cost)campaignUpgradeInfrastructure253(root,fac,s,n,true);
+  }
+  return out;
+};
+
 })();
 </script>
 </body>

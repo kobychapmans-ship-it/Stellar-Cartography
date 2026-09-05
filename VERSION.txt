@@ -1,2 +1,2 @@
-Stellar Cartographica v26.2
-Build: 26.2-fleet-settlements-foundation-site-economies-v46-tested
+Stellar Cartographica v26.3
+Build: 26.3-era-anchors-minor-polities-faction-civilisations-v47-tested

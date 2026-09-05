@@ -136,3 +136,16 @@ The audit also found and fixed a genuine infinite recursion affecting developed 
 - Resource recovery can be set to Mixed Recovery, Sequence Analysis, Cogitator Checksum, or Signal Amplification before extraction.
 - Added unique district chains for Orbital Defence Platforms, Gas Harvesting Platforms, and Fleet Settlements.
 - Site Defence is presented as one effective defensive value assembled automatically from fortifications, settlement depth, and orbital/fleet defence.
+
+## Revision 26.3 — Era Anchors, Living Polities & Faction Civilisations
+- Campaign Era selection is now at the top of Generation Scale.
+- Optional era-specific lore anchors seed relevant named 30k/40k locations into generated theatres; Segmentum Solar prioritises Sol.
+- 30k anchor catalogue includes the Sol System, Primarch/Legion homeworlds and selected Heresy-associated locations such as Davin. Names are anchored to generated campaign coordinates rather than presented as false exact canonical LY coordinates.
+- Territory environments now include positive strategic and tabletop advantages alongside hazards.
+- Legacy astronomical-inspector Add/Found Colony controls are removed. World generation remains responsible for native/existing population records.
+- Small native Size 1–3 settlement networks become lightweight Minor Polities. They grow slowly without full AI overhead and promote to a normal autonomous faction when one settlement reaches Size 4.
+- Minor-polity development is compatible with normal turns and compressed T2–T1000 Deep Time.
+- Every campaign faction archetype now receives an exclusive civilisation district chain with mechanical economic, military, technological, defensive or command effects.
+
+### Jambonium reference
+Era-specific lore anchors are primarily modelled on the Jambonium Warhammer 40K Interactive Map (v8-era reference), including its separate 30k/40k modes and its distinction between high/medium/low/zero placement confidence. Cartographica uses those as broad lore anchors and deliberately keeps procedural campaign light-year coordinates separate from claimed canonical coordinates.

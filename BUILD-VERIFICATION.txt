@@ -1,45 +1,23 @@
-STELLAR CARTOGRAPHICA v26.2 TEST REPORT
-Build: 26.2-fleet-settlements-foundation-site-economies-v46-tested
+STELLAR CARTOGRAPHICA v26.3 TEST REPORT
+Build: 26.3-era-anchors-minor-polities-faction-civilisations-v47-tested
 
-PASS — 4 embedded JavaScript blocks pass Node syntax validation.
-PASS — service worker passes Node syntax validation.
-PASS — manifest parses as Revision 26.2 with a fresh cache/start identity.
-PASS — 105 literal button IDs audited with no unmatched IDs after the shared map-control framework is accounted for.
-PASS — 105 button data-action/metadata families audited with no unmatched action families.
+PASS — Campaign Era selector is positioned before generation scale and only one era selector is rendered.
+PASS — era-specific canonical-anchor controls are present and persist in generation config.
+PASS — 30k anchor catalogue includes Sol, Davin and major Primarch/Legion homeworlds; 40k adds era-specific strategic worlds.
+PASS — lore anchors are applied as named campaign anchors without claiming procedural LY coordinates are canonical.
+PASS — territory environments can generate positive colony and tabletop advantages as well as hazards.
+PASS — legacy astronomical-inspector settlement/prospect founding controls are replaced by read-only generated population records.
+PASS — generated Size 1–3 native settlement networks can remain lightweight Minor Polities outside the full faction pool.
+PASS — Minor Polities slowly develop in normal turns and bounded T2–T1000 Deep Time; first Size-4 settlement promotes the polity to a normal autonomous faction.
+PASS — every current campaign faction archetype has an exclusive district chain.
+PASS — every current campaign faction archetype has two exclusive infrastructure networks, hard-locked to that faction.
+PASS — faction-exclusive infrastructure participates in the existing Level 1–10 Size-capped infrastructure system and AI construction.
+PASS — v26.2 fleet settlements/site economies, v26.1 T2–T1000 Deep Time, and v26.0 combat/claim lifecycle code remain present.
+PASS — all embedded JavaScript blocks and service worker pass Node syntax validation.
+PASS — manifest parses as Revision 26.3.
 
-FLEET SETTLEMENTS
-PASS — Tier III player conversion sets a pending mobile-settlement state instead of materialising a settlement immediately.
-PASS — pending Tier III fleets are excluded from mobile-settlement enumeration until End Turn completes.
-PASS — End Turn finalisation creates the mobile colony and initialises its development/infrastructure state.
-PASS — mobile settlements render a dedicated Level 1–10 infrastructure/support planner.
-PASS — mobile infrastructure/support controls resolve via campaignFindSettlement236 instead of fixed-settlement-only lookup.
-PASS — mobile settlement district purchases resolve the fleet proxy rather than fac.settlements[].
-PASS — Fleet-Colony polity benefits are visible in Overview: 20% cheaper fleet-settlement development, 15% cheaper fleet commissioning, +5% campaign fleet speed, and +1 Supply/turn per active mobile settlement.
-
-FOUNDATION DEPTH
-PASS — player foundation packages expose Size 1, 2, 3, 4 and 5.
-PASS — additional Supply/Materiel/Command costs rise with foundation Size.
-PASS — the created settlement is initialised at the selected Size and receives matching colony/infrastructure initialisation.
-
-RESOURCE EXTRACTION
-PASS — resource recovery mode persists at campaign level.
-PASS — Mixed Recovery, Sequence Analysis, Cogitator Checksum and Signal Amplification are selectable before extraction.
-PASS — selected non-mixed modes force the corresponding puzzle family without changing resource rewards or extraction difficulty.
-
-SITE-SPECIFIC DISTRICTS
-PASS — Orbital Defence Platforms gain the Orbital Defence Platform Systems chain.
-PASS — Gas Harvesting Platforms gain the Atmospheric Harvesting Complex chain.
-PASS — Fleet Settlements gain the Fleet Settlement Infrastructure chain.
-PASS — eligibility prevents those chains being constructed at the wrong site type.
-PASS — custom demographic-momentum and site-defence district effects are aggregated into campaign development/defence calculations.
-
-SITE DEFENCE
-PASS — the rules reference is consolidated around Effective Site Defence = fortifications + settlement defence + orbital/fleet defence.
-PASS — existing auto-resolve mechanics remain: up to +3 defender roll and +300 equivalent strategic power per Effective Defence level.
-
-REGRESSION
-PASS — v26.1 T2–T1000 independent Deep-Time scheduler remains present.
-PASS — v26.0 combat/claims/fleet-lifecycle and v25.9 territory-specific ground operations remain in the runtime.
+REFERENCE NOTE
+The canonical-location feature is modelled primarily on the Jambonium interactive 30k/40k map. The source itself distinguishes location placement confidence, so Cartographica anchors names to generated theatre nodes rather than presenting its procedural LY coordinates as exact setting coordinates.
 
 BROWSER LIMITATION
-The container browser environment remains unsuitable for a reliable local-file/localhost full click-through. Release validation therefore uses syntax validation, interaction-path auditing and direct state-path inspection on this exact package; no interactive browser run is falsely claimed.
+The container browser environment is not reliable for a full local-file/localhost click-through. This release therefore uses syntax validation, source-path auditing and deterministic configuration/state checks; no unsupported interactive-browser claim is made.
