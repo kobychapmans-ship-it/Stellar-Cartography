@@ -99,3 +99,13 @@ The audit also found and fixed a genuine infinite recursion affecting developed 
 - Fleet roles and strategic doctrines now alter campaign speed, naval profiles, invasion/defence strength and civic development where applicable.
 - Expansion & Population districts now contribute directly to demographic momentum and decline-pressure reduction.
 - Rebellions require identifiable political stress and show why they can or did begin; deployed Task Forces can fight a rebellion in its exact territory.
+
+
+## Revision 25.9 — Interaction Audit & Reliable Ground Operations
+- Replaced the shared Fleet-tab Ground Force selector with separate Embarkable Force and Embarked Force selectors.
+- Disembarkation now directly deploys an actually embarked Task Force into the chosen territory on the fleet's exact planet/moon and consumes one fleet action.
+- Embarkation lists only ground forces deployed on that exact planet/moon and continues to enforce troop-lift capacity.
+- System-scale campaigns resolve the fleet's strategic site as the landing planetary object, while sector/sub-sector campaigns use true in-system orbital position.
+- Removed the dead legacy `Use Fleet Movement Plot` button. Current Journey Planner and in-system navigation controls are authoritative.
+- Removed the Campaign Colonies `Advance Extra 90 Days` shortcut because settlement time already advances through the campaign turn cycle.
+- Added a release-time interaction audit for campaign buttons and data-action families.

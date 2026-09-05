@@ -1,2 +1,2 @@
-Stellar Cartographica v25.8
-Build: 25.8-consolidated-orders-operational-doctrines-rebellion-warfare-v42-tested
+Stellar Cartographica v25.9
+Build: 25.9-ground-operations-ui-audit-v43-tested

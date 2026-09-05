@@ -1,18 +1,31 @@
-STELLAR CARTOGRAPHICA v25.8 TEST REPORT
-Build: 25.8-consolidated-orders-operational-doctrines-rebellion-warfare-v42-tested
+STELLAR CARTOGRAPHICA v25.9 INTERACTION AUDIT
+Build: 25.9-ground-operations-ui-audit-v43-tested
 
-PASS — obsolete Player Strategic Orders section is removed at source.
-PASS — Fleet Command Orders exposes the fleet's current planet/moon and a territory-specific disembark selector.
-PASS — fleet-tab embarkation now requires the fleet and deployed ground force to occupy the same planet/moon.
-PASS — fleet role speed modifiers remain active and roles now alter naval profile and ground invasion/defence effectiveness.
-PASS — all strategic doctrines retain their original attack/defence/logistics/income behaviour and now also have explicit operational/civic effects.
-PASS — Expansion & Population districts add deterministic demographic momentum and decline-pressure reduction rather than relying on obsolete random Size-growth chance language.
-PASS — open rebellion now requires >=32% consequence risk plus an identifiable major political trigger.
-PASS — settlement governance explains current rebellion eligibility and historic trigger causes.
-PASS — a Task Force deployed in the exact rebellious territory can declare and auto-resolve a ground battle against the insurgency.
-PASS — v25.7 independent stack-safe Deep-Time engine remains present and unchanged.
-PASS — all embedded JavaScript blocks pass Node syntax validation.
-PASS — service worker passes Node syntax validation and uses a fresh v25.8 cache identity.
-PASS — manifest parses as valid JSON and identifies Revision 25.8.
+GROUND OPERATIONS
+PASS — Fleet-tab ground operations now use separate selectors for forces aboard the selected fleet and forces deployed on the selected planetary object.
+PASS — Disembarkation directly removes the chosen Task Force from fleet cargo and assigns system, planet/moon and exact territory state.
+PASS — Embarkation requires exact planet/moon co-location and clears surface-location state after loading.
+PASS — Fleet troop-lift capacity remains enforced.
+PASS — Embark/disembark each consume one fleet action.
+PASS — A direct state-transition harness successfully disembarked a 4,000-point force into a chosen territory and re-embarked a separate 3,000-point surface force.
 
-BROWSER LIMITATION — the container's Chromium executable is blocked by administrator policy for both localhost and file:// navigation in this environment. Two launch attempts were made (localhost and file URL) and both returned ERR_BLOCKED_BY_ADMINISTRATOR before page execution. No interactive browser regression pass is claimed.
+CONTROL / FEATURE AUDIT
+PASS — 102 literal button IDs scanned.
+PASS — 99 button data-action/metadata families scanned.
+PASS — no unmatched literal campaign button IDs were found after accounting for the shared pan/zoom control framework.
+PASS — no unmatched data-action button families were found.
+FIXED — dead `Use Fleet Movement Plot` legacy control removed from the rendered Fleets tab.
+UPDATED — old shared Fleet-tab Ground Force selector removed; embark and disembark now have purpose-specific lists.
+REMOVED — Campaign Colonies `Advance Extra 90 Days` shortcut; settlement time is governed by the normal campaign turn cycle.
+RETAINED — current Inter-System Journey Planner and true In-System Navigation are the authoritative fleet movement controls.
+RETAINED — Territory/planetary inspectors remain the authoritative territory and ground-force movement interfaces.
+RETAINED — v25.7 independent stack-safe Deep-Time engine and v25.8 doctrine/rebellion warfare systems.
+
+PACKAGE VALIDATION
+PASS — 4 embedded JavaScript blocks pass Node syntax validation.
+PASS — service worker passes Node syntax validation.
+PASS — manifest parses as valid JSON and identifies Administratum Stellar Cartographica — Revision 25.9.
+PASS — fresh service-worker/cache identity: cartographica-r25.9-ground-operations-audit-v43-tested.
+
+BROWSER LIMITATION
+The container Chromium build blocks both local file navigation and localhost with ERR_BLOCKED_BY_ADMINISTRATOR. A full browser click-through cannot be truthfully claimed in this environment. The ground-operation state transition was therefore tested independently with the exact v25.9 functions plus mocked campaign state, while all UI action families were statically audited against their handlers.

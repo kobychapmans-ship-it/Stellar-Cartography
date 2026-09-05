@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="25.8" />
+<meta name="cartographica-revision" content="25.9" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=25.8-consolidated-orders-operational-doctrines-rebellion-warfare-v42-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=25.9-ground-operations-ui-audit-v43-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='25.8';
-  const BUILD='25.8-consolidated-orders-operational-doctrines-rebellion-warfare-v42-tested';
-  const LABEL='rev 25.8 — Operational Roles & Rebellion Warfare';
-  const TITLE='Administratum Stellar Cartographica — Revision 25.8';
+  const REVISION='25.9';
+  const BUILD='25.9-ground-operations-ui-audit-v43-tested';
+  const LABEL='rev 25.9 — Interaction Audit & Ground Operations';
+  const TITLE='Administratum Stellar Cartographica — Revision 25.9';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 25.8</title>
+<title>Administratum Stellar Cartographica — Revision 25.9</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -643,6 +643,12 @@ html.carto-orientation-lock body:after{content:'';display:none}
 </style>
 <style id="rev258-css">
 .campaign-fleet-landing258{grid-column:1/-1;margin:8px 0;padding:9px;border:1px solid rgba(105,145,174,.28);background:rgba(52,86,110,.06)}.campaign-fleet-landing258 h5{margin:0 0 6px;color:#b9d1dc}.campaign-fleet-landing258 small{display:block;margin-top:5px;color:#8f9a9d;line-height:1.4}.campaign-static-field258{min-height:32px;display:flex;align-items:center;border:1px solid #574c32;padding:6px 9px;color:#d8d0bb;background:#0c0f11}.campaign-doctrine-effects258{margin-top:7px;padding:7px;border-left:3px solid #9b8148;background:rgba(155,129,72,.07);color:#c8b98e;font-size:9px;line-height:1.45}.campaign-rebellion-explain258,.campaign-rebellion-battle258{margin-top:6px;padding:7px;border:1px solid rgba(176,102,87,.24);background:rgba(110,54,45,.055);color:#ac9990;font-size:8px;line-height:1.45}.campaign-rebellion-explain258 b,.campaign-rebellion-battle258 b{color:#d2b18f}.campaign-rebellion-battle258 small,.campaign-rebellion-battle258 span{display:block;margin:4px 0;color:#9f9189}.campaign-rebellion-battle258 select,.campaign-rebellion-battle258 button{margin-top:5px;max-width:100%}@media(max-width:700px){.campaign-fleet-landing258 .campaign-command-grid{grid-template-columns:1fr!important}}
+</style>
+<style id="rev259-css">
+.campaign-ground-transport259{margin:9px 0;border:1px solid rgba(111,157,124,.34);background:rgba(54,92,65,.055);padding:10px;grid-column:1/-1}
+.campaign-ground-transport-head259{display:flex;gap:8px;align-items:flex-start}.campaign-ground-transport-head259>div{flex:1}.campaign-ground-transport-head259 h5{margin:0;color:#c7d9bd}.campaign-ground-transport-head259 p{margin:3px 0;color:#929d94;font-size:8px}.campaign-ground-transport-warning259{margin:7px 0;border-left:3px solid #9a594d;background:rgba(125,68,57,.08);padding:7px;color:#c6a29a;font-size:8px}
+.campaign-ground-transport-grid259{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.campaign-ground-operation259{border:1px solid rgba(255,255,255,.07);padding:8px;background:rgba(0,0,0,.13)}.campaign-ground-operation259 h6{margin:0 0 6px;color:#d6cba9;font-size:9px;text-transform:uppercase}.campaign-ground-operation259 label{display:block;margin-top:5px;color:#8e968e;font-size:7px;text-transform:uppercase}.campaign-ground-operation259 select,.campaign-ground-operation259 button{width:100%;margin-top:3px}.campaign-ground-operation259 small{display:block;margin-top:5px;color:#7f8881;font-size:7px;line-height:1.4}
+@media(max-width:720px){.campaign-ground-transport-grid259{grid-template-columns:1fr}.campaign-ground-transport-head259{flex-direction:column}}
 </style>
 </head>
 <body>
@@ -7294,6 +7300,110 @@ const _campaignRulesReferenceHTML_rev258=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev258(root),add=`<div class="campaign-rule-card"><h4>69. Consolidated Strategic Controls</h4><p>The obsolete Player Strategic Orders box has been removed. Territory, Colonies, Army and Fleet tabs are now the authoritative controls for their respective actions.</p></div><div class="campaign-rule-card"><h4>70. Planetary Embarkation</h4><p>Fleet-tab disembarkation chooses a territory on the fleet’s current planet/moon. A deployed force can only re-embark when its fleet is physically stationed at that same planetary object.</p></div><div class="campaign-rule-card"><h4>71. Operational Roles & Doctrine</h4><p>Fleet roles alter campaign speed, capacity and BFG-style combat characteristics, while assault/battle/escort/blockade roles also affect ground invasion or defence. Strategic doctrines now apply explicit fleet-speed, ground-combat and civic-development modifiers in addition to their original income/roll effects.</p></div><div class="campaign-rule-card"><h4>72. Rebellion Warfare</h4><p>Open rebellion requires identifiable political stress, not merely an unlucky consequence roll. The settlement card explains current eligibility and trigger causes. A Task Force deployed into the rebellious territory can directly declare a ground battle against the insurgency.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
 window.__cartoRevision258={version:REV258,build:REV258_BUILD,landingContext:campaignFleetLandingContext258,doctrine:campaignDoctrineEffects258,rebellionEligible:campaignRebellionEligible258,attackRebellion:campaignAttackRebellion258};
 const rb258=document.querySelector('.generation-head-actions .badge');if(rb258)rb258.textContent='rev 25.8 — Operational Roles & Rebellion Warfare';document.title='Administratum Stellar Cartographica — Revision 25.8';document.documentElement.dataset.cartographicaRevision=REV258;document.documentElement.dataset.cartographicaBuild=REV258_BUILD;
+
+
+/* ===== Revision 25.9 — Interaction Audit & Reliable Ground Operations ===== */
+const REV259='25.9';
+const REV259_BUILD='25.9-ground-operations-ui-audit-v43-tested';
+
+function campaignFleetGroundOpsContext259(root,fac,fleet){
+  if(!fleet)return{ok:false,reason:'No fleet selected.',embarkable:[],embarked:[],territories:[]};
+  if(fleet.transit)return{ok:false,reason:'Fleet is translating between systems.',embarkable:[],embarked:[],territories:[]};
+  if(fleet.localTransit2352)return{ok:false,reason:'Fleet is travelling inside the current system.',embarkable:[],embarked:[],territories:[]};
+  let q=null;
+  if(root?._campaignScope==='system'){
+    const rec=campaignRecord(root,fleet.currentId),loc=rec?.nodeLocationId,ctx=loc?campaignTerritoryContext238(root,fleet.currentId,loc):null;
+    if(ctx?.territories?.length)q={nodeId:fleet.currentId,locationId:loc,location:rec.nodeLocation,territories:ctx.territories};
+  }else q=campaignFleetLandingContext258(root,fleet);
+  if(!q)return{ok:false,reason:'Move the fleet into orbit around a planet or moon before embarking or disembarking ground forces.',embarkable:[],embarked:(fleet.cargoTaskForceIds||[]).map(id=>(fac.taskForces||[]).find(tf=>tf.id===id)).filter(Boolean),territories:[]};
+  const embarked=(fleet.cargoTaskForceIds||[]).map(id=>(fac.taskForces||[]).find(tf=>tf.id===id)).filter(Boolean);
+  const embarkable=(fac.taskForces||[]).filter(tf=>!tf.fleetId&&tf.systemId===q.nodeId&&campaignGroundLocation245(tf)===q.locationId);
+  return{ok:true,q,reason:'',embarkable,embarked,territories:q.territories||[]};
+}
+function campaignFleetGroundOpsHTML259(root,fac,fleet){
+  const x=campaignFleetGroundOpsContext259(root,fac,fleet),q=x.q;
+  const orbit=q?(q.location?.name||q.location?.label||q.locationId):'No planetary orbit selected';
+  const dis=x.embarked.length?x.embarked.map(tf=>`<option value="${esc(tf.id)}">${esc(tf.name)} — ${campaignTaskForcePoints(tf).toLocaleString()} pts</option>`).join(''):'<option value="">No embarked Task Force</option>';
+  const emb=x.embarkable.length?x.embarkable.map(tf=>`<option value="${esc(tf.id)}">${esc(tf.name)} — ${campaignTaskForcePoints(tf).toLocaleString()} pts — ${esc(campaignTerritoryById237(root,tf.systemId,campaignGroundLocation245(tf),campaignGroundTerritory245(tf))?.name||'surface')}</option>`).join(''):'<option value="">No ground force at this planet/moon</option>';
+  const terr=x.territories.length?x.territories.map(t=>`<option value="${esc(t.id)}">${esc(t.name)} — ${esc(t.biome237||t.base||'Territory')}</option>`).join(''):'<option value="">No valid territory</option>';
+  return `<section class="campaign-ground-transport259">
+    <div class="campaign-ground-transport-head259"><div><h5>Ground Transport Operations</h5><p>Fleet orbit: <b>${esc(orbit)}</b>. Embarkation and disembarkation only work at this exact planet/moon.</p></div><span class="badge">${x.ok?'ORBITAL ACCESS':'NO LANDING ACCESS'}</span></div>
+    ${x.ok?'':`<div class="campaign-ground-transport-warning259">${esc(x.reason)}</div>`}
+    <div class="campaign-ground-transport-grid259">
+      <div class="campaign-ground-operation259"><h6>Disembark to Territory</h6><label>Embarked force</label><select id="campaignDisembarkForce259">${dis}</select><label>Landing territory</label><select id="campaignDisembarkTerritory259">${terr}</select><button id="campaignDisembark259" class="ghost" type="button" ${x.ok&&x.embarked.length&&x.territories.length?'':'disabled'}>Disembark Selected Force</button><small>Only forces actually carried by this fleet are listed.</small></div>
+      <div class="campaign-ground-operation259"><h6>Embark from Surface</h6><label>Ground force at this world/moon</label><select id="campaignEmbarkForce259">${emb}</select><button id="campaignEmbark259" class="ghost" type="button" ${x.ok&&x.embarkable.length?'':'disabled'}>Embark Selected Force</button><small>The fleet and Task Force must share the same planetary object. Fleet troop-lift limits still apply.</small></div>
+    </div>
+  </section>`;
+}
+function campaignDisembarkToTerritory259(root,fac,fleet,tfId,territoryId){
+  const x=campaignFleetGroundOpsContext259(root,fac,fleet),tf=(fac.taskForces||[]).find(t=>t.id===tfId);
+  if(!x.ok)return campaignQueueNotice(root,'Disembarkation Blocked',x.reason),false;
+  if(!tf||tf.fleetId!==fleet.id||!(fleet.cargoTaskForceIds||[]).includes(tf.id))return campaignQueueNotice(root,'Disembarkation Blocked','Choose a Task Force that is actually embarked aboard this fleet.'),false;
+  const tr=x.territories.find(t=>t.id===territoryId);
+  if(!tr)return campaignQueueNotice(root,'Disembarkation Blocked','Choose a valid territory on the fleet’s current planet or moon.'),false;
+  const acts=campaignFleetActions(root,fleet);if(acts.remaining<1)return campaignQueueNotice(root,'Disembarkation Blocked',`${fleet.name} has no fleet actions remaining this turn.`),false;
+  if(!campaignSpendFleetAction(root,fleet,'Disembarkation'))return false;
+  fleet.cargoTaskForceIds=(fleet.cargoTaskForceIds||[]).filter(id=>id!==tf.id);
+  tf.fleetId=null;tf.systemId=x.q.nodeId;tf.localLocationId245=x.q.locationId;tf.territoryId245=tr.id;tf.locationId239=x.q.locationId;tf.territoryId239=tr.id;tf.status='Deployed';tf.disembarkedTurn245=root.campaign.turn;
+  const band=campaignForceOccupationBand246(campaignTaskForcePoints(tf));
+  campaignLog(root.campaign,`${tf.name} disembarked from ${fleet.name} into ${tr.name}; occupation support +${band.claim} claim / +${band.order} Order.`,'gain');
+  campaignQueueNotice(root,'Ground Force Deployed',`${tf.name} has disembarked into ${tr.name}.\n\n${campaignTaskForcePoints(tf).toLocaleString()} pts\nLocal claim bonus: +${band.claim}\nLocal Order support: +${band.order}`);
+  return true;
+}
+function campaignEmbarkFromSurface259(root,fac,fleet,tfId){
+  const x=campaignFleetGroundOpsContext259(root,fac,fleet),tf=(fac.taskForces||[]).find(t=>t.id===tfId);
+  if(!x.ok)return campaignQueueNotice(root,'Embarkation Blocked',x.reason),false;
+  if(!tf||tf.fleetId)return campaignQueueNotice(root,'Embarkation Blocked','Choose a deployed Task Force that is not already embarked.'),false;
+  if(tf.systemId!==x.q.nodeId||campaignGroundLocation245(tf)!==x.q.locationId)return campaignQueueNotice(root,'Embarkation Blocked','The Task Force is not deployed on the same planet or moon as this fleet.'),false;
+  const used=campaignFleetCargoPoints(root.campaign,fac,fleet),pts=campaignTaskForcePoints(tf),cap=campaignFleetCapacity(fleet);
+  if(used+pts>cap)return campaignFleetFullPopup248(root,fleet,pts,used),false;
+  const acts=campaignFleetActions(root,fleet);if(acts.remaining<1)return campaignQueueNotice(root,'Embarkation Blocked',`${fleet.name} has no fleet actions remaining this turn.`),false;
+  if(!campaignSpendFleetAction(root,fleet,'Embarkation'))return false;
+  fleet.cargoTaskForceIds=fleet.cargoTaskForceIds||[];if(!fleet.cargoTaskForceIds.includes(tf.id))fleet.cargoTaskForceIds.push(tf.id);
+  tf.fleetId=fleet.id;tf.systemId=fleet.currentId;delete tf.localLocationId245;delete tf.territoryId245;delete tf.locationId239;delete tf.territoryId239;tf.status='Embarked';
+  campaignLog(root.campaign,`${tf.name} embarked aboard ${fleet.name} from ${x.q.location?.name||'local orbit'}.`,'gain');
+  campaignQueueNotice(root,'Ground Force Embarked',`${tf.name} is now aboard ${fleet.name}.\n\nFleet lift: ${(used+pts).toLocaleString()} / ${cap.toLocaleString()} pts.`);
+  return true;
+}
+
+/* Replace the old shared ground-force selector and v25.8 landing block with one authoritative transport panel. */
+const _campaignFleetManagerHTML_rev259=campaignFleetManagerHTML;
+campaignFleetManagerHTML=function(root,c){
+  let h=_campaignFleetManagerHTML_rev259(root,c),p=campaignPlayer(c),fleet=(p.fleets||[]).find(f=>f.id===c.selectedFleetId)||p.fleets?.[0];
+  h=h.replace(/<div class="field"><label>Ground force<\/label><select id="campaignFleetTaskForce">[\s\S]*?<\/select><\/div>/,'');
+  h=h.replace(/<button id="campaignEmbarkBtn"[\s\S]*?<\/button>/,'').replace(/<button id="campaignDisembarkBtn"[\s\S]*?<\/button>/,'');
+  h=h.replace(/<button id="campaignFleetMoveLegacyHidden"[\s\S]*?<\/button>/,'');
+  const start=h.indexOf('<div class="campaign-fleet-landing258">');
+  if(start>=0){const end=h.indexOf('<div class="campaign-actionrow">',start);if(end>start)h=h.slice(0,start)+campaignFleetGroundOpsHTML259(root,p,fleet)+h.slice(end)}
+  else{const anchor='<div class="campaign-actionrow">';if(h.includes(anchor))h=h.replace(anchor,campaignFleetGroundOpsHTML259(root,p,fleet)+anchor)}
+  return h;
+};
+
+/* Campaign settlements advance on the campaign turn. Remove the old manual extra-turn shortcut. */
+const _campaignColoniesHTML_rev259=campaignColoniesHTML;
+campaignColoniesHTML=function(root,c){return _campaignColoniesHTML_rev259(root,c).replace(/<button[^>]*data-campaign-colony="advance"[^>]*>[\s\S]*?<\/button>/g,'')};
+
+const _campaignBindDashboard_rev259=campaignBindDashboard;
+campaignBindDashboard=function(root){
+  _campaignBindDashboard_rev259(root);const c=root?.campaign,p=c&&campaignPlayer(c);
+  $('campaignDisembark259')?.addEventListener('click',()=>{const fleet=(p.fleets||[]).find(f=>f.id===val('campaignFleetSelect'));if(fleet&&campaignDisembarkToTerritory259(root,p,fleet,val('campaignDisembarkForce259'),val('campaignDisembarkTerritory259'))){campaignPersist(root);campaignRenderDashboard(root);campaignShowView('fleets');campaignStrategicRefreshMap(root)}});
+  $('campaignEmbark259')?.addEventListener('click',()=>{const fleet=(p.fleets||[]).find(f=>f.id===val('campaignFleetSelect'));if(fleet&&campaignEmbarkFromSurface259(root,p,fleet,val('campaignEmbarkForce259'))){campaignPersist(root);campaignRenderDashboard(root);campaignShowView('fleets');campaignStrategicRefreshMap(root)}});
+};
+
+/* Audit helper used by release tests and future maintenance. */
+function campaignInteractionAudit259(){
+  const issues=[],buttons=[...document.querySelectorAll('button')];
+  if(document.getElementById('campaignFleetMoveLegacyHidden'))issues.push('Dead legacy fleet movement button is still rendered.');
+  if(buttons.some(b=>b.textContent.trim()==='Advance Extra 90 Days'))issues.push('Manual settlement extra-turn control is still rendered.');
+  if(document.getElementById('campaignEmbarkBtn')||document.getElementById('campaignDisembarkBtn'))issues.push('Old shared fleet ground-operation buttons are still rendered.');
+  if(document.getElementById('campaignDisembark259')&&!document.getElementById('campaignDisembarkForce259'))issues.push('Disembark action is missing its embarked-force selector.');
+  if(document.getElementById('campaignEmbark259')&&!document.getElementById('campaignEmbarkForce259'))issues.push('Embark action is missing its surface-force selector.');
+  return{ok:issues.length===0,issues};
+}
+const _campaignRulesReferenceHTML_rev259=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev259(root),add=`<div class="campaign-rule-card"><h4>73. Ground Transport Operations</h4><p>The Fleets tab now separates embarkation from disembarkation. Disembark lists only Task Forces actually aboard the selected fleet and deploys them directly into the selected territory. Embark lists only deployed forces on the fleet’s exact planet/moon. Both operations consume one fleet action and obey troop-lift capacity.</p></div><div class="campaign-rule-card"><h4>74. Interaction Cleanup</h4><p>The dead legacy fleet-movement button and campaign settlement “Advance Extra 90 Days” shortcut were removed. Settlement time advances through the campaign turn cycle; inter-system and local fleet travel use the current journey/navigation controls.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
+window.__cartoRevision259={version:REV259,build:REV259_BUILD,groundOps:campaignFleetGroundOpsContext259,disembark:campaignDisembarkToTerritory259,embark:campaignEmbarkFromSurface259,audit:campaignInteractionAudit259};
+const rb259=document.querySelector('.generation-head-actions .badge');if(rb259)rb259.textContent='rev 25.9 — Interaction Audit & Ground Operations';document.title='Administratum Stellar Cartographica — Revision 25.9';document.documentElement.dataset.cartographicaRevision=REV259;document.documentElement.dataset.cartographicaBuild=REV259_BUILD;
 
 })();
 

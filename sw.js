@@ -1,5 +1,5 @@
-const CACHE_NAME='cartographica-r25.8-operational-orders-v42-tested';
-const CANONICAL='./?rev=25.8-consolidated-orders-operational-doctrines-rebellion-warfare-v42-tested';
+const CACHE_NAME='cartographica-r25.9-ground-operations-audit-v43-tested';
+const CANONICAL='./?rev=25.9-ground-operations-ui-audit-v43-tested';
 const SHELL=[CANONICAL,'./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 self.addEventListener('install',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/cartographica/i.test(k)&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>caches.open(CACHE_NAME)).then(c=>c.addAll(SHELL.map(x=>new Request(x,{cache:'reload'})))).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/cartographica/i.test(k)&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
