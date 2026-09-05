@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="25.6" />
+<meta name="cartographica-revision" content="25.8" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=25.7-independent-deeptime-engine-v41-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=25.8-consolidated-orders-operational-doctrines-rebellion-warfare-v42-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='25.6';
-  const BUILD='25.7-independent-deeptime-engine-v41-tested';
-  const LABEL='rev 25.7 — Independent Stack-Safe Deep Time';
-  const TITLE='Administratum Stellar Cartographica — Revision 25.7';
+  const REVISION='25.8';
+  const BUILD='25.8-consolidated-orders-operational-doctrines-rebellion-warfare-v42-tested';
+  const LABEL='rev 25.8 — Operational Roles & Rebellion Warfare';
+  const TITLE='Administratum Stellar Cartographica — Revision 25.8';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 25.7</title>
+<title>Administratum Stellar Cartographica — Revision 25.8</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -640,6 +640,9 @@ html.carto-orientation-lock body:after{content:'';display:none}
 </style>
 <style id="rev255-css">
 .campaign-fleet-hulls255{margin:6px 0;padding:7px;border:1px solid rgba(109,145,177,.25);background:rgba(44,75,101,.07);display:grid;gap:2px}.campaign-fleet-hulls255 b{color:#c4d8e5;font-size:9px;text-transform:uppercase}.campaign-fleet-hulls255 span{color:#d6d7d0;font-size:9px}.campaign-fleet-hulls255 small{color:#8fa0a8;font-size:7.5px}.campaign-fleet-hulls255.inspector{grid-column:1/-1}.campaign-fleet-polity255{border-color:rgba(108,159,190,.38)!important}
+</style>
+<style id="rev258-css">
+.campaign-fleet-landing258{grid-column:1/-1;margin:8px 0;padding:9px;border:1px solid rgba(105,145,174,.28);background:rgba(52,86,110,.06)}.campaign-fleet-landing258 h5{margin:0 0 6px;color:#b9d1dc}.campaign-fleet-landing258 small{display:block;margin-top:5px;color:#8f9a9d;line-height:1.4}.campaign-static-field258{min-height:32px;display:flex;align-items:center;border:1px solid #574c32;padding:6px 9px;color:#d8d0bb;background:#0c0f11}.campaign-doctrine-effects258{margin-top:7px;padding:7px;border-left:3px solid #9b8148;background:rgba(155,129,72,.07);color:#c8b98e;font-size:9px;line-height:1.45}.campaign-rebellion-explain258,.campaign-rebellion-battle258{margin-top:6px;padding:7px;border:1px solid rgba(176,102,87,.24);background:rgba(110,54,45,.055);color:#ac9990;font-size:8px;line-height:1.45}.campaign-rebellion-explain258 b,.campaign-rebellion-battle258 b{color:#d2b18f}.campaign-rebellion-battle258 small,.campaign-rebellion-battle258 span{display:block;margin:4px 0;color:#9f9189}.campaign-rebellion-battle258 select,.campaign-rebellion-battle258 button{margin-top:5px;max-width:100%}@media(max-width:700px){.campaign-fleet-landing258 .campaign-command-grid{grid-template-columns:1fr!important}}
 </style>
 </head>
 <body>
@@ -7011,7 +7014,7 @@ const rb255=document.querySelector('.generation-head-actions .badge');if(rb255)r
 
 /* ==========================================================================\n   Revision 25.7 — Managed Empires, Strong Fleet Foundations & Stack Guard\n   ========================================================================== */
 const REV256='25.6';
-const REV256_BUILD='25.7-independent-deeptime-engine-v41-tested';
+const REV256_BUILD='25.8-consolidated-orders-operational-doctrines-rebellion-warfare-v42-tested';
 function campaignStrongFleetClass256(fac,turn=0,slot=0){
   const fleetPolity=campaignIsFleetPolity255(fac);if(fleetPolity){if(turn>=820&&slot===0)return'armada';if(turn>=560)return'assault';if(turn>=260)return slot===0?'battle':'expeditionary';if(turn>=60)return'expeditionary';return slot===0?'escort':'scout'}
   if(turn>=760&&slot===0)return'battle';if(turn>=360)return'expeditionary';if(turn>=140)return'escort';return'scout'
@@ -7058,7 +7061,7 @@ const rb253=document.querySelector('.generation-head-actions .badge');if(rb253)r
 
 /* ==========================================================================\n   Revision 25.7 — Independent Stack-Safe Deep-Time Engine\n   ========================================================================== */
 const REV257='25.7';
-const REV257_BUILD='25.7-independent-deeptime-engine-v41-tested';
+const REV257_BUILD='25.8-consolidated-orders-operational-doctrines-rebellion-warfare-v42-tested';
 /* Break the v23.5/v23.6/v23.7 mobile-settlement PF lookup recursion:
    colony effectiveness only needs to know whether the colony belongs to a fixed
    or mobile settlement, so never materialise every mobile proxy during that lookup. */
@@ -7194,6 +7197,104 @@ campaignSimulatePrehistory247=campaignSimulatePrehistory257;
 if(window.__cartoTest247)window.__cartoTest247.simulatePrehistory=(...args)=>campaignSimulatePrehistory257(...args);
 window.__cartoRevision257={version:REV257,build:REV257_BUILD,simulatePrehistory:(...args)=>campaignSimulatePrehistory257(...args),advanceEpoch:campaignAdvanceMacroEpoch257,compact:campaignCompactDeepTime257};
 const rb257=document.querySelector('.generation-head-actions .badge');if(rb257)rb257.textContent='rev 25.7 — Independent Stack-Safe Deep Time';document.title='Administratum Stellar Cartographica — Revision 25.7';document.documentElement.dataset.cartographicaRevision=REV257;document.documentElement.dataset.cartographicaBuild=REV257_BUILD;
+
+
+/* ===== Revision 25.8 — Consolidated Orders, Operational Roles & Rebellion Warfare ===== */
+const REV258='25.8';
+const REV258_BUILD='25.8-consolidated-orders-operational-doctrines-rebellion-warfare-v42-tested';
+
+/* The old Overview command box duplicated Territory/Fleet/Colony controls and is removed. */
+campaignCommandHTML=function(){return''};
+const _campaignColoniesHTML_rev258=campaignColoniesHTML;
+campaignColoniesHTML=function(root,c){return _campaignColoniesHTML_rev258(root,c).replace('Use Player Strategic Orders to establish colonies on worlds, moons, asteroid belts, stations or debris loci.','Establish and manage settlements through the Territory, planetary inspector and Colonies controls.')};
+
+/* ---------- Fleet landing zones: exact planet/moon + territory ---------- */
+function campaignFleetLandingContext258(root,fleet){
+  if(!fleet||fleet.transit||fleet.localTransit2352)return null;
+  const node=fleet.currentId,loc=fleet.localLocationId2352;if(!node||!loc)return null;
+  const ctx=campaignTerritoryContext238(root,node,loc);if(!ctx?.territories?.length)return null;
+  return{nodeId:node,locationId:loc,location:campaignLocalLocation2352(root,fleet,loc),territories:ctx.territories};
+}
+function campaignFleetLandingOptions258(root,fleet){const q=campaignFleetLandingContext258(root,fleet);if(!q)return'<option value="">Fleet must be stationed at a planet/moon</option>';return q.territories.map(t=>`<option value="${esc(t.id)}">${esc(t.name)} — ${esc(t.biome237||t.base||'Territory')}</option>`).join('')}
+const _campaignFleetManagerHTML_rev258=campaignFleetManagerHTML;
+campaignFleetManagerHTML=function(root,c){
+  let h=_campaignFleetManagerHTML_rev258(root,c),p=campaignPlayer(c),fleet=(p.fleets||[]).find(f=>f.id===c.selectedFleetId)||p.fleets?.[0],q=campaignFleetLandingContext258(root,fleet),loc=q?.location?.name||q?.location?.label||q?.locationId||'Not positioned at a planet/moon';
+  const landing=`<div class="campaign-fleet-landing258"><h5>Ground Landing / Recovery Zone</h5><div class="campaign-command-grid"><div class="field"><label>Fleet orbital position</label><div class="campaign-static-field258">${esc(loc)}</div></div><div class="field"><label>Disembark territory</label><select id="campaignFleetDisembarkTerritory258">${campaignFleetLandingOptions258(root,fleet)}</select></div></div><small>Disembarkation deploys the selected embarked Task Force directly into this territory. Embarkation is only possible when the fleet is stationed at the same planet/moon as the deployed force.</small></div>`;
+  return h.replace('<div class="campaign-actionrow"><button id="campaignFleetMoveBtn"',landing+'<div class="campaign-actionrow"><button id="campaignFleetMoveBtn"');
+};
+const _campaignDisembarkForce_rev258=campaignDisembarkForce;
+campaignDisembarkForce=function(root,fac,fleet,tf,territoryId=null){
+  const q=campaignFleetLandingContext258(root,fleet);if(!q){campaignQueueNotice(root,'Disembarkation Blocked','The fleet must be physically stationed at a planet or moon before ground forces can disembark.');return false}
+  const tid=territoryId||q.territories[0]?.id;if(!tid||!q.territories.some(t=>t.id===tid)){campaignQueueNotice(root,'Disembarkation Blocked','Select a valid territory on the fleet’s current planet or moon.');return false}
+  if(tf?.fleetId!==fleet.id){campaignQueueNotice(root,'Disembarkation Blocked','The selected Task Force is not embarked on this fleet.');return false}
+  return campaignDeployTaskForce245(root,fac,tf.id,q.nodeId,q.locationId,tid);
+};
+const _campaignEmbarkForce_rev258=campaignEmbarkForce;
+campaignEmbarkForce=function(root,fac,fleet,tf){
+  const loc=campaignGroundLocation245(tf);if(!loc){campaignQueueNotice(root,'Embarkation Blocked','A ground force must be deployed on a planet/moon territory before it can embark from the surface.');return false}
+  if(!fleet||fleet.transit||fleet.localTransit2352||fleet.currentId!==tf.systemId||fleet.localLocationId2352!==loc){campaignQueueNotice(root,'Embarkation Blocked','The selected fleet must be stationed at the same planet or moon as the ground force. Move the fleet into local orbit first.');return false}
+  return _campaignEmbarkForce_rev258(root,fac,fleet,tf);
+};
+const _campaignBindDashboard_rev258=campaignBindDashboard;
+campaignBindDashboard=function(root){
+  _campaignBindDashboard_rev258(root);const c=root.campaign,p=campaignPlayer(c);
+  const old=$('campaignDisembarkBtn');if(old&&!old.dataset.rev258){const n=old.cloneNode(true);old.replaceWith(n);n.dataset.rev258='1';n.addEventListener('click',()=>{const f=(p.fleets||[]).find(x=>x.id===val('campaignFleetSelect')),tf=(p.taskForces||[]).find(x=>x.id===val('campaignFleetTaskForce'));if(f&&tf)campaignDisembarkForce(root,p,f,tf,val('campaignFleetDisembarkTerritory258'));campaignPersist(root);campaignRenderDashboard(root);campaignShowView('fleets')})}
+};
+
+/* ---------- Operational fleet roles and strategic doctrines ---------- */
+const DOCTRINE_EFFECTS258={
+ balanced:{fleetSpeed:1.05,groundAttack:1.01,groundDefence:1.01,growth:1,risk:-1,claim:1,label:'Flexible logistics: +5% fleet speed, +1 claim pressure, slight army and civic benefit.'},
+ aggressive:{fleetSpeed:.98,groundAttack:1.10,groundDefence:.96,growth:0,risk:3,claim:0,label:'Shock warfare: +10% ground attack and stronger assault fleets, but higher civic risk.'},
+ defensive:{fleetSpeed:.94,groundAttack:.96,groundDefence:1.12,growth:1,risk:-6,claim:0,label:'Fortress posture: +12% ground defence and substantially lower settlement consequence risk.'},
+ industrial:{fleetSpeed:.94,groundAttack:1,groundDefence:1.02,growth:4,risk:-2,claim:0,label:'Industrial mobilisation: existing +2 Materiel income plus +4 demographic momentum and steadier settlements.'},
+ raider:{fleetSpeed:1.15,groundAttack:1.08,groundDefence:.94,growth:-1,risk:2,claim:0,label:'Raiding tempo: +15% fleet speed and +8% ground attack, trading away defence and stability.'},
+ subversive:{fleetSpeed:1.08,groundAttack:1.04,groundDefence:1,growth:2,risk:-2,claim:2,label:'Infiltration network: +8% fleet speed, +2 claim pressure, improved growth/stability and covert attack support.'}
+};
+function campaignDoctrineEffects258(fac){return DOCTRINE_EFFECTS258[fac?.doctrine]||DOCTRINE_EFFECTS258.balanced}
+function campaignFleetOwner258(fleet){const c=window.currentSector?.campaign;if(!c)return null;for(const f of c.factions||[])if((f.fleets||[]).includes(fleet))return f;return null}
+const _campaignFleetSpeed_rev258=campaignFleetSpeed;
+campaignFleetSpeed=function(root,fleet){return _campaignFleetSpeed_rev258(root,fleet)*(campaignDoctrineEffects258(campaignFleetOwner258(fleet)).fleetSpeed||1)};
+const _campaignNavalProfile247_rev258=campaignNavalProfile247;
+campaignNavalProfile247=function(fac,fleet){const p=_campaignNavalProfile247_rev258(fac,fleet),r=campaignFleetRole(fleet),d=campaignDoctrineEffects258(fac);switch(fleet?.roleKey){case'recon':p.command+=1;p.speed+=2;p.resilience-=.5;break;case'escort':p.resilience+=1.5;p.gunnery+=.5;break;case'transport':p.resilience-=1;p.gunnery-=.75;break;case'expedition':p.command+=.5;p.resilience+=.5;break;case'battle':p.gunnery+=1.5;p.lances+=1;p.resilience+=1;break;case'assault':p.ordnance+=1.5;p.boarding+=2;break;case'blockade':p.gunnery+=1;p.resilience+=2;p.speed-=1;break}if(fac?.doctrine==='aggressive'){p.gunnery+=1;p.boarding+=.5}else if(fac?.doctrine==='defensive')p.resilience+=1.5;else if(fac?.doctrine==='raider'){p.speed+=2;p.command+=.5}else if(fac?.doctrine==='subversive')p.command+=1;return p};
+function campaignGroundFleetMultiplier258(fac,tf,attack){let m=attack?campaignDoctrineEffects258(fac).groundAttack:campaignDoctrineEffects258(fac).groundDefence;if(tf?.fleetId){const fl=(fac.fleets||[]).find(f=>f.id===tf.fleetId);if(fl){if(attack&&fl.roleKey==='assault')m*=1.12;if(attack&&fl.roleKey==='battle')m*=1.06;if(attack&&fl.roleKey==='expedition')m*=1.03;if(attack&&fl.roleKey==='transport')m*=.96;if(!attack&&fl.roleKey==='escort')m*=1.06;if(!attack&&fl.roleKey==='blockade')m*=1.08}}return m}
+const _campaignAutoResolveBattle_rev258=campaignAutoResolveBattle;
+campaignAutoResolveBattle=function(root,battleId,quiet=false){const b=root?.campaign?.battles?.find(x=>x.id===battleId);if(!b)return _campaignAutoResolveBattle_rev258(root,battleId,quiet);const a=campaignFaction(root.campaign,b.attackerFactionId),d=campaignFaction(root.campaign,b.defenderFactionId),at=a?.taskForces?.find(x=>x.id===b.attackerTaskForceId),dt=d?.taskForces?.find(x=>x.id===b.defenderTaskForceId),ap=b.attackerPoints,dp=b.defenderPoints;b.attackerPoints=Math.round(ap*campaignGroundFleetMultiplier258(a,at,true));b.defenderPoints=Math.round(dp*campaignGroundFleetMultiplier258(d,dt,false));const out=_campaignAutoResolveBattle_rev258(root,battleId,quiet);b.attackerPoints=ap;b.defenderPoints=dp;if(b.resolution)b.resolution.operationalModifiers258={attacker:+campaignGroundFleetMultiplier258(a,at,true).toFixed(3),defender:+campaignGroundFleetMultiplier258(d,dt,false).toFixed(3)};return out};
+
+/* Strategic doctrine card now states the effects actually applied by the engine. */
+const _campaignOverviewHTML_rev258=campaignOverviewHTML;
+campaignOverviewHTML=function(root,c){let h=_campaignOverviewHTML_rev258(root,c),p=campaignPlayer(c),d=campaignDoctrineEffects258(p);h=h.replace(`<p>${esc(CAMPAIGN_DOCTRINES[p.doctrine]?.desc||'')}</p>`,`<p>${esc(CAMPAIGN_DOCTRINES[p.doctrine]?.desc||'')}</p><div class="campaign-doctrine-effects258"><b>In-game effects:</b> ${esc(d.label)}</div>`);return h};
+
+/* ---------- Expansion & Population districts now operate on demographic momentum ---------- */
+function campaignGrowthDistrictMomentum258(col){const web=campaignEnsureDevelopmentWeb(col),o={growth:0,buffer:0};for(const slot of web?.slots||[]){if(slot.chain!=='growth'||!slot.tier)continue;const t=slot.tier,path=slot.path||'';o.growth+=t<=2?t*2:path==='expansion'?t*3:path==='planned'?t*2:Math.max(1,t);o.buffer+=t<=2?t:path==='stability'?t*3:path==='planned'?t*2:Math.ceil(t/2)}return o}
+const _campaignSettlementDevelopment251_rev258=campaignSettlementDevelopment251;
+campaignSettlementDevelopment251=function(c){const d=_campaignSettlementDevelopment251_rev258(c),g=campaignGrowthDistrictMomentum258(c),doc=campaignDoctrineEffects258(c?._campaignFaction258);d.positive+=g.growth;d.negative=Math.max(0,d.negative-g.buffer);d.net=Math.max(-25,Math.min(25,d.positive-d.negative));d.reasons.push(`+${g.growth} population-district momentum`,`−${g.buffer} decline pressure from population planning`);return d};
+/* Attach faction doctrine temporarily while development is evaluated. */
+const _campaignSettlementDevelopmentForFaction258=campaignSettlementDevelopment251;
+function campaignSettlementDevelopmentWithFaction258(c,fac){c._campaignFaction258=fac;try{const d=_campaignSettlementDevelopmentForFaction258(c),e=campaignDoctrineEffects258(fac);d.positive+=Math.max(0,e.growth||0);d.negative+=Math.max(0,-Number(e.growth||0));d.net=Math.max(-25,Math.min(25,d.positive-d.negative));if(e.growth)d.reasons.push(`${e.growth>0?'+':''}${e.growth} ${CAMPAIGN_DOCTRINES[fac.doctrine]?.label||'doctrine'} momentum`);return d}finally{delete c._campaignFaction258}}
+const _soiAdvanceColony_rev258=soiAdvanceColony;
+/* campaign settlement turn paths call this helper directly where faction is known below; generic world colonies retain normal momentum. */
+for(const [tier,node] of Object.entries(CAMPAIGN_BUILDING_CHAINS.growth.common||{})){if(node.reward)node.reward=node.reward.replace(/% extra chance to gain Size after each 90-day turn\.?/i,' demographic momentum each 90-day turn.').replace(/growth chance/gi,'growth momentum').replace(/protection against Size loss/gi,'decline-pressure reduction')}
+for(const path of Object.values(CAMPAIGN_BUILDING_CHAINS.growth.paths||{}))for(const node of Object.values(path.tiers||{}))node.reward=String(node.reward||'').replace(/growth chance/gi,'growth momentum').replace(/chance to cancel a Size loss/gi,'decline-pressure reduction').replace(/decline protection/gi,'decline-pressure reduction').replace(/growth,/gi,'growth momentum,');
+
+/* ---------- Rebellions require identifiable political stress and can be fought in-territory ---------- */
+function campaignRebellionCauses258(root,fac,s,q=campaignSettlementConsequenceRisk246(root,fac,s)){const causes=[];if(q.hostility>=12)causes.push(`local hostility ${q.hostility}`);if(q.orderDef>0)causes.push(`Order deficit ${q.orderDef}`);if(q.compDef>0)causes.push(`Complacency deficit ${q.compDef}`);if(q.pietyDef>0)causes.push(`Piety/Cohesion deficit ${q.pietyDef}`);if(q.infra)causes.push('unmet infrastructure');if(s.occupiedBy&&s.occupiedBy!==fac.id)causes.push('foreign occupation');const native=campaignNativeProfile238(root,s.systemId,s.locationId);if(native&&!campaignNativeResolved238(root,s.systemId,s.locationId))causes.push('unresolved native resistance');return causes}
+function campaignRebellionEligible258(root,fac,s,q){const causes=campaignRebellionCauses258(root,fac,s,q);return{eligible:q.risk>=32&&(q.orderDef>0||q.hostility>=16||q.pietyDef>=2||s.occupiedBy&&s.occupiedBy!==fac.id),causes}}
+const _campaignSettlementConsequenceRisk246_rev258=campaignSettlementConsequenceRisk246;
+campaignSettlementConsequenceRisk246=function(root,fac,s){const q=_campaignSettlementConsequenceRisk246_rev258(root,fac,s),e=campaignDoctrineEffects258(fac);q.risk=Math.max(2,Math.min(90,q.risk+Number(e.risk||0)));q.doctrineRisk258=Number(e.risk||0);return q};
+const _campaignSpawnRebellion246_rev258=campaignSpawnRebellion246;
+campaignSpawnRebellion246=function(root,fac,s,severity=1){const q=campaignSettlementConsequenceRisk246(root,fac,s),e=campaignRebellionEligible258(root,fac,s,q);if(!e.eligible)return null;const r=_campaignSpawnRebellion246_rev258(root,fac,s,severity);if(r){r.causes258=e.causes;r.triggerRisk258=q.risk;r.triggerTurn258=root.campaign.turn}return r};
+campaignRollSettlementConsequence246=function(root,fac,s,endedTurn){const col=s.colony;if(!col||s.status==='Destroyed'||s.mobile236)return;campaignResolveActiveRebellion246(root,fac,s);const q=campaignSettlementConsequenceRisk246(root,fac,s),raw=1+Math.floor(campaignRandom(root.campaign,`SETTLEMENT-CONSEQUENCE258-${s.id}-T${endedTurn}`)*100);s.lastConsequenceRisk246={turn:endedTurn,...q,roll:raw};if(raw>q.risk)return;const sev=q.risk>=65?3:q.risk>=40?2:1,d=1+Math.floor(campaignRandom(root.campaign,`SETTLEMENT-CONSEQUENCE-TABLE258-${s.id}-T${endedTurn}`)*10),elig=campaignRebellionEligible258(root,fac,s,q);let text='';if(d<=2){col.complacency=Math.max(0,Number(col.complacency||0)-1);text='Smuggling, absentee rule and local disorder reduce Complacency by 1.'}else if(d<=4){col.productivity=Math.max(0,Number(col.productivity||0)-1);text='Strikes, sabotage or administrative paralysis reduce Productivity by 1.'}else if(d===5){col.order=Math.max(0,Number(col.order||0)-1);col.piety=Math.max(0,Number(col.piety||0)-1);text='Sectarian or ideological agitation reduces Order and Piety/Cohesion by 1.'}else if(d===6){col.requiredInfrastructure=col.requiredInfrastructure||SOI_INFRA[(hashText(`${s.id}|INFRA-FAIL|${endedTurn}`)>>>0)%SOI_INFRA.length];col.pendingInfrastructurePenalty=true;text=`Infrastructure failure creates an urgent ${col.requiredInfrastructure} requirement.`}else if(d<=8||!elig.eligible){col.order=Math.max(0,Number(col.order||0)-1);text=elig.eligible?'Separatist agitation reduces Order by 1 and increases rebellion pressure.':`Local unrest reduces Order by 1, but conditions are not severe enough for open rebellion (${elig.causes.join(', ')||'no major political trigger'}).`}else{const r=campaignSpawnRebellion246(root,fac,s,sev);text=r?`Open rebellion erupts with approximately ${r.points.toLocaleString()} pts of insurgent strength. Causes: ${r.causes258.join(', ')}.`:'Unrest intensifies, but open rebellion conditions were not met.'}col.events=[{kind:'Settlement Consequence',text:`Risk ${q.risk}% (roll ${raw}): ${text}`},...(col.events||[])].slice(0,8);campaignLog(root.campaign,`${s.locationName} consequence: ${text}`,'war')};
+function campaignRebellionForces258(fac,s){return(fac.taskForces||[]).filter(tf=>!tf.fleetId&&tf.systemId===s.systemId&&campaignGroundLocation245(tf)===s.locationId&&campaignGroundTerritory245(tf)===(s.territoryId237||s.territoryId245||s.territoryId239))}
+function campaignAttackRebellion258(root,fac,s,tfId){const r=s.rebellion246,tf=(fac.taskForces||[]).find(x=>x.id===tfId);if(!r?.active||!tf)return false;const eligible=campaignRebellionForces258(fac,s);if(!eligible.includes(tf)){campaignQueueNotice(root,'Rebellion Attack Blocked','Deploy the Task Force into the rebellious settlement’s exact territory before declaring battle.');return false}if(tf.rebellionAttackTurn258===root.campaign.turn){campaignQueueNotice(root,'Rebellion Battle Used','This Task Force has already attacked a rebellion this turn.');return false}const pts=campaignTaskForcePoints(tf)*Math.max(.1,(tf.strength||100)/100),profile=campaignArmyStrategicProfile251(tf),attack=pts*(.65+(profile.assault+profile.morale+profile.firepower)/300),def=r.points*(.9+Math.min(25,s.colony?.size||1)/50),rollA=.85+campaignRandom(root.campaign,`REB-A-${s.id}-${tf.id}`)*.3,rollD=.85+campaignRandom(root.campaign,`REB-D-${s.id}-${tf.id}`)*.3,awin=attack*rollA>def*rollD;tf.rebellionAttackTurn258=root.campaign.turn;if(awin){const loss=Math.max(4,Math.min(28,Math.round(r.points/Math.max(1,pts)*12)));tf.strength=Math.max(5,(tf.strength||100)-loss);r.points=Math.max(0,Math.round(r.points*.18));if(r.points<=150){r.active=false;r.resolvedTurn=root.campaign.turn;s.colony.order=Math.max(1,Number(s.colony.order||0)+2)}campaignLog(root.campaign,`${tf.name} defeated the rebellion at ${s.locationName}; ${loss}% Task Force strength lost.`,'gain');campaignQueueNotice(root,'Rebellion Battle Won',`${tf.name} defeated the insurgents in ${s.locationName}. Remaining rebel strength: ${Math.round(r.points).toLocaleString()} pts.`)}else{const loss=Math.max(8,Math.min(35,Math.round(r.points/Math.max(1,pts)*18)));tf.strength=Math.max(5,(tf.strength||100)-loss);r.points=Math.min(r.cap250||campaignRebellionPointCap250(root,fac,s),Math.round(r.points*1.12));campaignLog(root.campaign,`${tf.name} failed to break the rebellion at ${s.locationName}; ${loss}% Task Force strength lost.`,'war');campaignQueueNotice(root,'Rebellion Battle Lost',`${tf.name} was repulsed by the rebellion and loses ${loss}% Strength.`)}campaignPersist(root);return awin}
+const _campaignSettlementGovernanceHTML246_rev258=campaignSettlementGovernanceHTML246;
+campaignSettlementGovernanceHTML246=function(root,fac,s,own){let h=_campaignSettlementGovernanceHTML246_rev258(root,fac,s,own),q=campaignSettlementConsequenceRisk246(root,fac,s),elig=campaignRebellionEligible258(root,fac,s,q),r=s.rebellion246;if(!r?.active){const why=`<div class="campaign-rebellion-explain258"><b>Rebellion threshold:</b> Open rebellion requires consequence risk of at least 32% plus a major trigger such as low Order, severe hostility, major cohesion deficit or foreign occupation. Current state: <strong>${elig.eligible?'eligible':'not eligible'}</strong>${elig.causes.length?` • ${esc(elig.causes.join(' • '))}`:''}.</div>`;h=h.replace('<small>Risk uses',why+'<small>Risk uses')}else{const forces=campaignRebellionForces258(fac,s),causes=r.causes258?.length?r.causes258.join(' • '):campaignRebellionCauses258(root,fac,s,q).join(' • '),battle=`<div class="campaign-rebellion-battle258"><b>Why it began:</b> ${esc(causes||'historic unresolved political stress')}<small>To fight it as a ground battle, disembark a Task Force into this settlement’s exact territory.</small>${own&&forces.length?`<select data-rebellion-force258="${esc(s.id)}">${forces.map(tf=>`<option value="${esc(tf.id)}">${esc(tf.name)} — ${campaignTaskForcePoints(tf).toLocaleString()} pts</option>`).join('')}</select><button class="danger" type="button" data-rebellion-attack258="${esc(s.id)}">Declare Ground Battle</button>`:'<span>No friendly Task Force is currently deployed in the rebellion territory.</span>'}</div>`;h=h.replace('</div>'+campaignInfrastructurePlannerHTML246(s,own),'</div>'+battle+campaignInfrastructurePlannerHTML246(s,own));if(!h.includes('campaign-rebellion-battle258'))h+=battle}return h};
+if(!window.__cartoRebellionBattleDelegation258){window.__cartoRebellionBattleDelegation258=true;document.addEventListener('click',e=>{const b=e.target.closest?.('[data-rebellion-attack258]');if(!b)return;const root=window.currentSector,p=root?.campaign&&campaignPlayer(root.campaign),s=p?.settlements?.find(x=>x.id===b.dataset.rebellionAttack258);if(!root||!p||!s)return;e.preventDefault();e.stopImmediatePropagation();const sel=[...document.querySelectorAll('[data-rebellion-force258]')].find(x=>x.dataset.rebellionForce258===s.id);campaignAttackRebellion258(root,p,s,sel?.value);campaignRenderDashboard(root);campaignShowView('colonies')},true)}
+
+const _campaignRulesReferenceHTML_rev258=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev258(root),add=`<div class="campaign-rule-card"><h4>69. Consolidated Strategic Controls</h4><p>The obsolete Player Strategic Orders box has been removed. Territory, Colonies, Army and Fleet tabs are now the authoritative controls for their respective actions.</p></div><div class="campaign-rule-card"><h4>70. Planetary Embarkation</h4><p>Fleet-tab disembarkation chooses a territory on the fleet’s current planet/moon. A deployed force can only re-embark when its fleet is physically stationed at that same planetary object.</p></div><div class="campaign-rule-card"><h4>71. Operational Roles & Doctrine</h4><p>Fleet roles alter campaign speed, capacity and BFG-style combat characteristics, while assault/battle/escort/blockade roles also affect ground invasion or defence. Strategic doctrines now apply explicit fleet-speed, ground-combat and civic-development modifiers in addition to their original income/roll effects.</p></div><div class="campaign-rule-card"><h4>72. Rebellion Warfare</h4><p>Open rebellion requires identifiable political stress, not merely an unlucky consequence roll. The settlement card explains current eligibility and trigger causes. A Task Force deployed into the rebellious territory can directly declare a ground battle against the insurgency.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
+window.__cartoRevision258={version:REV258,build:REV258_BUILD,landingContext:campaignFleetLandingContext258,doctrine:campaignDoctrineEffects258,rebellionEligible:campaignRebellionEligible258,attackRebellion:campaignAttackRebellion258};
+const rb258=document.querySelector('.generation-head-actions .badge');if(rb258)rb258.textContent='rev 25.8 — Operational Roles & Rebellion Warfare';document.title='Administratum Stellar Cartographica — Revision 25.8';document.documentElement.dataset.cartographicaRevision=REV258;document.documentElement.dataset.cartographicaBuild=REV258_BUILD;
+
 })();
 
 

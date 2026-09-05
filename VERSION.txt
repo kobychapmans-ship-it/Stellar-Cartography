@@ -1,2 +1,2 @@
-Stellar Cartographica v25.7
-Build: 25.7-independent-deeptime-engine-v41-tested
+Stellar Cartographica v25.8
+Build: 25.8-consolidated-orders-operational-doctrines-rebellion-warfare-v42-tested

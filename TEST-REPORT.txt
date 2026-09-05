@@ -1,33 +1,18 @@
-STELLAR CARTOGRAPHICA v25.7 TEST REPORT
-Build: 25.7-independent-deeptime-engine-v41-tested
+STELLAR CARTOGRAPHICA v25.8 TEST REPORT
+Build: 25.8-consolidated-orders-operational-doctrines-rebellion-warfare-v42-tested
 
-ROOT CAUSE FIXED
-The full-sector stack overflow was reproduced and traced to an actual infinite recursion:
-campaignAllSettlementRecords236 → campaignFindSettlementByColony237 → soiColonyEffective → soiColonyPF → campaignEnsureMobileColony235 → campaignMobileSettlementProxy236 → campaignAllSettlementRecords236.
-The original colony lookup function was rewritten so effectiveness/PF checks never materialise every mobile-settlement proxy.
-
-ARCHITECTURE FIX
-Long Deep Time now calls campaignSimulatePrehistory257 directly from the campaign launch path. It does not enter the older nested historical epoch wrapper chain. The engine uses 10–24 bounded iterative epochs for 100–1000 turns and yields between faction batches. Generated reinforcement detail, logs, battles, notices, fleet counts and temporary caches are bounded during prehistory.
-
-RUNTIME MATRIX — real Chromium, 390×844 mobile viewport
-PASS — subsector T250 craftworld existing: 3.05s; systems=8; settlements=1; mobile=2; fleets=3; strong=1; stackRecoveries=0; dialogs=0; pageErrors=0.
-PASS — subsector T1000 mechanicum existing: 3.55s; systems=8; settlements=2; mobile=0; fleets=6; strong=6; stackRecoveries=0; dialogs=0; pageErrors=0.
-PASS — subsector T500 ork existing: 3.0s; systems=8; settlements=6; mobile=0; fleets=4; strong=2; stackRecoveries=0; dialogs=0; pageErrors=0.
-PASS — sector T250 legion emerging: 10.99s; systems=41; settlements=0; mobile=0; fleets=1; strong=0; stackRecoveries=0; dialogs=0; pageErrors=0.
-PASS — sector T1000 craftworld existing: 16.79s; systems=41; settlements=22; mobile=10; fleets=10; strong=8; stackRecoveries=0; dialogs=0; pageErrors=0.
-PASS — sector T500 ork existing: 12.35s; systems=41; settlements=3; mobile=0; fleets=3; strong=2; stackRecoveries=0; dialogs=0; pageErrors=0.
-PASS — sector T1000 legion existing: 15.67s; systems=41; settlements=1; mobile=6; fleets=6; strong=6; stackRecoveries=0; dialogs=0; pageErrors=0.
-PASS — sector T1000 mechanicum existing: 15.24s; systems=41; settlements=2; mobile=0; fleets=6; strong=6; stackRecoveries=0; dialogs=0; pageErrors=0.
-PASS — sector T1000 ork existing: 15.0s; systems=41; settlements=3; mobile=0; fleets=6; strong=6; stackRecoveries=0; dialogs=0; pageErrors=0.
-
-Additional PASS — full sector T100 Legion existing completed after the recursion fix with no launch dialog.
-PASS — full sector T1000 Legion existing: 41 systems, 14 factions, 1 managed fixed settlement + 6 mobile fleet settlements, 6 fleets/6 strong fleets, zero stack recoveries, zero dialogs, zero page errors.
-PASS — full sector T1000 Craftworld existing: 41 systems, 14 factions, 22 managed fixed settlements + 10 mobile settlements, 10 fleets/8 strong fleets, zero stack recoveries/errors.
-PASS — full sector T1000 Mechanicum existing: 41 systems, 14 factions, 2 managed settlements, 6 strong fleets, zero stack recoveries/errors.
-PASS — full sector T1000 Ork existing: 41 systems, 14 factions, 3 managed settlements, 6 strong fleets, zero stack recoveries/errors.
-
-STATIC VALIDATION
+PASS — obsolete Player Strategic Orders section is removed at source.
+PASS — Fleet Command Orders exposes the fleet's current planet/moon and a territory-specific disembark selector.
+PASS — fleet-tab embarkation now requires the fleet and deployed ground force to occupy the same planet/moon.
+PASS — fleet role speed modifiers remain active and roles now alter naval profile and ground invasion/defence effectiveness.
+PASS — all strategic doctrines retain their original attack/defence/logistics/income behaviour and now also have explicit operational/civic effects.
+PASS — Expansion & Population districts add deterministic demographic momentum and decline-pressure reduction rather than relying on obsolete random Size-growth chance language.
+PASS — open rebellion now requires >=32% consequence risk plus an identifiable major political trigger.
+PASS — settlement governance explains current rebellion eligibility and historic trigger causes.
+PASS — a Task Force deployed in the exact rebellious territory can declare and auto-resolve a ground battle against the insurgency.
+PASS — v25.7 independent stack-safe Deep-Time engine remains present and unchanged.
 PASS — all embedded JavaScript blocks pass Node syntax validation.
-PASS — service worker passes Node syntax validation.
-PASS — manifest parses as valid JSON and identifies Revision 25.7.
-PASS — ZIP integrity test passes.
+PASS — service worker passes Node syntax validation and uses a fresh v25.8 cache identity.
+PASS — manifest parses as valid JSON and identifies Revision 25.8.
+
+BROWSER LIMITATION — the container's Chromium executable is blocked by administrator policy for both localhost and file:// navigation in this environment. Two launch attempts were made (localhost and file URL) and both returned ERR_BLOCKED_BY_ADMINISTRATOR before page execution. No interactive browser regression pass is claimed.

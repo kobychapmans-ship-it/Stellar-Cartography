@@ -91,3 +91,11 @@ Fleet polities now directly commission fleet-class formations instead of waiting
 Deep Time no longer enters the layered v25.2→v25.6 historical wrapper chain. A single bounded macro-history engine advances 100–1000 turns through 10–24 iterative epochs. It directly processes income, settlement maintenance and growth, historical foundations, districts, infrastructure, territorial expansion, diplomacy, fleet/hull growth, mobile fleet settlements and military strength while yielding to the browser between bounded batches.
 
 The audit also found and fixed a genuine infinite recursion affecting developed mobile fleet settlements: settlement enumeration → colony lookup → colony effectiveness → PF calculation → mobile-colony ensure → settlement enumeration. Colony lookup now scans fixed settlement records and already-created mobile colonies directly without materialising every fleet-settlement proxy.
+
+
+## Revision 25.8 — Operational Roles & Rebellion Warfare
+- Removes the obsolete Player Strategic Orders panel; Territory, Colonies, Army and Fleets are authoritative.
+- Fleet-tab disembarkation targets a specific territory on the fleet's current planet/moon; surface embarkation requires the fleet to be at that same object.
+- Fleet roles and strategic doctrines now alter campaign speed, naval profiles, invasion/defence strength and civic development where applicable.
+- Expansion & Population districts now contribute directly to demographic momentum and decline-pressure reduction.
+- Rebellions require identifiable political stress and show why they can or did begin; deployed Task Forces can fight a rebellion in its exact territory.
