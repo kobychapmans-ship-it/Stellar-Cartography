@@ -9,16 +9,16 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=25.2-stack-safe-full-sector-deep-time-v35-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=25.3-infrastructure-depth-army-drilldown-naval-growth-v36-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='25.2';
-  const BUILD='25.2-stack-safe-full-sector-deep-time-v35-tested';
-  const LABEL='rev 25.2 — Stack-Safe Full-Sector Deep Time';
-  const TITLE='Administratum Stellar Cartographica — Revision 25.2';
+  const REVISION='25.3';
+  const BUILD='25.3-infrastructure-depth-army-drilldown-naval-growth-v36-tested';
+  const LABEL='rev 25.3 — Infrastructure Depth & Naval Growth';
+  const TITLE='Administratum Stellar Cartographica — Revision 25.3';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 25.2</title>
+<title>Administratum Stellar Cartographica — Revision 25.3</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -634,6 +634,9 @@ html.carto-orientation-lock body:after{content:'';display:none}
 
 <style id="rev251-css">
 .campaign-development251{grid-column:1/-1!important}.development-meter251{height:8px;background:#24282d;border:1px solid rgba(255,255,255,.08);margin:8px 0}.development-meter251 i{display:block;height:100%;background:#789b62}.development-meter251 i.negative{background:#a45f59}.development-stats251{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.development-stats251 span,.army-traits251>div{border:1px solid rgba(255,255,255,.07);padding:5px;color:#898f88;font-size:7px}.development-stats251 b{display:block;color:#d4ccb5;font-size:10px}.good251{color:#a9cb91!important}.bad251{color:#d58b82!important}.development-causes251{margin-top:6px;border:1px solid rgba(255,255,255,.07);padding:6px}.development-causes251 span{display:block;font-size:7.5px;padding:2px 0}.army-strategic251,.battle-strategic251{margin:7px 0;border:1px solid rgba(103,148,173,.27);background:rgba(63,103,127,.055);padding:7px}.army-strategic251>summary{cursor:pointer;color:#bed5df;font-weight:700;font-size:9px}.army-traits251{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:5px;margin-top:7px}.army-traits251 span,.army-traits251 b,.army-traits251 small,.battle-trait-side251 b,.battle-trait-side251 span,.battle-trait-side251 small{display:block}.army-traits251 b{color:#d3d9d5;font-size:10px}.army-traits251 i{display:block;height:3px;background:#24282d;margin:4px 0}.army-traits251 em{display:block;height:100%;background:#799eaa}.army-traits251>div>small{font-size:6.5px}.battle-strategic251>div{display:grid;grid-template-columns:1fr 1fr;gap:6px}.battle-trait-side251{border:1px solid rgba(255,255,255,.07);padding:6px}.battle-trait-side251 span{color:#a8bdc3;font-size:8px}.battle-trait-side251 small{font-size:7px}@media(max-width:600px){.development-stats251{grid-template-columns:1fr 1fr}.battle-strategic251>div{grid-template-columns:1fr}}
+</style>
+<style id="rev253-css">
+.campaign-strategic-investment{grid-column:1/-1!important;width:100%!important;max-width:100%!important;justify-self:stretch!important;margin:10px auto!important;box-sizing:border-box}.campaign-invest-grid{width:100%;grid-template-columns:repeat(3,minmax(0,1fr))!important}.campaign-infra-planner253{grid-column:1/-1!important;width:100%!important;box-sizing:border-box}.campaign-infra-levels253{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:5px;margin:8px 0}.campaign-infra-levels253 span{display:block;border:1px solid rgba(255,255,255,.07);padding:5px;color:#97917f;font-size:7px}.campaign-infra-levels253 b{display:block;color:#d4c69e;font-size:8px}.campaign-unit-click253{cursor:pointer}.campaign-unit-strategic253{grid-column:1/-1;margin-top:5px;border-top:1px solid rgba(103,148,173,.2);padding-top:5px}.campaign-unit-strategic253>summary{cursor:pointer;color:#a8c3cb;font-size:8px}.campaign-unit-traits253{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:4px;margin-top:5px}.campaign-unit-traits253 span{border:1px solid rgba(255,255,255,.06);padding:4px}.campaign-unit-traits253 b,.campaign-unit-traits253 i{display:block;font-size:7px}.campaign-unit-traits253 b{color:#929b9a}.campaign-unit-traits253 i{color:#d5ddd9;font-style:normal;font-weight:700}.campaign-unit-traits253 em{display:block;height:2px;background:#25292c;margin-top:3px}.campaign-unit-traits253 u{display:block;height:100%;background:#799eaa;text-decoration:none}.campaign-detachment253,.campaign-force253{border:1px solid rgba(255,255,255,.08);margin:6px 0;padding:6px}.campaign-detachment253>summary,.campaign-force253>summary{cursor:pointer;color:#d8cfb7}.campaign-force-summary253{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px}.campaign-fleet-refit253{font-size:7px;border:1px solid rgba(103,148,173,.28);color:#aac5ce;padding:3px 5px;margin-right:4px}.campaign-fleet-head>span{display:inline-block}.campaign-fleet-head>div+span{margin-left:auto}@media(max-width:600px){.campaign-invest-grid{grid-template-columns:1fr!important}.campaign-strategic-investment{margin-left:0!important;margin-right:0!important}.campaign-infra-levels253{grid-template-columns:1fr 1fr}.campaign-unit-traits253{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -6747,6 +6750,82 @@ window.__cartoRevision252={version:REV252,build:REV252_BUILD,simulatePrehistory:
 const rb252=document.querySelector('.generation-head-actions .badge');if(rb252)rb252.textContent='rev 25.2 — Stack-Safe Full-Sector Deep Time';
 document.title='Administratum Stellar Cartographica — Revision 25.2';document.documentElement.dataset.cartographicaRevision=REV252;document.documentElement.dataset.cartographicaBuild=REV252_BUILD;
 
+
+/* ==========================================================================
+   Revision 25.3 — Infrastructure Depth, Army Drill-down & Naval Growth
+   ========================================================================== */
+const REV253='25.3';
+const REV253_BUILD='25.3-infrastructure-depth-army-drilldown-naval-growth-v36-tested';
+
+/* ---------- Infrastructure levels 1–10, capped by settlement Size ---------- */
+function campaignInfrastructureLevels253(col){
+  if(!col)return{};col.infrastructure=col.infrastructure||[];col.infrastructureLevels253=col.infrastructureLevels253||{};
+  for(const n of col.infrastructure)if(!Number.isFinite(col.infrastructureLevels253[n]))col.infrastructureLevels253[n]=1;
+  for(const n of SOI_INFRA)if(!Number.isFinite(col.infrastructureLevels253[n]))col.infrastructureLevels253[n]=0;
+  return col.infrastructureLevels253;
+}
+function campaignInfrastructureLevel253(col,name){return Math.max(0,Math.min(10,Number(campaignInfrastructureLevels253(col)[name])||0))}
+function campaignInfrastructureUpgradeCost253(col,name){const next=campaignInfrastructureLevel253(col,name)+1;return 4+next*2}
+function campaignInfrastructureIncrement253(col,name,level){
+  const scale=1+Math.floor((level-1)/3),apex=level>=10?1:0;
+  if(name==='Transport Infrastructure'){col.productivity=(col.productivity||0)+scale;col.complacency=(col.complacency||0)+1;if(level>=7)col.order=(col.order||0)+1}
+  else if(name==='Power Infrastructure'){col.productivity=(col.productivity||0)+scale+1;if(level>=5)col.order=(col.order||0)+1}
+  else if(name==='Water Infrastructure'){col.order=(col.order||0)+scale;col.complacency=(col.complacency||0)+scale;if(level>=8)col.piety=(col.piety||0)+1}
+  else if(name==='Food Production and Distribution Infrastructure'){col.productivity=(col.productivity||0)+scale;col.complacency=(col.complacency||0)+scale;if(level>=6)col.order=(col.order||0)+1}
+  else if(name==='Communications Infrastructure'){col.productivity=(col.productivity||0)+scale;col.order=(col.order||0)+scale;if(level>=5)col.piety=(col.piety||0)+1}
+  if(apex){col.complacency=(col.complacency||0)+1;col.productivity=(col.productivity||0)+1;col.order=(col.order||0)+1;col.piety=(col.piety||0)+1}
+}
+function campaignUpgradeInfrastructure253(root,fac,s,name,free=false){
+  if(!s?.colony||!SOI_INFRA.includes(name))return false;const col=s.colony,levels=campaignInfrastructureLevels253(col),cur=campaignInfrastructureLevel253(col,name),cap=Math.max(1,Math.min(10,Number(col.size)||1));
+  if(cur>=cap){if(!free)campaignQueueNotice(root,'Infrastructure Upgrade Blocked',`${name} is Level ${cur}. Settlement Size ${cap} permits infrastructure only up to Level ${cap}.`);return false}
+  const cost=campaignInfrastructureUpgradeCost253(col,name);if(!free&&(fac.treasury.materiel||0)<cost){campaignQueueNotice(root,'Infrastructure Upgrade Blocked',`Level ${cur+1} ${name} requires ${cost} Materiel.`);return false}
+  fac.treasury.materiel-=cost;levels[name]=cur+1;if(!col.infrastructure.includes(name))col.infrastructure.push(name);campaignInfrastructureIncrement253(col,name,cur+1);
+  const oldReq=col.requiredInfrastructure;if(oldReq){col.requiredInfrastructureSuggested246=oldReq;col.requiredInfrastructure=null;col.pendingInfrastructurePenalty=false;col.complacency=(col.complacency||0)+1}
+  col.lastInfrastructure=name;col.pfValue=soiColonyPF(col);if(!free){campaignLog(root.campaign,`${fac.name} upgraded ${name} to Level ${cur+1} at ${s.locationName}${oldReq?`, satisfying the outstanding ${oldReq} requirement`:''}.`,'gain');campaignPersist(root);campaignRenderDashboard(root)}return true
+}
+const _campaignChooseInfrastructure246_rev253=campaignChooseInfrastructure246;
+campaignChooseInfrastructure246=function(root,fac,s,name){return campaignUpgradeInfrastructure253(root,fac,s,name,false)};
+const _campaignCivicSupportScores250_rev253=campaignCivicSupportScores250;
+campaignCivicSupportScores250=function(s){const score=_campaignCivicSupportScores250_rev253(s),col=s?.colony||{},levels=campaignInfrastructureLevels253(col);for(const name of SOI_INFRA){const lv=Math.max(0,(levels[name]||0)-1);if(!lv)continue;const bonus=Math.ceil(lv/2);if(name==='Transport Infrastructure'){score.productivity+=lv;score.complacency+=bonus;score.order+=Math.floor(lv/3)}else if(name==='Power Infrastructure'){score.productivity+=lv*2;score.order+=Math.floor(lv/3)}else if(name==='Water Infrastructure'){score.order+=lv;score.complacency+=lv;score.piety+=Math.floor(lv/4)}else if(name==='Food Production and Distribution Infrastructure'){score.productivity+=lv;score.complacency+=lv*2;score.order+=Math.floor(lv/3)}else if(name==='Communications Infrastructure'){score.productivity+=bonus;score.order+=lv;score.piety+=lv}}return score};
+campaignInfrastructurePlannerHTML246=function(s,own){if(!own||s.mobile236)return'';const c=s.colony,req=c.requiredInfrastructure,levels=campaignInfrastructureLevels253(c),cap=Math.max(1,Math.min(10,Number(c.size)||1)),inf=SOI_INFRA.map(x=>{const lv=levels[x]||0,next=Math.min(10,lv+1),blocked=lv>=cap||lv>=10,cost=campaignInfrastructureUpgradeCost253(c,x);return `<option value="${esc(x)}" ${blocked?'disabled':''}>${esc(x)} — L${lv}/${cap}${x===req?' — growth requirement':''}${blocked?' — capped':` → L${next} (${cost}M)`}</option>`}).join(''),sup=SOI_SUPPORT.map(x=>`<option value="${esc(x)}">${esc(x)}${x===c.suggestedSupport?' — suggested':''}</option>`).join('');return `<div class="campaign-infra-planner246 campaign-infra-planner253"><h5>Infrastructure & Support Planner</h5><small>${req?`Population development currently requires further infrastructure. <b>${esc(req)}</b> is the generated recommendation; upgrading <b>any</b> infrastructure network satisfies the immediate requirement.`:'Infrastructure can be repeatedly upgraded from Level 1–10. The settlement Size is the current level cap, so larger cities can sustain deeper civic networks.'}</small><div class="campaign-infra-levels253">${SOI_INFRA.map(x=>`<span><b>${esc(x.replace(' Infrastructure',''))}</b> L${levels[x]||0}/${cap}</span>`).join('')}</div><div class="campaign-infra-grid246"><select data-infra-choice246="${esc(s.id)}">${inf}</select><button class="ghost" type="button" data-infra-build246="${esc(s.id)}">Upgrade Selected Infrastructure</button><select data-support-choice246="${esc(s.id)}">${sup}</select><button class="ghost" type="button" data-support-build246="${esc(s.id)}">Install Selected — 6M</button></div></div>`};
+
+/* Give AI settlements the same repeatable infrastructure ladder. */
+const _campaignAIConstruct246_rev253=campaignAIConstruct246;
+campaignAIConstruct246=function(root,fac,s,strategy){let out=_campaignAIConstruct246_rev253(root,fac,s,strategy);const col=s?.colony;if(!col||s.status==='Destroyed'||s.mobile236)return out;const cap=Math.max(1,Math.min(10,Number(col.size)||1)),levels=campaignInfrastructureLevels253(col);if((col.pendingInfrastructurePenalty||col.requiredInfrastructure||campaignRandom(root.campaign,`infra253 ${fac.id} ${s.id} ${root.campaign.turn}`)<.30)){const choices=SOI_INFRA.filter(n=>(levels[n]||0)<cap);if(choices.length){choices.sort((a,b)=>(levels[a]||0)-(levels[b]||0));const n=choices[0],cost=campaignInfrastructureUpgradeCost253(col,n);if((fac.treasury.materiel||0)>=cost)campaignUpgradeInfrastructure253(root,fac,s,n,true)}}return out};
+
+/* ---------- Per-unit strategic drill-down and collapsible armies ---------- */
+function campaignUnitStrategicHTML253(u){const p=campaignUnitStrategicTraits251(u),labels={mobility:'Mobility',recon:'Recon',firepower:'Firepower',armour:'Armour',assault:'Assault',siege:'Siege',airPower:'Air Power',airDefence:'Air Defence',logistics:'Logistics',morale:'Morale',titanic:'Titanic'};return `<details class="campaign-unit-strategic253"><summary>Strategic breakdown</summary><div class="campaign-unit-traits253">${CAMPAIGN_STRATEGIC_TRAITS_251.map(k=>`<span><b>${labels[k]}</b><i>${p[k]}</i><em><u style="width:${p[k]}%"></u></em></span>`).join('')}</div></details>`}
+function campaignEnhanceForceDOM253(root){const c=root?.campaign,p=campaignPlayer(c);if(!p)return;for(const row of document.querySelectorAll('.campaign-unit-row:not([data-strategic253])')){row.dataset.strategic253='1';const b=row.querySelector('[data-campaign-remove-unit]'),uid=b?.dataset.campaignRemoveUnit;let unit=null;for(const tf of p.taskForces||[])for(const d of tf.detachments||[]){unit=(d.units||[]).find(u=>u.id===uid);if(unit)break}if(unit){row.insertAdjacentHTML('beforeend',campaignUnitStrategicHTML253(unit));const main=row.querySelector('.unit-main'),detail=row.querySelector('.campaign-unit-strategic253');if(main&&detail){main.classList.add('campaign-unit-click253');main.title='Tap to show/hide strategic breakdown';main.addEventListener('click',e=>{if(e.target.closest('button,select,input,a'))return;detail.open=!detail.open})}}}
+  for(const det of [...document.querySelectorAll('.campaign-detachment:not([data-collapse253])')]){det.dataset.collapse253='1';const title=det.querySelector(':scope > b'),sub=det.querySelector(':scope > small'),details=document.createElement('details');details.className='campaign-detachment253';const summary=document.createElement('summary');summary.innerHTML=`<b>${title?.innerHTML||'Detachment'}</b>${sub?` <small>${sub.innerHTML}</small>`:''}`;details.appendChild(summary);for(const ch of [...det.childNodes])if(ch!==title&&ch!==sub)details.appendChild(ch);det.replaceWith(details)}
+  for(const force of [...document.querySelectorAll('.campaign-force:not([data-collapse253])')]){force.dataset.collapse253='1';const head=force.querySelector(':scope > .campaign-force-head'),details=document.createElement('details');details.className='campaign-force253';if(force.querySelector(`[data-campaign-force="${CSS.escape(c.selectedTaskForceId||'')}"]`))details.open=true;const summary=document.createElement('summary');summary.className='campaign-force-summary253';summary.innerHTML=head?head.innerHTML:'<b>Army / Reinforcement Force</b>';details.appendChild(summary);for(const ch of [...force.childNodes])if(ch!==head)details.appendChild(ch);force.replaceWith(details)}
+}
+const _campaignBindDashboard_rev253=campaignBindDashboard;
+campaignBindDashboard=function(root){_campaignBindDashboard_rev253(root);if(root?.campaign)queueMicrotask(()=>campaignEnhanceForceDOM253(root))};
+
+/* ---------- Deep-Time naval construction and refit progression ---------- */
+const CAMPAIGN_FLEET_CLASS_ORDER253=['scout','escort','transport','expeditionary','battle','assault','armada'];
+function campaignFleetRefitLevel253(f){if(!Number.isFinite(f.refitLevel253))f.refitLevel253=1;return Math.max(1,Math.min(10,f.refitLevel253))}
+const _campaignFleetNaval_rev253=campaignFleetNaval;
+campaignFleetNaval=function(f){return _campaignFleetNaval_rev253(f)+Math.floor((campaignFleetRefitLevel253(f)-1)/2)};
+const _campaignFleetCapacity_rev253=campaignFleetCapacity;
+campaignFleetCapacity=function(f){return Math.round(_campaignFleetCapacity_rev253(f)*(1+(campaignFleetRefitLevel253(f)-1)*.025))};
+const _campaignFleetSpeed_rev253=campaignFleetSpeed;
+campaignFleetSpeed=function(root,f){return _campaignFleetSpeed_rev253(root,f)*(1+(campaignFleetRefitLevel253(f)-1)*.008)};
+function campaignDeepTimeFleetProgression253(root,fac,turn,representedTurns=1){if(!fac||fac.prehistoryDormant247)return{built:0,upgraded:0,refit:0};fac.fleets=fac.fleets||[];campaignEnsureFleetCoverage(root,fac);const territory=(fac.territory||[]).length,settlements=(fac.settlements||[]).filter(s=>s.status!=='Destroyed').length,ageBonus=Math.floor(turn/175),target=Math.max(1,Math.min(16,1+Math.floor(territory/3)+Math.floor(settlements/8)+ageBonus)),result={built:0,upgraded:0,refit:0};
+  const buildAttempts=Math.min(3,Math.max(0,target-fac.fleets.length));for(let i=0;i<buildAttempts;i++){const home=fac.homeSystemId||fac.territory?.[i%Math.max(1,territory)]||fac.presence?.[0];if(!home)break;const wealth=(fac.treasury?.materiel||0),desired=turn>=700?'battle':turn>=350?'expeditionary':turn>=150?'escort':'scout',cost=CAMPAIGN_FLEET_CLASSES[desired].cost;if(wealth<cost)break;fac.treasury.materiel-=cost;const fl=campaignFleetMake(root,fac,desired,campaignFleetDefaultRole(fac.key),home,`${fac.name} Historical ${CAMPAIGN_FLEET_CLASSES[desired].size} ${roman(fac.fleets.length+1)}`,[]);fl.refitLevel253=Math.max(1,Math.min(10,1+Math.floor(turn/225)));fl.deepTimeBuilt253=true;fac.fleets.push(fl);result.built++}
+  const upgradeBudget=Math.max(1,Math.min(4,Math.ceil(representedTurns/35)));for(const f of fac.fleets){if(result.upgraded+result.refit>=upgradeBudget)break;const idx=CAMPAIGN_FLEET_CLASS_ORDER253.indexOf(f.classKey),next=CAMPAIGN_FLEET_CLASS_ORDER253[Math.min(CAMPAIGN_FLEET_CLASS_ORDER253.length-1,idx+1)],cargo=campaignFleetCargoPoints(root.campaign,fac,f);if(next&&next!==f.classKey&&turn>=100+(idx+1)*70&&campaignFleetCapacity({...f,classKey:next})>=cargo){const cost=Math.max(4,Math.ceil(CAMPAIGN_FLEET_CLASSES[next].cost*.4));if((fac.treasury?.materiel||0)>=cost){fac.treasury.materiel-=cost;f.classKey=next;f.historicalUpgradeTurn253=turn;result.upgraded++;continue}}const lv=campaignFleetRefitLevel253(f);if(lv<10&&turn>=lv*75){const cost=3+lv*2;if((fac.treasury?.materiel||0)>=cost){fac.treasury.materiel-=cost;f.refitLevel253=lv+1;f.historicalRefitTurn253=turn;result.refit++}}}
+  return result}
+const _campaignAdvanceHistoricEpoch252_rev253=campaignAdvanceHistoricEpoch252;
+campaignAdvanceHistoricEpoch252=async function(root,startTurn,representedTurns){const out=await _campaignAdvanceHistoricEpoch252_rev253(root,startTurn,representedTurns),turn=Math.min(1000,startTurn+representedTurns);for(const fac of root.campaign.factions||[])if(fac.ai&&!fac.prehistoryDormant247)campaignDeepTimeFleetProgression253(root,fac,turn,representedTurns);campaignRepairAllFleetLift248(root,false);return out};
+const _campaignFleetCardHTML_rev253=campaignFleetCardHTML;
+campaignFleetCardHTML=function(root,c,fac,fleet,owned){let h=_campaignFleetCardHTML_rev253(root,c,fac,fleet,owned),lv=campaignFleetRefitLevel253(fleet);return h.replace(`<span class="campaign-fleet-status">`,`<span class="campaign-fleet-refit253">Refit L${lv}/10</span><span class="campaign-fleet-status">`)};
+
+/* ---------- Layout repair: strategic programme spans the settlement ---------- */
+const _campaignRulesReferenceHTML_rev253=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev253(root),add=`<div class="campaign-rule-card"><h4>65. Infrastructure Levels</h4><p>Each of the five infrastructure networks can be upgraded repeatedly from Level 1 to Level 10. Settlement Size is the infrastructure level cap. Every level provides an incremental direct benefit and stronger recurring civic upkeep; completing any legal infrastructure upgrade satisfies an outstanding population-development infrastructure requirement.</p></div><div class="campaign-rule-card"><h4>66. Unit Strategic Drill-down</h4><p>Army and detachment cards are collapsible. Every unit package exposes its own Mobility, Reconnaissance, Firepower, Armour, Assault, Siege, Air Power, Air Defence, Logistics, Morale and Titanic contribution.</p></div><div class="campaign-rule-card"><h4>67. Deep-Time Naval Growth</h4><p>Historic AI polities now commission additional fleets as their territory, settlements and age grow. Existing fleets can advance through larger fleet classes and ten refit levels, improving void strength, troop lift and strategic speed while paying Materiel from the historic economy.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
+
+window.__cartoRevision253={version:REV253,build:REV253_BUILD,infrastructureLevels:campaignInfrastructureLevels253,upgradeInfrastructure:campaignUpgradeInfrastructure253,unitTraits:campaignUnitStrategicTraits251,fleetProgression:campaignDeepTimeFleetProgression253};
+const rb253=document.querySelector('.generation-head-actions .badge');if(rb253)rb253.textContent='rev 25.3 — Infrastructure Depth & Naval Growth';document.title='Administratum Stellar Cartographica — Revision 25.3';document.documentElement.dataset.cartographicaRevision=REV253;document.documentElement.dataset.cartographicaBuild=REV253_BUILD;
 
 })();
 

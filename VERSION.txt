@@ -1,2 +1,2 @@
-Stellar Cartographica v25.2
-Build: 25.2-stack-safe-full-sector-deep-time-v35-tested
+Stellar Cartographica v25.3
+Build: 25.3-infrastructure-depth-army-drilldown-naval-growth-v36-tested

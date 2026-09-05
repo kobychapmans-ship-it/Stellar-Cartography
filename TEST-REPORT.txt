@@ -1,20 +1,20 @@
-STELLAR CARTOGRAPHICA v25.2 TEST REPORT
-Build: 25.2-stack-safe-full-sector-deep-time-v35-tested
+STELLAR CARTOGRAPHICA v25.3 TEST REPORT
+Build: 25.3-infrastructure-depth-army-drilldown-naval-growth-v36-tested
 
-PASS — v25.1 Demographic Momentum and Strategic Army Traits were moved inside the core runtime scope; the previous out-of-scope integration bug is removed.
 PASS — all embedded JavaScript blocks pass Node syntax validation.
-PASS — manifest parses and identifies Revision 25.2.
-PASS — service worker uses the fresh v25.2 cache/navigation identity and deletes older Cartographica caches.
-PASS — campaign persistence is suppressed during internal Deep-Time actions and written again at final player handover.
-PASS — unbounded campaign Math.min/Math.max spread in campaign start-map bounds is removed.
-PASS — AI reinforcement append no longer uses unbounded spread argument expansion.
-PASS — stack-sensitive historical operations are isolated and RangeError recovery no longer aborts the entire campaign launch.
-PASS — long histories and full sectors use bounded historical epochs rather than accumulating browser call-stack/workload pressure.
-PASS — exact requested campaign time is retained at handover; epochs materially scale economy, demographic momentum, district investment, territorial expansion and military growth rather than merely changing the displayed turn.
+PASS — manifest parses as valid JSON and identifies Revision 25.3.
+PASS — service worker uses a fresh v25.3 cache/navigation identity.
+PASS — infrastructure has persistent Level 0–10 state, capped by Settlement Size.
+PASS — repeated infrastructure upgrades satisfy outstanding population-development infrastructure requirements.
+PASS — infrastructure levels strengthen direct settlement effects and recurring civic-upkeep support.
+PASS — AI settlement construction can upgrade existing infrastructure beyond Level 1.
+PASS — individual unit rows expose/toggle their eleven strategic characteristics.
+PASS — Task Forces and detachments become collapsible dropdown sections after render.
+PASS — Strategic Supply & Influence Programme spans the full settlement content width, with one-column mobile controls.
+PASS — Deep-Time AI commissions additional fleets based on territory, settlements and campaign age.
+PASS — Deep-Time fleets advance through larger fleet classes and ten refit levels when Materiel permits.
+PASS — fleet refits improve void rating, troop capacity and strategic speed while preserving the hard troop-lift audit.
+PASS — v25.2 stack-safe bounded historical-epoch Deep-Time path remains active.
+PASS — v25.0 rebellion/secession and v24.9 unified full faction roster paths remain integrated.
 
-INTERACTIVE CHROMIUM TESTS ON THIS EXACT INDEX.HTML
-PASS — mobile viewport 390x844: page loads as Revision 25.2 with zero page errors and live v25.1/v25.2 runtime hooks.
-PASS — generated Sub-sector: 8 systems; Deep-Time Turn 100 completed in about 1.2 seconds, 10 historical epochs / 10-turn stride, final Turn 100 / Player, zero page errors. Resulting test history contained 6 factions, 41 settlements, 75 districts, 182 district tiers, ~115,868 army points and active rebellions.
-PASS — generated Full Sector: 9 sub-sectors, 36 regular systems + 5 rogue systems (41 campaign systems); Deep-Time Turn 1000 completed in about 11.9 seconds using 10 historical epochs / 100-turn stride, final Turn 1000 / Player, zero page errors and zero stack recoveries. Resulting test history contained 16 faction records, 40 controlled systems, 209 settlements, 340 districts, 720 district tiers and ~375,508 army points.
-
-NOTE — localhost navigation is blocked by the container administrator policy, so the interactive browser tests used Playwright page.set_content on the exact packaged index.html. Service-worker installation itself is therefore validated statically rather than claimed as a browser-install test.
+LIMITATION — the available container Chromium process still does not terminate cleanly when asked to dump this large self-contained PWA from file://. It was bounded and terminated without producing a useful completed DOM run, so an interactive Chromium regression pass is not claimed.

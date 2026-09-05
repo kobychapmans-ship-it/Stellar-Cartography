@@ -58,3 +58,10 @@ Deep-Time is processed as 1:1 historical turns in asynchronous bounded phases. L
 
 ### Deep-Time execution model
 Revision 25.2 cannot and does not attempt to increase Safari/Chromium's fixed JavaScript call-stack limit. Instead, Deep-Time is stack-safe by architecture. Histories under 100 turns on modest maps may use the detailed per-turn runner. Histories of 100–1000 turns, or sufficiently large/full-sector campaigns, use up to 10 bounded historical epochs. Each epoch represents a real span of 90-day campaign turns and scales treasury income, demographic momentum, district investment, claims, recruitment, resource activity and other strategic changes across that span. The campaign always hands over at the exact requested turn.
+
+
+## Revision 25.3 — Infrastructure Depth, Army Drill-down & Naval Growth
+- Infrastructure networks now progress from Level 1 to Level 10, capped by settlement Size. Repeated upgrades provide stronger direct and recurring civic benefits and can satisfy new population-development infrastructure requirements.
+- Task Forces and detachments are collapsible; every unit package has an expandable strategic trait breakdown.
+- Strategic Supply & Influence Programme cards span the settlement content width, including mobile layouts.
+- Deep-Time AI now commissions additional fleets and advances existing fleets through larger classes and 10 refit levels as territory, settlement count, age and Materiel allow.
