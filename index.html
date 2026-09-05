@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="25.0" />
+<meta name="cartographica-revision" content="25.1.1" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=25.0-civic-secession-recruitment-depth-v32-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=25.1.1-demographic-momentum-strategic-armies-bootstrap-fix-v34-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='25.0';
-  const BUILD='25.0-civic-secession-recruitment-depth-v32-tested';
-  const LABEL='rev 25.0 — Civic Balance & Secession';
-  const TITLE='Administratum Stellar Cartographica — Revision 25.0';
+  const REVISION='25.1.1';
+  const BUILD='25.1.1-demographic-momentum-strategic-armies-bootstrap-fix-v34-tested';
+  const LABEL='rev 25.1.1 — Demographic Momentum & Strategic Armies';
+  const TITLE='Administratum Stellar Cartographica — Revision 25.1.1';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 25.0</title>
+<title>Administratum Stellar Cartographica — Revision 25.1.1</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -6403,14 +6403,14 @@ const style250=document.createElement('style');style250.id='rev250-css';style250
 @media(max-width:760px){.campaign-governance246{padding:10px!important}.campaign-governance-grid246{grid-template-columns:repeat(2,minmax(0,1fr))!important}.campaign-infra-grid246{grid-template-columns:1fr!important}.campaign-infra-grid246 select,.campaign-infra-grid246 button{font-size:12px!important;min-height:42px!important}.campaign-rebellion246 b{font-size:15px;line-height:1.15}.campaign-rebellion246 span{font-size:10px!important;line-height:1.35}.campaign-governance246 p,.campaign-governance246 small,.campaign-civic-upkeep250{font-size:10px!important;line-height:1.45}.campaign-governance246 h5,.campaign-infra-planner246 h5{font-size:15px!important}}
 `;document.head.appendChild(style250);
 
-const rb250=document.querySelector('.generation-head-actions .badge');if(rb250)rb250.textContent='rev 25.0 — Civic Balance & Secession';document.title='Administratum Stellar Cartographica — Revision 25.0';document.documentElement.dataset.cartographicaRevision=REV250;document.documentElement.dataset.cartographicaBuild=REV250_BUILD;
+/* v25.0 mechanics retained; visible revision identity is controlled by the v25.1.1 bootstrap. */
 window.__cartoRevision250={version:REV250,build:REV250_BUILD,civicTargets:campaignCivicTargets250,civicSupport:campaignCivicSupportScores250,applyCivicUpkeep:campaignApplyCivicUpkeep250,rebellionCap:campaignRebellionPointCap250,spawnRebellion:campaignSpawnRebellion246,resolveRebellion:campaignResolveActiveRebellion246,secession:campaignCreateRebelFaction250,recruitRequirements:campaignUnitRecruitRequirements,governanceHTML:campaignSettlementGovernanceHTML246};
 
 /* Source note and revision identity. */
 document.querySelectorAll('.source-note').forEach(n=>{if(n.textContent.includes('Sector Campaign')&&!n.textContent.includes('Battlefleet Operations'))n.innerHTML+=`<br/><br/><b>Battlefleet Operations:</b> Revision 24.7 adds a strategic void-war layer inspired by Battlefleet Gothic Remastered: faction-specific fleet identities, command quality, direct-fire emphasis, lance/ordnance/boarding biases, durable versus agile fleet styles, persistent fleet damage, and separate fleet engagements before invasions. It deliberately stores campaign abstractions and closest fleet-list analogues instead of reproducing copyrighted ship profiles. Deep-Time campaign starts can simulate 100–1000 autonomous turns before player handover.`});
 window.__cartoRevision247={version:REV247,build:REV247_BUILD,navalDoctrines:CAMPAIGN_NAVAL_DOCTRINES247,navalProfile:campaignNavalProfile247,autoResolveNaval:campaignAutoResolveNaval247,simulatePrehistory:campaignSimulatePrehistory247};
 window.__cartoTest247={initialize:(root,opts)=>campaignInitialize(root,opts),player:c=>campaignPlayer(c),ensureFleetState:root=>campaignEnsureFleetState(root),ensureNaval:root=>campaignEnsureAllNavalIdentities247(root),normaliseTurnZero:root=>campaignNormaliseTurnZero247(root),simulatePrehistory:campaignSimulatePrehistory247,navalBattle:campaignNavalBattle247,autoResolveNaval:campaignAutoResolveNaval247,resolveNaval:campaignResolveNaval247,record:(root,id)=>campaignRecord(root,id),systemRecords:root=>campaignSystemRecords(root),commandHTML:(root,c)=>campaignCommandHTML(root,c),renderDashboard:root=>campaignRenderDashboard(root)};
-const rb=document.querySelector('.generation-head-actions .badge');if(rb)rb.textContent='rev 25.0 — Civic Balance & Secession';document.title='Administratum Stellar Cartographica — Revision 25.0';document.documentElement.dataset.cartographicaRevision='25.0';document.documentElement.dataset.cartographicaBuild='25.0-civic-secession-recruitment-depth-v32-tested';document.documentElement.dataset.cartographicaCleanBuild='true';
+document.documentElement.dataset.cartographicaCleanBuild='true';
 
 /* ===== End integrated extension layers ===== */
 
@@ -6421,7 +6421,7 @@ const rb=document.querySelector('.generation-head-actions .badge');if(rb)rb.text
    Revision 25.1 — Demographic Momentum & Strategic Army Traits
    ========================================================================== */
 const REV251='25.1';
-const REV251_BUILD='25.1-demographic-momentum-strategic-armies-v33-tested';
+const REV251_BUILD='25.1.1-demographic-momentum-strategic-armies-bootstrap-fix-v34-tested';
 
 function campaignSettlementDevelopment251(c){
   if(!c)return null;
@@ -6588,9 +6588,9 @@ const _campaignRulesReferenceHTML_rev251=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev251(root);const add=`<div class="campaign-rule-card"><h4>63. Demographic Momentum</h4><p>Settlement Size 1–10 is now an accumulated outcome rather than a random growth roll. Productivity, Order, cohesion, infrastructure, support and district development create positive momentum; shortages, unrest, rebellion and unmet infrastructure create decline. Larger settlements require progressively more sustained development. Contraction leaves ruined legacy capacity rather than erasing the settlement's history.</p></div><div class="campaign-rule-card"><h4>64. Strategic Army Traits</h4><p>Every Task Force derives Mobility, Reconnaissance, Firepower, Armour, Assault, Siege, Air Power, Air Defence, Logistics, Morale and Titanic Strength from its actual roster. Strategic auto-resolve weights these traits by theatre and fortification, so equal-points armies can perform very differently depending on composition.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
 
 window.__cartoRevision251={version:REV251,build:REV251_BUILD,development:campaignSettlementDevelopment251,armyProfile:campaignArmyStrategicProfile251,battleModifier:campaignBattleStrategicModifier251};
-const rb251=document.querySelector('.generation-head-actions .badge');if(rb251)rb251.textContent='rev 25.1 — Demographic Momentum & Strategic Armies';
-document.title='Administratum Stellar Cartographica — Revision 25.1';
-document.documentElement.dataset.cartographicaRevision=REV251;
+const rb251=document.querySelector('.generation-head-actions .badge');if(rb251)rb251.textContent='rev 25.1.1 — Demographic Momentum & Strategic Armies';
+document.title='Administratum Stellar Cartographica — Revision 25.1.1';
+document.documentElement.dataset.cartographicaRevision='25.1.1';
 document.documentElement.dataset.cartographicaBuild=REV251_BUILD;
 
 </script>

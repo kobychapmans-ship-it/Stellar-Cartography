@@ -1,17 +1,23 @@
-STELLAR CARTOGRAPHICA v25.1 TEST REPORT
-Build: 25.1-demographic-momentum-strategic-armies-v33-tested
+STELLAR CARTOGRAPHICA v25.1.1 FIXED RELEASE TEST REPORT
+Build: 25.1.1-demographic-momentum-strategic-armies-bootstrap-fix-v34-tested
 
+ROOT CAUSE FIXED
+The previous v25.1 archive contained the new mechanics, but its first bootstrap script still declared Revision 25.0 and re-enforced the v25.0 title/badge/build on DOMContentLoaded, load and pageshow. On mobile/Safari this could overwrite the later v25.1 identity every time the page restored or completed loading.
+
+PASS — first parsed bootstrap is now v25.1.1, not v25.0.
+PASS — page meta revision is v25.1.1.
+PASS — static HTML title is Revision 25.1.1.
+PASS — bootstrap title/badge/build are all v25.1.1.
+PASS — no active v25.0 document-title or badge enforcement remains.
+PASS — manifest has a new v25.1.1 app id/start URL.
+PASS — service worker has fresh v34 cache/canonical keys and deletes older Cartographica caches on install/activate.
 PASS — all embedded JavaScript blocks pass Node syntax validation.
-PASS — manifest parses and identifies Revision 25.1.
-PASS — service worker has a fresh v25.1 cache/navigation key.
-PASS — settlement Size uses accumulated demographic momentum instead of the campaign random growth roll.
-PASS — Size thresholds scale upward and contraction records ruined legacy capacity.
-PASS — every Task Force derives 11 strategic traits from its actual roster.
-PASS — ground auto-resolve applies theatre-weighted composition before command/doctrine resolution.
-PASS — Army / Detachments exposes Strategic Army Profile details.
-PASS — v25.0 rebellion/secession remains integrated.
-PASS — exact 1:1 Deep-Time historical-turn path remains integrated.
-PASS — unified full faction roster remains the generator/Add Unit source.
-PASS — hard fleet troop-capacity system remains integrated.
+PASS — Demographic Momentum functions are present.
+PASS — Strategic Army Profile and theatre-weighted combat integration are present.
+PASS — v25.0 rebellion/secession remains present.
+PASS — v24.9 exact Deep-Time path remains present.
+PASS — unified full-roster generator/Add Unit path remains present.
+PASS — hard fleet troop-capacity path remains present.
 
-LIMITATION — the available container Chromium process does not terminate cleanly on this large self-contained PWA from file://, even with a virtual-time budget. I therefore do not claim a completed interactive Chromium regression run for this build.
+BROWSER HARNESS NOTE
+Chromium in this container starts the PWA but does not terminate under --dump-dom/virtual-time-budget; the bounded smoke process was killed after 25 seconds. No completed interactive Chromium result is claimed. Identity and integration were validated directly against the exact packaged files.

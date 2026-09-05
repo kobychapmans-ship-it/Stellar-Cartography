@@ -1,7 +1,7 @@
-# Administratum Stellar Cartographica — Revision 25.1
+# Administratum Stellar Cartographica — Revision 25.1.1
 ## Full Deep-Time History & Unified Faction Rosters
 
-Build: `25.1-demographic-momentum-strategic-armies-v33-tested`
+Build: `25.1.1-demographic-momentum-strategic-armies-bootstrap-fix-v34-tested`
 
 Revision 25.1 builds on the fully restored v24.9 runtime. It retains exact Deep-Time simulation, Autonomous District Economy, Hard Fleet Troop Lift, full unified rosters and Battlefleet Operations, then adds centred settlement governance, capped rebellion/secession, recurring civic upkeep and wider Size/Technology recruitment locks.
 
@@ -38,7 +38,7 @@ Revision 25.1 builds on the fully restored v24.9 runtime. It retains exact Deep-
 - Settlement governance, rebellions, occupation effects, generated settlement networks, T4/T5 resource automation and strategic expedition rewards remain active.
 
 ## Cache/install identity
-The PWA uses the distinct cache key `25.1-demographic-momentum-strategic-armies-v33-tested`. The service worker removes older Cartographica caches during install/activation, and navigation requests prefer the network before the canonical offline shell.
+The PWA uses the distinct cache key `25.1.1-demographic-momentum-strategic-armies-bootstrap-fix-v34-tested`. The service worker removes older Cartographica caches during install/activation, and navigation requests prefer the network before the canonical offline shell.
 
 ## Validation
 See `TEST-REPORT.txt` and `BUILD-VERIFICATION.txt` for the validation performed on this exact package.
@@ -46,3 +46,7 @@ See `TEST-REPORT.txt` and `BUILD-VERIFICATION.txt` for the validation performed 
 
 ## Revision 25.1 — Demographic Momentum & Strategic Armies
 Settlement Size now changes through accumulated development/decline pressure rather than a random growth roll. Task Forces derive eleven strategic traits from their actual unit composition; ground auto-resolve weights those traits against the battle theatre before command/doctrine resolution.
+
+
+## v25.1.1 bootstrap hotfix
+The v25.1 mechanics were present in the previous archive, but the original startup bootstrap still re-enforced the v25.0 title, badge, URL revision and service-worker registration on DOMContentLoaded/load/pageshow. This hotfix makes v25.1.1 authoritative from the first parsed script and removes the active legacy v25.0 identity writers.
