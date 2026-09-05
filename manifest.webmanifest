@@ -1,0 +1,26 @@
+{
+  "name": "Administratum Stellar Cartographica — Revision 25.1",
+  "short_name": "Cartographica R25.1",
+  "description": "Revision 25.1 adds accumulated settlement demographic momentum and roster-derived strategic army traits while retaining v25.0 civic balance, secession, Deep-Time, unified rosters, fleet capacity and Battlefleet Operations.",
+  "id": "./?app=cartographica-r25.1-demographic-momentum-strategic-armies",
+  "start_url": "./?rev=25.1-demographic-momentum-strategic-armies-v33-tested",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#05070a",
+  "theme_color": "#05070a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

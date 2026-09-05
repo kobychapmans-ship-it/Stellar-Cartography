@@ -1,0 +1,17 @@
+STELLAR CARTOGRAPHICA v25.1 TEST REPORT
+Build: 25.1-demographic-momentum-strategic-armies-v33-tested
+
+PASS — all embedded JavaScript blocks pass Node syntax validation.
+PASS — manifest parses and identifies Revision 25.1.
+PASS — service worker has a fresh v25.1 cache/navigation key.
+PASS — settlement Size uses accumulated demographic momentum instead of the campaign random growth roll.
+PASS — Size thresholds scale upward and contraction records ruined legacy capacity.
+PASS — every Task Force derives 11 strategic traits from its actual roster.
+PASS — ground auto-resolve applies theatre-weighted composition before command/doctrine resolution.
+PASS — Army / Detachments exposes Strategic Army Profile details.
+PASS — v25.0 rebellion/secession remains integrated.
+PASS — exact 1:1 Deep-Time historical-turn path remains integrated.
+PASS — unified full faction roster remains the generator/Add Unit source.
+PASS — hard fleet troop-capacity system remains integrated.
+
+LIMITATION — the available container Chromium process does not terminate cleanly on this large self-contained PWA from file://, even with a virtual-time budget. I therefore do not claim a completed interactive Chromium regression run for this build.
