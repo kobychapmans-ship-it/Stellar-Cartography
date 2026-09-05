@@ -65,3 +65,7 @@ Revision 25.2 cannot and does not attempt to increase Safari/Chromium's fixed Ja
 - Task Forces and detachments are collapsible; every unit package has an expandable strategic trait breakdown.
 - Strategic Supply & Influence Programme cards span the settlement content width, including mobile layouts.
 - Deep-Time AI now commissions additional fleets and advances existing fleets through larger classes and 10 refit levels as territory, settlement count, age and Materiel allow.
+
+
+## Revision 25.3.1 — Deep-Time Fleet Coverage Hotfix
+Deep-Time naval progression no longer directly calls the fragile `campaignEnsureFleetCoverage` helper. It now normalises fleet ownership through the stable `campaignEnsureFleetState` path before historic fleet construction/refits, fixing Safari launch failures reporting “Can’t find variable: campaignEnsureFleetCoverage”.

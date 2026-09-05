@@ -1,2 +1,2 @@
-Stellar Cartographica v25.3
-Build: 25.3-infrastructure-depth-army-drilldown-naval-growth-v36-tested
+Stellar Cartographica v25.3.1
+Build: 25.3.1-deeptime-fleet-coverage-hotfix-v37-tested

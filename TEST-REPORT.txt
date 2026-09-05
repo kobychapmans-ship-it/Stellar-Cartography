@@ -1,20 +1,14 @@
-STELLAR CARTOGRAPHICA v25.3 TEST REPORT
-Build: 25.3-infrastructure-depth-army-drilldown-naval-growth-v36-tested
+STELLAR CARTOGRAPHICA v25.3.1 HOTFIX TEST REPORT
+Build: 25.3.1-deeptime-fleet-coverage-hotfix-v37-tested
 
+PASS — reproduced source of the reported Deep-Time launch path: v25.3 naval historical progression directly referenced campaignEnsureFleetCoverage.
+PASS — v25.3.1 removes that dependency from campaignDeepTimeFleetProgression253 and normalises fleet ownership using campaignEnsureFleetState(root) instead.
+PASS — the historic epoch wrapper still invokes naval construction/refit progression after each stack-safe Deep-Time epoch.
 PASS — all embedded JavaScript blocks pass Node syntax validation.
-PASS — manifest parses as valid JSON and identifies Revision 25.3.
-PASS — service worker uses a fresh v25.3 cache/navigation identity.
-PASS — infrastructure has persistent Level 0–10 state, capped by Settlement Size.
-PASS — repeated infrastructure upgrades satisfy outstanding population-development infrastructure requirements.
-PASS — infrastructure levels strengthen direct settlement effects and recurring civic-upkeep support.
-PASS — AI settlement construction can upgrade existing infrastructure beyond Level 1.
-PASS — individual unit rows expose/toggle their eleven strategic characteristics.
-PASS — Task Forces and detachments become collapsible dropdown sections after render.
-PASS — Strategic Supply & Influence Programme spans the full settlement content width, with one-column mobile controls.
-PASS — Deep-Time AI commissions additional fleets based on territory, settlements and campaign age.
-PASS — Deep-Time fleets advance through larger fleet classes and ten refit levels when Materiel permits.
-PASS — fleet refits improve void rating, troop capacity and strategic speed while preserving the hard troop-lift audit.
-PASS — v25.2 stack-safe bounded historical-epoch Deep-Time path remains active.
-PASS — v25.0 rebellion/secession and v24.9 unified full faction roster paths remain integrated.
+PASS — service worker passes syntax validation and uses a fresh v25.3.1 cache key.
+PASS — manifest identifies Revision 25.3.1 and a fresh start URL.
+PASS — v25.2 stack-safe Deep-Time simulation path remains present.
+PASS — v25.3 infrastructure levels, unit strategic drill-down, collapsible army UI and naval growth code remain present.
+PASS — final ZIP integrity test passed.
 
-LIMITATION — the available container Chromium process still does not terminate cleanly when asked to dump this large self-contained PWA from file://. It was bounded and terminated without producing a useful completed DOM run, so an interactive Chromium regression pass is not claimed.
+BROWSER LIMITATION — this environment's Chromium installation is policy-blocked from loading localhost/file test pages correctly (it renders a host error shell rather than the PWA), so a browser launch test cannot be truthfully claimed here. The reported undefined-variable path itself was removed and statically validated in the exact packaged runtime.

@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="25.1.1" />
+<meta name="cartographica-revision" content="25.3.1" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=25.3-infrastructure-depth-army-drilldown-naval-growth-v36-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=25.3.1-deeptime-fleet-coverage-hotfix-v37-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='25.3';
-  const BUILD='25.3-infrastructure-depth-army-drilldown-naval-growth-v36-tested';
-  const LABEL='rev 25.3 — Infrastructure Depth & Naval Growth';
-  const TITLE='Administratum Stellar Cartographica — Revision 25.3';
+  const REVISION='25.3.1';
+  const BUILD='25.3.1-deeptime-fleet-coverage-hotfix-v37-tested';
+  const LABEL='rev 25.3.1 — Deep-Time Fleet Hotfix';
+  const TITLE='Administratum Stellar Cartographica — Revision 25.3.1';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 25.3</title>
+<title>Administratum Stellar Cartographica — Revision 25.3.1</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -6406,7 +6406,7 @@ const style250=document.createElement('style');style250.id='rev250-css';style250
 @media(max-width:760px){.campaign-governance246{padding:10px!important}.campaign-governance-grid246{grid-template-columns:repeat(2,minmax(0,1fr))!important}.campaign-infra-grid246{grid-template-columns:1fr!important}.campaign-infra-grid246 select,.campaign-infra-grid246 button{font-size:12px!important;min-height:42px!important}.campaign-rebellion246 b{font-size:15px;line-height:1.15}.campaign-rebellion246 span{font-size:10px!important;line-height:1.35}.campaign-governance246 p,.campaign-governance246 small,.campaign-civic-upkeep250{font-size:10px!important;line-height:1.45}.campaign-governance246 h5,.campaign-infra-planner246 h5{font-size:15px!important}}
 `;document.head.appendChild(style250);
 
-/* v25.0 mechanics retained; visible revision identity is controlled by the v25.1.1 bootstrap. */
+/* v25.0 mechanics retained; visible revision identity is controlled by the v25.3.1 bootstrap. */
 window.__cartoRevision250={version:REV250,build:REV250_BUILD,civicTargets:campaignCivicTargets250,civicSupport:campaignCivicSupportScores250,applyCivicUpkeep:campaignApplyCivicUpkeep250,rebellionCap:campaignRebellionPointCap250,spawnRebellion:campaignSpawnRebellion246,resolveRebellion:campaignResolveActiveRebellion246,secession:campaignCreateRebelFaction250,recruitRequirements:campaignUnitRecruitRequirements,governanceHTML:campaignSettlementGovernanceHTML246};
 
 /* Source note and revision identity. */
@@ -6590,7 +6590,7 @@ campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev2
 window.__cartoRevision251={version:REV251,build:REV251_BUILD,development:campaignSettlementDevelopment251,armyProfile:campaignArmyStrategicProfile251,battleModifier:campaignBattleStrategicModifier251};
 const rb251=document.querySelector('.generation-head-actions .badge');if(rb251)rb251.textContent='rev 25.2 — Stack-Safe Full-Sector Deep Time';
 document.title='Administratum Stellar Cartographica — Revision 25.2';
-document.documentElement.dataset.cartographicaRevision='25.1.1';
+document.documentElement.dataset.cartographicaRevision='25.3.1';
 document.documentElement.dataset.cartographicaBuild=REV251_BUILD;
 
 
@@ -6754,8 +6754,8 @@ document.title='Administratum Stellar Cartographica — Revision 25.2';document.
 /* ==========================================================================
    Revision 25.3 — Infrastructure Depth, Army Drill-down & Naval Growth
    ========================================================================== */
-const REV253='25.3';
-const REV253_BUILD='25.3-infrastructure-depth-army-drilldown-naval-growth-v36-tested';
+const REV253='25.3.1';
+const REV253_BUILD='25.3.1-deeptime-fleet-coverage-hotfix-v37-tested';
 
 /* ---------- Infrastructure levels 1–10, capped by settlement Size ---------- */
 function campaignInfrastructureLevels253(col){
@@ -6811,7 +6811,7 @@ const _campaignFleetCapacity_rev253=campaignFleetCapacity;
 campaignFleetCapacity=function(f){return Math.round(_campaignFleetCapacity_rev253(f)*(1+(campaignFleetRefitLevel253(f)-1)*.025))};
 const _campaignFleetSpeed_rev253=campaignFleetSpeed;
 campaignFleetSpeed=function(root,f){return _campaignFleetSpeed_rev253(root,f)*(1+(campaignFleetRefitLevel253(f)-1)*.008)};
-function campaignDeepTimeFleetProgression253(root,fac,turn,representedTurns=1){if(!fac||fac.prehistoryDormant247)return{built:0,upgraded:0,refit:0};fac.fleets=fac.fleets||[];campaignEnsureFleetCoverage(root,fac);const territory=(fac.territory||[]).length,settlements=(fac.settlements||[]).filter(s=>s.status!=='Destroyed').length,ageBonus=Math.floor(turn/175),target=Math.max(1,Math.min(16,1+Math.floor(territory/3)+Math.floor(settlements/8)+ageBonus)),result={built:0,upgraded:0,refit:0};
+function campaignDeepTimeFleetProgression253(root,fac,turn,representedTurns=1){if(!fac||fac.prehistoryDormant247)return{built:0,upgraded:0,refit:0};fac.fleets=fac.fleets||[];campaignEnsureFleetState(root);fac.fleets=fac.fleets||[];const territory=(fac.territory||[]).length,settlements=(fac.settlements||[]).filter(s=>s.status!=='Destroyed').length,ageBonus=Math.floor(turn/175),target=Math.max(1,Math.min(16,1+Math.floor(territory/3)+Math.floor(settlements/8)+ageBonus)),result={built:0,upgraded:0,refit:0};
   const buildAttempts=Math.min(3,Math.max(0,target-fac.fleets.length));for(let i=0;i<buildAttempts;i++){const home=fac.homeSystemId||fac.territory?.[i%Math.max(1,territory)]||fac.presence?.[0];if(!home)break;const wealth=(fac.treasury?.materiel||0),desired=turn>=700?'battle':turn>=350?'expeditionary':turn>=150?'escort':'scout',cost=CAMPAIGN_FLEET_CLASSES[desired].cost;if(wealth<cost)break;fac.treasury.materiel-=cost;const fl=campaignFleetMake(root,fac,desired,campaignFleetDefaultRole(fac.key),home,`${fac.name} Historical ${CAMPAIGN_FLEET_CLASSES[desired].size} ${roman(fac.fleets.length+1)}`,[]);fl.refitLevel253=Math.max(1,Math.min(10,1+Math.floor(turn/225)));fl.deepTimeBuilt253=true;fac.fleets.push(fl);result.built++}
   const upgradeBudget=Math.max(1,Math.min(4,Math.ceil(representedTurns/35)));for(const f of fac.fleets){if(result.upgraded+result.refit>=upgradeBudget)break;const idx=CAMPAIGN_FLEET_CLASS_ORDER253.indexOf(f.classKey),next=CAMPAIGN_FLEET_CLASS_ORDER253[Math.min(CAMPAIGN_FLEET_CLASS_ORDER253.length-1,idx+1)],cargo=campaignFleetCargoPoints(root.campaign,fac,f);if(next&&next!==f.classKey&&turn>=100+(idx+1)*70&&campaignFleetCapacity({...f,classKey:next})>=cargo){const cost=Math.max(4,Math.ceil(CAMPAIGN_FLEET_CLASSES[next].cost*.4));if((fac.treasury?.materiel||0)>=cost){fac.treasury.materiel-=cost;f.classKey=next;f.historicalUpgradeTurn253=turn;result.upgraded++;continue}}const lv=campaignFleetRefitLevel253(f);if(lv<10&&turn>=lv*75){const cost=3+lv*2;if((fac.treasury?.materiel||0)>=cost){fac.treasury.materiel-=cost;f.refitLevel253=lv+1;f.historicalRefitTurn253=turn;result.refit++}}}
   return result}
@@ -6825,7 +6825,7 @@ const _campaignRulesReferenceHTML_rev253=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev253(root),add=`<div class="campaign-rule-card"><h4>65. Infrastructure Levels</h4><p>Each of the five infrastructure networks can be upgraded repeatedly from Level 1 to Level 10. Settlement Size is the infrastructure level cap. Every level provides an incremental direct benefit and stronger recurring civic upkeep; completing any legal infrastructure upgrade satisfies an outstanding population-development infrastructure requirement.</p></div><div class="campaign-rule-card"><h4>66. Unit Strategic Drill-down</h4><p>Army and detachment cards are collapsible. Every unit package exposes its own Mobility, Reconnaissance, Firepower, Armour, Assault, Siege, Air Power, Air Defence, Logistics, Morale and Titanic contribution.</p></div><div class="campaign-rule-card"><h4>67. Deep-Time Naval Growth</h4><p>Historic AI polities now commission additional fleets as their territory, settlements and age grow. Existing fleets can advance through larger fleet classes and ten refit levels, improving void strength, troop lift and strategic speed while paying Materiel from the historic economy.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
 
 window.__cartoRevision253={version:REV253,build:REV253_BUILD,infrastructureLevels:campaignInfrastructureLevels253,upgradeInfrastructure:campaignUpgradeInfrastructure253,unitTraits:campaignUnitStrategicTraits251,fleetProgression:campaignDeepTimeFleetProgression253};
-const rb253=document.querySelector('.generation-head-actions .badge');if(rb253)rb253.textContent='rev 25.3 — Infrastructure Depth & Naval Growth';document.title='Administratum Stellar Cartographica — Revision 25.3';document.documentElement.dataset.cartographicaRevision=REV253;document.documentElement.dataset.cartographicaBuild=REV253_BUILD;
+const rb253=document.querySelector('.generation-head-actions .badge');if(rb253)rb253.textContent='rev 25.3.1 — Deep-Time Fleet Hotfix';document.title='Administratum Stellar Cartographica — Revision 25.3.1';document.documentElement.dataset.cartographicaRevision=REV253;document.documentElement.dataset.cartographicaBuild=REV253_BUILD;
 
 })();
 
