@@ -1,5 +1,5 @@
-const CACHE_NAME='cartographica-r24.9-full-deep-time-unified-rosters-v31-tested';
-const CANONICAL='./?rev=24.9-full-deep-time-unified-rosters-v31-tested';
+const CACHE_NAME='cartographica-r25.0-civic-secession-recruitment-depth-v32-tested';
+const CANONICAL='./?rev=25.0-civic-secession-recruitment-depth-v32-tested';
 const SHELL=[CANONICAL,'./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 self.addEventListener('install',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/cartographica/i.test(k)&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>caches.open(CACHE_NAME)).then(c=>c.addAll(SHELL.map(x=>new Request(x,{cache:'reload'})))).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/cartographica/i.test(k)&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));

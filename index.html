@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="24.9" />
+<meta name="cartographica-revision" content="25.0" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=24.9-full-deep-time-unified-rosters-v31-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=25.0-civic-secession-recruitment-depth-v32-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='24.9';
-  const BUILD='24.9-full-deep-time-unified-rosters-v31-tested';
-  const LABEL='rev 24.9 — Full Deep-Time & Unified Rosters';
-  const TITLE='Administratum Stellar Cartographica — Revision 24.9';
+  const REVISION='25.0';
+  const BUILD='25.0-civic-secession-recruitment-depth-v32-tested';
+  const LABEL='rev 25.0 — Civic Balance & Secession';
+  const TITLE='Administratum Stellar Cartographica — Revision 25.0';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 24.9</title>
+<title>Administratum Stellar Cartographica — Revision 25.0</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -6268,11 +6268,146 @@ window.__cartoRevision249={version:REV249,build:REV249_BUILD,rosterPool:campaign
 
 
 
+
+/* ===== Revision 25.0: Settlement Civic Balance, Secession & Recruitment Depth ===== */
+const REV250='25.0';
+const REV250_BUILD='25.0-civic-secession-recruitment-depth-v32-tested';
+
+/* Civic upkeep: infrastructure + districts now actively stabilise every settlement facet.
+   Warlike cultures can deliberately accept lower civic targets instead of behaving like civilian polities. */
+function campaignCivicTargets250(fac,s){
+  const size=Math.max(1,Math.min(10,Number(s?.colony?.size)||1));
+  let profile={complacency:1,productivity:1,order:1,piety:.8};
+  if(fac?.key==='ork')profile={complacency:.55,productivity:.9,order:.55,piety:.25};
+  else if(fac?.doctrine==='aggressive'||['legion','rangdan','rakgol','darkcompliance'].includes(fac?.key))profile={complacency:.75,productivity:1,order:1,piety:.55};
+  else if(fac?.doctrine==='industrial'||fac?.key==='mechanicum')profile={complacency:.75,productivity:1.15,order:.85,piety:.65};
+  return Object.fromEntries(Object.entries(profile).map(([k,v])=>[k,Math.max(1,Math.min(10,Math.ceil(size*v)))]));
+}
+function campaignCivicSupportScores250(s){
+  const col=s?.colony||{},score={complacency:0,productivity:0,order:0,piety:0};
+  const add=(k,n=1)=>score[k]=(score[k]||0)+n;
+  for(const name of col.infrastructure||[]){
+    if(name==='Transport Infrastructure'){add('productivity',2);add('complacency',1)}
+    else if(name==='Power Infrastructure'){add('productivity',3)}
+    else if(name==='Water Infrastructure'){add('order',2);add('complacency',2)}
+    else if(name==='Food Production and Distribution Infrastructure'){add('complacency',3);add('productivity',1)}
+    else if(name==='Communications Infrastructure'){add('order',2);add('piety',2);add('productivity',1)}
+  }
+  for(const name of col.supportUpgrades||[]){
+    if(/Arbites|Infantry Garrison|Navy Station/i.test(name))add('order',3);
+    else if(/Ecclesiarchy Mission/i.test(name))add('piety',3);
+    else if(/Mechanicum Station|Industrial Facility/i.test(name))add('productivity',3);
+    else if(/Cultural Improvement|Trappings/i.test(name)){add('complacency',2);add('piety',1)}
+    else if(/Personal Lodgings/i.test(name))add('complacency',2);
+    else {add('complacency',1);add('piety',1)}
+  }
+  const web=campaignEnsureDevelopmentWeb(col),cap=campaignSettlementSlotCount(col);
+  for(const sl of web.slots.slice(0,cap)){if(!sl.chain||!sl.tier)continue;const n=Math.max(1,Number(sl.tier)||1);
+    if(sl.chain==='recruitment'){add('order',n);add('complacency',Math.ceil(n/2))}
+    else if(sl.chain==='industry'){add('productivity',n*2);add('order',Math.floor(n/2))}
+    else if(sl.chain==='resources'){add('productivity',n);add('complacency',Math.ceil(n/2))}
+    else if(sl.chain==='logistics'){add('productivity',n);add('order',Math.ceil(n/2));add('complacency',Math.ceil(n/2))}
+    else if(sl.chain==='defence'){add('order',n*2)}
+    else if(sl.chain==='administration'){add('order',n);add('piety',n);add('complacency',Math.ceil(n/2))}
+    else if(sl.chain==='research'){add('productivity',n);add('piety',n)}
+    else if(sl.chain==='habitation'){add('complacency',n*2);add('piety',n);add('order',Math.ceil(n/2))}
+  }
+  return score;
+}
+function campaignApplyCivicUpkeep250(root,fac,s,endedTurn){
+  if(!s?.colony||s.status==='Destroyed'||s.mobile236)return null;
+  const col=s.colony,target=campaignCivicTargets250(fac,s),support=campaignCivicSupportScores250(s),gains={};
+  for(const k of ['complacency','productivity','order','piety']){
+    const cur=Math.max(0,Number(col[k]||0)),def=Math.max(0,target[k]-cur),capacity=Math.min(2,Math.floor((support[k]||0)/4));
+    const warNeglect=fac?.key==='ork'&&(k==='piety'||k==='complacency')?1:0;
+    const gain=Math.max(0,Math.min(def,Math.max(0,capacity-warNeglect)));
+    if(gain){col[k]=cur+gain;gains[k]=gain}
+  }
+  col.civicUpkeep250={turn:endedTurn,target,support,gains};col.pfValue=soiColonyPF(col);return col.civicUpkeep250;
+}
+
+/* Make AI district selection react to civic deficits as well as pure economic output. */
+const _campaignAIDistrictCandidate248_rev250=campaignAIDistrictCandidate248;
+campaignAIDistrictCandidate248=function(root,fac,s,strategy){
+  const x=_campaignAIDistrictCandidate248_rev250(root,fac,s,strategy);if(!x)return x;
+  const c=s.colony||{},e=soiColonyEffective(c),t=campaignCivicTargets250(fac,s),need={
+    complacency:Math.max(0,t.complacency-Number(e.complacency||0)),productivity:Math.max(0,t.productivity-Number(e.productivity||0)),order:Math.max(0,t.order-Number(e.order||0)),piety:Math.max(0,t.piety-Number(e.piety||0))};
+  const civicWeight={habitation:need.complacency*8+need.piety*5,administration:need.order*7+need.piety*6,defence:need.order*8,logistics:need.productivity*5+need.order*3+need.complacency*3,research:need.piety*5+need.productivity*4,industry:need.productivity*7,resources:need.productivity*5+need.complacency*3,recruitment:need.order*5};
+  /* Re-score all legal choices so a settlement under civic pressure can prefer support districts. */
+  const web=campaignEnsureDevelopmentWeb(c),cap=campaignSettlementSlotCount(c),all=[];
+  for(let i=0;i<Math.min(cap,web.slots.length);i++){const sl=web.slots[i];
+    const chains=sl.chain?[sl.chain]:Object.keys(CAMPAIGN_BUILDING_CHAINS);
+    for(const chain of chains){const tier=sl.chain?sl.tier+1:1;if(tier>5)continue;const b=CAMPAIGN_BUILDING_CHAINS[chain],paths=tier<3?[null]:sl.path?[sl.path]:Object.keys(b?.paths||{});for(const path of paths){const q=campaignDevEligibility(root,fac,s,i,chain,tier,path);if(!q.ok)continue;let score=70+tier*6+(civicWeight[chain]||0);if(['industry','resources'].includes(chain))score+=12;if(strategy==='tall'&&['administration','research','habitation'].includes(chain))score+=10;if(strategy==='wide'&&['logistics','resources','defence'].includes(chain))score+=8;if(fac.key==='ork'&&['recruitment','defence','industry'].includes(chain))score+=18;if(fac.key==='ork'&&['administration','habitation'].includes(chain))score-=12;all.push({s,i,chain,tier,path,q,score})}}
+  }
+  return all.sort((a,b)=>b.score-a.score)[0]||x;
+};
+
+/* Rebellions have a hard military cap and can become a permanent breakaway faction if neglected. */
+function campaignRebellionPointCap250(root,fac,s){const size=Math.max(1,Math.min(10,Number(s?.colony?.size)||1)),tech=Math.max(1,Math.min(10,Number(campaignFactionTech(fac)?.tier)||1));return Math.round(Math.max(2500,size*3500+tech*500))}
+function campaignRebellionSecessionThreshold250(r){return Math.max(6,14-Math.max(1,Number(r?.severity)||1)*2)}
+function campaignCreateRebelFaction250(root,parent,s,r){
+  const c=root?.campaign;if(!c||!parent||!s||!r?.active||r.seceded250)return null;
+  const idx=c.factions.length,rebel=campaignMakeFaction(parent.key,idx,true,`Rebellion (${parent.name})`);
+  rebel.id=`fac-rebellion-${hashText(`${c.seed}|${s.id}|${r.startedTurn}|${idx}`).toString(36)}`;rebel.name=`Rebellion (${parent.name})`;rebel.ai=true;rebel.personality='Breakaway insurgent polity';rebel.doctrine='aggressive';rebel.aiStrategy246='wide';rebel.homeSystemId=s.systemId;rebel.presence=[s.systemId];rebel.territory=[];rebel.treasury={supply:Math.max(8,Math.ceil(r.points/2500)),materiel:Math.max(10,Math.ceil(r.points/1800)),influence:4};rebel.maxCommand=4;rebel.command=4;
+  parent.settlements=(parent.settlements||[]).filter(x=>x.id!==s.id);s.factionId=rebel.id;s.status='Active';s.occupiedBy=null;s.rebellion246={...r,active:false,seceded250:true,secededTurn:c.turn,newFactionId:rebel.id,finalPoints:r.points};rebel.settlements=[s];
+  const tf=campaignTaskForceFromGenerated(rebel.key,Math.max(500,Math.round(r.points)),s.systemId,`${s.locationName} Rebel Army`);tf.pointsOverride=Math.max(500,Math.round(r.points));tf.source='Secession force from unresolved rebellion';tf.status='Ready';rebel.taskForces=[tf];rebel.fleets=[];
+  c.factions.push(rebel);campaignSetRelation(c,parent,rebel,-100);
+  const st=c.systems?.[s.systemId];if(st){st.presenceFactionIds=Array.from(new Set([...(st.presenceFactionIds||[]),rebel.id]));const parentOther=(parent.settlements||[]).some(x=>x.status!=='Destroyed'&&x.systemId===s.systemId);if(st.ownerFactionId===parent.id&&!parentOther){st.ownerFactionId=rebel.id;parent.territory=(parent.territory||[]).filter(x=>x!==s.systemId);if(!rebel.territory.includes(s.systemId))rebel.territory.push(s.systemId)}}
+  if(s.territoryId237){const ctx=campaignTerritoryContext238(root,s.systemId,s.locationId),tr=ctx?.territories?.find(x=>x.id===s.territoryId237);if(tr){tr.claimFactionId238=rebel.id;tr.claimTurn238=c.turn;tr.claimSource238='Secession'}}
+  campaignLog(c,`${s.locationName} seceded from ${parent.name}. ${rebel.name} entered the campaign with approximately ${Math.round(r.points).toLocaleString()} pts and is automatically at war with its former ruler.`,'war');
+  if(parent.id===c.playerFactionId)campaignQueueNotice(root,'Rebellion Becomes a Breakaway Faction',`${s.locationName} was left in rebellion too long and has seceded as ${rebel.name}.\n\nStarting military strength: ${Math.round(r.points).toLocaleString()} pts\nDiplomatic state: WAR\n\nThe new faction now behaves as a normal autonomous polity and can expand, build, recruit and conduct diplomacy with other powers.`);
+  return rebel;
+}
+const _campaignSpawnRebellion246_rev250=campaignSpawnRebellion246;
+campaignSpawnRebellion246=function(root,fac,s,severity=1){const r=_campaignSpawnRebellion246_rev250(root,fac,s,severity),cap=campaignRebellionPointCap250(root,fac,s);if(r){r.cap250=cap;r.points=Math.min(cap,Math.max(1,Math.round(r.points)));r.lastCappedTurn250=root.campaign.turn}return r};
+const _campaignResolveActiveRebellion246_rev250=campaignResolveActiveRebellion246;
+campaignResolveActiveRebellion246=function(root,fac,s){
+  const before=s?.rebellion246;if(!before?.active)return _campaignResolveActiveRebellion246_rev250(root,fac,s);
+  _campaignResolveActiveRebellion246_rev250(root,fac,s);const r=s.rebellion246;if(!r?.active)return;
+  const cap=campaignRebellionPointCap250(root,fac,s);r.cap250=cap;r.points=Math.min(cap,Math.max(1,Math.round(r.points)));if(r.points>=cap*.98)r.atCapTurns250=(r.atCapTurns250||0)+1;else r.atCapTurns250=0;
+  const age=Math.max(0,Number(root.campaign.turn)-Number(r.startedTurn||root.campaign.turn)),threshold=campaignRebellionSecessionThreshold250(r);r.age250=age;r.secessionThreshold250=threshold;
+  if(age>=threshold||(age>=6&&(r.atCapTurns250||0)>=3))campaignCreateRebelFaction250(root,fac,s,r);
+};
+
+/* Apply civic upkeep before each normal settlement consequence pass. */
+const _campaignPostTurn246_rev250=campaignPostTurn246;
+campaignPostTurn246=function(root,endedTurn){const c=root?.campaign;if(!c||c.postTurnProcessed246===endedTurn)return;for(const fac of c.factions||[])for(const s of (fac.settlements||[]).filter(x=>x.status!=='Destroyed'))campaignApplyCivicUpkeep250(root,fac,s,endedTurn);return _campaignPostTurn246_rev250(root,endedTurn)};
+
+/* Recruitment now uses the full Size 1-10 / Technology 1-10 spectrum.
+   Role, points, rarity and explicit apex/unique language all increase requirements. */
+function campaignUnitRarity250(t){const text=`${t?.name||''} ${t?.role||''} ${t?.notes||''} ${t?.desc||''}`;let n=0;if(/unique|relic|ancient|prototype|primarch|lord of war|super.?heavy|titan|ordinatus|wraithknight|tesseract|fellblade|falchion|glaive|mastodon|thunderhawk|orion|ares/i.test(text))n+=2;if(/elite|veteran|command|honour|royal|praetorian|aspect|terminator/i.test(text))n+=1;return Math.min(3,n)}
+campaignUnitRecruitRequirements=function(root,fac,tf,t,models){
+  const pts=Math.max(1,campaignPackageCost(t,models)),role=t.role||'Other',rarity=campaignUnitRarity250(t),roleSize={Troops:1,'Dedicated Transport':2,'Fast Attack':3,Elites:3,HQ:3,'Heavy Support':4,'Lord of War':7,Fortification:5,Other:2}[role]??2,roleTech={Troops:1,'Dedicated Transport':2,'Fast Attack':2,Elites:3,HQ:3,'Heavy Support':4,'Lord of War':7,Fortification:4,Other:2}[role]??2;
+  const pointBand=pts>=2500?4:pts>=1400?3:pts>=750?2:pts>=350?1:0,techBand=pts>=2500?3:pts>=1200?2:pts>=500?1:0;
+  const requiredSize=Math.max(1,Math.min(10,roleSize+pointBand+Math.floor(rarity/2))),requiredTech=Math.max(1,Math.min(10,roleTech+techBand+rarity));
+  const materiel=Math.max(1,Math.ceil(pts/200)),supply=Math.max(1,Math.ceil(pts/800)),command=(role==='Lord of War'||role==='HQ'||pts>=1000)?1:0,hub=campaignRecruitmentHub(root,fac,tf),factionTech=campaignFactionTech(fac).tier,reasons=[];
+  if(hub.size<requiredSize)reasons.push(`local settlement/logistics Size ${hub.size} < ${requiredSize}`);if(hub.tech<requiredTech)reasons.push(`local tech ${hub.tech} < ${requiredTech}`);if(factionTech<requiredTech)reasons.push(`faction arsenal ${factionTech} < ${requiredTech}`);if(fac.treasury.materiel<materiel)reasons.push(`needs ${materiel} Materiel`);if(fac.treasury.supply<supply)reasons.push(`needs ${supply} Supply`);if(fac.command<command)reasons.push(`needs ${command} Command`);return{points:pts,requiredSize,requiredTech,materiel,supply,command,hub,factionTech,rarity,ok:!reasons.length,reasons}
+};
+
+/* UI: keep governance, rebellion and planner content full-width/centred on narrow displays. */
+const _campaignSettlementGovernanceHTML246_rev250=campaignSettlementGovernanceHTML246;
+campaignSettlementGovernanceHTML246=function(root,fac,s,own){let h=_campaignSettlementGovernanceHTML246_rev250(root,fac,s,own),r=s?.rebellion246;if(r?.active){const cap=campaignRebellionPointCap250(root,fac,s),age=Math.max(0,root.campaign.turn-r.startedTurn),th=campaignRebellionSecessionThreshold250(r),extra=`<span class="campaign-rebellion-meta250">Cap ${cap.toLocaleString()} pts • unresolved ${age}/${th} turns before breakaway risk</span>`;h=h.replace(/(<div class="campaign-rebellion246"><b>[^<]*<\/b>)/,`$1${extra}`)}const up=s?.colony?.civicUpkeep250;if(up){const g=Object.entries(up.gains||{}).filter(x=>x[1]).map(([k,v])=>`+${v} ${k}`).join(' • ');h=h.replace('<small>Risk uses',`<div class="campaign-civic-upkeep250"><b>Civic upkeep:</b> infrastructure and districts target Comp ${up.target.complacency}, Prod ${up.target.productivity}, Order ${up.target.order}, Piety/Cohesion ${up.target.piety}${g?` • last cycle ${esc(g)}`:''}.</div><small>Risk uses`)}return h};
+
+const _campaignRulesReferenceHTML_rev250=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev250(root);const add=`<div class="campaign-rule-card"><h4>60. Rebellion Caps & Secession</h4><p>Open rebellion strength is capped by settlement Size and faction technology, preventing unlimited exponential growth. If rebellion remains active for roughly 8–12 turns depending on severity, or sits at its cap for several turns, the settlement can secede into a new normal AI faction named Rebellion (Former Faction). It begins with the rebellion's final troop strength and is automatically at War with its former ruler.</p></div><div class="campaign-rule-card"><h4>61. Civic Upkeep Network</h4><p>Infrastructure, support upgrades and district tiers now provide recurring civic maintenance toward Complacency, Productivity, Order and Piety/Cohesion targets. Civilian polities try to maintain all four; aggressive cultures weight Order/Productivity more heavily, while Orks deliberately tolerate much lower Complacency and Piety.</p></div><div class="campaign-rule-card"><h4>62. Size 1–10 / Tech 1–10 Recruitment</h4><p>Recruitment locks now use the whole settlement and technology scales. Ordinary line units can be raised from small hubs, while elite, rare, super-heavy, relic and Lord of War choices progressively require Size 5–10 settlements and Technology 4–10. The generator and Add Unit continue to share the same complete faction roster.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
+
+const style250=document.createElement('style');style250.id='rev250-css';style250.textContent=`
+.campaign-governance246,.campaign-infra-planner246,.campaign-rebellion246,.campaign-auto-resource246,.campaign-civic-upkeep250{box-sizing:border-box;width:100%;max-width:100%;min-width:0}
+.campaign-governance246{display:block;margin-left:auto;margin-right:auto}.campaign-governance246>*{max-width:100%}
+.campaign-infra-planner246{text-align:left}.campaign-infra-grid246{width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.campaign-infra-grid246 select,.campaign-infra-grid246 button{width:100%;min-width:0}
+.campaign-rebellion246{display:flex;flex-direction:column;align-items:stretch;gap:3px}.campaign-rebellion-meta250{color:#c99389!important;font-size:7px!important}.campaign-civic-upkeep250{margin:6px 0;padding:6px 8px;border-left:3px solid #668f75;background:rgba(74,112,84,.07);color:#9db4a1;font-size:8px;line-height:1.4}
+.campaign-colony-row.visual>.campaign-governance246{grid-column:1/-1!important;margin:8px 0!important}.campaign-colony-row.visual>.campaign-governance246 .campaign-infra-planner246,.campaign-colony-row.visual>.campaign-governance246 .campaign-rebellion246{margin-left:0;margin-right:0}
+@media(max-width:760px){.campaign-governance246{padding:10px!important}.campaign-governance-grid246{grid-template-columns:repeat(2,minmax(0,1fr))!important}.campaign-infra-grid246{grid-template-columns:1fr!important}.campaign-infra-grid246 select,.campaign-infra-grid246 button{font-size:12px!important;min-height:42px!important}.campaign-rebellion246 b{font-size:15px;line-height:1.15}.campaign-rebellion246 span{font-size:10px!important;line-height:1.35}.campaign-governance246 p,.campaign-governance246 small,.campaign-civic-upkeep250{font-size:10px!important;line-height:1.45}.campaign-governance246 h5,.campaign-infra-planner246 h5{font-size:15px!important}}
+`;document.head.appendChild(style250);
+
+const rb250=document.querySelector('.generation-head-actions .badge');if(rb250)rb250.textContent='rev 25.0 — Civic Balance & Secession';document.title='Administratum Stellar Cartographica — Revision 25.0';document.documentElement.dataset.cartographicaRevision=REV250;document.documentElement.dataset.cartographicaBuild=REV250_BUILD;
+window.__cartoRevision250={version:REV250,build:REV250_BUILD,civicTargets:campaignCivicTargets250,civicSupport:campaignCivicSupportScores250,applyCivicUpkeep:campaignApplyCivicUpkeep250,rebellionCap:campaignRebellionPointCap250,spawnRebellion:campaignSpawnRebellion246,resolveRebellion:campaignResolveActiveRebellion246,secession:campaignCreateRebelFaction250,recruitRequirements:campaignUnitRecruitRequirements,governanceHTML:campaignSettlementGovernanceHTML246};
+
 /* Source note and revision identity. */
 document.querySelectorAll('.source-note').forEach(n=>{if(n.textContent.includes('Sector Campaign')&&!n.textContent.includes('Battlefleet Operations'))n.innerHTML+=`<br/><br/><b>Battlefleet Operations:</b> Revision 24.7 adds a strategic void-war layer inspired by Battlefleet Gothic Remastered: faction-specific fleet identities, command quality, direct-fire emphasis, lance/ordnance/boarding biases, durable versus agile fleet styles, persistent fleet damage, and separate fleet engagements before invasions. It deliberately stores campaign abstractions and closest fleet-list analogues instead of reproducing copyrighted ship profiles. Deep-Time campaign starts can simulate 100–1000 autonomous turns before player handover.`});
 window.__cartoRevision247={version:REV247,build:REV247_BUILD,navalDoctrines:CAMPAIGN_NAVAL_DOCTRINES247,navalProfile:campaignNavalProfile247,autoResolveNaval:campaignAutoResolveNaval247,simulatePrehistory:campaignSimulatePrehistory247};
 window.__cartoTest247={initialize:(root,opts)=>campaignInitialize(root,opts),player:c=>campaignPlayer(c),ensureFleetState:root=>campaignEnsureFleetState(root),ensureNaval:root=>campaignEnsureAllNavalIdentities247(root),normaliseTurnZero:root=>campaignNormaliseTurnZero247(root),simulatePrehistory:campaignSimulatePrehistory247,navalBattle:campaignNavalBattle247,autoResolveNaval:campaignAutoResolveNaval247,resolveNaval:campaignResolveNaval247,record:(root,id)=>campaignRecord(root,id),systemRecords:root=>campaignSystemRecords(root),commandHTML:(root,c)=>campaignCommandHTML(root,c),renderDashboard:root=>campaignRenderDashboard(root)};
-const rb=document.querySelector('.generation-head-actions .badge');if(rb)rb.textContent='rev 24.9 — Full Deep-Time & Unified Rosters';document.title='Administratum Stellar Cartographica — Revision 24.9';document.documentElement.dataset.cartographicaRevision='24.9';document.documentElement.dataset.cartographicaBuild='24.9-full-deep-time-unified-rosters-v31-tested';document.documentElement.dataset.cartographicaCleanBuild='true';
+const rb=document.querySelector('.generation-head-actions .badge');if(rb)rb.textContent='rev 25.0 — Civic Balance & Secession';document.title='Administratum Stellar Cartographica — Revision 25.0';document.documentElement.dataset.cartographicaRevision='25.0';document.documentElement.dataset.cartographicaBuild='25.0-civic-secession-recruitment-depth-v32-tested';document.documentElement.dataset.cartographicaCleanBuild='true';
 
 /* ===== End integrated extension layers ===== */
 

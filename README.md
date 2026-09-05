@@ -1,9 +1,17 @@
-# Administratum Stellar Cartographica — Revision 24.9
+# Administratum Stellar Cartographica — Revision 25.0
 ## Full Deep-Time History & Unified Faction Rosters
 
-Build: `24.9-full-deep-time-unified-rosters-v31-tested`
+Build: `25.0-civic-secession-recruitment-depth-v32-tested`
 
-Revision 24.9 is a regression-fix and integration release built on Revision 24.8. It preserves Autonomous District Economy, Hard Fleet Troop Lift, Full/expanded rosters and Battlefleet Operations while restoring a genuine Deep-Time campaign simulation.
+Revision 25.0 builds on the fully restored v24.9 runtime. It retains exact Deep-Time simulation, Autonomous District Economy, Hard Fleet Troop Lift, full unified rosters and Battlefleet Operations, then adds centred settlement governance, capped rebellion/secession, recurring civic upkeep and wider Size/Technology recruitment locks.
+
+## Revision 25.0 additions
+- Settlement governance, rebellion and infrastructure/support panels now remain full-width inside the settlement card. Mobile layouts collapse the planner into a single centred column instead of squeezing text into the left edge.
+- Rebellions have a Size/Technology-scaled hard points cap. Severe unresolved rebellions normally secede after roughly 8–12 turns, or sooner after remaining at their cap for several cycles.
+- Secession creates a normal autonomous faction named `Rebellion (Former Faction)`, transfers the rebellious settlement/local claim, gives it a generated starting army equal to the final rebellion points, and immediately sets relations with the former ruler to War.
+- Infrastructure, support upgrades and district tiers now provide recurring civic upkeep toward Complacency, Productivity, Order and Piety/Cohesion targets. Aggressive factions emphasise Order/Productivity; Orks deliberately tolerate lower Complacency/Piety.
+- AI district selection now responds to civic deficits as well as economic output, allowing Administration, Habitation, Defence and Research districts to be built when settlements need stability rather than only more resources.
+- Unit recruitment requirements now use the full Size 1–10 and Technology 1–10 range. Ordinary troops remain accessible early; rare/elite/super-heavy/relic/Lord of War units can require much more developed mustering worlds.
 
 ## Deep-Time restoration
 - Deep-Time no longer substitutes a displayed target turn or compressed economy for missing history.
@@ -30,7 +38,7 @@ Revision 24.9 is a regression-fix and integration release built on Revision 24.8
 - Settlement governance, rebellions, occupation effects, generated settlement networks, T4/T5 resource automation and strategic expedition rewards remain active.
 
 ## Cache/install identity
-The PWA uses the distinct cache key `24.9-full-deep-time-unified-rosters-v31-tested`. The service worker removes older Cartographica caches during install/activation, and navigation requests prefer the network before the canonical offline shell.
+The PWA uses the distinct cache key `25.0-civic-secession-recruitment-depth-v32-tested`. The service worker removes older Cartographica caches during install/activation, and navigation requests prefer the network before the canonical offline shell.
 
 ## Validation
 See `TEST-REPORT.txt` and `BUILD-VERIFICATION.txt` for the validation performed on this exact package.

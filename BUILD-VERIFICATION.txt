@@ -1,31 +1,18 @@
-STELLAR CARTOGRAPHICA REVISION 24.9 BUILD VERIFICATION
-Build: 24.9-full-deep-time-unified-rosters-v31-tested
+BUILD VERIFICATION — STELLAR CARTOGRAPHICA 25.0
 
-Integration findings and fixes:
-1. Revision 24.8 had been appended in a separate script scope and threw `hh1Inf is not defined`, preventing its runtime changes from completing.
-2. Revision 24.8 and 24.9 logic were moved into the same core runtime scope as the campaign/world functions they extend.
-3. A secondary fleet-coverage hook that is scope-dependent is now guarded safely rather than aborting the integration.
-4. Deep-Time simulation was replaced with exact one-step-per-turn history. `simulationSteps247` equals the requested turn count and `turnStride247` is exactly 1.
-5. Generator and manual Add Unit now resolve through the same authoritative roster function.
-6. Dark Compliance combines Legion + Militia roster entries.
-7. Revision/cache/manifest identities were changed to Revision 24.9 / v31-tested.
+Exact tested package source: index.html in this directory.
+Build key: 25.0-civic-secession-recruitment-depth-v32-tested
 
-Static validation:
-- All inline JavaScript blocks parse with Node --check.
-- Service worker parses with Node --check.
-- manifest.webmanifest parses as valid JSON.
-- Final ZIP passes `unzip -t`.
+Validation performed:
+- Extracted every embedded JavaScript block and checked each with node --check.
+- Checked sw.js with node --check.
+- Parsed manifest.webmanifest as JSON.
+- Loaded the exact HTML with system Chromium through Playwright page.set_content.
+- Generated a sector through the real Generate button.
+- Initialised live campaigns through the integrated campaign runtime.
+- Exercised civic support/upkeep, rebellion cap, rebellion-to-faction secession, automatic War relation, rebellion-force creation and Size/Tech recruitment requirements.
+- Performed a 390x844 mobile-layout test and checked settlement governance/planner geometry for horizontal overflow.
+- Performed an exact 25-turn Deep-Time simulation to verify v24.9 history functionality remains intact after the new integration.
 
-Browser-harness validation:
-- The environment blocks direct file:// and localhost navigation by administrator policy, but Chromium is usable through Playwright `page.set_content`, which executes the exact packaged HTML and inline runtime.
-- Revision 24.9 runtime initialized with no page errors.
-- A generated two-subsector sector was initialized as an established Craftworld campaign.
-- Exact Turn-100 prehistory completed in 100 simulation steps with stride 1 and returned Turn 100 / Player phase.
-- Test-seed historical state changed materially: settlements 44→48, districts 62→149, district-tier total 124→515, army points 15,416→306,665.
-- AI district audit showed mature AI settlements actively filling/upgrading district slots.
-- Fleet audit showed every fleet at or below troop-lift capacity after history.
-- Craftworld authoritative pool exposed 34 current unit entries including Wraithknight and Ancient Grav War Engine Lords of War.
-- Dark Compliance authoritative pool exposed 62 combined Legion/Militia entries.
-- No JavaScript runtime errors were observed during the Turn-100 test.
-- Add Unit runtime parity: Craftworld selector 34 entries = authoritative pool 34 entries; missing=0, extra=0.
-- Generator runtime probe: 20,000-point Legion force selected roster Lords of War and respected the 25% ceiling.
+Environment note:
+The test uses /usr/bin/chromium with Playwright page.set_content because local navigation/service-worker installation is restricted in this container. The service-worker code and unique cache/build identity were validated separately.

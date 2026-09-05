@@ -1,24 +1,20 @@
-STELLAR CARTOGRAPHICA REVISION 24.9 TEST REPORT
-Build: 24.9-full-deep-time-unified-rosters-v31-tested
+STELLAR CARTOGRAPHICA REVISION 25.0 TEST REPORT
+Build: 25.0-civic-secession-recruitment-depth-v32-tested
 
-PASS — Runtime architecture: v24.8/v24.9 extension code executes inside the core Cartographica scope.
-PASS — Exact historical stepping: requested Turn 100 produced simulationSteps247=100, turnStride247=1, compressed=false.
-PASS — Historical handover: campaign ended at Turn 100, phase Player.
-PASS — Historical world change: settlements 44→48 in the browser-harness test seed.
-PASS — Historical AI development: districts 62→149 and district-tier total 124→515.
-PASS — Historical military development: total task-force strength 15,416→306,665 points.
-PASS — AI district programme remained active during Deep-Time and produced developed district webs.
-PASS — Fleet troop capacity audit: all tested fleets satisfied used <= capacity after the historical simulation.
-PASS — Unified roster source: generator/Add Unit/start muster resolve through campaignFactionRosterPool249.
-PASS — Craftworld pool: 34 entries in the test runtime, including explicit Lord of War entries.
-PASS — Dark Compliance pool: 62 combined Legion/Militia entries rather than the old procedural fallback.
-PASS — Lord of War pre-filter corrected to the documented 25% ceiling.
-PASS — Revision identity reports 24.9 in the live browser harness.
-PASS — No page errors during generation, campaign initialization or 100-turn simulation.
-PASS — JavaScript/service worker/manifest static validation.
-
-Browser environment note:
-Direct file:// and localhost navigation are blocked by administrator policy. Runtime testing therefore loaded the exact packaged HTML through Playwright page.set_content. This executes the inline application runtime and allowed actual sector generation and campaign simulation, but does not exercise service-worker network installation in-browser. Service-worker syntax/cache identity were validated separately.
-PASS — Add Unit parity test: Craftworld Add Unit selector contained 34/34 authoritative pool entries, with zero missing and zero extra entries; Wraithknight and Ancient Grav War Engine were present.
-PASS — Generator pool test: a 20,000-point Legion generation used the authoritative live roster and selected Lord of War choices (Mastodon Heavy Assault Transports) while remaining below the 25% Lord of War ceiling.
-PASS — Runtime roster census included explicit Lord of War entries for Legion, Craftworld, Dark Compliance, Militia, Mechanicum, Talons, Necrons, Rangdan, Orks, Rak’Gol, independent Humans and procedural Xenos. Kroot currently has no Lord of War entry in its defined Cartographica roster, so none is invented.
+PASS — Revision identity: live Chromium runtime reports Revision 25.0 / v32-tested.
+PASS — Core runtime: no page errors during generation, campaign initialisation, civic, rebellion, secession or recruitment tests.
+PASS — Mobile settlement layout at 390 px viewport: governance card fills its 350 px test container; rebellion/planner remain full usable width; infrastructure planner collapses to one column; no horizontal overflow.
+PASS — Rebellion hard cap: injected runaway 999,999,999 pt rebellion was capped to 22,500 pts for the Size 6 / tested-tech settlement.
+PASS — Secession: a rebellion deliberately aged beyond its threshold became a normal AI faction named Rebellion (The Ninefold Clade) in the test seed.
+PASS — Secession diplomacy: breakaway faction relation with the parent was immediately set to -100 (War).
+PASS — Secession army: breakaway faction received a 22,500 pt starting force matching the capped rebellion strength.
+PASS — Civic upkeep: infrastructure/support/district support produced recurring recovery across Complacency, Productivity, Order and Piety/Cohesion toward settlement targets.
+PASS — Warlike profiles: Ork civic targets intentionally tolerate substantially lower Complacency/Piety than ordinary civilian polities.
+PASS — Recruitment depth: live Craftworld roster requirements ranged from Size 1 to Size 9 and Technology 1 to Technology 9; Wraithknight required Size 8 / Tech 9 and Ancient Grav War Engine Size 9 / Tech 9. Formula supports the full 1–10 scale for still rarer/more expensive apex units.
+PASS — Unified roster retained: Craftworld live authoritative pool remained 34 entries; generator and Add Unit still resolve from campaignFactionRosterPool249/campaignFactionTemplates.
+PASS — Exact Deep-Time retained: a 25-turn live Chromium history test completed with simulationSteps247=25, turnStride247=1, compressed=false and handover at Turn 25 / Player phase.
+PASS — Deep-Time world evolution remained active: controlled systems 7→11, districts 5→23, district-tier total 10→91, military strength 13,388→88,952 pts in the test seed.
+PASS — Dynamic rebellion politics appeared during historical simulation without runtime failure; faction count increased 5→6 in the test history.
+PASS — JavaScript syntax validation for all embedded scripts.
+PASS — service worker syntax validation.
+PASS — manifest JSON validation.

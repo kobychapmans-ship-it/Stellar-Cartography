@@ -1,2 +1,2 @@
-Stellar Cartographica 24.9
-Build: 24.9-full-deep-time-unified-rosters-v31-tested
+Stellar Cartographica 25.0
+Build: 25.0-civic-secession-recruitment-depth-v32-tested
