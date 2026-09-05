@@ -1,0 +1,218 @@
+[
+  {
+    "case": [
+      "subsector",
+      250,
+      "craftworld",
+      "existing"
+    ],
+    "elapsed": 3.05,
+    "dialogs": [],
+    "errors": [],
+    "data": {
+      "turn": 250,
+      "phase": "Player",
+      "systems": 8,
+      "factions": 6,
+      "stack": 0,
+      "independent": true,
+      "settlements": 1,
+      "managed": 1,
+      "mobile": 2,
+      "fleets": 3,
+      "strong": 1
+    }
+  },
+  {
+    "case": [
+      "subsector",
+      1000,
+      "mechanicum",
+      "existing"
+    ],
+    "elapsed": 3.55,
+    "dialogs": [],
+    "errors": [],
+    "data": {
+      "turn": 1000,
+      "phase": "Player",
+      "systems": 8,
+      "factions": 6,
+      "stack": 0,
+      "independent": true,
+      "settlements": 2,
+      "managed": 2,
+      "mobile": 0,
+      "fleets": 6,
+      "strong": 6
+    }
+  },
+  {
+    "case": [
+      "subsector",
+      500,
+      "ork",
+      "existing"
+    ],
+    "elapsed": 3.0,
+    "dialogs": [],
+    "errors": [],
+    "data": {
+      "turn": 500,
+      "phase": "Player",
+      "systems": 8,
+      "factions": 5,
+      "stack": 0,
+      "independent": true,
+      "settlements": 6,
+      "managed": 6,
+      "mobile": 0,
+      "fleets": 4,
+      "strong": 2
+    }
+  },
+  {
+    "case": [
+      "sector",
+      250,
+      "legion",
+      "emerging"
+    ],
+    "elapsed": 10.99,
+    "dialogs": [],
+    "errors": [],
+    "data": {
+      "turn": 250,
+      "phase": "Player",
+      "systems": 41,
+      "factions": 11,
+      "stack": 0,
+      "independent": true,
+      "settlements": 0,
+      "managed": 0,
+      "mobile": 0,
+      "fleets": 1,
+      "strong": 0
+    }
+  },
+  {
+    "case": [
+      "sector",
+      1000,
+      "craftworld",
+      "existing"
+    ],
+    "elapsed": 16.79,
+    "dialogs": [],
+    "errors": [],
+    "data": {
+      "turn": 1000,
+      "phase": "Player",
+      "systems": 41,
+      "factions": 14,
+      "stack": 0,
+      "independent": true,
+      "settlements": 22,
+      "managed": 22,
+      "mobile": 10,
+      "fleets": 10,
+      "strong": 8
+    }
+  },
+  {
+    "case": [
+      "sector",
+      500,
+      "ork",
+      "existing"
+    ],
+    "elapsed": 12.35,
+    "dialogs": [],
+    "errors": [],
+    "data": {
+      "turn": 500,
+      "phase": "Player",
+      "systems": 41,
+      "factions": 12,
+      "stack": 0,
+      "independent": true,
+      "settlements": 3,
+      "managed": 3,
+      "mobile": 0,
+      "fleets": 3,
+      "strong": 2
+    }
+  },
+  {
+    "case": [
+      "sector",
+      1000,
+      "legion",
+      "existing"
+    ],
+    "elapsed": 15.67,
+    "dialogs": [],
+    "errors": [],
+    "data": {
+      "turn": 1000,
+      "phase": "Player",
+      "systems": 41,
+      "factions": 14,
+      "stack": 0,
+      "independent": true,
+      "settlements": 1,
+      "managed": 1,
+      "mobile": 6,
+      "fleets": 6,
+      "strong": 6
+    }
+  },
+  {
+    "case": [
+      "sector",
+      1000,
+      "mechanicum",
+      "existing"
+    ],
+    "elapsed": 15.24,
+    "dialogs": [],
+    "errors": [],
+    "data": {
+      "turn": 1000,
+      "phase": "Player",
+      "systems": 41,
+      "factions": 14,
+      "stack": 0,
+      "independent": true,
+      "settlements": 2,
+      "managed": 2,
+      "mobile": 0,
+      "fleets": 6,
+      "strong": 6
+    }
+  },
+  {
+    "case": [
+      "sector",
+      1000,
+      "ork",
+      "existing"
+    ],
+    "elapsed": 15.0,
+    "dialogs": [],
+    "errors": [],
+    "data": {
+      "turn": 1000,
+      "phase": "Player",
+      "systems": 41,
+      "factions": 14,
+      "stack": 0,
+      "independent": true,
+      "settlements": 3,
+      "managed": 3,
+      "mobile": 0,
+      "fleets": 6,
+      "strong": 6
+    }
+  }
+]

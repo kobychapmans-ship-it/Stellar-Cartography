@@ -84,3 +84,10 @@ The v25.5 release was statically checked for historical fixed-settlement foundat
 
 ## Revision 25.6 — Managed Empires & Strong Fleet Foundations
 Fleet polities now directly commission fleet-class formations instead of waiting for Scout Flotillas to satisfy Mobile Colony prerequisites. Deep-Time reserves resources for managed settlement cores and performs a final managed handover for established player polities. Long histories use smaller epochs, chunked final settlement processing and aggressive transient-state compaction for Safari stack safety.
+
+
+## Revision 25.7 — Independent Stack-Safe Deep Time
+
+Deep Time no longer enters the layered v25.2→v25.6 historical wrapper chain. A single bounded macro-history engine advances 100–1000 turns through 10–24 iterative epochs. It directly processes income, settlement maintenance and growth, historical foundations, districts, infrastructure, territorial expansion, diplomacy, fleet/hull growth, mobile fleet settlements and military strength while yielding to the browser between bounded batches.
+
+The audit also found and fixed a genuine infinite recursion affecting developed mobile fleet settlements: settlement enumeration → colony lookup → colony effectiveness → PF calculation → mobile-colony ensure → settlement enumeration. Colony lookup now scans fixed settlement records and already-created mobile colonies directly without materialising every fleet-settlement proxy.

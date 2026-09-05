@@ -1,2 +1,2 @@
-Stellar Cartographica v25.6
-Build: 25.6-managed-empires-strong-fleets-stack-guard-v40-tested
+Stellar Cartographica v25.7
+Build: 25.7-independent-deeptime-engine-v41-tested
