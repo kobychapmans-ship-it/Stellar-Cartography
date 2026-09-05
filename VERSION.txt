@@ -1,2 +1,2 @@
-Stellar Cartographica v25.1.1
-Build: 25.1.1-demographic-momentum-strategic-armies-bootstrap-fix-v34-tested
+Stellar Cartographica v25.2
+Build: 25.2-stack-safe-full-sector-deep-time-v35-tested

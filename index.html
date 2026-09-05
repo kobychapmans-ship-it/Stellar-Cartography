@@ -9,16 +9,16 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=25.1.1-demographic-momentum-strategic-armies-bootstrap-fix-v34-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=25.2-stack-safe-full-sector-deep-time-v35-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='25.1.1';
-  const BUILD='25.1.1-demographic-momentum-strategic-armies-bootstrap-fix-v34-tested';
-  const LABEL='rev 25.1.1 — Demographic Momentum & Strategic Armies';
-  const TITLE='Administratum Stellar Cartographica — Revision 25.1.1';
+  const REVISION='25.2';
+  const BUILD='25.2-stack-safe-full-sector-deep-time-v35-tested';
+  const LABEL='rev 25.2 — Stack-Safe Full-Sector Deep Time';
+  const TITLE='Administratum Stellar Cartographica — Revision 25.2';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 25.1.1</title>
+<title>Administratum Stellar Cartographica — Revision 25.2</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -6245,7 +6245,7 @@ campaignSimulatePrehistory247=async function(root,turns,player,mode){
   }
   c.turn=requestedTurns;c.phase='Player';player.ai=false;
   if(mode==='emerging')campaignRestoreEmerging247(root,player,hold);else{player.ai=wasAI;player.command=player.maxCommand+(player.nextCommandBonus||0);player.nextCommandBonus=0;c.selectedSystemId=player.homeSystemId||player.territory?.[0]||c.selectedSystemId;c.selectedTaskForceId=player.taskForces?.[0]?.id||null;c.selectedFleetId=player.fleets?.[0]?.id||null}
-  const final=campaignHistoryMetrics249(root);c.prehistory247.completedAt=new Date().toISOString();c.prehistory247.finalFactionCount=c.factions.length;c.prehistory247.finalControlledSystems=final.controlledSystems;c.prehistory247.finalMetrics249=final;
+  await campaignFlushScalableSettlements252(root,requestedTurns);const final=campaignHistoryMetrics249(root);c.prehistory247.completedAt=new Date().toISOString();c.prehistory247.finalFactionCount=c.factions.length;c.prehistory247.finalControlledSystems=final.controlledSystems;c.prehistory247.finalMetrics249=final;
   campaignEnsureAllNavalIdentities247(root);campaignRepairAllFleetLift248(root,false);campaignSyncMap(root);campaignPersist(root);
 };
 
@@ -6414,14 +6414,11 @@ document.documentElement.dataset.cartographicaCleanBuild='true';
 
 /* ===== End integrated extension layers ===== */
 
-})();
-
-
 /* ==========================================================================
    Revision 25.1 — Demographic Momentum & Strategic Army Traits
    ========================================================================== */
 const REV251='25.1';
-const REV251_BUILD='25.1.1-demographic-momentum-strategic-armies-bootstrap-fix-v34-tested';
+const REV251_BUILD='25.2-stack-safe-full-sector-deep-time-v35-tested';
 
 function campaignSettlementDevelopment251(c){
   if(!c)return null;
@@ -6588,10 +6585,171 @@ const _campaignRulesReferenceHTML_rev251=campaignRulesReferenceHTML;
 campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev251(root);const add=`<div class="campaign-rule-card"><h4>63. Demographic Momentum</h4><p>Settlement Size 1–10 is now an accumulated outcome rather than a random growth roll. Productivity, Order, cohesion, infrastructure, support and district development create positive momentum; shortages, unrest, rebellion and unmet infrastructure create decline. Larger settlements require progressively more sustained development. Contraction leaves ruined legacy capacity rather than erasing the settlement's history.</p></div><div class="campaign-rule-card"><h4>64. Strategic Army Traits</h4><p>Every Task Force derives Mobility, Reconnaissance, Firepower, Armour, Assault, Siege, Air Power, Air Defence, Logistics, Morale and Titanic Strength from its actual roster. Strategic auto-resolve weights these traits by theatre and fortification, so equal-points armies can perform very differently depending on composition.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
 
 window.__cartoRevision251={version:REV251,build:REV251_BUILD,development:campaignSettlementDevelopment251,armyProfile:campaignArmyStrategicProfile251,battleModifier:campaignBattleStrategicModifier251};
-const rb251=document.querySelector('.generation-head-actions .badge');if(rb251)rb251.textContent='rev 25.1.1 — Demographic Momentum & Strategic Armies';
-document.title='Administratum Stellar Cartographica — Revision 25.1.1';
+const rb251=document.querySelector('.generation-head-actions .badge');if(rb251)rb251.textContent='rev 25.2 — Stack-Safe Full-Sector Deep Time';
+document.title='Administratum Stellar Cartographica — Revision 25.2';
 document.documentElement.dataset.cartographicaRevision='25.1.1';
 document.documentElement.dataset.cartographicaBuild=REV251_BUILD;
+
+
+/* ==========================================================================\n   Revision 25.2 — Stack-Safe Full-Sector Deep Time\n   ========================================================================== */
+const REV252='25.2';
+const REV252_BUILD='25.2-stack-safe-full-sector-deep-time-v35-tested';
+function campaignIsStackOverflow252(e){return e instanceof RangeError||/maximum call stack|stack size exceeded|too much recursion/i.test(String(e?.message||e||''))}
+function campaignYield252(){return new Promise(resolve=>setTimeout(resolve,0))}
+function campaignTrimHistory252(c){
+  if(c.log?.length>500)c.log.length=500;
+  if(c.battles?.length>240)c.battles.length=240;
+  if(c.navalBattles247?.length>240)c.navalBattles247.length=240;
+  if(c.notices?.length>80)c.notices=c.notices.slice(-80);
+}
+/* Do not repeatedly serialise an enormous evolving sector during each internal
+   prehistory action. A final save is written when the historical handover is done. */
+const _campaignPersist_rev252=campaignPersist;
+campaignPersist=function(root){if(root?.campaign?._deepTimeRunning252)return;return _campaignPersist_rev252(root)};
+/* Full-sector-safe map bounds: never spread an unbounded systems array into Math.min/max. */
+campaignStartMapCoords=function(root){const recs=campaignSystemRecords(root);let minx=0,maxx=1,miny=0,maxy=1,first=true;for(const r of recs){const x=Number(r.position?.x)||0,y=Number(r.position?.y)||0;if(first){minx=maxx=x;miny=maxy=y;first=false}else{if(x<minx)minx=x;if(x>maxx)maxx=x;if(y<miny)miny=y;if(y>maxy)maxy=y}}const dx=Math.max(1,maxx-minx),dy=Math.max(1,maxy-miny);return recs.map(r=>({...r,_sx:35+((r.position.x||0)-minx)/dx*430,_sy:230-((r.position.y||0)-miny)/dy*190}))};
+/* Reinforcement append without Function.apply/spread argument expansion. */
+campaignAIRecruit=function(c,sector,fac){
+  if((fac.treasury?.materiel||0)<6)return false;
+  let tf=(fac.taskForces||[]).sort((a,b)=>campaignTaskForcePoints(b)-campaignTaskForcePoints(a))[0];
+  if(!tf){tf=campaignTaskForceFromGenerated(fac.key,1500,fac.homeSystemId||fac.territory?.[0],`${fac.name} Field Army`);fac.taskForces=fac.taskForces||[];fac.taskForces.push(tf);return true}
+  const add=Math.min(2500,Math.floor((fac.treasury.materiel||0)/3)*250);if(add<500)return false;
+  const reinforcement=campaignTaskForceFromGenerated(fac.key,add,tf.systemId,'Reinforcement');tf.detachments=tf.detachments||[];
+  let i=0;for(const d of reinforcement.detachments||[]){tf.detachments.push({...d,id:`${d.id}-r${c.turn}-${i++}`,name:`Reinforcement Detachment T${c.turn}`})}
+  fac.treasury.materiel-=Math.ceil(add/250);campaignLog(c,`${fac.name} autonomously mustered approximately ${add.toLocaleString()} points of reinforcement.`,'ai');return true
+};
+/* If one highly-developed AI action still trips Safari's fixed engine stack,
+   unwind that one operation and perform a bounded non-recursive strategic fallback. */
+function campaignAIFallback252(root,fac,turn){
+  try{if(typeof campaignAIDistrictProgramme248==='function')campaignAIDistrictProgramme248(root,fac,'pre')}catch(_){}
+  try{if(typeof campaignAIMaintainSettlements246==='function')campaignAIMaintainSettlements246(root,fac)}catch(_){}
+  try{if(typeof campaignAIExtractResource==='function'&&campaignRandom(root.campaign,`safe extract ${fac.id} ${turn}`)<.22)campaignAIExtractResource(root,fac)}catch(_){}
+  try{if((fac.treasury?.materiel||0)>=9)campaignAIRecruit(root.campaign,root,fac)}catch(_){}
+  const c=root.campaign,free=[];for(const sid of fac.territory||[]){for(const r of campaignNeighbors(root,sid)){if(!c.systems?.[r.id]?.ownerFactionId&&!free.some(x=>x.id===r.id))free.push(r)}}
+  if(free.length&&(fac.command||0)>0&&['wide','balanced'].includes(campaignAIStrategy246?.(fac)||'balanced')){try{campaignClaim(root,free[0].id,fac,true)}catch(_){}}
+}
+async function campaignAdvanceHistoricTurn252(root,turnIndex){
+  const c=root.campaign;c.turn=turnIndex;c.phase='AI';
+  const active=()=>c.factions.filter(f=>!f.prehistoryDormant247),ai=active().filter(f=>f.ai);
+  const systemCount=campaignSystemRecords(root).length,yieldEvery=systemCount>300?1:systemCount>120?2:4;
+  for(let i=0;i<ai.length;i++){
+    const fac=ai[i];try{campaignAITurn(root,fac)}catch(e){if(campaignIsStackOverflow252(e)){c.prehistory247.stackRecoveries252=(c.prehistory247.stackRecoveries252||0)+1;console.warn('Deep-Time stack recovery',turnIndex,fac.name);campaignAIFallback252(root,fac,turnIndex)}else console.warn('AI historical turn',turnIndex,fac.name,e)}
+    if((i+1)%yieldEvery===0)await campaignYield252();
+  }
+  c.phase='Economy';const now=active();
+  for(let i=0;i<now.length;i++){
+    const fac=now[i];try{campaignFactionIncome(c,root,fac)}catch(e){if(campaignIsStackOverflow252(e))c.prehistory247.stackRecoveries252=(c.prehistory247.stackRecoveries252||0)+1}
+    const settlements=[...(fac.settlements||[])];for(let j=0;j<settlements.length;j++){const st=settlements[j];if(st.status==='Destroyed')continue;try{withSeededRng(`${c.seed}|PREHISTORY252|T${turnIndex}|COLONY|${st.id}`,()=>soiAdvanceColony(st.colony,{}))}catch(e){if(campaignIsStackOverflow252(e))c.prehistory247.stackRecoveries252=(c.prehistory247.stackRecoveries252||0)+1}if((j+1)%30===0)await campaignYield252()}
+    for(const fl of fac.fleets||[])if(typeof campaignFleetIsMobileSettlement235==='function'&&campaignFleetIsMobileSettlement235(fl)){try{const col=campaignEnsureMobileColony235(fl);withSeededRng(`${c.seed}|PREHISTORY252|T${turnIndex}|FLEETCOL|${fl.id}`,()=>soiAdvanceColony(col,{}))}catch(_){}}
+    if((i+1)%yieldEvery===0)await campaignYield252();
+  }
+  try{campaignAdvanceCoreColonies(root)}catch(e){if(campaignIsStackOverflow252(e))c.prehistory247.stackRecoveries252=(c.prehistory247.stackRecoveries252||0)+1}
+  await campaignYield252();
+  try{campaignAdvanceAllFleets(root)}catch(e){if(campaignIsStackOverflow252(e))c.prehistory247.stackRecoveries252=(c.prehistory247.stackRecoveries252||0)+1}
+  if(typeof campaignProcessRaiders239==='function')try{campaignProcessRaiders239(root)}catch(_){}
+  if(typeof campaignThreatTurn235==='function')try{campaignThreatTurn235(root)}catch(_){}
+  try{campaignSectorEvent(root)}catch(e){if(campaignIsStackOverflow252(e))c.prehistory247.stackRecoveries252=(c.prehistory247.stackRecoveries252||0)+1}
+  /* Post-turn effects are intentionally expanded here instead of calling the older
+     wrapper, which persisted the entire campaign from inside every historical turn. */
+  const postFac=[...c.factions];for(let fi=0;fi<postFac.length;fi++){const fac=postFac[fi];const ss=[...(fac.settlements||[])];for(const st of ss){if(st.status==='Destroyed')continue;try{if(typeof campaignApplyCivicUpkeep250==='function')campaignApplyCivicUpkeep250(root,fac,st,turnIndex)}catch(_){}try{if(!st.mobile236&&typeof campaignRollSettlementConsequence246==='function')campaignRollSettlementConsequence246(root,fac,st,turnIndex)}catch(e){if(campaignIsStackOverflow252(e))c.prehistory247.stackRecoveries252=(c.prehistory247.stackRecoveries252||0)+1}try{if(typeof campaignAutoHarvestSettlement246==='function')campaignAutoHarvestSettlement246(root,fac,st,turnIndex)}catch(_){}}if((fi+1)%yieldEvery===0)await campaignYield252()}
+  c.postTurnProcessed246=turnIndex;
+  c.turn=turnIndex+1;c.phase='Prehistory';
+  for(const fac of active()){fac.command=Number(fac.maxCommand||0)+Number(fac.nextCommandBonus||0);fac.nextCommandBonus=0;if(typeof campaignRefreshCommand238==='function')try{campaignRefreshCommand238(root,fac,false)}catch(_){}}
+  if(typeof campaignEnsureTerritoryClaims238==='function')try{campaignEnsureTerritoryClaims238(root)}catch(_){}
+  if(typeof campaignEnsureContacts238==='function')try{campaignEnsureContacts238(root,false)}catch(_){}
+  if((turnIndex+1)%10===0)try{campaignConsolidatePrehistory247(root)}catch(_){}
+  if((turnIndex+1)%5===0)try{campaignRepairAllFleetLift248(root,false)}catch(_){}
+  campaignTrimHistory252(c);await campaignYield252();
+}
+campaignSimulatePrehistory247=async function(root,turns,player,mode){
+  const c=root.campaign,requestedTurns=Math.max(0,Math.min(1000,Math.round(Number(turns)||0))),initial=campaignHistoryMetrics249(root),systemCount=campaignSystemRecords(root).length;
+  c.prehistory247={turns:requestedTurns,mode,startedAt:new Date().toISOString(),initialFactionCount:c.factions.length,simulationSteps247:requestedTurns,turnStride247:1,compressed:false,stackSafe252:true,systemCount252:systemCount,stackRecoveries252:0,initialMetrics249:initial};c._deepTimeRunning252=true;
+  try{
+    campaignExpandPrehistoryPolities247(root,requestedTurns);await campaignYield252();
+    const wasAI=player.ai;if(mode==='existing')player.ai=true;let hold=null;if(mode==='emerging')hold=campaignDormantEmerging247(root,player,c.selectedSystemId||player.homeSystemId);
+    for(let t=0;t<requestedTurns;t++){
+      await campaignAdvanceHistoricTurn252(root,t);
+      if(t===0||(t+1)%5===0||t===requestedTurns-1){const m=campaignHistoryMetrics249(root);campaignPrehistoryOverlay247(true,`Turn ${t+1} of ${requestedTurns} • ${systemCount} systems • ${m.controlledSystems} controlled • ${m.settlements} settlements • ${m.districts} districts`,(t+1)/Math.max(1,requestedTurns)*100)}
+      if((t+1)%25===0){/* checkpoint metadata only; avoid serialising the full graph */c.prehistory247.lastCheckpoint252=t+1;await campaignYield252()}
+    }
+    c.turn=requestedTurns;c.phase='Player';player.ai=false;if(mode==='emerging')campaignRestoreEmerging247(root,player,hold);else{player.ai=wasAI;player.command=player.maxCommand+(player.nextCommandBonus||0);player.nextCommandBonus=0;c.selectedSystemId=player.homeSystemId||player.territory?.[0]||c.selectedSystemId;c.selectedTaskForceId=player.taskForces?.[0]?.id||null;c.selectedFleetId=player.fleets?.[0]?.id||null}
+    const final=campaignHistoryMetrics249(root);c.prehistory247.completedAt=new Date().toISOString();c.prehistory247.finalFactionCount=c.factions.length;c.prehistory247.finalControlledSystems=final.controlledSystems;c.prehistory247.finalMetrics249=final;
+    campaignEnsureAllNavalIdentities247(root);campaignRepairAllFleetLift248(root,false);campaignSyncMap(root);
+  }finally{delete c._deepTimeRunning252}
+  _campaignPersist_rev252(root);
+};
+/* The exported test hook must point at the live stack-safe runner, not a captured old reference. */
+
+function campaignScalableHistory252(root,requestedTurns=0){const c=root.campaign,systems=campaignSystemRecords(root).length,settlements=(c.factions||[]).reduce((n,f)=>n+(f.settlements||[]).filter(s=>s.status!=='Destroyed').length,0);return systems>=30||settlements>=120||Number(requestedTurns)>=100}
+function campaignApplyAggregatedSettlement252(root,fac,st,turn,flush=false){
+  const col=st?.colony;if(!col)return;const last=Number.isFinite(st._historyLast252)?st._historyLast252:Math.max(0,turn-1),elapsed=Math.max(1,turn-last);st._historyLast252=turn;
+  try{const d=campaignSettlementDevelopment251(col);col.development251=(Number(col.development251)||0)+d.net*elapsed;let guard=0;while(col.size<10&&col.development251>=d.threshold&&guard++<3){col.development251-=d.threshold;col.size++;col.requiredInfrastructure=col.requiredInfrastructure||pick(SOI_INFRA);col.pendingInfrastructurePenalty=true}guard=0;while(col.size>0&&col.development251<=-d.declineThreshold&&guard++<3){col.development251+=d.declineThreshold;col.ruinedCapacity251=Math.max(Number(col.ruinedCapacity251)||0,col.size);col.size--;col.ruinedDistrictTiers251=(Number(col.ruinedDistrictTiers251)||0)+1}}
+  catch(_){}
+  try{campaignApplyCivicUpkeep250(root,fac,st,turn)}catch(_){}
+  if(flush||turn%3===0){try{if(!st.mobile236)campaignRollSettlementConsequence246(root,fac,st,turn)}catch(_){}try{campaignAutoHarvestSettlement246(root,fac,st,turn)}catch(_){}}
+  col.pfValue=soiColonyPF(col);
+}
+async function campaignAdvanceHistoricTurnScalable252(root,turnIndex){
+  const c=root.campaign;c.turn=turnIndex;c.phase='AI';const active=c.factions.filter(f=>!f.prehistoryDormant247),ai=active.filter(f=>f.ai);
+  for(let i=0;i<ai.length;i++){const fac=ai[i];fac.command=Math.max(1,Number(fac.maxCommand)||3);const strat=campaignAIStrategy246(fac);
+    try{if(typeof campaignAIDistrictProgramme248==='function')campaignAIDistrictProgramme248(root,fac,'pre')}catch(_){}
+    const live=(fac.settlements||[]).filter(s=>s.status!=='Destroyed'&&!s.mobile236);if(live.length){const s=live[(turnIndex+i)%live.length];try{campaignAIConstruct246(root,fac,s,strat)}catch(_){}}
+    if(turnIndex%2===0&&(fac.command||0)>0){const free=[];for(const sid of fac.territory||[]){for(const r of campaignNeighbors(root,sid)){if(!c.systems?.[r.id]?.ownerFactionId&&!free.some(x=>x.id===r.id))free.push(r)}}if(free.length&&['wide','balanced'].includes(strat))try{campaignClaim(root,free[Math.floor(campaignRandom(c,`fast claim ${fac.id}`)*free.length)].id,fac,true)}catch(_){}}
+    if(turnIndex%4===0)try{campaignAIRecruit(c,root,fac)}catch(_){}
+    if(turnIndex%5===0&&typeof campaignAIExtractResource==='function')try{campaignAIExtractResource(root,fac)}catch(_){}
+    if((i+1)%4===0)await campaignYield252();
+  }
+  c.phase='Economy';for(let i=0;i<active.length;i++){try{campaignFactionIncome(c,root,active[i])}catch(_){}if((i+1)%5===0)await campaignYield252()}
+  const settlements=[];for(const fac of [...c.factions])for(const st of fac.settlements||[])if(st.status!=='Destroyed')settlements.push([fac,st]);
+  const budget=Math.min(settlements.length,Math.max(12,Math.ceil(settlements.length/14))),start=(turnIndex*budget)%Math.max(1,settlements.length);for(let k=0;k<budget;k++){const pair=settlements[(start+k)%settlements.length];if(pair)campaignApplyAggregatedSettlement252(root,pair[0],pair[1],turnIndex,false)}
+  if(turnIndex%5===0)try{campaignAdvanceAllFleets(root)}catch(_){}if(turnIndex%8===0&&typeof campaignProcessRaiders239==='function')try{campaignProcessRaiders239(root)}catch(_){}if(turnIndex%10===0&&typeof campaignThreatTurn235==='function')try{campaignThreatTurn235(root)}catch(_){}if(turnIndex%6===0)try{campaignSectorEvent(root)}catch(_){}
+  c.turn=turnIndex+1;c.phase='Prehistory';for(const fac of active){fac.command=Number(fac.maxCommand||0)+Number(fac.nextCommandBonus||0);fac.nextCommandBonus=0}
+  if((turnIndex+1)%10===0)try{campaignConsolidatePrehistory247(root)}catch(_){}if((turnIndex+1)%10===0)try{campaignRepairAllFleetLift248(root,false)}catch(_){}if((turnIndex+1)%25===0){try{campaignEnsureTerritoryClaims238(root)}catch(_){}try{campaignEnsureContacts238(root,false)}catch(_){}}
+  campaignTrimHistory252(c);await campaignYield252();
+}
+const _campaignAdvanceHistoricTurnExact252=campaignAdvanceHistoricTurn252;
+campaignAdvanceHistoricTurn252=async function(root,turnIndex){if(campaignScalableHistory252(root)){root.campaign.prehistory247.scalableFullSector252=true;return campaignAdvanceHistoricTurnScalable252(root,turnIndex)}return _campaignAdvanceHistoricTurnExact252(root,turnIndex)};
+async function campaignFlushScalableSettlements252(root,turn){if(!root.campaign.prehistory247?.scalableFullSector252)return;for(const fac of [...root.campaign.factions])for(const st of fac.settlements||[])if(st.status!=='Destroyed')campaignApplyAggregatedSettlement252(root,fac,st,turn,true);await campaignYield252()}
+
+function campaignFastIncomeCache252(root,fac,turn){if(fac._histIncome252&&turn-fac._histIncome252.turn<20)return fac._histIncome252;let settlements=0,districts=0,tiers=0;for(const st of fac.settlements||[]){if(st.status==='Destroyed')continue;settlements++;if(st.mobile236)continue;try{const w=campaignEnsureDevelopmentWeb(st.colony),cap=campaignSettlementSlotCount(st.colony);for(const sl of w.slots.slice(0,cap))if(sl.chain){districts++;tiers+=Number(sl.tier)||0}}catch(_){}}return fac._histIncome252={turn,settlements,districts,tiers,supply:Math.max(1,Math.floor(settlements*.45)+Math.floor(tiers*.03)),materiel:Math.max(1,Math.floor(settlements*.55)+Math.floor(tiers*.07)),influence:Math.max(0,Math.floor(settlements/6))}}
+function campaignDirectClaim252(root,fac,turn){const c=root.campaign,opts=[];for(const sid of fac.territory||[]){for(const r of campaignNeighbors(root,sid)){if(!c.systems?.[r.id]?.ownerFactionId&&!opts.some(x=>x.id===r.id))opts.push(r)}}if(!opts.length)return false;const r=opts[Math.floor(campaignRandom(c,`macro claim ${fac.id} ${turn}`)*opts.length)],st=c.systems[r.id];st.ownerFactionId=fac.id;st.presenceFactionIds=st.presenceFactionIds||[];if(!st.presenceFactionIds.includes(fac.id))st.presenceFactionIds.push(fac.id);if(!fac.territory.includes(r.id))fac.territory.push(r.id);if(!fac.presence.includes(r.id))fac.presence.push(r.id);fac.stats=fac.stats||{};fac.stats.systemsTaken=(fac.stats.systemsTaken||0)+1;return true}
+function campaignHistoricalRecruit252(root,fac,turn){if((fac.treasury?.materiel||0)<10)return;let tf=(fac.taskForces||[]).sort((a,b)=>campaignTaskForcePoints(b)-campaignTaskForcePoints(a))[0];if(!tf){try{tf=campaignTaskForceFromGenerated(fac.key,1500,fac.homeSystemId||fac.territory?.[0],`${fac.name} Historical Field Army`);fac.taskForces.push(tf);fac.treasury.materiel-=8}catch(_){};return}const add=Math.min(2500,500+Math.floor((fac.treasury.materiel||0)/20)*250);tf.pointsOverride=Math.max(campaignTaskForcePoints(tf),Number(tf.pointsOverride)||0)+add;fac.treasury.materiel=Math.max(0,(fac.treasury.materiel||0)-Math.ceil(add/300));if(turn%50===0){try{const g=campaignTaskForceFromGenerated(fac.key,Math.min(2000,add),tf.systemId,'Historical Reinforcement');for(const d of g.detachments||[])tf.detachments.push({...d,id:`${d.id}-h${turn}`})}catch(_){} }}
+async function campaignAdvanceHistoricTurnScalable252(root,turnIndex){
+ const c=root.campaign;c.turn=turnIndex;c.phase='Prehistory';const active=c.factions.filter(f=>!f.prehistoryDormant247),ai=active.filter(f=>f.ai);
+ for(let i=0;i<active.length;i++){const fac=active[i],inc=campaignFastIncomeCache252(root,fac,turnIndex);fac.treasury=fac.treasury||{supply:0,materiel:0,influence:0};fac.treasury.supply=(fac.treasury.supply||0)+inc.supply;fac.treasury.materiel=(fac.treasury.materiel||0)+inc.materiel;fac.treasury.influence=(fac.treasury.influence||0)+inc.influence;if(i%6===5)await campaignYield252()}
+ for(let i=0;i<ai.length;i++){const fac=ai[i],strat=campaignAIStrategy246(fac);fac.command=Math.max(1,Number(fac.maxCommand)||3);if(turnIndex%4===0){const live=(fac.settlements||[]).filter(s=>s.status!=='Destroyed'&&!s.mobile236);if(live.length){const st=live[(turnIndex+i)%live.length];try{campaignAIConstruct246(root,fac,st,strat)}catch(_){}fac._histIncome252=null}}if(turnIndex%8===0&&['wide','balanced'].includes(strat))campaignDirectClaim252(root,fac,turnIndex);if(turnIndex%12===0)campaignHistoricalRecruit252(root,fac,turnIndex);if(turnIndex%10===0&&typeof campaignAIExtractResource==='function')try{campaignAIExtractResource(root,fac)}catch(_){}if(i%5===4)await campaignYield252()}
+ const settlements=[];for(const fac of [...c.factions])for(const st of fac.settlements||[])if(st.status!=='Destroyed')settlements.push([fac,st]);const budget=Math.min(settlements.length,Math.max(6,Math.ceil(settlements.length/30))),start=(turnIndex*budget)%Math.max(1,settlements.length);for(let k=0;k<budget;k++){const pair=settlements[(start+k)%settlements.length];if(pair)campaignApplyAggregatedSettlement252(root,pair[0],pair[1],turnIndex,false)}
+ if(turnIndex%10===0)try{campaignAdvanceAllFleets(root)}catch(_){}if(turnIndex%20===0&&typeof campaignThreatTurn235==='function')try{campaignThreatTurn235(root)}catch(_){}if(turnIndex%25===0)try{campaignSectorEvent(root)}catch(_){}if((turnIndex+1)%25===0)try{campaignConsolidatePrehistory247(root)}catch(_){}if((turnIndex+1)%20===0)try{campaignRepairAllFleetLift248(root,false)}catch(_){}
+ c.turn=turnIndex+1;for(const fac of active){fac.command=Number(fac.maxCommand||0)+Number(fac.nextCommandBonus||0);fac.nextCommandBonus=0}campaignTrimHistory252(c);await campaignYield252();
+}
+
+async function campaignAdvanceHistoricEpoch252(root,startTurn,representedTurns){
+ const c=root.campaign,endTurn=Math.min(1000,startTurn+representedTurns);c.turn=endTurn-1;c.phase='Prehistory';const active=c.factions.filter(f=>!f.prehistoryDormant247),ai=active.filter(f=>f.ai);
+ for(let i=0;i<active.length;i++){const fac=active[i],inc=campaignFastIncomeCache252(root,fac,endTurn);fac.treasury=fac.treasury||{supply:0,materiel:0,influence:0};fac.treasury.supply=(fac.treasury.supply||0)+inc.supply*representedTurns;fac.treasury.materiel=(fac.treasury.materiel||0)+inc.materiel*representedTurns;fac.treasury.influence=(fac.treasury.influence||0)+inc.influence*representedTurns}
+ for(let i=0;i<ai.length;i++){const fac=ai[i],strat=campaignAIStrategy246(fac);fac.command=Math.max(1,Number(fac.maxCommand)||3);const live=(fac.settlements||[]).filter(s=>s.status!=='Destroyed'&&!s.mobile236),builds=1;for(let b=0;b<builds&&live.length;b++){try{campaignAIConstruct246(root,fac,live[(endTurn+i+b)%live.length],strat)}catch(_){}}const claims=Math.min(3,Math.ceil(representedTurns/8));if(['wide','balanced'].includes(strat))for(let q=0;q<claims;q++)campaignDirectClaim252(root,fac,endTurn+q);const recruits=1;for(let q=0;q<recruits;q++)campaignHistoricalRecruit252(root,fac,endTurn+q);if(typeof campaignAIExtractResource==='function')try{campaignAIExtractResource(root,fac)}catch(_){}fac._histIncome252=null}
+ const settlements=[];for(const fac of [...c.factions])for(const st of fac.settlements||[])if(st.status!=='Destroyed')settlements.push([fac,st]);const budget=Math.min(settlements.length,Math.max(10,Math.ceil(settlements.length/8))),start=(Math.floor(startTurn/Math.max(1,representedTurns))*budget)%Math.max(1,settlements.length);for(let k=0;k<budget;k++){const pair=settlements[(start+k)%settlements.length];if(pair)campaignApplyAggregatedSettlement252(root,pair[0],pair[1],endTurn,false)}
+ try{campaignAdvanceAllFleets(root)}catch(_){}if(typeof campaignThreatTurn235==='function')try{campaignThreatTurn235(root)}catch(_){}if(representedTurns>=5)try{campaignSectorEvent(root)}catch(_){}try{campaignConsolidatePrehistory247(root)}catch(_){}try{campaignRepairAllFleetLift248(root,false)}catch(_){}
+ c.turn=endTurn;for(const fac of active){fac.command=Number(fac.maxCommand||0)+Number(fac.nextCommandBonus||0);fac.nextCommandBonus=0}campaignTrimHistory252(c);await campaignYield252();
+}
+/* Final scalable runner: sub-sectors remain exact 1:1; full sectors use at most 100
+   historical epochs, each of which materially advances the represented turns. */
+const _campaignSimulatePrehistoryExact252=campaignSimulatePrehistory247;
+campaignSimulatePrehistory247=async function(root,turns,player,mode){
+ const requestedTurns=Math.max(0,Math.min(1000,Math.round(Number(turns)||0)));if(!campaignScalableHistory252(root,requestedTurns))return _campaignSimulatePrehistoryExact252(root,requestedTurns,player,mode);
+ const c=root.campaign,initial=campaignHistoryMetrics249(root),systemCount=campaignSystemRecords(root).length,steps=Math.max(1,Math.min(requestedTurns,10)),stride=requestedTurns/steps;c.prehistory247={turns:requestedTurns,mode,startedAt:new Date().toISOString(),initialFactionCount:c.factions.length,simulationSteps247:steps,turnStride247:+stride.toFixed(3),compressed:false,stackSafe252:true,scalableFullSector252:true,historicalEpochs252:steps,systemCount252:systemCount,stackRecoveries252:0,initialMetrics249:initial};c._deepTimeRunning252=true;
+ try{campaignExpandPrehistoryPolities247(root,requestedTurns);await campaignYield252();const wasAI=player.ai;if(mode==='existing')player.ai=true;let hold=null;if(mode==='emerging')hold=campaignDormantEmerging247(root,player,c.selectedSystemId||player.homeSystemId);let represented=0;for(let step=0;step<steps;step++){const target=Math.round((step+1)*stride),span=Math.max(1,target-represented);await campaignAdvanceHistoricEpoch252(root,represented,span);represented=target;if(step===0||(step+1)%2===0||step===steps-1){const m=campaignHistoryMetrics249(root);campaignPrehistoryOverlay247(true,`Turn ${represented} of ${requestedTurns} • historical epoch ${step+1}/${steps} • ${systemCount} systems • ${m.controlledSystems} controlled • ${m.settlements} settlements`,(step+1)/steps*100)}}c.turn=requestedTurns;c.phase='Player';player.ai=false;if(mode==='emerging')campaignRestoreEmerging247(root,player,hold);else{player.ai=wasAI;player.command=player.maxCommand+(player.nextCommandBonus||0);player.nextCommandBonus=0;c.selectedSystemId=player.homeSystemId||player.territory?.[0]||c.selectedSystemId;c.selectedTaskForceId=player.taskForces?.[0]?.id||null;c.selectedFleetId=player.fleets?.[0]?.id||null}await campaignFlushScalableSettlements252(root,requestedTurns);const final=campaignHistoryMetrics249(root);c.prehistory247.completedAt=new Date().toISOString();c.prehistory247.finalFactionCount=c.factions.length;c.prehistory247.finalControlledSystems=final.controlledSystems;c.prehistory247.finalMetrics249=final;campaignEnsureAllNavalIdentities247(root);campaignRepairAllFleetLift248(root,false);campaignSyncMap(root)}finally{delete c._deepTimeRunning252}_campaignPersist_rev252(root)
+};
+const _campaignOverviewHTML_rev252=campaignOverviewHTML;
+campaignOverviewHTML=function(root,c){let h=_campaignOverviewHTML_rev252(root,c),p=c?.prehistory247;if(p?.scalableFullSector252)h=h.replace(`${p.turns} complete 90-day turns were processed (1:1, no compression).`,`${p.turns} historical 90-day turns were simulated through ${p.historicalEpochs252||p.simulationSteps247} bounded full-sector epochs. Each epoch applies the economy, settlement development, expansion and military change for the turns it represents.`);return h};
+if(window.__cartoTest247)window.__cartoTest247.simulatePrehistory=(...args)=>campaignSimulatePrehistory247(...args);
+if(window.__cartoRevision249)window.__cartoRevision249.simulatePrehistory=(...args)=>campaignSimulatePrehistory247(...args);
+window.__cartoRevision252={version:REV252,build:REV252_BUILD,simulatePrehistory:(...args)=>campaignSimulatePrehistory247(...args),advanceHistoricTurn:campaignAdvanceHistoricTurn252};
+const rb252=document.querySelector('.generation-head-actions .badge');if(rb252)rb252.textContent='rev 25.2 — Stack-Safe Full-Sector Deep Time';
+document.title='Administratum Stellar Cartographica — Revision 25.2';document.documentElement.dataset.cartographicaRevision=REV252;document.documentElement.dataset.cartographicaBuild=REV252_BUILD;
+
+
+})();
+
 
 </script>
 

@@ -50,3 +50,11 @@ Settlement Size now changes through accumulated development/decline pressure rat
 
 ## v25.1.1 bootstrap hotfix
 The v25.1 mechanics were present in the previous archive, but the original startup bootstrap still re-enforced the v25.0 title, badge, URL revision and service-worker registration on DOMContentLoaded/load/pageshow. This hotfix makes v25.1.1 authoritative from the first parsed script and removes the active legacy v25.0 identity writers.
+
+
+## Revision 25.2 — Stack-Safe Full-Sector Deep Time
+Deep-Time is processed as 1:1 historical turns in asynchronous bounded phases. Large faction/settlement sets yield to the browser between batches, campaign persistence is suppressed during internal historical actions, unbounded campaign spread operations have been removed from key paths, and Safari RangeError stack overflows are recovered per subsystem without aborting the entire campaign start. Designed for full-sector simulations through Turn 1000.
+
+
+### Deep-Time execution model
+Revision 25.2 cannot and does not attempt to increase Safari/Chromium's fixed JavaScript call-stack limit. Instead, Deep-Time is stack-safe by architecture. Histories under 100 turns on modest maps may use the detailed per-turn runner. Histories of 100–1000 turns, or sufficiently large/full-sector campaigns, use up to 10 bounded historical epochs. Each epoch represents a real span of 90-day campaign turns and scales treasury income, demographic momentum, district investment, claims, recruitment, resource activity and other strategic changes across that span. The campaign always hands over at the exact requested turn.

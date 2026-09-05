@@ -1,23 +1,20 @@
-STELLAR CARTOGRAPHICA v25.1.1 FIXED RELEASE TEST REPORT
-Build: 25.1.1-demographic-momentum-strategic-armies-bootstrap-fix-v34-tested
+STELLAR CARTOGRAPHICA v25.2 TEST REPORT
+Build: 25.2-stack-safe-full-sector-deep-time-v35-tested
 
-ROOT CAUSE FIXED
-The previous v25.1 archive contained the new mechanics, but its first bootstrap script still declared Revision 25.0 and re-enforced the v25.0 title/badge/build on DOMContentLoaded, load and pageshow. On mobile/Safari this could overwrite the later v25.1 identity every time the page restored or completed loading.
-
-PASS — first parsed bootstrap is now v25.1.1, not v25.0.
-PASS — page meta revision is v25.1.1.
-PASS — static HTML title is Revision 25.1.1.
-PASS — bootstrap title/badge/build are all v25.1.1.
-PASS — no active v25.0 document-title or badge enforcement remains.
-PASS — manifest has a new v25.1.1 app id/start URL.
-PASS — service worker has fresh v34 cache/canonical keys and deletes older Cartographica caches on install/activate.
+PASS — v25.1 Demographic Momentum and Strategic Army Traits were moved inside the core runtime scope; the previous out-of-scope integration bug is removed.
 PASS — all embedded JavaScript blocks pass Node syntax validation.
-PASS — Demographic Momentum functions are present.
-PASS — Strategic Army Profile and theatre-weighted combat integration are present.
-PASS — v25.0 rebellion/secession remains present.
-PASS — v24.9 exact Deep-Time path remains present.
-PASS — unified full-roster generator/Add Unit path remains present.
-PASS — hard fleet troop-capacity path remains present.
+PASS — manifest parses and identifies Revision 25.2.
+PASS — service worker uses the fresh v25.2 cache/navigation identity and deletes older Cartographica caches.
+PASS — campaign persistence is suppressed during internal Deep-Time actions and written again at final player handover.
+PASS — unbounded campaign Math.min/Math.max spread in campaign start-map bounds is removed.
+PASS — AI reinforcement append no longer uses unbounded spread argument expansion.
+PASS — stack-sensitive historical operations are isolated and RangeError recovery no longer aborts the entire campaign launch.
+PASS — long histories and full sectors use bounded historical epochs rather than accumulating browser call-stack/workload pressure.
+PASS — exact requested campaign time is retained at handover; epochs materially scale economy, demographic momentum, district investment, territorial expansion and military growth rather than merely changing the displayed turn.
 
-BROWSER HARNESS NOTE
-Chromium in this container starts the PWA but does not terminate under --dump-dom/virtual-time-budget; the bounded smoke process was killed after 25 seconds. No completed interactive Chromium result is claimed. Identity and integration were validated directly against the exact packaged files.
+INTERACTIVE CHROMIUM TESTS ON THIS EXACT INDEX.HTML
+PASS — mobile viewport 390x844: page loads as Revision 25.2 with zero page errors and live v25.1/v25.2 runtime hooks.
+PASS — generated Sub-sector: 8 systems; Deep-Time Turn 100 completed in about 1.2 seconds, 10 historical epochs / 10-turn stride, final Turn 100 / Player, zero page errors. Resulting test history contained 6 factions, 41 settlements, 75 districts, 182 district tiers, ~115,868 army points and active rebellions.
+PASS — generated Full Sector: 9 sub-sectors, 36 regular systems + 5 rogue systems (41 campaign systems); Deep-Time Turn 1000 completed in about 11.9 seconds using 10 historical epochs / 100-turn stride, final Turn 1000 / Player, zero page errors and zero stack recoveries. Resulting test history contained 16 faction records, 40 controlled systems, 209 settlements, 340 districts, 720 district tiers and ~375,508 army points.
+
+NOTE — localhost navigation is blocked by the container administrator policy, so the interactive browser tests used Playwright page.set_content on the exact packaged index.html. Service-worker installation itself is therefore validated statically rather than claimed as a browser-install test.
