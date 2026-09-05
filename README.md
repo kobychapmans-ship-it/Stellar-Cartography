@@ -80,3 +80,7 @@ Deep Time now uses a historical foundation fallback for fixed settlements and tr
 
 ### v25.5 validation
 The v25.5 release was statically checked for historical fixed-settlement foundations, mobile fleet-settlement progression, normal settlement maintenance for mobile colonies, and real hull/class naval growth distinct from refit levels. The available Chromium process did not finish a bounded headless load, so an interactive browser pass is not claimed.
+
+
+## Revision 25.6 — Managed Empires & Strong Fleet Foundations
+Fleet polities now directly commission fleet-class formations instead of waiting for Scout Flotillas to satisfy Mobile Colony prerequisites. Deep-Time reserves resources for managed settlement cores and performs a final managed handover for established player polities. Long histories use smaller epochs, chunked final settlement processing and aggressive transient-state compaction for Safari stack safety.

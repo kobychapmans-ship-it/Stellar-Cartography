@@ -1,2 +1,2 @@
-Stellar Cartographica v25.5
-Build: 25.5-fleet-polities-historical-foundations-hull-growth-v39-tested
+Stellar Cartographica v25.6
+Build: 25.6-managed-empires-strong-fleets-stack-guard-v40-tested

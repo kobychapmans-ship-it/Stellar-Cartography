@@ -1,17 +1,17 @@
-STELLAR CARTOGRAPHICA v25.5 TEST REPORT
-Build: 25.5-fleet-polities-historical-foundations-hull-growth-v39-tested
+STELLAR CARTOGRAPHICA v25.6 TEST REPORT
+Build: 25.6-managed-empires-strong-fleets-stack-guard-v40-tested
 
 PASS — all embedded JavaScript blocks pass Node syntax validation.
-PASS — service worker passes Node syntax validation and uses a fresh v25.5 cache identity.
-PASS — manifest parses as valid JSON and identifies Revision 25.5.
-PASS — Deep-Time historical foundation fallback can create fixed settlements without relying exclusively on player-facing site restrictions.
-PASS — established player polity remains included in v25.4 autonomous Deep-Time archetype spending before handover.
-PASS — Legion/Astartes, Craftworld, Kroot, Rak'Gol and Talons archetypes are recognised as fleet-polity candidates.
-PASS — fleet-polity Deep-Time spending develops Mobile Colony Core / Migratory Enclave / Fleet-City tiers when resources and age permit.
-PASS — Tier III+ mobile fleet settlements are passed through aggregated demographic/civic settlement development during Deep Time.
-PASS — mobile settlements receive district construction attempts and repeatable infrastructure upgrades capped by settlement Size.
-PASS — Deep-Time naval growth now records capital ships, escorts and support hulls separately from refit level.
-PASS — hull investment can advance actual fleet class and contributes to Void Rating and troop-lift capacity.
-PASS — v25.4 archetype diplomacy, v25.3 fleet refits, v25.2 stack-safe historical epochs, v25.1 strategic armies, v25.0 secession and unified faction rosters remain present.
+PASS — manifest parses and identifies Revision 25.6.
+PASS — service worker uses a fresh v25.6 cache/navigation key.
+PASS — fleet-polity AI can directly commission Expeditionary Fleet or stronger formations according to age/resources; Scout Flotillas are no longer the required upgrade bottleneck.
+PASS — strong fleet commissioning is prioritised before the inherited v25.5 mobile-colony progression for fleet-based archetypes.
+PASS — managed Deep-Time settlement cores spend Supply/Materiel/Influence to support Productivity, Order, Cohesion/Piety and Complacency according to faction archetype.
+PASS — ghost-town core settlements have an explicit historical recovery path and established player polities receive a final managed-handover stabilisation pass.
+PASS — fixed historical foundations, mobile fleet settlements, hull growth, infrastructure levels, diplomacy and strategic army traits remain integrated.
+PASS — long-history final settlement processing is chunked and yields every 12 settlements.
+PASS — Deep-Time transient logs, battle records, settlement events and AI caches are compacted between epochs and before handover.
+PASS — stack-overflow recovery around historical epochs compacts state and yields rather than aborting campaign launch.
+PASS — scalable 100–1000-turn history remains bounded to 10–25 epochs, avoiding the performance regression of per-turn simulation while adding more frequent stack cleanup.
 
-LIMITATION — the available container Chromium process did not complete a headless localhost DOM load within the bounded 20-second test window. No interactive Chromium pass is claimed; static JavaScript, integration-path, manifest, service-worker and package-integrity validation were completed on this exact release.
+INTERACTIVE TEST LIMITATION — direct file:// navigation is blocked by the container Chromium administrator policy. A set_content Playwright attempt did not complete within the bounded test window on this very large single-file application, so an interactive browser regression pass is not claimed.
