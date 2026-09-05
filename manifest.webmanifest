@@ -1,16 +1,26 @@
 {
-  "name": "Administratum Stellar Cartographica — Revision 24.8",
-  "short_name": "Cartographica R24.8",
-  "description": "Revision 24.8 adds proactive autonomous district economies, hard fleet troop-lift enforcement, expanded complete faction roster pools and Lord of War generation, while retaining Deep-Time starts and Battlefleet Operations.",
-  "id": "./?app=cartographica-r24.8-autonomous-economy-full-rosters",
-  "start_url": "./?rev=24.8-ai-district-lift-full-roster-v30-tested",
+  "name": "Administratum Stellar Cartographica — Revision 24.9",
+  "short_name": "Cartographica R24.9",
+  "description": "Revision 24.9 restores exact 1:1 Deep-Time historical simulation while retaining autonomous AI districts, hard fleet lift, Battlefleet Operations and unified full faction rosters.",
+  "id": "./?app=cartographica-r24.9-full-deep-time-unified-rosters",
+  "start_url": "./?rev=24.9-full-deep-time-unified-rosters-v31-tested",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",
   "theme_color": "#05070a",
   "orientation": "portrait-primary",
   "icons": [
-    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
-    {"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }

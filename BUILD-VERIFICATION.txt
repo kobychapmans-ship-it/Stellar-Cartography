@@ -1,16 +1,31 @@
-Stellar Cartographica Revision 24.8
-Build key: 24.8-ai-district-lift-full-roster-v30-tested
+STELLAR CARTOGRAPHICA REVISION 24.9 BUILD VERIFICATION
+Build: 24.9-full-deep-time-unified-rosters-v31-tested
 
-Verification performed on the packaged source:
-1. Extracted/working source inspected independently of the prior release archive.
-2. Every inline JavaScript block passed Node syntax validation.
-3. Service worker passed Node syntax validation.
-4. Web manifest passed JSON parsing.
-5. Active revision/title/cache identifiers checked for Revision 24.8.
-6. AI district construction verified to wrap the active AI-turn path with both pre- and post-spending passes.
-7. Both embarkation entry points verified to reject troop lift overflow before mutation.
-8. Automatic legacy/deep-history overload repair verified on fleet-state, fleet-coverage, roster-integration, consolidation and render paths.
-9. Full embedded faction catalogue expansion includes explicit Lord of War entries and active generator scoring support.
-10. Final release ZIP tested with unzip -t.
+Integration findings and fixes:
+1. Revision 24.8 had been appended in a separate script scope and threw `hh1Inf is not defined`, preventing its runtime changes from completing.
+2. Revision 24.8 and 24.9 logic were moved into the same core runtime scope as the campaign/world functions they extend.
+3. A secondary fleet-coverage hook that is scope-dependent is now guarded safely rather than aborting the integration.
+4. Deep-Time simulation was replaced with exact one-step-per-turn history. `simulationSteps247` equals the requested turn count and `turnStride247` is exactly 1.
+5. Generator and manual Add Unit now resolve through the same authoritative roster function.
+6. Dark Compliance combines Legion + Militia roster entries.
+7. Revision/cache/manifest identities were changed to Revision 24.9 / v31-tested.
 
-Browser note: this execution environment blocks Chromium navigation to local and localhost content by administrator policy. No interactive-browser pass is claimed for this revision.
+Static validation:
+- All inline JavaScript blocks parse with Node --check.
+- Service worker parses with Node --check.
+- manifest.webmanifest parses as valid JSON.
+- Final ZIP passes `unzip -t`.
+
+Browser-harness validation:
+- The environment blocks direct file:// and localhost navigation by administrator policy, but Chromium is usable through Playwright `page.set_content`, which executes the exact packaged HTML and inline runtime.
+- Revision 24.9 runtime initialized with no page errors.
+- A generated two-subsector sector was initialized as an established Craftworld campaign.
+- Exact Turn-100 prehistory completed in 100 simulation steps with stride 1 and returned Turn 100 / Player phase.
+- Test-seed historical state changed materially: settlements 44→48, districts 62→149, district-tier total 124→515, army points 15,416→306,665.
+- AI district audit showed mature AI settlements actively filling/upgrading district slots.
+- Fleet audit showed every fleet at or below troop-lift capacity after history.
+- Craftworld authoritative pool exposed 34 current unit entries including Wraithknight and Ancient Grav War Engine Lords of War.
+- Dark Compliance authoritative pool exposed 62 combined Legion/Militia entries.
+- No JavaScript runtime errors were observed during the Turn-100 test.
+- Add Unit runtime parity: Craftworld selector 34 entries = authoritative pool 34 entries; missing=0, extra=0.
+- Generator runtime probe: 20,000-point Legion force selected roster Lords of War and respected the 25% ceiling.

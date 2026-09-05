@@ -1,17 +1,24 @@
-STELLAR CARTOGRAPHICA REVISION 24.8 VALIDATION REPORT
-Build: 24.8-ai-district-lift-full-roster-v30-tested
+STELLAR CARTOGRAPHICA REVISION 24.9 TEST REPORT
+Build: 24.9-full-deep-time-unified-rosters-v31-tested
 
-PASS — All 4 inline JavaScript blocks parse with Node --check.
-PASS — Service worker parses with Node --check.
-PASS — manifest.webmanifest parses as valid JSON.
-PASS — Revision identity is consistently 24.8 / v30-tested in index, manifest, service worker and VERSION.txt.
-PASS — AI development integration is inside the main runtime scope and wraps the active AI turn.
-PASS — AI development uses pre-turn and post-turn investment passes and strategy-specific district priorities.
-PASS — Direct fleet embarkation checks used troop points + requested points against capacity before changing cargo state.
-PASS — Task-force embarkation checks used troop points + requested points against capacity before changing cargo state.
-PASS — Fleet-state, fleet-coverage, roster-integration, deep-history consolidation and dashboard paths all run overload repair.
-PASS — Overload repair disembarks excess task forces at the fleet's current location rather than leaving impossible cargo values.
-PASS — Expanded embedded canonical rosters include explicit Lord of War candidates and the generator's active template pool is no longer a separate reduced shortlist.
-PASS — Service-worker cache key is unique to Revision 24.8 and old Cartographica caches are purged during activation.
+PASS — Runtime architecture: v24.8/v24.9 extension code executes inside the core Cartographica scope.
+PASS — Exact historical stepping: requested Turn 100 produced simulationSteps247=100, turnStride247=1, compressed=false.
+PASS — Historical handover: campaign ended at Turn 100, phase Player.
+PASS — Historical world change: settlements 44→48 in the browser-harness test seed.
+PASS — Historical AI development: districts 62→149 and district-tier total 124→515.
+PASS — Historical military development: total task-force strength 15,416→306,665 points.
+PASS — AI district programme remained active during Deep-Time and produced developed district webs.
+PASS — Fleet troop capacity audit: all tested fleets satisfied used <= capacity after the historical simulation.
+PASS — Unified roster source: generator/Add Unit/start muster resolve through campaignFactionRosterPool249.
+PASS — Craftworld pool: 34 entries in the test runtime, including explicit Lord of War entries.
+PASS — Dark Compliance pool: 62 combined Legion/Militia entries rather than the old procedural fallback.
+PASS — Lord of War pre-filter corrected to the documented 25% ceiling.
+PASS — Revision identity reports 24.9 in the live browser harness.
+PASS — No page errors during generation, campaign initialization or 100-turn simulation.
+PASS — JavaScript/service worker/manifest static validation.
 
-ENVIRONMENT LIMITATION — The available Chromium environment blocks local/file and localhost navigation under administrator policy. Therefore a fresh interactive browser regression could not be truthfully marked as passed in this container. The package was validated by syntax, manifest/cache validation, source-path invariant checks and archive integrity testing.
+Browser environment note:
+Direct file:// and localhost navigation are blocked by administrator policy. Runtime testing therefore loaded the exact packaged HTML through Playwright page.set_content. This executes the inline application runtime and allowed actual sector generation and campaign simulation, but does not exercise service-worker network installation in-browser. Service-worker syntax/cache identity were validated separately.
+PASS — Add Unit parity test: Craftworld Add Unit selector contained 34/34 authoritative pool entries, with zero missing and zero extra entries; Wraithknight and Ancient Grav War Engine were present.
+PASS — Generator pool test: a 20,000-point Legion generation used the authoritative live roster and selected Lord of War choices (Mastodon Heavy Assault Transports) while remaining below the 25% Lord of War ceiling.
+PASS — Runtime roster census included explicit Lord of War entries for Legion, Craftworld, Dark Compliance, Militia, Mechanicum, Talons, Necrons, Rangdan, Orks, Rak’Gol, independent Humans and procedural Xenos. Kroot currently has no Lord of War entry in its defined Cartographica roster, so none is invented.

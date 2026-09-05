@@ -1,1 +1,2 @@
-24.8-ai-district-lift-full-roster-v30-tested
+Stellar Cartographica 24.9
+Build: 24.9-full-deep-time-unified-rosters-v31-tested
