@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "version": "26.8",
+  "build": "26.8-craftworld-embarkation-realm-stability-fleet-panels-v52-tested",
+  "fleets": [
+    {
+      "id": "fleet-F-CW-mtqal5en-1",
+      "craftworld": true,
+      "seed": false,
+      "cargo": [
+        "TF-START"
+      ]
+    }
+  ],
+  "taskForce": {
+    "id": "TF-START",
+    "fleetId": "fleet-F-CW-mtqal5en-1",
+    "status": "Embarked"
+  },
+  "realmMomentum": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "realmInfrastructure": [
+    7,
+    7,
+    7,
+    7,
+    7
+  ],
+  "realmDistrictTiers": [
+    15,
+    13,
+    11,
+    11,
+    15
+  ],
+  "craftworldPanelsInFleets": true,
+  "craftworldPanelsInColonies": false,
+  "uniqueInfrastructureInline": true,
+  "openSettlement": true
+}

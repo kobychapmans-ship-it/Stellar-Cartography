@@ -1,0 +1,26 @@
+{
+  "name": "Administratum Stellar Cartographica — Revision 26.11",
+  "short_name": "Cartographica R26.11",
+  "description": "Revision 26.11 changes Craftworld demographic calibration to a one-turn creation grace, then restores genuine infrastructure/district/civic momentum in normal turns and Deep Time.",
+  "id": "./?app=cartographica-r26.11-craftworld-growth-grace",
+  "start_url": "./?rev=26.11-craftworld-one-turn-growth-grace-v55-tested",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#05070a",
+  "theme_color": "#05070a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

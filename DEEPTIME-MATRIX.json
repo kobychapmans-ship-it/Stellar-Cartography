@@ -1,0 +1,170 @@
+[
+  {
+    "t": 2,
+    "mode": "existing",
+    "steps": 2,
+    "lifecycle": 29
+  },
+  {
+    "t": 2,
+    "mode": "emerging",
+    "steps": 2,
+    "lifecycle": 26
+  },
+  {
+    "t": 3,
+    "mode": "existing",
+    "steps": 3,
+    "lifecycle": 43
+  },
+  {
+    "t": 3,
+    "mode": "emerging",
+    "steps": 3,
+    "lifecycle": 39
+  },
+  {
+    "t": 5,
+    "mode": "existing",
+    "steps": 5,
+    "lifecycle": 71
+  },
+  {
+    "t": 5,
+    "mode": "emerging",
+    "steps": 5,
+    "lifecycle": 65
+  },
+  {
+    "t": 10,
+    "mode": "existing",
+    "steps": 10,
+    "lifecycle": 141
+  },
+  {
+    "t": 10,
+    "mode": "emerging",
+    "steps": 10,
+    "lifecycle": 130
+  },
+  {
+    "t": 20,
+    "mode": "existing",
+    "steps": 20,
+    "lifecycle": 281
+  },
+  {
+    "t": 20,
+    "mode": "emerging",
+    "steps": 20,
+    "lifecycle": 260
+  },
+  {
+    "t": 21,
+    "mode": "existing",
+    "steps": 10,
+    "lifecycle": 141
+  },
+  {
+    "t": 21,
+    "mode": "emerging",
+    "steps": 10,
+    "lifecycle": 130
+  },
+  {
+    "t": 50,
+    "mode": "existing",
+    "steps": 10,
+    "lifecycle": 141
+  },
+  {
+    "t": 50,
+    "mode": "emerging",
+    "steps": 10,
+    "lifecycle": 130
+  },
+  {
+    "t": 99,
+    "mode": "existing",
+    "steps": 10,
+    "lifecycle": 141
+  },
+  {
+    "t": 99,
+    "mode": "emerging",
+    "steps": 10,
+    "lifecycle": 130
+  },
+  {
+    "t": 100,
+    "mode": "existing",
+    "steps": 10,
+    "lifecycle": 141
+  },
+  {
+    "t": 100,
+    "mode": "emerging",
+    "steps": 10,
+    "lifecycle": 130
+  },
+  {
+    "t": 101,
+    "mode": "existing",
+    "steps": 14,
+    "lifecycle": 197
+  },
+  {
+    "t": 101,
+    "mode": "emerging",
+    "steps": 14,
+    "lifecycle": 182
+  },
+  {
+    "t": 250,
+    "mode": "existing",
+    "steps": 14,
+    "lifecycle": 197
+  },
+  {
+    "t": 250,
+    "mode": "emerging",
+    "steps": 14,
+    "lifecycle": 182
+  },
+  {
+    "t": 500,
+    "mode": "existing",
+    "steps": 18,
+    "lifecycle": 253
+  },
+  {
+    "t": 500,
+    "mode": "emerging",
+    "steps": 18,
+    "lifecycle": 234
+  },
+  {
+    "t": 750,
+    "mode": "existing",
+    "steps": 24,
+    "lifecycle": 337
+  },
+  {
+    "t": 750,
+    "mode": "emerging",
+    "steps": 24,
+    "lifecycle": 312
+  },
+  {
+    "t": 1000,
+    "mode": "existing",
+    "steps": 24,
+    "lifecycle": 337
+  },
+  {
+    "t": 1000,
+    "mode": "emerging",
+    "steps": 24,
+    "lifecycle": 312
+  }
+]

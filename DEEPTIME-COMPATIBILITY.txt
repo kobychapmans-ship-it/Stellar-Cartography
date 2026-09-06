@@ -1,0 +1,42 @@
+STELLAR CARTOGRAPHICA v26.1 DEEP-TIME COMPATIBILITY REPORT
+Build: 26.1-deeptime-complete-t2-1000-v45-tested
+
+CHRONOLOGY RANGE
+PASS — Deep-Time selector accepts every integer Turn from T2 through T1000.
+PASS — T2, T3, T5, T10 and T20 use exactly one bounded historical epoch per requested turn.
+PASS — T21–T100 use 10 bounded macro epochs; T101–T250 use 14; T251–T500 use 18; T501–T1000 use 24.
+PASS — scheduler matrix verified exact final turn for 14 start ages × Existing/Emerging modes (28 simulations): T2, T3, T5, T10, T20, T21, T50, T99, T100, T101, T250, T500, T750 and T1000.
+PASS — no scheduler test reported a stack recovery.
+
+CURRENT FEATURE COMPATIBILITY INSIDE DEEP TIME
+PASS — settlement civic maintenance and recovery.
+PASS — demographic Size momentum and historical settlement founding.
+PASS — districts and infrastructure investment/upgrading.
+PASS — system expansion and partial planetary territorial claims.
+PASS — faction-archetype diplomacy and war state.
+PASS — army recruitment and strategic-trait-aware abstract ground warfare.
+PASS — fleet construction, class growth, refits and mobile fleet settlements.
+PASS — every active faction is ensured a Tier-0 Expeditionary Vessel.
+PASS — role/doctrine-aware abstract fleet warfare uses current naval profiles.
+PASS — persistent fleet Hull damage is accumulated during history.
+PASS — damaged stationary fleets can spend historical Supply/Materiel to repair.
+PASS — fleets reaching 0% Hull are permanently destroyed with embarked forces, using v26.0 fleet lifecycle rules.
+PASS — active rebellions can be historically suppressed by available armies.
+PASS — current fleet-lift audits and destroyed-fleet culling run during history/handover.
+PASS — player-established polities receive final settlement/fleet/lifecycle management before handover.
+
+STACK / OBJECT-GROWTH TESTING
+PASS — independent v25.7 macro-history engine remains the simulation base; the older nested Deep-Time wrapper chain is not re-entered.
+PASS — v26.1 current-feature layer is iterative and never calls player-facing render, modal, export/share, notice-heavy battle creation or campaign-save handlers during an epoch.
+PASS — stress harness ran 720 feature-lifecycle passes (30 factions × 24 T1000-style epochs) with 6 fleets, 4 armies and 10 settlements per faction and completed without call-stack overflow.
+PASS — stress run exercised 324 abstract naval battles, 311 abstract ground battles and 990 territorial claim mutations while fleet destruction/repair and rebellion logic remained active.
+PASS — transient state remains compacted after every historical epoch.
+
+PACKAGE VALIDATION
+PASS — all embedded JavaScript blocks pass Node syntax validation.
+PASS — service worker passes syntax validation and uses a fresh v26.1 cache key.
+PASS — manifest parses and identifies Revision 26.1.
+PASS — final ZIP archive integrity validated.
+
+BROWSER LIMITATION
+The container Chromium installation blocks localhost/file navigation with ERR_BLOCKED_BY_ADMINISTRATOR. Full Safari/Chromium UI launch testing cannot be truthfully performed here. The history scheduler and feature layer were therefore exercised through exact-function Node harnesses plus static integration validation. DEEPTIME-MATRIX.json and DEEPTIME-STRESS.json are included in the package.
