@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="26.3" />
+<meta name="cartographica-revision" content="26.4" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=26.2-fleet-settlements-foundation-site-economies-v46-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=26.4-forced-lore-craftworlds-stability-unique-buildings-v48-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='26.3';
-  const BUILD='26.3-era-anchors-minor-polities-faction-civilisations-v47-tested';
-  const LABEL='rev 26.3 — Era Anchors & Living Polities';
-  const TITLE='Administratum Stellar Cartographica — Revision 26.3';
+  const REVISION='26.4';
+  const BUILD='26.4-forced-lore-craftworlds-stability-unique-buildings-v48-tested';
+  const LABEL='rev 26.4 — Lore Starts & Craftworld Polities';
+  const TITLE='Administratum Stellar Cartographica — Revision 26.4';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -669,6 +669,16 @@ html.carto-orientation-lock body:after{content:'';display:none}
 </style>
 <style id="rev263-infra-css">
 .faction-infra-guide263{margin:7px 0;border:1px solid rgba(255,255,255,.07);padding:6px}.faction-infra-guide263 summary{cursor:pointer;color:#c8b98e}.faction-infra-guide263 span{display:block;padding:4px 0;border-top:1px solid rgba(255,255,255,.04);font-size:7px;color:#8e968f}.faction-infra-guide263 span b{display:block;color:#c8c1aa;font-size:8px}
+</style><style id="rev264-css">
+.lore-start264,.lore-faction264{grid-column:1/-1}.lore-start264{border:1px solid rgba(201,168,83,.27);padding:8px;background:rgba(125,92,30,.045)}
+.craftworld-start264{display:none;border:1px solid rgba(117,102,164,.35);padding:8px;background:rgba(85,69,130,.06)}.craftworld-start264.available264{display:block}.craftworld-start264 button.active{border-color:#a891d0;background:rgba(125,95,170,.14)}
+.faction-unique-build264,.faction-unique-infra264{border:1px solid rgba(202,173,95,.32);background:rgba(127,95,34,.055);padding:9px;margin:8px 0;grid-column:1/-1}.faction-unique-build264 h4,.faction-unique-infra264 h4{color:#dfc889;margin:0 0 5px}.faction-unique-grid264{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:7px}.faction-unique-grid264>div{border:1px solid rgba(255,255,255,.07);padding:7px}.faction-unique-grid264>div b,.faction-unique-grid264>div span,.faction-unique-grid264>div small{display:block}.faction-unique-grid264>div small{font-size:7px;color:#8f948e;margin:4px 0}.campaign-building-choice.unique264{border-color:rgba(202,173,95,.38)!important}
+.craftworld-register264{border:2px solid rgba(129,111,181,.42);background:rgba(72,60,112,.055);padding:10px;margin:10px 0}.craftworld-register-head264 h3{margin:4px 0;color:#d8c8ef}.craftworld-register-head264 p{font-size:8px;color:#9b97aa}
+.rebellion-stability264{border-top:1px solid rgba(255,255,255,.07);margin-top:7px;padding-top:7px;color:#aeb8ae;font-size:8px}.rebellion-stability264 small{color:#858e88}
+@media(max-width:650px){.faction-unique-grid264{grid-template-columns:1fr}}
+</style>
+<style id="rev264-fleet-css">
+.craftworld-fleet-banner264{border:2px solid rgba(144,117,197,.42);background:rgba(91,70,135,.10);padding:9px;margin:7px 0}.craftworld-fleet-banner264 b,.craftworld-fleet-banner264 span{display:block}.craftworld-fleet-banner264 b{color:#dbc9f4}.craftworld-fleet-banner264 span{color:#9d96ad;font-size:8px;margin-top:3px}
 </style></head>
 <body>
 <div class="app">
@@ -8081,7 +8091,7 @@ const CAMPAIGN_LORE_LOCATIONS_263=[
  {name:'Nocturne',segmentum:'Segmentum Ultima',era:['30k','40k'],kind:'Primarch / Chapter Homeworld',priority:92,tags:['Vulkan','Salamanders']},
  {name:'Deliverance',segmentum:'Segmentum Solar',era:['30k','40k'],kind:'Primarch / Legion Homeworld',priority:90,tags:['Corvus Corax','Raven Guard']},
  {name:'Nuceria',segmentum:'Segmentum Ultima',era:['30k'],kind:'Primarch World',priority:89,tags:['Angron','World Eaters']},
- {name:'Barbarus',segmentum:'Segmentum Obscurus',era:['30k'],kind:'Primarch Homeworld',priority:91,tags:['Mortarion','Death Guard']},
+ {name:'Barbarus',segmentum:'Segmentum Tempestus',era:['30k'],kind:'Primarch Homeworld',priority:91,tags:['Mortarion','Death Guard']},
  {name:'Nostramo',segmentum:'Segmentum Ultima',era:['30k'],kind:'Primarch Homeworld',priority:91,tags:['Konrad Curze','Night Lords']},
  {name:'Cadia',segmentum:'Segmentum Obscurus',era:['40k'],kind:'Fortress World / Cadian Gate',priority:98,tags:['Imperium','Cadian Gate']},
  {name:'Armageddon',segmentum:'Segmentum Solar',era:['40k'],kind:'Major Imperial War World',priority:95,tags:['Imperium','Orks']},
@@ -8365,6 +8375,294 @@ campaignAIConstruct246=function(root,fac,s,strategy){
   }
   return out;
 };
+
+
+/* ===== Revision 26.4 — Forced Lore Starts, Craftworld Polities & Stability Rebalance ===== */
+const REV264='26.4';
+const REV264_BUILD='26.4-forced-lore-craftworlds-stability-unique-buildings-v48-tested';
+
+/* ---------- Canonical lore starts ---------- */
+const CAMPAIGN_LORE_LINKS_264={
+  'Cthonia':{factionKey:'legion',factionName:'Luna Wolves / Sons of Horus',forceName:'XVI Legion Cthonian Expeditionary Host',sizes:[6,5,4],armyPoints:12000},
+  'Davin':{factionKey:'legion',factionName:'Luna Wolves / Sons of Horus',forceName:'XVI Legion Davinite Expeditionary Host',sizes:[5,4,3],armyPoints:10000},
+  'Fenris':{factionKey:'legion',factionName:'Space Wolves Legiones Astartes',forceName:'VI Legion Rout of Fenris',sizes:[6,5,4],armyPoints:12000},
+  'Prospero':{factionKey:'legion',factionName:'Thousand Sons Legiones Astartes',forceName:'XV Legion Prosperine Host',sizes:[7,5,4],armyPoints:11000},
+  'Caliban':{factionKey:'legion',factionName:'Dark Angels Legiones Astartes',forceName:'I Legion Calibanite Host',sizes:[6,5,4],armyPoints:12000},
+  'Chemos':{factionKey:'legion',factionName:"Emperor's Children Legiones Astartes",forceName:'III Legion Chemosian Host',sizes:[6,5,4],armyPoints:11000},
+  'Olympia':{factionKey:'legion',factionName:'Iron Warriors Legiones Astartes',forceName:'IV Legion Olympian Grand Battalion',sizes:[7,6,5],armyPoints:14000},
+  'Chogoris':{factionKey:'legion',factionName:'White Scars Legiones Astartes',forceName:'V Legion Chogorian Brotherhood',sizes:[5,4,3],armyPoints:10000},
+  'Baal':{factionKey:'legion',factionName:'Blood Angels Legiones Astartes',forceName:'IX Legion Baalite Host',sizes:[6,5,4],armyPoints:12000},
+  'Medusa':{factionKey:'legion',factionName:'Iron Hands Legiones Astartes',forceName:'X Legion Medusan Clan Host',sizes:[6,5,4],armyPoints:12000},
+  'Macragge':{factionKey:'legion',factionName:'Ultramarines Legiones Astartes',forceName:'XIII Legion Macraggian Expeditionary Host',sizes:[8,7,6],armyPoints:16000},
+  'Colchis':{factionKey:'legion',factionName:'Word Bearers Legiones Astartes',forceName:'XVII Legion Colchisian Host',sizes:[6,5,4],armyPoints:12000},
+  'Nocturne':{factionKey:'legion',factionName:'Salamanders Legiones Astartes',forceName:'XVIII Legion Nocturnean Host',sizes:[5,4,4],armyPoints:10000},
+  'Deliverance':{factionKey:'legion',factionName:'Raven Guard Legiones Astartes',forceName:'XIX Legion Deliverance Host',sizes:[5,4,3],armyPoints:10000},
+  'Nuceria':{factionKey:'legion',factionName:'World Eaters Legiones Astartes',forceName:'XII Legion Nucerian War Host',sizes:[5,4,3],armyPoints:12000},
+  'Barbarus':{factionKey:'legion',factionName:'Death Guard Legiones Astartes',forceName:'XIV Legion Barbaran Host',sizes:[6,5,4],armyPoints:13000},
+  'Nostramo':{factionKey:'legion',factionName:'Night Lords Legiones Astartes',forceName:'VIII Legion Nostraman Host',sizes:[6,5,4],armyPoints:11000},
+  'Inwit':{factionKey:'legion',factionName:'Imperial Fists Legiones Astartes',forceName:'VII Legion Inwit Host',sizes:[7,6,5],armyPoints:13000},
+  'Sol':{factionKey:'talons',factionName:'Terran Imperial Strategic Command',forceName:'Solar Strategic Defence Host',sizes:[10,9,8],armyPoints:18000},
+  'Cadia':{factionKey:'militia',factionName:'Cadian Defence Forces',forceName:'Cadian Strategic Reserve',sizes:[9,8,7],armyPoints:15000},
+  'Armageddon':{factionKey:'militia',factionName:'Armageddon Defence Forces',forceName:'Armageddon Steel Legion Reserve',sizes:[9,8,7],armyPoints:15000},
+  'Cypra Mundi':{factionKey:'solar',factionName:'Battlefleet Obscurus Command',forceName:'Cypra Mundi Naval Defence Army',sizes:[9,8,7],armyPoints:14000},
+  'Ryza':{factionKey:'mechanicum',factionName:'Forge World Ryza',forceName:'Ryza Taghmata Defence Host',sizes:[10,9,8],armyPoints:15000},
+  'Mordian':{factionKey:'militia',factionName:'Mordian Iron Guard Command',forceName:'Mordian Strategic Reserve',sizes:[8,7,6],armyPoints:13000},
+  'Vigilus':{factionKey:'militia',factionName:'Vigilus Defence Command',forceName:'Vigilus Strategic Reserve',sizes:[8,7,6],armyPoints:13000}
+};
+function campaignLoreStartOptions264(root){
+  const era=root?.config?.era||'40k',seg=root?.config?.segmentum||'',list=CAMPAIGN_LORE_LOCATIONS_263.filter(x=>x.era.includes(era)&&(x.segmentum===seg||seg==='Unregistered Galactic Volume'));
+  return `<option value="">No forced canonical location</option>`+list.map(x=>`<option value="${esc(x.name)}">${esc(x.name)} — ${esc(x.kind)}${CAMPAIGN_LORE_LINKS_264[x.name]?` • ${esc(CAMPAIGN_LORE_LINKS_264[x.name].factionName)}`:''}</option>`).join('');
+}
+function campaignForceLoreAnchor264(root,name){
+  if(!name)return null;
+  const lore=CAMPAIGN_LORE_LOCATIONS_263.find(x=>x.name===name),records=campaignSystemRecords(root);if(!lore||!records.length)return null;
+  let rec=records.find(r=>r.sys?.canonicalAnchor263?.name===name||r.name===name||r.sys?.name===name);
+  if(!rec){
+    const idx=(hashText(`${root.config.seed}|FORCED-LORE264|${name}`)>>>0)%records.length;rec=records[idx];
+    rec.sys.generatedName264=rec.sys.name;rec.sys.name=name;rec.name=name;
+    rec.sys.canonicalAnchor263={...lore,forced264:true,reference:'Jambonium 30k/40k interactive map / setting reference',coordinatePolicy:'forced lore anchor on generated campaign coordinate'};
+  }
+  const worlds=whAllPlanets(rec.sys).filter(w=>w&&w.soi);
+  let primary=null;
+  if(name==='Sol'){
+    const desired=['Terra','Mars','Luna'];desired.forEach((n,i)=>{if(worlds[i]){worlds[i].generatedName264=worlds[i].name;worlds[i].name=n;worlds[i].canonicalAnchor263=true}});
+    primary=worlds.find(w=>w.name==='Terra')||worlds[0];
+  }else{
+    primary=worlds.find(w=>w.name===name)||worlds[0];
+    if(primary){primary.generatedName264=primary.name;primary.name=name;primary.canonicalAnchor263=true}
+    if(Array.isArray(lore.worlds))lore.worlds.forEach((n,i)=>{if(worlds[i]){worlds[i].generatedName264=worlds[i].name;worlds[i].name=n;worlds[i].canonicalAnchor263=true}});
+  }
+  const locationId=primary?`world:${primary.id}`:(campaignLocationProfiles(rec.sys)[0]?.id||null);
+  root._forcedLore264={name,lore,systemId:rec.id,locationId};
+  return root._forcedLore264;
+}
+function campaignLoreSettlement264(root,fac,anchor,size,index){
+  const rec=campaignRecord(root,anchor.systemId),locs=campaignLocationProfiles(rec.sys),loc=locs.find(x=>x.id===anchor.locationId)||locs[0];if(!loc)return null;
+  const col=withSeededRng(`${root.campaign.seed}|LORE-SETTLE264|${anchor.name}|${index}`,()=>soiColonyProfile(loc.p,soiSuggestedColonyType(loc.p),true,CAMPAIGN_FACTION_META[fac.key]?.colony||'xenos','Canonical lore polity'));
+  col.size=size;col.complacency=size+1;col.productivity=size+2;col.order=size+2;col.piety=size+1;col.established=true;col.events=[];col.requiredInfrastructure=null;col.pendingInfrastructurePenalty=false;
+  const web264=campaignEnsureDevelopmentWeb(col);campaignInfrastructureLevels253(col);
+  const uniqueChain264=`faction263_${fac.key}`,ud264=CAMPAIGN_BUILDING_CHAINS[uniqueChain264];
+  if(ud264&&web264?.slots?.length){web264.slots[0].chain=uniqueChain264;web264.slots[0].tier=Math.min(5,Math.max(1,size));if(web264.slots[0].tier>=3)web264.slots[0].path=Object.keys(ud264.paths||{})[0]||null}
+  const unique=(typeof campaignFactionInfraDefs263==='function'?campaignFactionInfraDefs263(fac):[]).map(x=>x.name);
+  const standard=SOI_INFRA.slice(0,3);for(const n of [...standard,...unique.slice(0,1)]){col.infrastructureLevels253[n]=Math.min(size,Math.max(2,Math.ceil(size/2)));if(!col.infrastructure.includes(n))col.infrastructure.push(n)}
+  const world=String(loc.id||'').startsWith('world:')?soiFindInteractiveWorld(rec.sys,String(loc.id).slice(6)):null,trs=world?campaignEnsureWorldTerritories237(world):[],tr=trs[index%Math.max(1,trs.length)];
+  const st={id:`cs-lore264-${hashText(`${fac.id}|${anchor.name}|${index}`).toString(36)}`,factionId:fac.id,systemId:anchor.systemId,locationId:loc.id,locationName:loc.name,locationKind:loc.kind,settlementName246:`${anchor.name} ${index===0?'Primary Hold':`Holding ${roman(index+1)}`}`,colony:col,status:'Active',foundedTurn:0,occupiedBy:null,territoryId237:tr?.id||null,canonicalLore264:true};
+  col.pfValue=soiColonyPF(col);fac.settlements.push(st);if(tr)campaignSetTerritoryClaim238(root,anchor.systemId,loc.id,tr.id,fac,'Canonical lore polity');
+  return st;
+}
+function campaignApplyLoreFaction264(root,anchor){
+  const link=anchor&&CAMPAIGN_LORE_LINKS_264[anchor.name];if(!link||!root?.campaign)return null;
+  const c=root.campaign,p=campaignPlayer(c),customName=val('campaignPlayerName')?.trim?.()||'',playerMatches=p?.key===link.factionKey&&(p.homeSystemId===anchor.systemId||c.selectedSystemId===anchor.systemId);
+  let fac=playerMatches?p:c.factions.find(f=>f.loreAnchor264===anchor.name);
+  if(!fac){
+    fac=campaignMakeFaction(link.factionKey,c.factions.length,true,link.factionName);fac.loreAnchor264=anchor.name;c.factions.push(fac);
+  }else if(playerMatches&&!customName)fac.name=link.factionName;
+  fac.loreAnchor264=anchor.name;fac.homeSystemId=anchor.systemId;
+  if(!fac.presence.includes(anchor.systemId))fac.presence.push(anchor.systemId);
+  if(!fac.territory.includes(anchor.systemId))fac.territory.push(anchor.systemId);
+  const cs=c.systems[anchor.systemId];if(cs){cs.ownerFactionId=fac.id;if(!cs.presenceFactionIds.includes(fac.id))cs.presenceFactionIds.push(fac.id)}
+  if(!(fac.settlements||[]).some(x=>x.canonicalLore264))link.sizes.forEach((sz,i)=>campaignLoreSettlement264(root,fac,anchor,sz,i));
+  if(!(fac.taskForces||[]).some(x=>x.canonicalLore264)){
+    const tf=campaignTaskForceFromGenerated(link.factionKey,link.armyPoints,anchor.systemId,link.forceName);tf.canonicalLore264=true;fac.taskForces.push(tf);
+  }
+  campaignEnsureTierZeroExpeditionary260?.(root,fac);
+  return fac;
+}
+
+/* ---------- Craftworld world-ships ---------- */
+function campaignMakeCraftworldColony264(root,fac,fleet,index){
+  const size=6+((hashText(`${root.campaign.seed}|CRAFTWORLD264|${fleet.id}|${index}`)>>>0)%5);
+  const col={type:'Craftworld Realm',displayType:index===0?'Craftworld Core Realm':'Craftworld Habitat Realm',established:true,size,complacency:size+2,productivity:size+2,order:size+2,piety:size+3,pfValue:1,cycles:0,events:[],infrastructure:[],supportUpgrades:[],requiredInfrastructure:null,pendingInfrastructurePenalty:false,craftworldRealm264:true,craftworldSlot264:index};
+  const webCW264=campaignEnsureDevelopmentWeb(col);campaignInfrastructureLevels253(col);
+  const cwChain264='faction263_craftworld',cwDef264=CAMPAIGN_BUILDING_CHAINS[cwChain264];
+  if(cwDef264&&webCW264?.slots?.length){webCW264.slots[0].chain=cwChain264;webCW264.slots[0].tier=Math.min(5,Math.max(3,size-3));webCW264.slots[0].path=Object.keys(cwDef264.paths||{})[0]||null}
+  const defs=campaignFactionInfraDefs263?.(fac)||[];for(const n of ['Power Infrastructure','Water Infrastructure','Communications Infrastructure',...defs.map(x=>x.name)]){if(!n)continue;col.infrastructureLevels253[n]=Math.min(size,Math.max(4,Math.ceil(size*.7)));if(!col.infrastructure.includes(n))col.infrastructure.push(n)}
+  col.pfValue=soiColonyPF(col);return col;
+}
+function campaignCreateCraftworldFleet264(root,fac,nodeId,name=null){
+  fac.fleets=[];fac.fleetColonyFaction235=true;const fleet=campaignFleetMake(root,fac,'armada','expedition',nodeId,name||`${fac.name} Craftworld`,[]);
+  fleet.craftworld264=true;fleet.craftworldWorldShip264=true;fleet.developmentTier235=5;fleet.refitLevel253=10;fleet.hullDamage247=0;fleet.voidDamage247=0;fleet.hullCondition264=100;fleet.capitalHulls255=12;fleet.escortHulls255=30;fleet.supportHulls255=24;
+  fleet.craftworldColonies264=Array.from({length:5},(_,i)=>campaignMakeCraftworldColony264(root,fac,fleet,i));fleet.mobileColony235=fleet.craftworldColonies264[0];
+  fac.fleets.push(fleet);root.campaign.selectedFleetId=fleet.id;return fleet;
+}
+function campaignCraftworldSettlementProxy264(root,fac,fleet,index){
+  const col=fleet?.craftworldColonies264?.[index];if(!col)return null;
+  return{id:`craftworld:${fleet.id}:${index}`,factionId:fac.id,systemId:fleet.currentId,locationId:`craftworld:${fleet.id}`,locationName:`${fleet.name} — ${index===0?'Core Realm':`Habitat Realm ${roman(index+1)}`}`,locationKind:'Craftworld World-Ship',settlementName246:index===0?'Infinity Core Metropolis':`Habitat Realm ${roman(index+1)}`,colony:col,status:'Active',foundedTurn:0,occupiedBy:null,mobile236:true,craftworld264:true,craftworldFleetId264:fleet.id,craftworldSlot264:index};
+}
+const _campaignFleetCapacity_rev264=campaignFleetCapacity;
+campaignFleetCapacity=function(f){return f?.craftworld264?250000:_campaignFleetCapacity_rev264(f)};
+const _campaignFleetSpeed_rev264=campaignFleetSpeed;
+campaignFleetSpeed=function(root,f){return f?.craftworld264?(root?._campaignScope==='system'?220:12):_campaignFleetSpeed_rev264(root,f)};
+const _campaignFleetNaval_rev264=campaignFleetNaval;
+campaignFleetNaval=function(f){return f?.craftworld264?Math.max(18,_campaignFleetNaval_rev264(f)):_campaignFleetNaval_rev264(f)};
+const _campaignMobileSettlementProxy236_rev264=campaignMobileSettlementProxy236;
+campaignMobileSettlementProxy236=function(root,fac,fleet){if(fleet?.craftworld264)return null;return _campaignMobileSettlementProxy236_rev264(root,fac,fleet)};
+const _campaignFindSettlement236_rev264=campaignFindSettlement236;
+campaignFindSettlement236=function(root,fac,id){
+  if(String(id||'').startsWith('craftworld:')){const [,fid,idx]=String(id).split(':'),fl=(fac?.fleets||[]).find(f=>f.id===fid);return fl?campaignCraftworldSettlementProxy264(root,fac,fl,Number(idx)||0):null}
+  return _campaignFindSettlement236_rev264(root,fac,id);
+};
+const _campaignAllSettlementRecords236_rev264=campaignAllSettlementRecords236;
+campaignAllSettlementRecords236=function(root){
+  const out=_campaignAllSettlementRecords236_rev264(root).filter(x=>!x.fleet?.craftworld264);
+  for(const fac of root?.campaign?.factions||[])for(const fl of fac.fleets||[])if(fl.craftworld264)for(let i=0;i<5;i++){const st=campaignCraftworldSettlementProxy264(root,fac,fl,i);if(st)out.push({fac,s:st,fleet:fl,mobile:true,craftworld264:true})}
+  return out;
+};
+const _campaignPurchaseDevelopment_rev264=campaignPurchaseDevelopment;
+campaignPurchaseDevelopment=function(root,facId,settlementId,slotIndex,chain,tier,path){
+  if(!String(settlementId||'').startsWith('craftworld:'))return _campaignPurchaseDevelopment_rev264(root,facId,settlementId,slotIndex,chain,tier,path);
+  const fac=campaignFaction(root.campaign,facId),st=campaignFindSettlement236(root,fac,settlementId);if(!fac||!st||fac.id!==root.campaign.playerFactionId)return false;
+  const q=campaignDevEligibility(root,fac,st,slotIndex,chain,tier,path);if(!q.ok){campaignQueueNotice(root,'Craftworld Construction Blocked',q.reasons.join('; '));return false}
+  fac.treasury.supply-=q.cost.supply;fac.treasury.materiel-=q.cost.materiel;fac.treasury.influence-=q.cost.influence;fac.command=Math.max(0,fac.command-q.cost.command);
+  const sl=campaignEnsureDevelopmentWeb(st.colony).slots[slotIndex];if(tier===1){sl.chain=chain;sl.path=null}if(tier>=3&&!sl.path)sl.path=path;sl.tier=tier;campaignApplyDevelopmentInstant(root,st,q.node);campaignPersist(root);campaignRenderDashboard(root);return true;
+};
+const _campaignColoniesHTML_rev264=campaignColoniesHTML;
+campaignColoniesHTML=function(root,c){
+  let h=_campaignColoniesHTML_rev264(root,c),p=campaignPlayer(c),craft=(p?.fleets||[]).filter(f=>f.craftworld264);
+  if(!craft.length)return h;
+  const cards=craft.map(fl=>`<section class="craftworld-register264"><div class="craftworld-register-head264"><span class="badge">CRAFTWORLD WORLD-SHIP</span><h3>${esc(fl.name)}</h3><p>Continent/moon-scale mobile Aeldari polity • 5 independent settlement realms • 250,000 pts troop lift • strategic speed ${campaignFleetSpeed(root,fl)} ${root._campaignScope==='system'?'AU':'ly'}/turn.</p></div>${fl.craftworldColonies264.map((_,i)=>campaignSettlementCard236(root,p,campaignCraftworldSettlementProxy264(root,p,fl,i),true)).join('')}</section>`).join('');
+  return cards+h;
+};
+
+/* ---------- Rebellion-risk rebalance ---------- */
+const _campaignSettlementConsequenceRisk246_rev264=campaignSettlementConsequenceRisk246;
+campaignSettlementConsequenceRisk246=function(root,fac,s){
+  const col=s?.colony||{},size=Math.max(1,Number(col.size)||1),e=soiColonyEffective(col),hostility=campaignSettlementHostility246(root,fac,s);
+  const targets={order:Math.max(2,Math.ceil(size*.70)),complacency:Math.max(2,Math.ceil(size*.60)),piety:Math.max(1,Math.ceil(size*.50)),productivity:Math.max(2,Math.ceil(size*.60))};
+  const deficit=(k,w)=>Math.max(0,targets[k]-Number(e[k]||0))*w;
+  const deficits=deficit('order',7)+deficit('complacency',4)+deficit('piety',4)+deficit('productivity',2);
+  const surplus=Math.min(34,Math.max(0,Number(e.order||0)-targets.order)*4+Math.max(0,Number(e.complacency||0)-targets.complacency)*3+Math.max(0,Number(e.piety||0)-targets.piety)*3+Math.max(0,Number(e.productivity||0)-targets.productivity)*1.5);
+  const levels=campaignInfrastructureLevels253(col),infraDepth=Object.values(levels).reduce((n,v)=>n+Math.max(0,Number(v)||0),0),infraCredit=Math.min(24,Math.floor(infraDepth/2));
+  const support=(col.supportUpgrades||[]).length,supportCredit=Math.min(12,support*3),sizePressure=Math.max(0,size-5),unmet=col.requiredInfrastructure?9:0,o=campaignOccupationEffects246(root,fac,s.systemId,s.locationId,s.territoryId237),reb=s.rebellion246?.active?14:0;
+  const doctrine=campaignDoctrineEffects258?.(fac)||{risk:0};
+  let risk=Math.round(2+hostility+sizePressure+deficits+unmet+reb+Number(doctrine.risk||0)-surplus-infraCredit-supportCredit-Math.min(18,(o.orderBonus||0)*4));
+  risk=Math.max(0,Math.min(90,risk));
+  return{risk,hostility,orderDef:Math.max(0,targets.order-Number(e.order||0)),compDef:Math.max(0,targets.complacency-Number(e.complacency||0)),pietyDef:Math.max(0,targets.piety-Number(e.piety||0)),productivityDef:Math.max(0,targets.productivity-Number(e.productivity||0)),stagnation:0,infra:col.requiredInfrastructure?1:0,occupation:o,targets264:targets,stabilityCredit264:Math.round(surplus),infrastructureCredit264:infraCredit,supportCredit264:sizePressure?Math.max(0,supportCredit-sizePressure):supportCredit,sizePressure264:sizePressure,doctrineRisk258:Number(doctrine.risk||0)};
+};
+
+/* ---------- Make unique construction impossible to miss ---------- */
+function campaignFactionUniqueDistrictPanel264(root,fac,s,readonly=false){
+  const defs=Object.entries(CAMPAIGN_BUILDING_CHAINS).filter(([,d])=>d.factionOnly263===fac.key);if(!defs.length)return'';
+  const web=campaignEnsureDevelopmentWeb(s.colony),cap=campaignSettlementSlotCount(s.colony),empty=web.slots.findIndex((x,i)=>i<cap&&!x.chain);
+  return `<section class="faction-unique-build264"><h4>${esc(CAMPAIGN_FACTION_META[fac.key]?.label||fac.name)} — Unique Districts</h4><p>These chains are exclusive to this faction and are displayed separately from generic districts.</p><div class="faction-unique-grid264">${defs.map(([key,d])=>{const used=campaignChainAlreadyUsed(web,key,-1),q=empty>=0&&!readonly?campaignDevEligibility(root,fac,s,empty,key,1,null):{ok:false,reasons:['No empty district slot']};return`<button class="campaign-building-choice unique264" ${used||!q.ok?'disabled':''} ${!used&&q.ok?`data-dev-buy="1" data-slot="${empty}" data-chain="${key}" data-tier="1" data-path=""`:''}><span class="ico">${esc(d.icon||'✦')}</span><span><b>${esc(d.label)}</b><small>${esc(d.summary||'Faction-exclusive construction')}</small></span></button>`}).join('')}</div></section>`;
+}
+const _campaignDevelopmentWebHTML_rev264=campaignDevelopmentWebHTML;
+campaignDevelopmentWebHTML=function(root,fac,s,readonly=false){
+  let h=_campaignDevelopmentWebHTML_rev264(root,fac,s,readonly),panel=campaignFactionUniqueDistrictPanel264(root,fac,s,readonly);
+  return panel+h;
+};
+function campaignFactionUniqueInfrastructurePanel264(root,fac,s,own){
+  if(!own)return'';const defs=campaignFactionInfraDefs263?.(fac)||[],levels=campaignInfrastructureLevels253(s.colony),cap=Math.max(1,Math.min(10,Number(s.colony.size)||1));
+  if(!defs.length)return'';
+  return `<section class="faction-unique-infra264"><h4>${esc(CAMPAIGN_FACTION_META[fac.key]?.label||fac.name)} — Unique Infrastructure</h4><div class="faction-unique-grid264">${defs.map(d=>{const lv=levels[d.name]||0,cost=campaignInfrastructureUpgradeCost253(s.colony,d.name),blocked=lv>=cap||lv>=10;return`<div><b>${esc(d.name)}</b><span>L${lv}/${cap}</span><small>${esc(d.desc)}</small><button class="ghost" data-unique-infra264="${esc(s.id)}" data-unique-infra-name264="${esc(d.name)}" ${blocked?'disabled':''}>${blocked?'Capped':`Upgrade — ${cost}M`}</button></div>`}).join('')}</div></section>`;
+}
+const _campaignSettlementCard236_rev264=campaignSettlementCard236;
+campaignSettlementCard236=function(root,fac,s,own){
+  let h=_campaignSettlementCard236_rev264(root,fac,s,own),panel=campaignFactionUniqueInfrastructurePanel264(root,fac,s,own);
+  if(!panel)return h;
+  const m=h.match(/<div class="campaign-infra-planner246[\s\S]*?<\/div><\/div>/);
+  if(m)return h.replace(m[0],m[0]+panel);
+  return h+panel;
+};
+
+/* ---------- Campaign launcher additions ---------- */
+const _campaignLauncherHTML_rev264=campaignLauncherHTML;
+campaignLauncherHTML=function(root){
+  let h=_campaignLauncherHTML_rev264(root),lore=`<div class="field lore-start264"><label>Force canonical start location</label><select id="campaignLoreStart264">${campaignLoreStartOptions264(root)}</select><small>Guarantees this named system/world is present in the campaign and makes it available as the starting node.</small></div><label class="check lore-faction264"><input id="campaignLoreFaction264" type="checkbox" checked/>Create or develop the lore-linked polity at that location (for example Barbarus → Death Guard).</label>`;
+  h=h.replace(/(<div class="field"><label>Starting system<\/label><select id="campaignStartSystem">[\s\S]*?<\/select><\/div>)/,`$1${lore}`);
+  h=h.replace(/(<div class="field"><label>Player faction<\/label><select id="campaignStartFaction">[\s\S]*?<\/select><\/div>)/,`$1<div id="campaignCraftworldStartBox264" class="craftworld-start264"><button id="campaignCraftworldStartBtn264" class="ghost" type="button">Begin Aboard a Craftworld World-Ship</button><input id="campaignCraftworldStart264" type="hidden" value="off"/><small>Craftworld Eldar only. Replaces the normal starting fleet with a continent/moon-scale Craftworld containing five established Size 6–10 settlement realms.</small></div>`);
+  return h;
+};
+function campaignPrepareStart264(root){
+  const loreName=val('campaignLoreStart264'),anchor=campaignForceLoreAnchor264(root,loreName);
+  if(anchor){const sel=$('campaignStartSystem');if(sel){if(![...sel.options].some(o=>o.value===anchor.systemId))sel.add(new Option(campaignRecord(root,anchor.systemId)?.name||anchor.name,anchor.systemId));sel.value=anchor.systemId}}
+  root._campaignStartLore264=anchor;root._campaignCreateLoreFaction264=checked('campaignLoreFaction264');root._campaignCraftworldStart264=val('campaignCraftworldStart264')==='on';
+  if(root._campaignCraftworldStart264){const f=$('campaignStartFaction');if(f)f.value='craftworld'}
+}
+const _campaignLaunch247_rev264=campaignLaunch247;
+campaignLaunch247=async function(root){campaignPrepareStart264(root);return _campaignLaunch247_rev264(root)};
+const _campaignInitialize_rev264=campaignInitialize;
+campaignInitialize=function(root,opts={}){
+  const c=_campaignInitialize_rev264(root,opts),p=campaignPlayer(c),anchor=root._campaignStartLore264;
+  if(anchor&&root._campaignCreateLoreFaction264)campaignApplyLoreFaction264(root,anchor);
+  if(root._campaignCraftworldStart264&&p?.key==='craftworld'){
+    p.homeSystemId=opts.startSystemId||anchor?.systemId||p.homeSystemId;c.selectedSystemId=p.homeSystemId;p.territory=p.territory||[];p.presence=p.presence||[];
+    if(!p.presence.includes(p.homeSystemId))p.presence.push(p.homeSystemId);if(!p.territory.includes(p.homeSystemId))p.territory.push(p.homeSystemId);
+    const cs=c.systems[p.homeSystemId];if(cs){cs.ownerFactionId=p.id;if(!cs.presenceFactionIds.includes(p.id))cs.presenceFactionIds.push(p.id)}
+    campaignCreateCraftworldFleet264(root,p,p.homeSystemId,opts.playerName?`${opts.playerName} Craftworld`:`${p.name} Craftworld`);
+    p.taskForces=[campaignTaskForceFromGenerated('craftworld',12000,p.homeSystemId,`${p.name} Craftworld Warhost`)];
+    p.craftworldPolity264=true;p.fleetColonyFaction235=true;
+  }
+  return c;
+};
+const _campaignBindLauncher_rev264=campaignBindLauncher;
+campaignBindLauncher=function(root){
+  _campaignBindLauncher_rev264(root);
+  const sync=()=>{const box=$('campaignCraftworldStartBox264'),is=val('campaignStartFaction')==='craftworld';if(box)box.classList.toggle('available264',is);if(!is&&$('campaignCraftworldStart264'))$('campaignCraftworldStart264').value='off'};
+  $('campaignStartFaction')?.addEventListener('change',sync);$('campaignCraftworldStartBtn264')?.addEventListener('click',()=>{const f=$('campaignStartFaction');if(f)f.value='craftworld';const x=$('campaignCraftworldStart264'),b=$('campaignCraftworldStartBtn264');x.value=x.value==='on'?'off':'on';b.classList.toggle('active',x.value==='on');b.textContent=x.value==='on'?'✓ Craftworld World-Ship Start Selected':'Begin Aboard a Craftworld World-Ship';sync()});sync();
+};
+
+/* Direct unique infrastructure handler. */
+document.addEventListener('click',e=>{const b=e.target.closest?.('[data-unique-infra264]');if(!b)return;const root=window.currentSector,p=root?.campaign&&campaignPlayer(root.campaign);if(!root||!p)return;e.preventDefault();e.stopImmediatePropagation();const st=campaignFindSettlement236(root,p,b.dataset.uniqueInfra264),name=b.dataset.uniqueInfraName264;if(st&&campaignUpgradeInfrastructure253(root,p,st,name,false)){campaignPersist(root);campaignRenderDashboard(root);campaignShowView('colonies')}},true);
+
+/* Rebellion risk explanation additions. */
+const _campaignSettlementGovernanceHTML250_rev264=campaignSettlementGovernanceHTML250;
+campaignSettlementGovernanceHTML250=function(root,fac,s,owned){
+  let h=_campaignSettlementGovernanceHTML250_rev264(root,fac,s,owned),q=campaignSettlementConsequenceRisk246(root,fac,s);
+  const note=`<div class="rebellion-stability264"><b>Stability calculation:</b> risk ${q.risk}% • hostility +${q.hostility} • settlement-scale pressure +${q.sizePressure264||0} • stable civic surplus −${q.stabilityCredit264||0} • infrastructure −${q.infrastructureCredit264||0} • support −${q.supportCredit264||0}.<br/><small>High Order, Complacency, Piety/Cohesion and Productivity now actively reduce rebellion risk. Settlement Size only adds a small administrative pressure above Size 5; deep infrastructure and civic surpluses can reduce healthy settlements to 0% risk.</small></div>`;
+  return h.replace('</section>',note+'</section>');
+};
+
+
+const _campaignDeepTimeLifecycle261_rev264=campaignDeepTimeLifecycle261;
+campaignDeepTimeLifecycle261=function(root,fac,turn,span){
+  const out=_campaignDeepTimeLifecycle261_rev264(root,fac,turn,span);
+  for(const fl of fac?.fleets||[])if(fl.craftworld264){
+    for(const col of fl.craftworldColonies264||[]){
+      const q=campaignSettlementDevelopment251(col),scale=Math.max(1,Math.round(Number(span)||1));
+      col.development251=(Number(col.development251)||0)+Math.round(q.net*Math.min(6,scale));
+      while((col.size||1)<10&&col.development251>=q.threshold){col.development251-=q.threshold;col.size++}
+      const floor=Math.max(4,Math.ceil((col.size||1)*.75));
+      col.order=Math.max(Number(col.order||0),floor);col.complacency=Math.max(Number(col.complacency||0),floor);col.piety=Math.max(Number(col.piety||0),floor);col.productivity=Math.max(Number(col.productivity||0),floor);
+      col.pfValue=soiColonyPF(col);
+    }
+  }
+  return out;
+};
+
+
+const _campaignFleetCardHTML_rev264=campaignFleetCardHTML;
+campaignFleetCardHTML=function(root,c,fac,fleet,owned){
+  let h=_campaignFleetCardHTML_rev264(root,c,fac,fleet,owned);
+  if(!fleet?.craftworld264)return h;
+  const avg=Math.round((fleet.craftworldColonies264||[]).reduce((n,x)=>n+Number(x.size||0),0)/Math.max(1,(fleet.craftworldColonies264||[]).length));
+  const banner=`<div class="craftworld-fleet-banner264"><b>CRAFTWORLD WORLD-SHIP</b><span>5 settlement realms • average Size ${avg} • maximum Size 10 each • 250,000 pts strategic lift • continent-scale mobile civilisation</span></div>`;
+  return banner+h;
+};
+
+
+const _campaignFactionIncome_rev264=campaignFactionIncome;
+campaignFactionIncome=function(c,root,fac){
+  const out=_campaignFactionIncome_rev264(c,root,fac);let S=0,M=0,I=0;
+  for(const fl of fac?.fleets||[])if(fl.craftworld264)for(const col of fl.craftworldColonies264||[]){
+    const y=campaignSettlementYield({colony:col},fac);S+=y.supply;M+=y.materiel;I+=y.influence;
+  }
+  if(S||M||I){fac.treasury.supply+=S;fac.treasury.materiel+=M;fac.treasury.influence+=I;out.supply=(out.supply||0)+S;out.materiel=(out.materiel||0)+M;out.influence=(out.influence||0)+I}
+  return out;
+};
+const _campaignRecruitmentCapacity_rev264=campaignRecruitmentCapacity;
+campaignRecruitmentCapacity=function(root,fac){
+  const q=_campaignRecruitmentCapacity_rev264(root,fac);let extra=0;
+  for(const fl of fac?.fleets||[])if(fl.craftworld264)for(const col of fl.craftworldColonies264||[])extra+=300+Math.max(1,Number(col.size)||1)*260;
+  if(extra){q.civilian+=extra;q.cap=Math.max(q.cap,Math.round((q.cap+extra)/50)*50);q.remaining=Math.max(0,q.cap-q.used);q.craftworldPopulation264=extra}
+  return q;
+};
+
+const _campaignRulesReferenceHTML_rev264=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev264(root),add=`<div class="campaign-rule-card"><h4>90. Forced Lore Starts</h4><p>The campaign starter can force an era-appropriate canonical system/world into the generated theatre. If Lore-Linked Polity is enabled, a matching faction, established settlements and a lore-appropriate strategic force are created there. Examples include Barbarus with the Death Guard, Fenris with the Space Wolves and Macragge with the Ultramarines.</p></div><div class="campaign-rule-card"><h4>91. Craftworld World-Ships</h4><p>Craftworld Eldar may begin aboard a Craftworld instead of a normal fleet. The Craftworld is a slow but extremely powerful mobile world-ship with 250,000 points of troop lift, strong void power and five independent settlement realms generated between Size 6 and Size 10. Each realm can reach Size 10 and uses normal districts/infrastructure.</p></div><div class="campaign-rule-card"><h4>92. Rebellion Stability</h4><p>Rebellion risk is no longer primarily a function of settlement Size. Size above 5 creates only modest administrative pressure. High Order, Complacency, Piety/Cohesion and Productivity directly subtract risk, while infrastructure depth, support installations and occupation forces further stabilise the settlement.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
+
+window.__cartoRevision264={version:REV264,build:REV264_BUILD,loreLinks:CAMPAIGN_LORE_LINKS_264,craftworld:campaignCreateCraftworldFleet264};
+document.title='Administratum Stellar Cartographica — Revision 26.4';document.documentElement.dataset.cartographicaRevision=REV264;document.documentElement.dataset.cartographicaBuild=REV264_BUILD;
 
 })();
 </script>

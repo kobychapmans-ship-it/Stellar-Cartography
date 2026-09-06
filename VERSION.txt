@@ -1,2 +1,2 @@
-Stellar Cartographica v26.3
-Build: 26.3-era-anchors-minor-polities-faction-civilisations-v47-tested
+Stellar Cartographica v26.4
+Build: 26.4-forced-lore-craftworlds-stability-unique-buildings-v48-tested

@@ -1,23 +1,27 @@
-STELLAR CARTOGRAPHICA v26.3 TEST REPORT
-Build: 26.3-era-anchors-minor-polities-faction-civilisations-v47-tested
+STELLAR CARTOGRAPHICA v26.4 TEST REPORT
+Build: 26.4-forced-lore-craftworlds-stability-unique-buildings-v48-tested
 
-PASS — Campaign Era selector is positioned before generation scale and only one era selector is rendered.
-PASS — era-specific canonical-anchor controls are present and persist in generation config.
-PASS — 30k anchor catalogue includes Sol, Davin and major Primarch/Legion homeworlds; 40k adds era-specific strategic worlds.
-PASS — lore anchors are applied as named campaign anchors without claiming procedural LY coordinates are canonical.
-PASS — territory environments can generate positive colony and tabletop advantages as well as hazards.
-PASS — legacy astronomical-inspector settlement/prospect founding controls are replaced by read-only generated population records.
-PASS — generated Size 1–3 native settlement networks can remain lightweight Minor Polities outside the full faction pool.
-PASS — Minor Polities slowly develop in normal turns and bounded T2–T1000 Deep Time; first Size-4 settlement promotes the polity to a normal autonomous faction.
-PASS — every current campaign faction archetype has an exclusive district chain.
-PASS — every current campaign faction archetype has two exclusive infrastructure networks, hard-locked to that faction.
-PASS — faction-exclusive infrastructure participates in the existing Level 1–10 Size-capped infrastructure system and AI construction.
-PASS — v26.2 fleet settlements/site economies, v26.1 T2–T1000 Deep Time, and v26.0 combat/claim lifecycle code remain present.
-PASS — all embedded JavaScript blocks and service worker pass Node syntax validation.
-PASS — manifest parses as Revision 26.3.
+PASS — all embedded JavaScript blocks pass Node syntax validation.
+PASS — service worker passes Node syntax validation.
+PASS — manifest identifies Revision 26.4 and HTML uses the v26.4 manifest cache-buster.
+PASS — campaign starter exposes a forced canonical-location selector and lore-linked polity toggle.
+PASS — Barbarus maps to a Death Guard Legiones Astartes polity with built settlements and a generated strategic force.
+PASS — Fenris maps to Space Wolves, Macragge to Ultramarines, and the current 30k/40k anchor catalogue has equivalent faction links where available.
+PASS — lore home settlements receive faction-unique infrastructure and an actual faction-exclusive district in their development web.
+PASS — faction-exclusive district chains are rendered in a separate highlighted Unique Districts panel.
+PASS — faction-exclusive infrastructure networks are rendered in a separate highlighted panel with direct upgrade buttons.
+PASS — rebellion risk uses civic deficits/surpluses, infrastructure depth, support installations, hostility and only modest Size pressure above Size 5.
+PASS — deterministic check: a healthy Size-10 settlement with strong civic values and infrastructure resolves to 0% rebellion risk; a poorly managed Size-6 settlement resolves substantially higher.
+PASS — Craftworld Eldar campaign setup includes an explicit Craftworld World-Ship start button.
+PASS — Craftworld start replaces the normal fleet with one world-ship containing exactly five independent Size 6–10 settlement realms, each able to reach Size 10.
+PASS — Craftworld world-ship has 250,000 points strategic troop lift, enhanced void rating, slow strategic speed, normal district/infrastructure access, settlement income and mobilisation capacity.
+PASS — Craftworld settlement development is included in the bounded Deep-Time lifecycle.
+PASS — v26.3 living minor polities and v26.1 T2–T1000 stack-safe Deep Time remain present.
 
-REFERENCE NOTE
-The canonical-location feature is modelled primarily on the Jambonium interactive 30k/40k map. The source itself distinguishes location placement confidence, so Cartographica anchors names to generated theatre nodes rather than presenting its procedural LY coordinates as exact setting coordinates.
+REFERENCE NOTES
+- Jambonium's 30k/40k interactive map remains the primary broad-placement model for canonical location anchoring.
+- Barbarus/Death Guard association was cross-checked against current Horus Heresy/Warhammer reference material.
+- Craftworld implementation follows the requested game abstraction of a moon/continent-scale mobile polity with five settlement realms.
 
 BROWSER LIMITATION
-The container browser environment is not reliable for a full local-file/localhost click-through. This release therefore uses syntax validation, source-path auditing and deterministic configuration/state checks; no unsupported interactive-browser claim is made.
+The container browser environment is not reliable for local-file/localhost interactive testing. Release validation is therefore syntax, integration-path and deterministic state-model validation; no unsupported full-browser claim is made.

@@ -149,3 +149,13 @@ The audit also found and fixed a genuine infinite recursion affecting developed 
 
 ### Jambonium reference
 Era-specific lore anchors are primarily modelled on the Jambonium Warhammer 40K Interactive Map (v8-era reference), including its separate 30k/40k modes and its distinction between high/medium/low/zero placement confidence. Cartographica uses those as broad lore anchors and deliberately keeps procedural campaign light-year coordinates separate from claimed canonical coordinates.
+
+
+## Revision 26.4 — Forced Lore Starts, Craftworld Polities & Stability
+- Campaign launch can force an era/Segmentum-appropriate canonical location into the generated theatre. The chosen system becomes an available starting node.
+- Optional Lore-Linked Polity generation creates the associated faction, several established settlements, territorial claims, and a lore-linked strategic army. Barbarus, for example, creates a Death Guard Legiones Astartes presence.
+- Faction-exclusive districts are shown in a dedicated highlighted construction panel rather than being buried in the generic district list.
+- Faction-exclusive infrastructure is shown in a dedicated highlighted panel with direct upgrade buttons.
+- Rebellion risk now uses civic deficits and surpluses, infrastructure depth, support installations, occupation, hostility and only modest Size pressure above Size 5. Healthy well-developed settlements can reach 0% rebellion risk.
+- Craftworld Eldar can select a Craftworld World-Ship start. The normal starting fleet is replaced with one massive Craftworld with five independent Size 6–10 settlement realms, each capable of reaching Size 10.
+- Craftworld world-ships have 250,000 points of strategic troop lift, very high void strength, slow strategic movement, full settlement construction, and bounded Deep-Time development.
