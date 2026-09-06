@@ -1,84 +1,11 @@
-STELLAR CARTOGRAPHICA v26.8 TEST REPORT
-Build: 26.8-craftworld-embarkation-realm-stability-fleet-panels-v52-tested
+STELLAR CARTOGRAPHICA v26.9 TEST REPORT
+Build: 26.9-settlement-district-modal-lifecycle-v53-tested
 
-CRAFTWORLD START / EMBARKATION
-PASS — Craftworld start preserves the starting Task Force instead of replacing it with a new generated warhost.
-PASS — the starting Task Force is assigned directly to the Craftworld cargo list and its fleetId is the Craftworld.
-PASS — a Craftworld satisfies the universal Tier-0 expeditionary-vessel requirement.
-PASS — simulated broken-save migration removed the auto-generated seed Expeditionary Vessel and moved its embarked starting force onto the Craftworld.
-PASS — after campaignEnsureFleetState and campaignEnsureTierZeroExpeditionary260, the test polity had exactly 1 fleet: the Craftworld.
-
-CRAFTWORLD REALMS / POPULATION DEVELOPMENT
-PASS — exactly 5 Craftworld settlement realms are retained.
-PASS — all five tested realms begin with Population Development progress +0.
-PASS — all five tested realms begin with current-cycle growth momentum +0.
-PASS — every realm had 7 active infrastructure networks in the audit seed, including standard and Craftworld-unique infrastructure.
-PASS — every realm had developed district tiers; audited totals were [15, 13, 11, 11, 15].
-PASS — the +0 starting equilibrium is a baseline offset calculated after real infrastructure/district construction, so later civic changes and new buildings can move momentum positive or negative normally.
-
-FLEET-SCOPED SETTLEMENT UI
-PASS — Craftworld settlement panels render in the Fleets section under CRAFTWORLD SETTLEMENT REALMS.
-PASS — the Craftworld panels are no longer prepended to the Colonies view.
-PASS — each Craftworld settlement card contains its Open Settlement & Districts control.
-PASS — the exact proxy-aware Open Settlement function appended a Craftworld development modal in the runtime harness.
-PASS — a delegated craftworld: settlement handler is installed so the button remains functional after dashboard re-renders.
-
-INFRASTRUCTURE UI CLEANUP
-PASS — Wraithbone Utility Matrix and Webway Transit Infrastructure remain inside the main infrastructure dropdown.
-PASS — their effects remain visible in the normal planner options/level cards.
-PASS — the duplicate faction-unique infrastructure side panel is stripped from settlement cards.
-PASS — the v26.5 unique-infrastructure wrapper panel is not emitted by the final v26.8 planner.
-
-REGRESSION
-PASS — the complete v26.7 all-faction construction audit still passes for all 15 faction archetypes.
-PASS — all 3 embedded JavaScript blocks pass Node syntax validation.
-PASS — service worker passes Node syntax validation.
-PASS — manifest identifies Revision 26.8.
-PASS — T2–T1000 Deep Time and prior combat/claim systems remain in the consolidated runtime.
-
-RUNTIME AUDIT RESULT
-{
-  "ok": true,
-  "version": "26.8",
-  "build": "26.8-craftworld-embarkation-realm-stability-fleet-panels-v52-tested",
-  "fleets": [
-    {
-      "id": "fleet-F-CW-mtqal5en-1",
-      "craftworld": true,
-      "seed": false,
-      "cargo": [
-        "TF-START"
-      ]
-    }
-  ],
-  "taskForce": {
-    "id": "TF-START",
-    "fleetId": "fleet-F-CW-mtqal5en-1",
-    "status": "Embarked"
-  },
-  "realmMomentum": [
-    0,
-    0,
-    0,
-    0,
-    0
-  ],
-  "realmInfrastructure": [
-    7,
-    7,
-    7,
-    7,
-    7
-  ],
-  "realmDistrictTiers": [
-    15,
-    13,
-    11,
-    11,
-    15
-  ],
-  "craftworldPanelsInFleets": true,
-  "craftworldPanelsInColonies": false,
-  "uniqueInfrastructureInline": true,
-  "openSettlement": true
-}
+PASS — one capture-phase delegated handler now services every Open Settlement & Districts button.
+PASS — Craftworld settlement proxy IDs resolve through the final settlement resolver.
+PASS — exact final opener created a MOBILE SETTLEMENT DISTRICTS & BUILDINGS modal for a Craftworld realm in the runtime harness.
+PASS — opener applies campaign-dev-open to body/html, activating the mobile full-screen modal CSS.
+PASS — Close removes the modal and clears the development-screen state.
+PASS — unresolved settlement buttons now show an in-game notice instead of silently failing.
+PASS — all embedded JavaScript blocks and service worker pass syntax validation.
+PASS — v26.8 Craftworld embarkation, five stable realms and Fleet-section settlement panels remain intact.
