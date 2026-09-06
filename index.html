@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="26.4" />
+<meta name="cartographica-revision" content="26.5" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=26.4-forced-lore-craftworlds-stability-unique-buildings-v48-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=26.5-craftworld-launch-unique-construction-v49-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='26.4';
-  const BUILD='26.4-forced-lore-craftworlds-stability-unique-buildings-v48-tested';
-  const LABEL='rev 26.4 — Lore Starts & Craftworld Polities';
-  const TITLE='Administratum Stellar Cartographica — Revision 26.4';
+  const REVISION='26.5';
+  const BUILD='26.5-craftworld-launch-unique-construction-v49-tested';
+  const LABEL='rev 26.5 — Craftworld Launch & Unique Construction';
+  const TITLE='Administratum Stellar Cartographica — Revision 26.5';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -679,7 +679,18 @@ html.carto-orientation-lock body:after{content:'';display:none}
 </style>
 <style id="rev264-fleet-css">
 .craftworld-fleet-banner264{border:2px solid rgba(144,117,197,.42);background:rgba(91,70,135,.10);padding:9px;margin:7px 0}.craftworld-fleet-banner264 b,.craftworld-fleet-banner264 span{display:block}.craftworld-fleet-banner264 b{color:#dbc9f4}.craftworld-fleet-banner264 span{color:#9d96ad;font-size:8px;margin-top:3px}
-</style></head>
+</style><style id="rev265-css">
+.faction-unique-tile265{border:2px solid rgba(229,190,83,.64)!important;background:linear-gradient(135deg,rgba(147,102,28,.17),rgba(59,45,19,.05))!important}
+.faction-unique-tile265 .choice-effect{color:#dfbd62!important;font-weight:700}
+.faction-unique-infra-inline265{grid-column:1/-1;border:2px solid rgba(218,181,82,.42);background:rgba(128,91,24,.07);padding:9px;margin:9px 0}
+.faction-unique-title265 b,.faction-unique-title265 span{display:block}.faction-unique-title265 b{color:#e0c471;font-size:10px}.faction-unique-title265 span{color:#9c9580;font-size:7px;margin-top:2px}
+.faction-unique-infra-grid265{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:7px;margin-top:7px}.faction-unique-infra-card265{border:1px solid rgba(255,255,255,.08);padding:7px}.faction-unique-infra-card265>b,.faction-unique-infra-card265>span,.faction-unique-infra-card265>small{display:block}.faction-unique-infra-card265>b{color:#d9cca7}.faction-unique-infra-card265>span{color:#bda968;font-size:8px}.faction-unique-infra-card265>small{color:#8b918b;font-size:7px;margin:4px 0}
+.craftworld-choice-backdrop265{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;padding:16px}.craftworld-choice-backdrop265[hidden]{display:none}
+.craftworld-choice-modal265{width:min(680px,100%);max-height:90vh;overflow:auto;border:2px solid rgba(153,126,210,.62);background:#111217;padding:18px}.craftworld-choice-modal265 h3{color:#dfcef3;margin:8px 0}.craftworld-choice-modal265 p{color:#a39eac;line-height:1.45}
+.craftworld-choice-grid265{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.craftworld-choice-grid265 button{min-height:120px;text-align:left;border:1px solid rgba(164,137,215,.45);padding:12px;background:rgba(95,72,140,.08)}.craftworld-choice-grid265 button b,.craftworld-choice-grid265 button small{display:block}.craftworld-choice-grid265 button b{font-size:16px;color:#dfcef3}.craftworld-choice-grid265 button small{font-size:9px;color:#9d98a8;margin-top:7px;line-height:1.4}
+@media(max-width:620px){.craftworld-choice-grid265{grid-template-columns:1fr}.craftworld-choice-grid265 button{min-height:95px}.faction-unique-infra-grid265{grid-template-columns:1fr}}
+</style>
+</head>
 <body>
 <div class="app">
   <header class="topbar">
@@ -8663,6 +8674,142 @@ campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev2
 
 window.__cartoRevision264={version:REV264,build:REV264_BUILD,loreLinks:CAMPAIGN_LORE_LINKS_264,craftworld:campaignCreateCraftworldFleet264};
 document.title='Administratum Stellar Cartographica — Revision 26.4';document.documentElement.dataset.cartographicaRevision=REV264;document.documentElement.dataset.cartographicaBuild=REV264_BUILD;
+
+
+/* ===== Revision 26.5 — Craftworld Launch Choice & Guaranteed Unique Construction ===== */
+const REV265='26.5';
+const REV265_BUILD='26.5-craftworld-launch-unique-construction-v49-tested';
+
+function campaignEnsureFactionDistrict265(fac){
+  if(!fac)return null;
+  const defs=(typeof CAMPAIGN_FACTION_DISTRICTS_263!=='undefined'&&CAMPAIGN_FACTION_DISTRICTS_263)||{};
+  const def=defs[fac.key]||defs.xenos;if(!def)return null;
+  const key=`faction263_${fac.key}`;
+  if(!CAMPAIGN_BUILDING_CHAINS[key]){
+    CAMPAIGN_BUILDING_CHAINS[key]={...def,icon:'✦',color:'#b28d47',factionOnly263:fac.key,summary:`Unique ${CAMPAIGN_FACTION_META[fac.key]?.label||fac.key} civilisation district.`};
+  }
+  return {key,def:CAMPAIGN_BUILDING_CHAINS[key]};
+}
+function campaignUniqueDistrictTile265(root,fac,s,readonly=false){
+  const x=campaignEnsureFactionDistrict265(fac);if(!x)return'';
+  const {key,def}=x,web=campaignEnsureDevelopmentWeb(s.colony),cap=campaignSettlementSlotCount(s.colony),empty=web.slots.findIndex((v,i)=>i<cap&&!v.chain);
+  const used=campaignChainAlreadyUsed(web,key,-1),q=empty>=0&&!readonly?campaignDevEligibility(root,fac,s,empty,key,1,null):{ok:false,reasons:[readonly?'Read-only':'No empty building slot']};
+  const disabled=used||!q.ok,node=campaignDevNode(key,1);
+  return `<button class="campaign-building-choice faction-unique-tile265" style="--chain:${def.color||'#b28d47'}" type="button" ${disabled?'disabled':''} title="${esc(used?'Faction-unique district already built':(q.reasons||[]).join('; '))}" ${!disabled?`data-dev-buy="1" data-slot="${empty}" data-chain="${key}" data-tier="1" data-path=""`:''}>
+    <span class="ico">${esc(def.icon||'✦')}</span>
+    <span><b>★ ${esc(def.label)}</b><small>${esc(def.summary||'Faction-exclusive civilisation district')}</small><span class="choice-effect">FACTION UNIQUE • T1: ${esc(campaignBuildingEffectText(node))}</span></span>
+  </button>`;
+}
+const _campaignBuildingPaletteHTML_rev265=campaignBuildingPaletteHTML;
+campaignBuildingPaletteHTML=function(root,fac,s,readonly=false){
+  campaignEnsureFactionDistrict265(fac);
+  let h=_campaignBuildingPaletteHTML_rev265(root,fac,s,readonly),tile=campaignUniqueDistrictTile265(root,fac,s,readonly);
+  if(!tile)return h;
+  const label=campaignEnsureFactionDistrict265(fac)?.def?.label||'';
+  if(label&&h.includes(`<b>${label}</b>`)){
+    h=h.replace(new RegExp(`<button class="campaign-building-choice"[^>]*>[\\s\\S]*?<b>${label.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}<\\/b>[\\s\\S]*?<\\/button>`),tile);
+    return h;
+  }
+  return h.replace('<div class="hint">',tile+'<div class="hint">');
+};
+
+function campaignFactionInfraDefs265(fac){
+  const defs=(typeof CAMPAIGN_FACTION_INFRA_263!=='undefined'&&CAMPAIGN_FACTION_INFRA_263)||{};
+  return defs[fac?.key]||defs.xenos||[];
+}
+function campaignUniqueInfrastructureInline265(root,fac,s){
+  const defs=campaignFactionInfraDefs265(fac);if(!defs.length)return'';
+  const levels=campaignInfrastructureLevels253(s.colony),cap=Math.max(1,Math.min(10,Number(s.colony.size)||1));
+  return `<div class="faction-unique-infra-inline265"><div class="faction-unique-title265"><b>★ ${esc(CAMPAIGN_FACTION_META[fac.key]?.label||fac.name)} Unique Infrastructure</b><span>Faction-exclusive networks — Level 1–10, capped by Size ${cap}</span></div>
+    <div class="faction-unique-infra-grid265">${defs.map(d=>{
+      const lv=Number(levels[d.name]||0),blocked=lv>=cap||lv>=10,cost=campaignInfrastructureUpgradeCost253(s.colony,d.name);
+      return `<div class="faction-unique-infra-card265"><b>${esc(d.name)}</b><span>L${lv}/${cap}</span><small>${esc(d.desc||'Faction-exclusive infrastructure network.')}</small><button class="ghost" type="button" data-unique-infra265="${esc(s.id)}" data-unique-infra-name265="${esc(d.name)}" ${blocked?'disabled':''}>${blocked?'Capped':`Upgrade to L${lv+1} — ${cost}M`}</button></div>`;
+    }).join('')}</div></div>`;
+}
+const _campaignInfrastructurePlannerHTML246_rev265=campaignInfrastructurePlannerHTML246;
+campaignInfrastructurePlannerHTML246=function(s,own){
+  let h=_campaignInfrastructurePlannerHTML246_rev265(s,own);if(!h||!own)return h;
+  const root=window.currentSector,fac=root?.campaign&&campaignFaction(root.campaign,s?.factionId);if(!fac)return h;
+  const unique=campaignUniqueInfrastructureInline265(root,fac,s);if(!unique)return h;
+  const marker='<div class="campaign-infra-levels253">';
+  if(h.includes(marker))return h.replace(marker,unique+marker);
+  const grid='<div class="campaign-infra-grid246">';
+  if(h.includes(grid))return h.replace(grid,unique+grid);
+  return h+unique;
+};
+document.addEventListener('click',e=>{
+  const b=e.target.closest?.('[data-unique-infra265]');if(!b)return;
+  const root=window.currentSector,p=root?.campaign&&campaignPlayer(root.campaign);if(!root||!p)return;
+  e.preventDefault();e.stopImmediatePropagation();
+  const st=campaignFindSettlement236(root,p,b.dataset.uniqueInfra265),name=b.dataset.uniqueInfraName265;
+  if(!st)return campaignQueueNotice(root,'Infrastructure Unavailable','The selected settlement could not be resolved.');
+  if(campaignUpgradeInfrastructure253(root,p,st,name,false)){campaignPersist(root);campaignRenderDashboard(root);campaignShowView('colonies')}
+},true);
+
+function campaignCraftworldChoiceModal265(){
+  return `<div id="campaignCraftworldChoiceModal265" class="craftworld-choice-backdrop265" hidden>
+    <div class="craftworld-choice-modal265" role="dialog" aria-modal="true" aria-labelledby="craftworldChoiceTitle265">
+      <span class="badge">CRAFTWORLD ELDAR START</span>
+      <h3 id="craftworldChoiceTitle265">Choose Your Starting Polity</h3>
+      <p>Craftworld Eldar can begin with a conventional expeditionary fleet, or aboard a moon/continent-scale Craftworld containing five established settlement realms.</p>
+      <div class="craftworld-choice-grid265">
+        <button id="campaignCraftworldNormal265" type="button"><b>Normal Fleet Start</b><small>Use the standard campaign fleet and ordinary starting settlement structure.</small></button>
+        <button id="campaignCraftworldWorldship265" type="button"><b>Craftworld World-Ship Start</b><small>Replace the normal fleet with a Craftworld: five Size 6–10 realms, 250,000 pts troop lift and full mobile-settlement economy.</small></button>
+      </div>
+      <button id="campaignCraftworldCancel265" class="ghost" type="button">Cancel</button>
+    </div>
+  </div>`;
+}
+const _campaignLauncherHTML_rev265=campaignLauncherHTML;
+campaignLauncherHTML=function(root){
+  let h=_campaignLauncherHTML_rev265(root);
+  h=h.replace(/<div id="campaignCraftworldStartBox264"[\s\S]*?<\/div>/,'');
+  return h+campaignCraftworldChoiceModal265();
+};
+function campaignSetCraftworldChoice265(root,mode){
+  root._campaignCraftworldChoice265=mode;
+  let hidden=$('campaignCraftworldStart264');
+  if(!hidden){hidden=document.createElement('input');hidden.type='hidden';hidden.id='campaignCraftworldStart264';document.body.appendChild(hidden)}
+  hidden.value=mode==='craftworld'?'on':'off';
+}
+function campaignShowCraftworldChoice265(root){const m=$('campaignCraftworldChoiceModal265');if(m)m.hidden=false;root._campaignCraftworldChoicePending265=true}
+function campaignHideCraftworldChoice265(root){const m=$('campaignCraftworldChoiceModal265');if(m)m.hidden=true;root._campaignCraftworldChoicePending265=false}
+
+if(!window.__craftworldLaunchCapture265){
+  window.__craftworldLaunchCapture265=true;
+  document.addEventListener('click',e=>{
+    const b=e.target.closest?.('#campaignStartBtn');if(!b)return;
+    const root=window.currentSector;if(!root)return;
+    if(val('campaignStartFaction')!=='craftworld'){campaignSetCraftworldChoice265(root,'normal');return}
+    if(root._campaignCraftworldChoice265==='normal'||root._campaignCraftworldChoice265==='craftworld'){campaignSetCraftworldChoice265(root,root._campaignCraftworldChoice265);return}
+    e.preventDefault();e.stopImmediatePropagation();campaignShowCraftworldChoice265(root);
+  },true);
+}
+const _campaignBindLauncher_rev265=campaignBindLauncher;
+campaignBindLauncher=function(root){
+  _campaignBindLauncher_rev265(root);
+  $('campaignStartFaction')?.addEventListener('change',()=>{root._campaignCraftworldChoice265=null;if(val('campaignStartFaction')!=='craftworld')campaignSetCraftworldChoice265(root,'normal')});
+  $('campaignCraftworldNormal265')?.addEventListener('click',()=>{campaignSetCraftworldChoice265(root,'normal');campaignHideCraftworldChoice265(root);$('campaignStartBtn')?.click()});
+  $('campaignCraftworldWorldship265')?.addEventListener('click',()=>{campaignSetCraftworldChoice265(root,'craftworld');campaignHideCraftworldChoice265(root);$('campaignStartBtn')?.click()});
+  $('campaignCraftworldCancel265')?.addEventListener('click',()=>campaignHideCraftworldChoice265(root));
+};
+
+function campaignReleaseCheck265(root,fac,s){
+  const faction=fac||root?.campaign&&campaignPlayer(root.campaign),settlement=s||campaignAllSettlementRecords236(root)?.find(x=>x.fac.id===faction?.id)?.s;
+  const district=settlement&&faction?campaignUniqueDistrictTile265(root,faction,settlement,false):'';
+  const infra=settlement&&faction?campaignUniqueInfrastructureInline265(root,faction,settlement):'';
+  return{
+    craftworldChoicePresent:campaignCraftworldChoiceModal265().includes('Normal Fleet Start')&&campaignCraftworldChoiceModal265().includes('Craftworld World-Ship Start'),
+    craftworldInterceptInstalled:!!window.__craftworldLaunchCapture265,
+    uniqueDistrictVisible:!!district&&district.includes('FACTION UNIQUE'),
+    uniqueInfrastructureVisible:!!infra&&infra.includes('Unique Infrastructure'),
+    factionKey:faction?.key||null
+  };
+}
+window.__cartoRevision265={version:REV265,build:REV265_BUILD,releaseCheck:campaignReleaseCheck265};
+document.title='Administratum Stellar Cartographica — Revision 26.5';
+document.documentElement.dataset.cartographicaRevision=REV265;
+document.documentElement.dataset.cartographicaBuild=REV265_BUILD;
 
 })();
 </script>

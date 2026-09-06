@@ -159,3 +159,9 @@ Era-specific lore anchors are primarily modelled on the Jambonium Warhammer 40K 
 - Rebellion risk now uses civic deficits and surpluses, infrastructure depth, support installations, occupation, hostility and only modest Size pressure above Size 5. Healthy well-developed settlements can reach 0% rebellion risk.
 - Craftworld Eldar can select a Craftworld World-Ship start. The normal starting fleet is replaced with one massive Craftworld with five independent Size 6–10 settlement realms, each capable of reaching Size 10.
 - Craftworld world-ships have 250,000 points of strategic troop lift, very high void strength, slow strategic movement, full settlement construction, and bounded Deep-Time development.
+
+## Revision 26.5 — Craftworld Launch & Guaranteed Unique Construction
+- Craftworld Eldar launch now always prompts for Normal Fleet Start or Craftworld World-Ship Start when Launch Campaign is pressed.
+- The old discoverability-dependent Craftworld start button is removed from the launcher.
+- Faction-exclusive districts are injected directly into the AVAILABLE BUILDING CHAINS palette and highlighted as FACTION UNIQUE.
+- Faction-exclusive infrastructure is injected directly into the live Infrastructure & Support Planner with direct Level 1–10 upgrade controls.
