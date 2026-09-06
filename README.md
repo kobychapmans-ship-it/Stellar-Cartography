@@ -165,3 +165,9 @@ Era-specific lore anchors are primarily modelled on the Jambonium Warhammer 40K 
 - The old discoverability-dependent Craftworld start button is removed from the launcher.
 - Faction-exclusive districts are injected directly into the AVAILABLE BUILDING CHAINS palette and highlighted as FACTION UNIQUE.
 - Faction-exclusive infrastructure is injected directly into the live Infrastructure & Support Planner with direct Level 1–10 upgrade controls.
+
+## Revision 26.6 — Visible Craftworld Start & Native Faction Construction
+- Starting Fleet is now a permanent setup control located between Player Faction and Starting Strategic Site.
+- Craftworld Eldar in 30k/40k can directly choose Normal Expeditionary Fleet or Craftworld World-Ship without a popup.
+- Faction-unique infrastructure now appears inside the real infrastructure dropdown, before standard networks, with effects written into each option.
+- Faction-unique districts now appear as the first highlighted tile in the real BUILDING DISTRICTS viewer.

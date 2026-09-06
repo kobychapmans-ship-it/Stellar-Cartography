@@ -1,2 +1,2 @@
-Stellar Cartographica v26.5
-Build: 26.5-craftworld-launch-unique-construction-v49-tested
+Stellar Cartographica v26.6
+Build: 26.6-visible-craftworld-native-faction-construction-v50-tested

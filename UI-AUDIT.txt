@@ -1,29 +1,27 @@
-STELLAR CARTOGRAPHICA v26.5 TEST REPORT
-Build: 26.5-craftworld-launch-unique-construction-v49-tested
+STELLAR CARTOGRAPHICA v26.6 TEST REPORT
+Build: 26.6-visible-craftworld-native-faction-construction-v50-tested
 
 PASS — all embedded JavaScript blocks pass Node syntax validation.
-PASS — service worker passes Node syntax validation.
-PASS — manifest identifies Revision 26.5 with a fresh cache/start identity.
+PASS — Starting Fleet control was runtime-rendered between Player Faction and Starting Strategic Site.
+PASS — the Starting Fleet control contains both Normal Expeditionary Fleet and Craftworld World-Ship choices.
+PASS — Craftworld World-Ship is only enabled for Craftworld Eldar in 30k/40k eras.
+PASS — choosing Craftworld writes the same state consumed by the existing v26.4 Craftworld creation path.
+PASS — existing Craftworld implementation still contains five Size 6–10 settlement realms and 250,000 pts troop lift.
 
-CRAFTWORLD START REGRESSION
-PASS — selecting Craftworld Eldar no longer requires finding a separate Craftworld button.
-PASS — pressing Launch Campaign with Craftworld Eldar is intercepted before older launch handlers.
-PASS — a mandatory modal presents exactly two choices: Normal Fleet Start and Craftworld World-Ship Start.
-PASS — Normal Fleet Start writes the ordinary-start state before re-triggering launch.
-PASS — Craftworld World-Ship Start writes the Craftworld-start state before re-triggering launch.
-PASS — exact modal helper was executed in Node and contained both launch choices.
-PASS — v26.4 Craftworld mechanics remain present: five Size 6–10 settlement realms and 250,000 pts troop lift.
+PASS — faction-unique infrastructure is now part of the actual Infrastructure dropdown, not a separate optional panel.
+PASS — runtime test with an Independent Human polity rendered Free Trade Infrastructure and Civic Services Network before the standard Transport/Power/Water options.
+PASS — dropdown labels include the mechanical effects: +2 Productivity/+1 Complacency and +1 Order/+2 Complacency in the human test case.
+PASS — fixed settlements retain the standard infrastructure build handler; mobile/Craftworld settlements retain the proxy-aware fleet infrastructure handler.
 
-FACTION-UNIQUE CONSTRUCTION REGRESSION
-PASS — faction-exclusive district is re-registered on demand if an older runtime layer failed to expose it.
-PASS — faction-exclusive district is injected directly into AVAILABLE BUILDING CHAINS rather than relying on a separate wrapper panel.
-PASS — faction-exclusive infrastructure is injected directly into Infrastructure & Support Planner before the standard infrastructure controls.
-PASS — faction-exclusive infrastructure has direct working upgrade buttons using campaignUpgradeInfrastructure253.
-PASS — exact rendering helpers were executed against a Craftworld test settlement and produced Aeldari Infinity Enclave, Wraithbone Utility Matrix, and Webway Transit Infrastructure controls.
+PASS — faction-unique districts are now generated directly by the actual BUILDING DISTRICTS palette.
+PASS — runtime test rendered Independent Civic State as the first tile before Muster & Recruitment.
+PASS — the unique tile is visibly marked FACTION UNIQUE and uses the normal data-dev-buy construction path.
+PASS — other factions' unique district chains are filtered out instead of appearing as irrelevant hidden/disabled entries.
+PASS — the settlement development modal is proxy-aware for fixed settlements, mobile fleet settlements, and Craftworld realms.
 
 REGRESSION
-PASS — v26.4 forced lore starts, rebellion rebalance and Craftworld settlement model remain present.
-PASS — v26.3 faction definitions/minor polities and v26.1 T2–T1000 stack-safe Deep Time remain present.
+PASS — v26.5/v26.4 Craftworld world-ship mechanics remain present.
+PASS — v26.4 forced lore starts/rebellion stability, v26.3 minor polities/faction definitions, and T2–T1000 stack-safe Deep Time remain present.
 
 BROWSER LIMITATION
-The container browser environment remains unsuitable for a reliable local-file/localhost full click-through. The two reported regressions were therefore checked with exact helper-function runtime tests plus source-level handler/path validation, without claiming a browser test that could not be completed.
+The container browser environment is not reliable for a full Safari/mobile click-through. The three reported regressions were therefore tested through the exact v26.6 rendering functions in Node harnesses plus full JavaScript syntax validation.
