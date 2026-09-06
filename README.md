@@ -171,3 +171,7 @@ Era-specific lore anchors are primarily modelled on the Jambonium Warhammer 40K 
 - Craftworld Eldar in 30k/40k can directly choose Normal Expeditionary Fleet or Craftworld World-Ship without a popup.
 - Faction-unique infrastructure now appears inside the real infrastructure dropdown, before standard networks, with effects written into each option.
 - Faction-unique districts now appear as the first highlighted tile in the real BUILDING DISTRICTS viewer.
+
+
+## Revision 26.7 — Consolidated Craftworld & Faction Construction
+The v26.3–v26.6 feature block was previously outside the core runtime scope and aborted on `generateSector is not defined`. It is now consolidated into the core runtime. The Craftworld start selector, faction infrastructure and faction district systems were then audited using the actual final render/action functions. All 15 faction archetypes expose two unique infrastructure networks and a unique district, while Craftworld Eldar can launch with a tested five-realm world-ship.

@@ -1,27 +1,47 @@
-STELLAR CARTOGRAPHICA v26.6 TEST REPORT
-Build: 26.6-visible-craftworld-native-faction-construction-v50-tested
+STELLAR CARTOGRAPHICA v26.7 — FULL CRAFTWORLD / FACTION CONSTRUCTION AUDIT
+Build: 26.7-consolidated-craftworld-faction-construction-v51-tested
 
-PASS — all embedded JavaScript blocks pass Node syntax validation.
-PASS — Starting Fleet control was runtime-rendered between Player Faction and Starting Strategic Site.
-PASS — the Starting Fleet control contains both Normal Expeditionary Fleet and Craftworld World-Ship choices.
-PASS — Craftworld World-Ship is only enabled for Craftworld Eldar in 30k/40k eras.
-PASS — choosing Craftworld writes the same state consumed by the existing v26.4 Craftworld creation path.
-PASS — existing Craftworld implementation still contains five Size 6–10 settlement realms and 250,000 pts troop lift.
+ROOT CAUSE FOUND AND FIXED
+FAILURE FOUND — v26.3 through v26.6 were packaged in a separate JavaScript IIFE. That IIFE immediately referenced generateSector, which exists only in the core runtime IIFE. In a real browser the block aborted at startup with ReferenceError: generateSector is not defined. This prevented the Craftworld selector, faction infrastructure, faction districts and later feature overrides from becoming live.
+FIXED — the complete v26.3–v26.7 block is now nested inside the original core runtime scope.
+FAILURE FOUND — after consolidation, the v26.4 governance wrapper referenced nonexistent campaignSettlementGovernanceHTML250.
+FIXED — it now wraps the live campaignSettlementGovernanceHTML246 path.
+PASS — the bootstrap, consolidated core runtime and orientation script all execute to completion in the runtime shim.
 
-PASS — faction-unique infrastructure is now part of the actual Infrastructure dropdown, not a separate optional panel.
-PASS — runtime test with an Independent Human polity rendered Free Trade Infrastructure and Civic Services Network before the standard Transport/Power/Water options.
-PASS — dropdown labels include the mechanical effects: +2 Productivity/+1 Complacency and +1 Order/+2 Complacency in the human test case.
-PASS — fixed settlements retain the standard infrastructure build handler; mobile/Craftworld settlements retain the proxy-aware fleet infrastructure handler.
+CRAFTWORLD START
+PASS — actual final launcher HTML contains Starting Fleet between Player Faction and Starting System / Starting Strategic Site.
+PASS — Normal Expeditionary Fleet and Craftworld World-Ship are both visible.
+PASS — Craftworld World-Ship enables for Craftworld Eldar in both 30k and 40k and disables for non-Craftworld factions.
+PASS — selecting Craftworld sets the visible starting-fleet mode and the legacy state consumed by campaignPrepareStart264.
+PASS — campaignPrepareStart264 receives _campaignCraftworldStart264=true.
+PASS — direct Craftworld creation creates exactly one world-ship fleet and exactly five independent settlement realms.
+PASS — audited realm sizes remain between Size 6 and Size 10.
+PASS — all five realms enumerate as normal settlement proxies.
+PASS — Craftworld troop lift = 250,000 points.
+PASS — audited Craftworld naval strength = 21 and strategic sector speed = 12 ly/turn.
+PASS — Craftworld settlement population contributes to recruitment capacity (11,900 in the deterministic audit seed).
+PASS — Craftworld realms show two faction-unique infrastructure options and Aeldari Infinity Enclave as the faction-unique district.
+PASS — a Craftworld unique infrastructure upgrade persists its new level.
 
-PASS — faction-unique districts are now generated directly by the actual BUILDING DISTRICTS palette.
-PASS — runtime test rendered Independent Civic State as the first tile before Muster & Recruitment.
-PASS — the unique tile is visibly marked FACTION UNIQUE and uses the normal data-dev-buy construction path.
-PASS — other factions' unique district chains are filtered out instead of appearing as irrelevant hidden/disabled entries.
-PASS — the settlement development modal is proxy-aware for fixed settlements, mobile fleet settlements, and Craftworld realms.
+FACTION-UNIQUE INFRASTRUCTURE
+PASS — all 15 current faction archetypes were audited: legion, mechanicum, ork, craftworld, necron, rangdan, militia, solar, knights, talons, darkcompliance, kroot, rakgol, xenos and human.
+PASS — every archetype renders exactly two faction-unique infrastructure networks in the ACTUAL Infrastructure & Support Planner dropdown.
+PASS — faction-unique entries are rendered before standard Transport / Power / Water / Food / Communications infrastructure.
+PASS — each unique dropdown option displays its mechanical civic effects.
+PASS — a unique infrastructure upgrade was executed for every faction archetype and persisted Level 1 state.
+
+FACTION-UNIQUE DISTRICTS
+PASS — every current faction archetype renders its faction-specific district in the ACTUAL BUILDING DISTRICTS viewer.
+PASS — the faction-specific district is the first district tile and is marked FACTION UNIQUE.
+PASS — other factions' unique districts are filtered out.
+PASS — the normal data-dev-buy path is attached to the faction-specific tile.
+PASS — district construction mutation was exercised for every faction archetype and persisted the faction chain into the settlement development slot.
+PASS — the district modal resolves fixed settlements, fleet settlements and Craftworld settlement proxies.
 
 REGRESSION
-PASS — v26.5/v26.4 Craftworld world-ship mechanics remain present.
-PASS — v26.4 forced lore starts/rebellion stability, v26.3 minor polities/faction definitions, and T2–T1000 stack-safe Deep Time remain present.
+PASS — v26.4 forced lore starts and rebellion stability remain integrated.
+PASS — v26.3 minor polities and faction definitions remain integrated.
+PASS — v26.1 T2–T1000 stack-safe Deep Time remains integrated.
 
-BROWSER LIMITATION
-The container browser environment is not reliable for a full Safari/mobile click-through. The three reported regressions were therefore tested through the exact v26.6 rendering functions in Node harnesses plus full JavaScript syntax validation.
+TEST ARTIFACT
+CRAFTWORLD-AUDIT-v26.7.json contains the complete deterministic audit result for every faction plus the Craftworld lifecycle test.

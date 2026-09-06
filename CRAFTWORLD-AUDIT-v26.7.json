@@ -1,0 +1,155 @@
+{
+  "ok": true,
+  "revision": "26.7",
+  "build": "26.7-consolidated-craftworld-faction-construction-v51-tested",
+  "launcher": {
+    "startingFleet": true,
+    "craftworld": true,
+    "normal": true,
+    "correctPosition": true
+  },
+  "craftworldSelector": {
+    "visibleMode": "craftworld",
+    "prepareFlag": true
+  },
+  "construction": [
+    {
+      "key": "legion",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    },
+    {
+      "key": "mechanicum",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    },
+    {
+      "key": "ork",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    },
+    {
+      "key": "craftworld",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    },
+    {
+      "key": "necron",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    },
+    {
+      "key": "rangdan",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    },
+    {
+      "key": "militia",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    },
+    {
+      "key": "solar",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    },
+    {
+      "key": "knights",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    },
+    {
+      "key": "talons",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    },
+    {
+      "key": "darkcompliance",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    },
+    {
+      "key": "kroot",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    },
+    {
+      "key": "rakgol",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    },
+    {
+      "key": "xenos",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    },
+    {
+      "key": "human",
+      "infraDefs": 2,
+      "uniqueOptions": 2,
+      "effects": true,
+      "districtVisible": true,
+      "districtFirst": true
+    }
+  ],
+  "craftworld": {
+    "fleets": 1,
+    "realms": 5,
+    "sizes": [
+      8,
+      7,
+      10,
+      9,
+      9
+    ],
+    "proxies": 5,
+    "uniqueInfrastructureOptions": 2,
+    "uniqueDistrict": true,
+    "capacity": 250000,
+    "naval": 21,
+    "speed": 12,
+    "recruitmentPopulation": 12680
+  }
+}
