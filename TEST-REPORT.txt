@@ -1,37 +1,18 @@
-STELLAR CARTOGRAPHICA v26.10 SETTLEMENT BUTTON AUDIT
-Build: 26.10-incore-settlement-district-button-v54-tested
+STELLAR CARTOGRAPHICA v26.11 CRAFTWORLD GROWTH AUDIT
+Build: 26.11-craftworld-one-turn-growth-grace-v55-tested
 
-ROOT CAUSE FOUND
-FAILURE IN v26.9 — the settlement-button/modal repair was packaged in a separate JavaScript IIFE after the core game runtime. It referenced private campaign functions such as campaignFaction and campaignFindSettlement236, so the patch could abort before installing its click handler.
-FIXED IN v26.10 — the complete settlement-button repair is now inside the original core campaign runtime. The broken external v26.9 script has been removed entirely.
+PASS — the v26.8 permanent craftworldMomentumOffset268 calibration is ignored and cleared.
+PASS — a newly created Craftworld realm receives exactly one 90-day creation grace cycle at +0 momentum.
+PASS — repeated settlement-panel renders do not consume the grace; only a real settlement cycle does.
+PASS — first normal settlement cycle adds 0 development and consumes the grace.
+PASS — the next cycle immediately uses the realm's genuine infrastructure/district/civic momentum.
+PASS — deterministic representative test resumed +20 raw momentum after the first cycle and accumulated +20 progress on the second cycle.
+PASS — legacy saves carrying a -20 calibration are released immediately and do not receive a new creation grace.
+PASS — compressed Deep Time treats exactly one represented turn as neutral; all remaining represented turns in the same bounded epoch use genuine momentum.
+PASS — representative span-6 Deep Time test processed one neutral turn plus five +20 turns, growing Size 6 to Size 7.
+PASS — Craftworld realms are explicitly advanced once per ordinary campaign turn, with a per-turn duplicate guard.
+PASS — T2–T1000 Deep Time remains bounded; the new logic does not add recursion or per-render state mutation.
+PASS — all embedded JavaScript blocks and the service worker pass Node syntax validation.
 
-FULL RUNTIME
-PASS — final package contains 2 script blocks: identity bootstrap + consolidated core runtime. There is no external v26.9 campaign patch.
-PASS — consolidated core script executes to completion in the full campaign audit harness.
-PASS — existing v26.7/v26.8 Craftworld audit still passes across all 15 faction archetypes.
-PASS — Craftworld generation still creates 1 world-ship with 5 settlement realms, 250,000 pts lift, faction-unique infrastructure and Aeldari Infinity Enclave district access.
-
-OPEN SETTLEMENT & DISTRICTS BUTTON
-PASS — actual Craftworld realm proxy resolved from: craftworld:fleet-F-CW-mtqcb912-1:0.
-PASS — direct district opener repeated 12 times without failure.
-PASS — each cycle created exactly one .campaign-dev-modal270 and rendered SETTLEMENT DISTRICTS & BUILDINGS.
-PASS — every open cycle applied campaign-dev-open to body/html.
-PASS — every close cycle removed the modal and restored the campaign state.
-PASS — freshly-created button objects simulating Fleet dashboard re-renders were clicked 12 times without failure.
-PASS — settlement card rendering contains a direct inline __cartoOpenSettlement270 fallback in addition to delegated click handling.
-PASS — delegated click handler is installed inside the core runtime and survives dashboard re-renders.
-PASS — object-inspector settlement buttons are re-armed after object settlement rendering.
-PASS — unresolved settlement IDs now show an in-game error notice instead of silently doing nothing.
-
-MODAL VISIBILITY
-PASS — modal receives explicit display:flex, visibility:visible, opacity:1, pointer-events:auto and z-index:50000 at runtime.
-PASS — v26.10 CSS pins the modal above the campaign UI on mobile and preserves a desktop side-by-side layout.
-
-REGRESSION
-PASS — T2–T1000 Deep Time remains in the consolidated core runtime.
-PASS — v26.8 Craftworld embarkation, stable realms, Fleet-section settlement panels and integrated infrastructure remain present.
-PASS — all embedded JavaScript and service worker pass Node syntax validation.
-PASS — manifest identifies Revision 26.10 with a fresh cache identity.
-
-BROWSER NOTE
-The container Chromium environment is not reliable for a faithful iOS/Safari local-PWA click-through. The exact core runtime was therefore executed in the existing full campaign VM audit and the settlement button was exercised repeatedly with tracked DOM state, rather than relying on a one-off isolated helper test.
+MIGRATION
+Old v26.8/v26.10 Craftworld realms with craftworldMomentumOffset268 values are released from that offset immediately. They resume their current natural momentum instead of being artificially held at equilibrium.

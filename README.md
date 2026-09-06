@@ -192,3 +192,11 @@ The v26.3–v26.6 feature block was previously outside the core runtime scope an
 - Every Open Settlement & Districts button has delegated handling plus a direct inline fallback.
 - Craftworld settlement proxy resolution has an explicit last-resort path.
 - Repeated audit: 12 direct open/close cycles plus 12 fresh-button/re-render cycles all passed on an actual Craftworld realm.
+
+
+## Revision 26.11 — One-Turn Craftworld Growth Grace
+- Craftworld settlement calibration is no longer permanent. New realms show +0 momentum for their first 90-day cycle only.
+- After that first cycle, the real momentum from civic stats, infrastructure and districts is used normally.
+- Existing saves carrying the old negative equilibrium calibration are migrated by clearing it immediately.
+- Deep Time applies one neutral represented turn, then normal momentum for the rest of the historical span.
+- Craftworld realms now receive an explicit normal settlement cycle after each ordinary campaign turn.

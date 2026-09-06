@@ -1,0 +1,31 @@
+{
+  "version": "26.11",
+  "build": "26.11-craftworld-one-turn-growth-grace-v55-tested",
+  "ok": true,
+  "normal_turn_test": {
+    "creation_display_momentum": 0,
+    "repeated_reads_consumed_grace": false,
+    "first_cycle_progress": 0,
+    "post_first_cycle_momentum": 20,
+    "second_cycle_progress": 20
+  },
+  "legacy_save_test": {
+    "legacy_offset_before": -20,
+    "legacy_offset_after": 0,
+    "grace_added": false,
+    "resumed_momentum": 20
+  },
+  "deep_time_test": {
+    "represented_span": 6,
+    "neutral_turns": 1,
+    "active_momentum_turns": 5,
+    "raw_momentum": 20,
+    "resulting_size": 7,
+    "remaining_progress": 0,
+    "post_epoch_momentum": 20
+  },
+  "notes": [
+    "The +20 value is a deterministic representative raw Craftworld momentum used to verify that the old -20 equilibrium calibration is no longer applied after creation grace.",
+    "Actual in-game raw momentum remains calculated from each realm's current civic stats, infrastructure and districts."
+  ]
+}

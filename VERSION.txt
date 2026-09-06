@@ -1,2 +1,2 @@
-Stellar Cartographica v26.10
-Build: 26.10-incore-settlement-district-button-v54-tested
+Stellar Cartographica v26.11
+Build: 26.11-craftworld-one-turn-growth-grace-v55-tested

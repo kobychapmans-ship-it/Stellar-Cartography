@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="26.10" />
+<meta name="cartographica-revision" content="26.11" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=26.10-incore-settlement-district-button-v54-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=26.11-craftworld-one-turn-growth-grace-v55-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='26.10';
-  const BUILD='26.10-incore-settlement-district-button-v54-tested';
-  const LABEL='rev 26.10 — Settlement District Button Repair';
-  const TITLE='Administratum Stellar Cartographica — Revision 26.10';
+  const REVISION='26.11';
+  const BUILD='26.11-craftworld-one-turn-growth-grace-v55-tested';
+  const LABEL='rev 26.11 — Craftworld Growth Grace';
+  const TITLE='Administratum Stellar Cartographica — Revision 26.11';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 26.2</title>
+<title>Administratum Stellar Cartographica — Revision 26.11</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -9005,6 +9005,155 @@ function campaignCraftworldAudit268(root,fac){
 }
 window.__cartoRevision268={version:REV268,build:REV268_BUILD,audit:campaignCraftworldAudit268,stabilize:campaignStabilizeCraftworldRealm268,repairStart:campaignRepairCraftworldStart268,createCraftworld:campaignCreateCraftworldFleet264,ensureTierZero:campaignEnsureTierZeroExpeditionary260,ensureFleetState:campaignEnsureFleetState,openSettlement:campaignOpenDevelopmentWeb,infrastructureHTML:campaignInfrastructurePlannerHTML246,settlementCard:campaignSettlementCard236,fleetManagerHTML:campaignFleetManagerHTML,coloniesHTML:campaignColoniesHTML,craftworldProxy:campaignCraftworldSettlementProxy264};
 document.title='Administratum Stellar Cartographica — Revision 26.8';document.documentElement.dataset.cartographicaRevision=REV268;document.documentElement.dataset.cartographicaBuild=REV268_BUILD;
+
+/* ===== Revision 26.11 — One-Turn Craftworld Growth Grace ===== */
+const REV271='26.11';
+const REV271_BUILD='26.11-craftworld-one-turn-growth-grace-v55-tested';
+
+/* The old v26.8 calibration stored a permanent numerical offset.  v26.11 ignores
+   that offset completely.  A newly created Craftworld realm gets exactly one
+   90-day grace cycle at +0 momentum, then immediately returns to its genuine
+   infrastructure/district/civic momentum. */
+const _campaignSettlementDevelopment251_rev271_raw=_campaignSettlementDevelopment251_rev268;
+campaignSettlementDevelopment251=function(c){
+  const q=_campaignSettlementDevelopment251_rev271_raw(c);if(!q||!c?.craftworldRealm264)return q;
+  c.craftworldMomentumOffset268=0;
+  const grace=Math.max(0,Number(c.craftworldMomentumGrace271)||0);
+  if(grace>0){
+    q.rawNet271=Number(q.net)||0;
+    q.net=0;
+    q.craftworldCreationGrace271=true;
+    q.reasons=[...(q.reasons||[]),`Craftworld creation grace: +0 momentum for the first 90-day turn; normal ${q.rawNet271>=0?'+':''}${q.rawNet271} momentum resumes next turn.`];
+  }
+  return q;
+};
+
+const _campaignStabilizeCraftworldRealm268_rev271=campaignStabilizeCraftworldRealm268;
+campaignStabilizeCraftworldRealm268=function(root,fac,fleet,col,index=0,force=false){
+  const existed=!!col?.craftworldPrepared268;
+  const out=_campaignStabilizeCraftworldRealm268_rev271(root,fac,fleet,col,index,force);
+  if(!col)return out;
+  /* Permanently retire the v26.8 suppression value. */
+  col.craftworldMomentumOffset268=0;
+  if(force||(!existed&&Number(col.cycles||0)===0)){
+    col.craftworldMomentumGrace271=1;
+    col.craftworldCreatedTurn271=Number(root?.campaign?.turn)||0;
+    col.craftworldInitialMomentum268=0;
+  }else if(col.craftworldMomentumGrace271==null){
+    /* Existing v26.8/v26.10 saves have already consumed their creation turn. */
+    col.craftworldMomentumGrace271=0;
+  }
+  return campaignSettlementDevelopment251(col);
+};
+
+/* Consume the one-turn grace only when a real settlement cycle is processed.
+   Merely opening/rendering the settlement panel never consumes it. */
+const _soiAdvanceColony_rev271=soiAdvanceColony;
+soiAdvanceColony=function(c,p){
+  const hadGrace=!!c?.craftworldRealm264&&Number(c.craftworldMomentumGrace271||0)>0;
+  const out=_soiAdvanceColony_rev271(c,p);
+  if(hadGrace){
+    c.craftworldMomentumGrace271=Math.max(0,Number(c.craftworldMomentumGrace271||0)-1);
+    c.craftworldMomentumOffset268=0;
+    c.craftworldGraceConsumedTurn271=Number(window.currentSector?.campaign?.turn)||0;
+    if(out)out.development251=campaignSettlementDevelopment251(c);
+  }
+  return out;
+};
+
+function campaignApplyCraftworldDevelopmentThresholds271(col,d){
+  let guard=0;
+  while((col.size||1)<10&&Number(col.development251||0)>=d.threshold&&guard++<4){
+    col.development251-=d.threshold;col.size++;
+    col.requiredInfrastructure=col.requiredInfrastructure||pick(SOI_INFRA);
+    col.pendingInfrastructurePenalty=true;
+  }
+  guard=0;
+  while((col.size||1)>0&&Number(col.development251||0)<=-d.declineThreshold&&guard++<4){
+    col.development251+=d.declineThreshold;col.size--;
+    col.ruinedCapacity251=Math.max(Number(col.ruinedCapacity251)||0,col.size+1);
+    col.ruinedDistrictTiers251=(Number(col.ruinedDistrictTiers251)||0)+1;
+  }
+  col.pfValue=soiColonyPF(col);
+}
+
+/* Deep Time may represent several historical turns in one bounded epoch.  If the
+   realm is brand new, exactly one represented turn is neutral; every remaining
+   represented turn in that same epoch uses the true unsuppressed momentum. */
+const _campaignDeepTimeLifecycle261_rev271=campaignDeepTimeLifecycle261;
+campaignDeepTimeLifecycle261=function(root,fac,turn,span){
+  const graced=[];
+  for(const fl of fac?.fleets||[])if(fl.craftworld264)for(const col of fl.craftworldColonies264||[]){
+    if(Number(col.craftworldMomentumGrace271||0)>0)graced.push(col);
+  }
+  const out=_campaignDeepTimeLifecycle261_rev271(root,fac,turn,span);
+  const represented=Math.max(1,Math.min(6,Math.round(Number(span)||1)));
+  for(const col of graced){
+    /* The wrapped lifecycle applied +0 for its whole represented block.  Restore
+       normal momentum for every represented turn after the first one. */
+    col.craftworldMomentumGrace271=0;col.craftworldMomentumOffset268=0;
+    const d=_campaignSettlementDevelopment251_rev271_raw(col),activeTurns=Math.max(0,represented-1);
+    if(activeTurns>0){
+      col.development251=(Number(col.development251)||0)+(Number(d.net)||0)*activeTurns;
+      campaignApplyCraftworldDevelopmentThresholds271(col,d);
+    }
+    col.craftworldGraceConsumedDeepTime271=true;
+    col.craftworldGraceConsumedTurn271=Number(turn)||0;
+  }
+  return out;
+};
+
+/* Craftworld realms are not stored in fac.settlements[], so explicitly process one
+   settlement cycle after each ordinary campaign turn.  A per-turn marker prevents
+   duplicate cycles if another wrapper re-renders or re-enters the turn handoff. */
+function campaignAdvanceCraftworldRealms271(root,completedTurn){
+  const c=root?.campaign;if(!c)return 0;let advanced=0;
+  for(const fac of c.factions||[])for(const fl of fac.fleets||[])if(fl.craftworld264){
+    for(let i=0;i<(fl.craftworldColonies264||[]).length;i++){
+      const col=fl.craftworldColonies264[i];if(!col)continue;
+      if(Number(col.craftworldLastAdvancedTurn271)===Number(completedTurn))continue;
+      withSeededRng(`${c.seed}|T${completedTurn}|CRAFTWORLD-REALM271|${fl.id}|${i}`,()=>soiAdvanceColony(col,{}));
+      col.craftworldLastAdvancedTurn271=Number(completedTurn);advanced++;
+    }
+  }
+  return advanced;
+}
+const _campaignEndTurn_rev271=campaignEndTurn;
+campaignEndTurn=function(root){
+  const before=Number(root?.campaign?.turn),out=_campaignEndTurn_rev271(root);let tries=0;
+  const watch=()=>{
+    const c=root?.campaign;if(!c)return;
+    if((c._endTurnProcessing||Number(c.turn)===before)&&tries++<220)return setTimeout(watch,100);
+    if(Number(c.turn)!==before){
+      campaignAdvanceCraftworldRealms271(root,before);
+      campaignPersist(root);campaignRenderDashboard(root);
+    }
+  };
+  setTimeout(watch,120);return out;
+};
+
+/* Migration helper: old saves carrying the permanent v26.8 offset are released
+   immediately.  Only realms explicitly created under v26.11 retain one grace cycle. */
+function campaignReleaseLegacyCraftworldCalibration271(root){
+  let released=0;
+  for(const fac of root?.campaign?.factions||[])for(const fl of fac.fleets||[])if(fl.craftworld264)for(const col of fl.craftworldColonies264||[]){
+    if(Number(col.craftworldMomentumOffset268||0)!==0){col.craftworldMomentumOffset268=0;released++}
+    if(col.craftworldMomentumGrace271==null)col.craftworldMomentumGrace271=0;
+  }
+  return released;
+}
+const _campaignEnsureFleetState_rev271=campaignEnsureFleetState;
+campaignEnsureFleetState=function(root){const out=_campaignEnsureFleetState_rev271(root);campaignReleaseLegacyCraftworldCalibration271(root);return out};
+
+function campaignCraftworldGrowthAudit271(root,fac){
+  const f=fac||root?.campaign&&campaignPlayer(root.campaign),cw=(f?.fleets||[]).find(x=>x.craftworld264),realms=cw?.craftworldColonies264||[];
+  return realms.map((col,i)=>({realm:i+1,size:col.size,grace:Number(col.craftworldMomentumGrace271||0),legacyOffset:Number(col.craftworldMomentumOffset268||0),displayedMomentum:campaignSettlementDevelopment251(col).net,rawMomentum:_campaignSettlementDevelopment251_rev271_raw(col).net,progress:Number(col.development251)||0,cycles:Number(col.cycles)||0}));
+}
+window.__cartoRevision271={version:REV271,build:REV271_BUILD,audit:campaignCraftworldGrowthAudit271,advanceRealms:campaignAdvanceCraftworldRealms271,releaseLegacy:campaignReleaseLegacyCraftworldCalibration271};
+document.title='Administratum Stellar Cartographica — Revision 26.11';
+document.documentElement.dataset.cartographicaRevision=REV271;
+document.documentElement.dataset.cartographicaBuild=REV271_BUILD;
+
 
 })();
 
