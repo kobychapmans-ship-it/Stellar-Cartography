@@ -175,3 +175,12 @@ Era-specific lore anchors are primarily modelled on the Jambonium Warhammer 40K 
 
 ## Revision 26.7 — Consolidated Craftworld & Faction Construction
 The v26.3–v26.6 feature block was previously outside the core runtime scope and aborted on `generateSector is not defined`. It is now consolidated into the core runtime. The Craftworld start selector, faction infrastructure and faction district systems were then audited using the actual final render/action functions. All 15 faction archetypes expose two unique infrastructure networks and a unique district, while Craftworld Eldar can launch with a tested five-realm world-ship.
+
+
+## Revision 26.8 — Craftworld Embarkation, Realm Stability & Fleet-Scoped Settlements
+- Craftworld starts preserve the chosen/generated starting Task Force and embark it directly aboard the Craftworld.
+- Craftworld polities satisfy the universal Tier-0 expeditionary-vessel requirement, so no redundant seed expeditionary fleet is generated. Existing broken saves migrate cargo from an auto-seeded expeditionary vessel back onto the Craftworld and delete only that automatic vessel.
+- Each of the five Craftworld realms starts with mature standard + Aeldari infrastructure and multiple developed districts. Its starting Population Development progress is +0 and its current-cycle momentum is calibrated to +0; later construction, damage and civic changes alter that normally.
+- Craftworld settlement panels are removed from the top of the Colonies view and rendered inside the Fleets view under their parent world-ship.
+- Craftworld Open Settlement & Districts buttons use a delegated, proxy-aware handler and survive dashboard re-renders.
+- Faction-unique infrastructure remains inside the main Infrastructure & Support Planner dropdown/level cards; the separate duplicate unique-infrastructure panel is removed.

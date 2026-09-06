@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="26.7" />
+<meta name="cartographica-revision" content="26.8" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=26.7-consolidated-craftworld-faction-construction-v51-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=26.8-craftworld-embarkation-realm-stability-fleet-panels-v52-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='26.7';
-  const BUILD='26.7-consolidated-craftworld-faction-construction-v51-tested';
-  const LABEL='rev 26.7 — Consolidated Craftworld & Faction Construction';
-  const TITLE='Administratum Stellar Cartographica — Revision 26.7';
+  const REVISION='26.8';
+  const BUILD='26.8-craftworld-embarkation-realm-stability-fleet-panels-v52-tested';
+  const LABEL='rev 26.8 — Craftworld Embarkation & Realm Stability';
+  const TITLE='Administratum Stellar Cartographica — Revision 26.8';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -699,6 +699,9 @@ html.carto-orientation-lock body:after{content:'';display:none}
 .campaign-infra-levels253 span.unique266{border-color:rgba(220,180,75,.45);background:rgba(130,91,26,.08);color:#d3bc78}.campaign-infra-levels253 span.unique266 small{display:block;font-size:6px;color:#978f79;margin-top:2px}
 .campaign-building-choice.visual.faction-unique-district266{border:2px solid rgba(228,184,69,.68)!important;background:linear-gradient(135deg,rgba(153,105,24,.18),rgba(20,20,18,.25))!important;box-shadow:inset 0 0 0 1px rgba(255,219,111,.12)}.campaign-building-choice.visual.faction-unique-district266 b{color:#ecd27e!important}.campaign-building-choice.visual.faction-unique-district266 .choice-effect{color:#d5b95f!important}
 @media(max-width:650px){.campaign-starting-fleet-options266{grid-template-columns:1fr}}
+</style>
+<style id="rev268-css">
+.craftworld-fleet-realms268{border:2px solid rgba(137,112,185,.42);background:rgba(77,62,112,.055);padding:10px;margin:12px 0}.craftworld-fleet-realms-head268{margin-bottom:8px}.craftworld-fleet-realms-head268 h4{margin:4px 0;color:#dbcdf0}.craftworld-fleet-realms-head268 p{font-size:8px;color:#9791a4}.craftworld-fleet-realms268 .campaign-settlement-collapse246{margin:7px 0}.campaign-infra-planner266 .campaign-infra-levels253 span.unique266{border-color:rgba(220,180,75,.45)}
 </style>
 </head>
 <body>
@@ -7483,7 +7486,7 @@ campaignExportSave=campaignExportSave260;
 /* ---------- Tier-0 expeditionary vessel for every faction ---------- */
 function campaignEnsureTierZeroExpeditionary260(root){
   const c=root?.campaign;if(!c)return 0;let made=0;
-  for(const fac of c.factions||[]){fac.fleets=fac.fleets||[];const exists=fac.fleets.some(f=>f.seedExpeditionary260||((f.classKey==='expeditionary')&&Number(f.developmentTier235||0)===0));if(exists)continue;const home=fac.homeSystemId||fac.territory?.[0]||fac.presence?.[0]||Object.keys(c.systems||{})[0];if(!home)continue;const role=campaignFleetDefaultRole(fac.key)==='transport'?'expedition':campaignFleetDefaultRole(fac.key),f=campaignFleetMake(root,fac,'expeditionary',role,home,`${fac.name} Expeditionary Vessel`,[]);f.developmentTier235=0;f.seedExpeditionary260=true;f.refitLevel253=Number(f.refitLevel253)||0;fac.fleets.push(f);made++}return made
+  for(const fac of c.factions||[]){fac.fleets=fac.fleets||[];const exists=fac.fleets.some(f=>f.craftworld264||f.seedExpeditionary260||((f.classKey==='expeditionary')&&Number(f.developmentTier235||0)===0));if(exists)continue;const home=fac.homeSystemId||fac.territory?.[0]||fac.presence?.[0]||Object.keys(c.systems||{})[0];if(!home)continue;const role=campaignFleetDefaultRole(fac.key)==='transport'?'expedition':campaignFleetDefaultRole(fac.key),f=campaignFleetMake(root,fac,'expeditionary',role,home,`${fac.name} Expeditionary Vessel`,[]);f.developmentTier235=0;f.seedExpeditionary260=true;f.refitLevel253=Number(f.refitLevel253)||0;fac.fleets.push(f);made++}return made
 }
 const _campaignInitialize_rev260=campaignInitialize;
 campaignInitialize=function(root,opts={}){const c=_campaignInitialize_rev260(root,opts);campaignEnsureTierZeroExpeditionary260(root);campaignEnsureFleetState(root);campaignPersist(root);return c};
@@ -8448,8 +8451,15 @@ campaignInitialize=function(root,opts={}){
     p.homeSystemId=opts.startSystemId||anchor?.systemId||p.homeSystemId;c.selectedSystemId=p.homeSystemId;p.territory=p.territory||[];p.presence=p.presence||[];
     if(!p.presence.includes(p.homeSystemId))p.presence.push(p.homeSystemId);if(!p.territory.includes(p.homeSystemId))p.territory.push(p.homeSystemId);
     const cs=c.systems[p.homeSystemId];if(cs){cs.ownerFactionId=p.id;if(!cs.presenceFactionIds.includes(p.id))cs.presenceFactionIds.push(p.id)}
-    campaignCreateCraftworldFleet264(root,p,p.homeSystemId,opts.playerName?`${opts.playerName} Craftworld`:`${p.name} Craftworld`);
-    p.taskForces=[campaignTaskForceFromGenerated('craftworld',12000,p.homeSystemId,`${p.name} Craftworld Warhost`)];
+    const craftworld268=campaignCreateCraftworldFleet264(root,p,p.homeSystemId,opts.playerName?`${opts.playerName} Craftworld`:`${p.name} Craftworld`);
+    if(!(p.taskForces||[]).length)p.taskForces=[campaignTaskForceFromGenerated('craftworld',12000,p.homeSystemId,`${p.name} Craftworld Warhost`)];
+    craftworld268.cargoTaskForceIds=[];
+    for(const tf268 of p.taskForces||[]){
+      tf268.systemId=p.homeSystemId;tf268.fleetId=craftworld268.id;tf268.status='Embarked';
+      delete tf268.localLocationId245;delete tf268.territoryId245;delete tf268.locationId239;delete tf268.territoryId239;
+      if(!craftworld268.cargoTaskForceIds.includes(tf268.id))craftworld268.cargoTaskForceIds.push(tf268.id);
+    }
+    c.selectedTaskForceId=p.taskForces?.[0]?.id||null;c.selectedFleetId=craftworld268.id;
     p.craftworldPolity264=true;p.fleetColonyFaction235=true;
   }
   return c;
@@ -8875,6 +8885,116 @@ document.title='Administratum Stellar Cartographica — Revision 26.7';
 document.documentElement.dataset.cartographicaRevision=REV267;
 document.documentElement.dataset.cartographicaBuild=REV267_BUILD;
 
+/* ===== Revision 26.8 — Craftworld Embarkation, Realm Stability & Fleet-Scoped Settlements ===== */
+const REV268='26.8';
+const REV268_BUILD='26.8-craftworld-embarkation-realm-stability-fleet-panels-v52-tested';
+
+/* Craftworlds satisfy the universal Tier-0 fleet requirement; never add a seed expeditionary vessel beside them. */
+const _campaignEnsureTierZeroExpeditionary260_rev268=campaignEnsureTierZeroExpeditionary260;
+campaignEnsureTierZeroExpeditionary260=function(root){
+  const c=root?.campaign;if(!c)return 0;let made=0;
+  for(const fac of c.factions||[]){
+    fac.fleets=fac.fleets||[];
+    if(fac.fleets.some(f=>f.craftworld264))continue;
+    const before=fac.fleets.length;
+    const temp={campaign:{...c,factions:[fac]}};
+    /* Reuse the established seeding rules faction-by-faction without touching Craftworld polities. */
+    const exists=fac.fleets.some(f=>f.seedExpeditionary260||((f.classKey==='expeditionary')&&Number(f.developmentTier235||0)===0));
+    if(exists)continue;
+    const home=fac.homeSystemId||fac.territory?.[0]||fac.presence?.[0]||Object.keys(c.systems||{})[0];if(!home)continue;
+    const role=campaignFleetDefaultRole(fac.key)==='transport'?'expedition':campaignFleetDefaultRole(fac.key),f=campaignFleetMake(root,fac,'expeditionary',role,home,`${fac.name} Expeditionary Vessel`,[]);
+    f.developmentTier235=0;f.seedExpeditionary260=true;f.refitLevel253=Number(f.refitLevel253)||0;fac.fleets.push(f);made+=fac.fleets.length-before;
+  }
+  return made;
+};
+
+/* Craftworld realms begin as mature, fully serviced habitats. Their initial infrastructure/district
+   package is calibrated to neutral demographic momentum (+0), so they neither grow nor collapse
+   until campaign changes alter their civic/economic state. */
+const _campaignSettlementDevelopment251_rev268=campaignSettlementDevelopment251;
+campaignSettlementDevelopment251=function(c){
+  const q=_campaignSettlementDevelopment251_rev268(c);if(!q||!c?.craftworldRealm264)return q;
+  const off=Number(c.craftworldMomentumOffset268)||0;
+  q.rawNet268=q.net;q.net=Math.max(-25,Math.min(25,q.net+off));
+  if(off)q.reasons=[...(q.reasons||[]),`${off>0?'+':'−'}${Math.abs(off)} Craftworld equilibrium calibration`];
+  return q;
+};
+function campaignSetDevelopmentSlot268(col,index,chain,tier,path=null){
+  const web=campaignEnsureDevelopmentWeb(col);if(!web?.slots?.[index]||!CAMPAIGN_BUILDING_CHAINS[chain])return false;
+  const def=CAMPAIGN_BUILDING_CHAINS[chain],chosen=path||Object.keys(def.paths||{})[0]||null;
+  web.slots[index].chain=chain;web.slots[index].tier=Math.max(1,Math.min(5,tier));web.slots[index].path=web.slots[index].tier>=3?chosen:null;return true;
+}
+function campaignStabilizeCraftworldRealm268(root,fac,fleet,col,index=0,force=false){
+  if(!col)return null;if(col.craftworldPrepared268&&!force)return campaignSettlementDevelopment251(col);
+  col.craftworldRealm264=true;col.craftworldPrepared268=true;col.requiredInfrastructure=null;col.pendingInfrastructurePenalty=false;col.development251=0;
+  const size=Math.max(6,Math.min(10,Number(col.size)||6)),target=Math.max(2,size*2);col.size=size;
+  /* Mature Craftworld civic baseline. */
+  col.productivity=Math.max(Number(col.productivity)||0,target+2);col.order=Math.max(Number(col.order)||0,target+2);col.piety=Math.max(Number(col.piety)||0,target+2);col.complacency=Math.max(Number(col.complacency)||0,target+1);
+  col.infrastructure=col.infrastructure||[];col.supportUpgrades=col.supportUpgrades||[];
+  const levels=campaignInfrastructureLevels253(col),unique=(typeof campaignInfrastructureDefinitions266==='function'?campaignInfrastructureDefinitions266(fac):[]).map(x=>x.name),standard=(typeof CAMPAIGN_BASE_INFRA_263!=='undefined'?CAMPAIGN_BASE_INFRA_263:SOI_INFRA.slice(0,5)),infraLevel=Math.min(size,Math.max(4,Math.ceil(size*.7)));
+  for(const name of [...standard,...unique]){levels[name]=Math.max(Number(levels[name])||0,infraLevel);if(!col.infrastructure.includes(name))col.infrastructure.push(name)}
+  /* Faction identity + population stability + mobile habitation are all represented physically. */
+  const factionChain=`faction263_${fac?.key||'craftworld'}`;if(typeof campaignEnsureFactionChain266==='function')campaignEnsureFactionChain266(fac);
+  campaignSetDevelopmentSlot268(col,0,factionChain,Math.min(5,Math.max(3,size-4)));
+  campaignSetDevelopmentSlot268(col,1,'growth',3,'stability');
+  campaignSetDevelopmentSlot268(col,2,'fleetHabitat262',3,'habitat');
+  campaignSetDevelopmentSlot268(col,3,'habitation',Math.min(4,Math.max(2,size-5)),'cohesion');
+  col.pfValue=soiColonyPF(col);
+  /* Freeze only the starting equilibrium. New construction, damage or civic changes move away from zero. */
+  col.craftworldMomentumOffset268=0;const raw=_campaignSettlementDevelopment251_rev268(col);col.craftworldMomentumOffset268=-Number(raw?.net||0);
+  const final=campaignSettlementDevelopment251(col);col.craftworldInitialMomentum268=final?.net||0;return final;
+}
+const _campaignCreateCraftworldFleet264_rev268=campaignCreateCraftworldFleet264;
+campaignCreateCraftworldFleet264=function(root,fac,nodeId,name=null){
+  const fl=_campaignCreateCraftworldFleet264_rev268(root,fac,nodeId,name);for(let i=0;i<(fl.craftworldColonies264||[]).length;i++)campaignStabilizeCraftworldRealm268(root,fac,fl,fl.craftworldColonies264[i],i,true);return fl;
+};
+function campaignRepairCraftworldStart268(root,fac){
+  const cw=(fac?.fleets||[]).find(f=>f.craftworld264);if(!cw)return null;
+  /* Remove only the automatically seeded expeditionary vessel, never a later player-commissioned fleet. */
+  const seeded=(fac.fleets||[]).filter(f=>f!==cw&&f.seedExpeditionary260);
+  for(const fl of seeded)for(const id of fl.cargoTaskForceIds||[]){const tf=(fac.taskForces||[]).find(x=>x.id===id);if(tf&&!cw.cargoTaskForceIds.includes(id)){cw.cargoTaskForceIds.push(id);tf.fleetId=cw.id;tf.systemId=cw.currentId;tf.status='Embarked'}}
+  if(seeded.length)fac.fleets=fac.fleets.filter(f=>!seeded.includes(f));
+  for(let i=0;i<(cw.craftworldColonies264||[]).length;i++)campaignStabilizeCraftworldRealm268(root,fac,cw,cw.craftworldColonies264[i],i,false);
+  return cw;
+}
+const _campaignInitialize_rev268=campaignInitialize;
+campaignInitialize=function(root,opts={}){const c=_campaignInitialize_rev268(root,opts),p=campaignPlayer(c);if(p?.craftworldPolity264){const cw=campaignRepairCraftworldStart268(root,p);if(cw){for(const tf of p.taskForces||[]){if(tf.fleetId===cw.id)continue;const used=campaignFleetCargoPoints(c,p,cw),pts=campaignTaskForcePoints(tf);if(tf.systemId===cw.currentId&&used+pts<=campaignFleetCapacity(cw)){cw.cargoTaskForceIds.push(tf.id);tf.fleetId=cw.id;tf.status='Embarked'}}c.selectedFleetId=cw.id}}campaignPersist(root);return c};
+const _campaignEnsureFleetState_rev268=campaignEnsureFleetState;
+campaignEnsureFleetState=function(root){const c=_campaignEnsureFleetState_rev268(root);if(c)for(const fac of c.factions||[])if((fac.fleets||[]).some(f=>f.craftworld264))campaignRepairCraftworldStart268(root,fac);return c};
+
+/* Craftworld settlement records belong to their world-ship. Do not prepend them to Colonies. */
+const _campaignColoniesHTML_rev268=campaignColoniesHTML;
+campaignColoniesHTML=function(root,c){return typeof _campaignColoniesHTML_rev264==='function'?_campaignColoniesHTML_rev264(root,c):_campaignColoniesHTML_rev268(root,c).replace(/<section class="craftworld-register264"[\s\S]*?<\/section>/g,'')};
+function campaignCraftworldFleetSettlementsHTML268(root,fac){
+  const fleets=(fac?.fleets||[]).filter(f=>f.craftworld264);if(!fleets.length)return'';
+  return fleets.map(fl=>`<section class="craftworld-fleet-realms268"><div class="craftworld-fleet-realms-head268"><span class="badge">CRAFTWORLD SETTLEMENT REALMS</span><h4>${esc(fl.name)}</h4><p>These five settlements are physically inside this Craftworld and travel with it. Their construction and growth are managed here in the Fleets section.</p></div>${fl.craftworldColonies264.map((_,i)=>campaignSettlementCard236(root,fac,campaignCraftworldSettlementProxy264(root,fac,fl,i),true)).join('')}</section>`).join('');
+}
+const _campaignFleetManagerHTML_rev268=campaignFleetManagerHTML;
+campaignFleetManagerHTML=function(root,c){let h=_campaignFleetManagerHTML_rev268(root,c),p=campaignPlayer(c),realms=campaignCraftworldFleetSettlementsHTML268(root,p);return realms?h+realms:h};
+
+/* Unique infrastructure remains inside the single main planner/dropdown. No duplicate side panel. */
+campaignInfrastructurePlannerHTML246=function(s,own){
+  if(!own)return'';const root=window.currentSector,fac=campaignSettlementFaction266(root,s),c=s.colony;if(!c||!fac)return'';
+  const levels=campaignInfrastructureLevels253(c),cap=Math.max(1,Math.min(10,Number(c.size)||1)),req=c.requiredInfrastructure,unique=campaignInfrastructureDefinitions266(fac),standard=(typeof CAMPAIGN_BASE_INFRA_263!=='undefined'?CAMPAIGN_BASE_INFRA_263:SOI_INFRA.filter(x=>!Object.values(CAMPAIGN_FACTION_INFRA_263||{}).flat().some(d=>d.name===x))),defs=[...unique.map(d=>({name:d.name,unique:true,effect:campaignInfrastructureEffectText266(d)})),...standard.map(name=>({name,unique:false,effect:''}))];
+  const options=defs.map(d=>{const lv=Number(levels[d.name]||0),blocked=lv>=cap||lv>=10,cost=campaignInfrastructureUpgradeCost253(c,d.name);return `<option value="${esc(d.name)}" ${blocked?'disabled':''}>${d.unique?'★ FACTION UNIQUE — ':''}${esc(d.name)} — L${lv}/${cap}${d.unique?` — ${esc(d.effect)}`:''}${d.name===req?' — GROWTH REQUIREMENT':''}${blocked?' — CAPPED':` → L${lv+1} (${cost}M)`}</option>`}).join('');
+  const levelCards=defs.map(d=>{const lv=Number(levels[d.name]||0);return `<span class="${d.unique?'unique266':''}"><b>${d.unique?'★ ':''}${esc(d.name.replace(' Infrastructure',''))}</b>L${lv}/${cap}${d.unique?`<small>${esc(d.effect)}</small>`:''}</span>`}).join(''),sup=SOI_SUPPORT.map(x=>`<option value="${esc(x)}">${esc(x)}${x===c.suggestedSupport?' — suggested':''}</option>`).join('');
+  return `<div class="campaign-infra-planner246 campaign-infra-planner253 campaign-infra-planner266"><h5>Infrastructure & Support Planner</h5><small>${req?`Population development currently requires further infrastructure. <b>${esc(req)}</b> is the recommendation; upgrading any valid network satisfies it.`:'Infrastructure upgrades from Level 1–10, capped by settlement Size. Faction-unique networks are integrated into the same build list.'}</small><div class="campaign-infra-levels253">${levelCards}</div><div class="campaign-infra-grid246"><select ${s.mobile236?`data-fleet-infra-choice262="${esc(s.id)}"`:`data-infra-choice246="${esc(s.id)}"`}>${options}</select><button class="ghost" type="button" ${s.mobile236?`data-fleet-infra-build262="${esc(s.id)}"`:`data-infra-build246="${esc(s.id)}"`}>Upgrade Selected Infrastructure</button><select ${s.mobile236?`data-fleet-support-choice262="${esc(s.id)}"`:`data-support-choice246="${esc(s.id)}"`}>${sup}</select><button class="ghost" type="button" ${s.mobile236?`data-fleet-support-build262="${esc(s.id)}"`:`data-support-build246="${esc(s.id)}"`}>Install Selected — 6M</button></div></div>`;
+};
+const _campaignSettlementCard236_rev268=campaignSettlementCard236;
+campaignSettlementCard236=function(root,fac,s,own){let h=_campaignSettlementCard236_rev268(root,fac,s,own);return h.replace(/<section class="faction-unique-infra264"[\s\S]*?<\/section>/g,'').replace(/<div class="faction-unique-infra-inline265"[\s\S]*?<\/div>\s*<\/div>/g,'')};
+const _campaignDevelopmentWebHTML_rev268=campaignDevelopmentWebHTML;
+campaignDevelopmentWebHTML=function(root,fac,s,readonly=false){let h=_campaignDevelopmentWebHTML_rev268(root,fac,s,readonly);return h.replace(/<section class="faction-unique-build264"[\s\S]*?<\/section>/g,'')};
+
+/* Fleet settlement buttons use delegated proxy-aware opening, so re-rendering cannot break them. */
+document.addEventListener('click',e=>{const b=e.target.closest?.('[data-open-development][data-development-faction]');if(!b||!String(b.dataset.openDevelopment||'').startsWith('craftworld:'))return;const root=window.currentSector;if(!root?.campaign)return;e.preventDefault();e.stopImmediatePropagation();campaignOpenDevelopmentWeb(root,b.dataset.developmentFaction,b.dataset.openDevelopment)},true);
+
+function campaignCraftworldAudit268(root,fac){
+  const cw=(fac?.fleets||[]).find(f=>f.craftworld264),realms=cw?.craftworldColonies264||[],proxies=cw?realms.map((_,i)=>campaignCraftworldSettlementProxy264(root,fac,cw,i)):[];
+  return{craftworld:!!cw,fleetCount:(fac?.fleets||[]).length,seedExpeditionaries:(fac?.fleets||[]).filter(f=>f.seedExpeditionary260).length,cargoIds:[...(cw?.cargoTaskForceIds||[])],taskForces:(fac?.taskForces||[]).map(tf=>({id:tf.id,fleetId:tf.fleetId,status:tf.status})),realmCount:realms.length,realmMomentum:realms.map(c=>campaignSettlementDevelopment251(c).net),realmProgress:realms.map(c=>Number(c.development251)||0),realmInfrastructure:realms.map(c=>Object.keys(campaignInfrastructureLevels253(c)).filter(k=>campaignInfrastructureLevels253(c)[k]>0).length),realmDistrictTiers:realms.map(c=>(campaignEnsureDevelopmentWeb(c).slots||[]).reduce((n,x)=>n+(Number(x.tier)||0),0)),fleetPanels:campaignCraftworldFleetSettlementsHTML268(root,fac),coloniesHTML:campaignColoniesHTML(root,root.campaign)};
+}
+window.__cartoRevision268={version:REV268,build:REV268_BUILD,audit:campaignCraftworldAudit268,stabilize:campaignStabilizeCraftworldRealm268,repairStart:campaignRepairCraftworldStart268,createCraftworld:campaignCreateCraftworldFleet264,ensureTierZero:campaignEnsureTierZeroExpeditionary260,ensureFleetState:campaignEnsureFleetState,openSettlement:campaignOpenDevelopmentWeb,infrastructureHTML:campaignInfrastructurePlannerHTML246,settlementCard:campaignSettlementCard236,fleetManagerHTML:campaignFleetManagerHTML,coloniesHTML:campaignColoniesHTML,craftworldProxy:campaignCraftworldSettlementProxy264};
+document.title='Administratum Stellar Cartographica — Revision 26.8';document.documentElement.dataset.cartographicaRevision=REV268;document.documentElement.dataset.cartographicaBuild=REV268_BUILD;
+
 })();
 
 
@@ -8978,6 +9098,8 @@ body.campaign-dev-open #campaignDashboard.campaign-panel{z-index:16010}
   window.addEventListener('pageshow',tryLock,{passive:true});
   document.addEventListener('pointerdown',tryLock,{passive:true,once:true});
   tryLock();
+
+
 })();
 </script>
 <!-- Revision 23.4 final/offline cache cleanup. Campaign feature layers above are untouched. replaced by stable bootstrap -->

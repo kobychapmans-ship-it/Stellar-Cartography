@@ -1,2 +1,2 @@
-Stellar Cartographica v26.7
-Build: 26.7-consolidated-craftworld-faction-construction-v51-tested
+Stellar Cartographica v26.8
+Build: 26.8-craftworld-embarkation-realm-stability-fleet-panels-v52-tested
