@@ -1,0 +1,31 @@
+{
+  "build": "26.10-incore-settlement-district-button-v54-tested",
+  "modalAudit": {
+    "repeatedOpenClose": 12,
+    "rerenderClicks": 12,
+    "realmId": "craftworld:fleet-F-CW-mtqcb912-1:0",
+    "resolved": true,
+    "inlineFallback": true,
+    "corePatchExecuted": true
+  },
+  "craftworld": {
+    "fleets": 1,
+    "realms": 5,
+    "sizes": [
+      9,
+      10,
+      6,
+      7,
+      10
+    ],
+    "proxies": 5,
+    "uniqueInfrastructureOptions": 2,
+    "uniqueDistrict": true,
+    "capacity": 250000,
+    "naval": 21,
+    "speed": 12,
+    "recruitmentPopulation": 12420
+  },
+  "fullRuntime": true,
+  "externalPatchRemoved": true
+}

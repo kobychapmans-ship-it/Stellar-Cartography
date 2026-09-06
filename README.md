@@ -184,3 +184,11 @@ The v26.3–v26.6 feature block was previously outside the core runtime scope an
 - Craftworld settlement panels are removed from the top of the Colonies view and rendered inside the Fleets view under their parent world-ship.
 - Craftworld Open Settlement & Districts buttons use a delegated, proxy-aware handler and survive dashboard re-renders.
 - Faction-unique infrastructure remains inside the main Infrastructure & Support Planner dropdown/level cards; the separate duplicate unique-infrastructure panel is removed.
+
+
+## Revision 26.10 — In-Core Settlement District Button Repair
+- Root cause: the v26.9 repair lived outside the private campaign runtime and could not reliably call campaign functions.
+- The opener, resolver and click handler are now inside the consolidated core runtime.
+- Every Open Settlement & Districts button has delegated handling plus a direct inline fallback.
+- Craftworld settlement proxy resolution has an explicit last-resort path.
+- Repeated audit: 12 direct open/close cycles plus 12 fresh-button/re-render cycles all passed on an actual Craftworld realm.

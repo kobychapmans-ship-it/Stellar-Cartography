@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="26.9" />
+<meta name="cartographica-revision" content="26.10" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=26.9-settlement-district-modal-lifecycle-v53-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=26.10-incore-settlement-district-button-v54-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='26.9';
-  const BUILD='26.9-settlement-district-modal-lifecycle-v53-tested';
-  const LABEL='rev 26.9 — Settlement District Modal Fix';
-  const TITLE='Administratum Stellar Cartographica — Revision 26.9';
+  const REVISION='26.10';
+  const BUILD='26.10-incore-settlement-district-button-v54-tested';
+  const LABEL='rev 26.10 — Settlement District Button Repair';
+  const TITLE='Administratum Stellar Cartographica — Revision 26.10';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -708,6 +708,11 @@ body.campaign-dev-open{overflow:hidden!important}
 body.campaign-dev-open .campaign-dev-modal{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:32000!important}
 @media(max-width:1050px){body.campaign-dev-open .campaign-dev-modal{position:fixed!important;inset:0 0 calc(96px + env(safe-area-inset-bottom)) 0!important;width:auto!important;height:auto!important;max-width:none!important;max-height:none!important}}
 .campaign-dev-modal-body{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+</style>
+<style id="rev270-modal-css">
+.campaign-dev-modal270{position:fixed!important;display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:50000!important;inset:0 0 calc(96px + env(safe-area-inset-bottom)) 0!important;max-width:none!important;max-height:none!important;background:radial-gradient(circle at 50% 16%,rgba(99,68,37,.23),rgba(5,7,9,.995) 60%)!important}
+body.campaign-dev-open{overflow:hidden!important}.campaign-dev-modal270 .campaign-dev-modal-body{overflow:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior:contain!important}
+@media(min-width:1051px){.campaign-dev-modal270{inset:2vh calc(min(445px,39vw) + 18px) 2vh 2vw!important}}
 </style>
 </head>
 <body>
@@ -9004,6 +9009,126 @@ document.title='Administratum Stellar Cartographica — Revision 26.8';document.
 })();
 
 
+
+/* ===== Revision 26.10 — In-Core Settlement District Button Repair ===== */
+const REV270='26.10';
+const REV270_BUILD='26.10-incore-settlement-district-button-v54-tested';
+
+function campaignResolveSettlement270(root,facId,settlementId){
+  const c=root?.campaign;if(!c)return{fac:null,s:null};
+  let fac=campaignFaction(c,facId)||null,s=null;
+  if(fac){
+    try{s=campaignFindSettlement236(root,fac,settlementId)}catch(_){s=null}
+    if(!s)s=(fac.settlements||[]).find(x=>String(x.id)===String(settlementId))||null;
+  }
+  if(!s){
+    for(const rec of campaignAllSettlementRecords236(root)||[]){
+      if(String(rec.s?.id)===String(settlementId)){
+        s=rec.s;fac=rec.fac||fac;break;
+      }
+    }
+  }
+  /* Last-resort Craftworld resolver: never silently fail a visible realm button. */
+  if(!s&&String(settlementId||'').startsWith('craftworld:')){
+    const parts=String(settlementId).split(':'),fleetId=parts[1],idx=Math.max(0,Number(parts[2])||0);
+    for(const f of c.factions||[]){
+      const fl=(f.fleets||[]).find(x=>String(x.id)===String(fleetId));
+      if(fl?.craftworld264){fac=f;s=campaignCraftworldSettlementProxy264(root,f,fl,idx);break}
+    }
+  }
+  return{fac,s};
+}
+function campaignCloseDevelopmentWeb270(){
+  document.querySelectorAll('.campaign-dev-modal').forEach?.(x=>x.remove());
+  document.querySelector('.campaign-dev-modal')?.remove();
+  document.body?.classList?.remove('campaign-dev-open');
+  document.documentElement?.classList?.remove('campaign-dev-open');
+  return true;
+}
+function campaignOpenDevelopmentWeb270(root,facId,settlementId){
+  campaignCloseDevelopmentWeb270();
+  const c=root?.campaign,{fac,s}=campaignResolveSettlement270(root,facId,settlementId);
+  if(!c||!fac||!s){
+    if(root?.campaign)campaignQueueNotice(root,'Settlement Districts Unavailable',`The settlement button could not resolve ${settlementId||'(unknown)'}. The campaign remains unchanged.`);
+    return false;
+  }
+  const readonly=fac.id!==c.playerFactionId,mobile=!!s.mobile236,d=document.createElement('div');
+  d.className='campaign-dev-modal campaign-dev-modal270';
+  d.dataset.settlementId270=String(s.id||settlementId);
+  d.dataset.factionId270=String(fac.id||facId);
+  d.setAttribute?.('role','dialog');d.setAttribute?.('aria-modal','true');
+  d.innerHTML=`<div class="campaign-dev-modal-head"><div><h3>${mobile?'MOBILE ':''}SETTLEMENT DISTRICTS & BUILDINGS</h3><small>${esc(s.locationName||s.settlementName246||'Settlement')} • ${esc(fac.name)}${s.craftworld264?' • Craftworld realm':''}${readonly?' • intelligence view':''}</small></div><span class="spacer"></span><button class="ghost" id="campaignDevClose" type="button" onclick="window.__cartoCloseSettlement270&&window.__cartoCloseSettlement270();return false;">Close</button></div><div class="campaign-dev-modal-body">${campaignDevelopmentWebHTML(root,fac,s,readonly)}</div>`;
+  document.body.appendChild(d);
+  document.body.classList.add('campaign-dev-open');
+  document.documentElement.classList.add('campaign-dev-open');
+  d.style.display='flex';d.style.visibility='visible';d.style.opacity='1';d.style.pointerEvents='auto';d.style.zIndex='50000';
+  d.querySelector?.('#campaignDevClose')?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();campaignCloseDevelopmentWeb270()});
+  d.querySelectorAll?.('[data-dev-buy]').forEach(b=>b.addEventListener('click',()=>{
+    const slot=Number(b.dataset.slot),chain=b.dataset.chain,tier=Number(b.dataset.tier),path=b.dataset.path||null,node=campaignDevNode(chain,tier,path);
+    if(!confirm(`Construct ${node?.name||'this building'} ${mobile?'aboard':'at'} ${s.locationName||s.settlementName246||'this settlement'}?\n\n${node?.reward||''}`))return;
+    if(campaignPurchaseDevelopment(root,fac.id,s.id,slot,chain,tier,path))campaignOpenDevelopmentWeb270(root,fac.id,s.id);
+  }));
+  try{d.querySelector?.('.campaign-dev-modal-body')?.scrollTo?.({top:0,left:0,behavior:'auto'})}catch(_){}
+  return true;
+}
+/* Replace the private opener itself so every pre-existing caller uses the repaired path. */
+campaignOpenDevelopmentWeb=campaignOpenDevelopmentWeb270;
+
+function campaignHandleSettlementButton270(target){
+  const b=target?.closest?.('[data-open-development][data-development-faction]')||
+          (target?.dataset?.openDevelopment&&target?.dataset?.developmentFaction?target:null);
+  if(!b)return false;
+  const root=window.currentSector;if(!root?.campaign)return false;
+  return campaignOpenDevelopmentWeb270(root,b.dataset.developmentFaction,b.dataset.openDevelopment);
+}
+/* Capture delegation survives every dashboard/fleet re-render. */
+if(!window.__settlementDistrictDelegation270){
+  window.__settlementDistrictDelegation270=true;
+  document.addEventListener('click',e=>{
+    const b=e.target?.closest?.('[data-open-development][data-development-faction]');if(!b)return;
+    e.preventDefault();e.stopImmediatePropagation();
+    campaignHandleSettlementButton270(b);
+  },true);
+}
+/* Inline bridge is a second independent path. Every newly rendered button receives it. */
+window.__cartoOpenSettlement270=(facId,settlementId)=>campaignOpenDevelopmentWeb270(window.currentSector,facId,settlementId);
+window.__cartoCloseSettlement270=campaignCloseDevelopmentWeb270;
+const _campaignSettlementCard236_rev270=campaignSettlementCard236;
+campaignSettlementCard236=function(root,fac,s,own){
+  let h=_campaignSettlementCard236_rev270(root,fac,s,own);
+  if(!own)return h;
+  return h.replace(/<button([^>]*data-open-development="[^"]+"[^>]*data-development-faction="[^"]+"[^>]*)>/g,(m,a)=>{
+    if(/onclick=/.test(a))return m;
+    return `<button${a} onclick="window.__cartoOpenSettlement270&&window.__cartoOpenSettlement270(this.dataset.developmentFaction,this.dataset.openDevelopment);return false;">`;
+  });
+};
+/* Object-inspector cards can be generated outside campaignSettlementCard236; add fallback inline bridge after render. */
+function campaignArmSettlementButtons270(scope=document){
+  scope?.querySelectorAll?.('[data-open-development][data-development-faction]').forEach(b=>{
+    if(b.dataset.open270)return;b.dataset.open270='1';
+    b.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();campaignHandleSettlementButton270(b)},true);
+  });
+}
+const _campaignRenderDashboard_rev270=campaignRenderDashboard;
+campaignRenderDashboard=function(root){const out=_campaignRenderDashboard_rev270(root);campaignArmSettlementButtons270(document);return out};
+const _campaignAppendObjectSettlements_rev270=campaignAppendObjectSettlements;
+campaignAppendObjectSettlements=function(...args){const out=_campaignAppendObjectSettlements_rev270(...args);campaignArmSettlementButtons270(document);return out};
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.querySelector('.campaign-dev-modal'))campaignCloseDevelopmentWeb270()},true);
+
+window.__cartoAudit270={
+  version:REV270,build:REV270_BUILD,
+  resolve:campaignResolveSettlement270,open:campaignOpenDevelopmentWeb270,close:campaignCloseDevelopmentWeb270,
+  handle:campaignHandleSettlementButton270,arm:campaignArmSettlementButtons270,
+  allSettlements:campaignAllSettlementRecords236,findSettlement:campaignFindSettlement236,
+  createCraftworld:typeof campaignCreateCraftworldFleet264==='function'?campaignCreateCraftworldFleet264:null,
+  settlementCard:campaignSettlementCard236
+};
+window.__cartoRevision270={version:REV270,build:REV270_BUILD,openSettlement:campaignOpenDevelopmentWeb270,closeSettlement:campaignCloseDevelopmentWeb270};
+document.title='Administratum Stellar Cartographica — Revision 26.10';
+document.documentElement.dataset.cartographicaRevision=REV270;
+document.documentElement.dataset.cartographicaBuild=REV270_BUILD;
+
 })();
 
 
@@ -9095,83 +9220,7 @@ body.campaign-dev-open #campaignDashboard.campaign-panel{z-index:16010}
 .campaign-local-nav2352{margin:9px 0;border:1px solid rgba(93,190,164,.34);background:linear-gradient(180deg,rgba(54,115,98,.08),rgba(0,0,0,.16));padding:10px}.campaign-local-nav2352 h4{margin:0;color:#bce5d7}.campaign-local-current2352{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin:8px 0}.campaign-local-current2352 span{border:1px solid rgba(255,255,255,.07);padding:6px;color:#84958f;font-size:7px}.campaign-local-current2352 b{display:block;color:#d9e8e2;font-size:9px;margin-top:2px}.campaign-local-mode2352{min-height:34px;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.16);padding:7px;color:#a6bbb4;font-size:8px;line-height:1.4}.campaign-local-travel2352{pointer-events:none}.campaign-local-travel2352 polygon{filter:drop-shadow(0 0 5px rgba(114,216,232,.55))}@media(max-width:760px){.campaign-local-current2352{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 
-<script>
-/* iPhone Home-Screen orientation guard: prefer primary portrait and avoid inverted secondary portrait. */
-(function(){
-  document.documentElement.classList.add('carto-orientation-lock');
-  const tryLock=()=>{try{const o=screen.orientation;if(o&&o.lock){const p=o.lock('portrait-primary');if(p&&p.catch)p.catch(()=>{})}}catch(_){}};
-  window.addEventListener('orientationchange',tryLock,{passive:true});
-  window.addEventListener('pageshow',tryLock,{passive:true});
-  document.addEventListener('pointerdown',tryLock,{passive:true,once:true});
-  tryLock();
 
-
-
-/* ===== Revision 26.9 — Reliable Settlement District Modal ===== */
-const REV269='26.9';
-const REV269_BUILD='26.9-settlement-district-modal-lifecycle-v53-tested';
-
-function campaignResolveSettlement269(root,facId,settlementId){
-  const c=root?.campaign,fac=campaignFaction(c,facId);if(!c||!fac)return{fac:null,s:null};
-  let s=null;
-  try{s=campaignFindSettlement236(root,fac,settlementId)}catch(_){s=null}
-  if(!s)s=(fac.settlements||[]).find(x=>x.id===settlementId)||null;
-  if(!s){
-    for(const rec of campaignAllSettlementRecords236(root)||[]){if(rec.fac?.id===facId&&rec.s?.id===settlementId){s=rec.s;break}}
-  }
-  return{fac,s};
-}
-function campaignCloseDevelopmentWeb269(){
-  document.querySelector('.campaign-dev-modal')?.remove();
-  document.body.classList.remove('campaign-dev-open');
-  document.documentElement.classList.remove('campaign-dev-open');
-}
-campaignOpenDevelopmentWeb=function(root,facId,settlementId){
-  campaignCloseDevelopmentWeb269();
-  const c=root?.campaign,{fac,s}=campaignResolveSettlement269(root,facId,settlementId);
-  if(!c||!fac||!s){
-    if(root?.campaign)campaignQueueNotice(root,'Settlement Panel Unavailable',`Could not resolve settlement ${settlementId||'(unknown)'}. Refresh the campaign view and try again.`);
-    return false;
-  }
-  const readonly=fac.id!==c.playerFactionId,mobile=!!s.mobile236,d=document.createElement('div');
-  d.className='campaign-dev-modal';
-  d.dataset.settlementId269=s.id;
-  d.dataset.factionId269=fac.id;
-  d.innerHTML=`<div class="campaign-dev-modal-head"><div><h3>${mobile?'MOBILE ':''}SETTLEMENT DISTRICTS & BUILDINGS</h3><small>${esc(s.locationName||s.settlementName246||'Settlement')} • ${esc(fac.name)}${mobile?' • mobile polity':''}${readonly?' • intelligence view':''}</small></div><span class="spacer"></span><button class="ghost" id="campaignDevClose" type="button">Close</button></div><div class="campaign-dev-modal-body">${campaignDevelopmentWebHTML(root,fac,s,readonly)}</div>`;
-  document.body.appendChild(d);
-  document.body.classList.add('campaign-dev-open');
-  document.documentElement.classList.add('campaign-dev-open');
-  d.scrollTop=0;
-  d.querySelector('#campaignDevClose')?.addEventListener('click',e=>{e.preventDefault();campaignCloseDevelopmentWeb269()});
-  d.querySelectorAll('[data-dev-buy]').forEach(b=>b.addEventListener('click',()=>{
-    const slot=Number(b.dataset.slot),chain=b.dataset.chain,tier=Number(b.dataset.tier),path=b.dataset.path||null,node=campaignDevNode(chain,tier,path);
-    if(!confirm(`Construct ${node?.name||'this building'} ${mobile?'aboard':'at'} ${s.locationName||s.settlementName246||'this settlement'}?\n\n${node?.reward||''}`))return;
-    if(campaignPurchaseDevelopment(root,fac.id,s.id,slot,chain,tier,path))campaignOpenDevelopmentWeb(root,fac.id,s.id);
-  }));
-  requestAnimationFrame(()=>{try{d.querySelector('.campaign-dev-modal-body')?.scrollTo({top:0,left:0,behavior:'auto'})}catch(_){}});
-  return true;
-};
-
-/* One authoritative delegated handler for every settlement type. */
-if(!window.__settlementDistrictDelegation269){
-  window.__settlementDistrictDelegation269=true;
-  document.addEventListener('click',e=>{
-    const b=e.target.closest?.('[data-open-development][data-development-faction]');if(!b)return;
-    const root=window.currentSector;if(!root?.campaign)return;
-    e.preventDefault();e.stopImmediatePropagation();
-    campaignOpenDevelopmentWeb(root,b.dataset.developmentFaction,b.dataset.openDevelopment);
-  },true);
-}
-/* Escape closes the modal on desktop keyboards without affecting campaign state. */
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.querySelector('.campaign-dev-modal'))campaignCloseDevelopmentWeb269()},true);
-
-window.__cartoRevision269={version:REV269,build:REV269_BUILD,openSettlement:campaignOpenDevelopmentWeb,closeSettlement:campaignCloseDevelopmentWeb269,resolveSettlement:campaignResolveSettlement269};
-document.title='Administratum Stellar Cartographica — Revision 26.9';
-document.documentElement.dataset.cartographicaRevision=REV269;
-document.documentElement.dataset.cartographicaBuild=REV269_BUILD;
-
-})();
-</script>
 <!-- Revision 23.4 final/offline cache cleanup. Campaign feature layers above are untouched. replaced by stable bootstrap -->
 
 
