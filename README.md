@@ -1,3 +1,17 @@
+# Administratum Stellar Cartographica — Revision 28.0
+
+## Faction Leaders of Renown
+
+Choose a faction, then choose its optional Leader of Renown directly underneath. The preview explains the command benefits, specialist unlocks and campaign doctrine. Starting a campaign adds the character and initial retinue to a protected Faction Command detachment. The overview records leader actions and banked orders.
+
+Includes 109 unique character profiles, all 18 Primarchs, 71 specialist packages and 26 active campaign protocols. Covers Legion, Solar Auxilia, Mechanicum, Knights, Talons, Craftworld, Necron, Dark Compliance, Chaos Daemons and Ruinstorm pools. Militia retains normal command because no eligible named commander was identified; factions outside the repository remain unlinked. Shared characters may appear in more than one eligible faction.
+
+Characters and source profiles are based on BSData/horus-heresy-1st-edition, commit 0a4c10da15f4ea40eea0932090fadafe3b90b696. Campaign doctrines, resource benefits and condensed specialist packages are game adaptations, not a complete implementation of tabletop special rules. See PATCH-NOTES-v28.0.md for scope and verification.
+
+Extract the ZIP and serve this folder over HTTPS or localhost for installation and offline caching. Open index.html for a local-file launch where supported; service-worker installation requires a secure web origin. Export an existing save before updating. The application identity is retained for PWA continuity while the cache is versioned to v28.0.
+
+## Earlier release history
+
 # Administratum Stellar Cartographica — Revision 25.1.1
 ## Full Deep-Time History & Unified Faction Rosters
 
@@ -200,3 +214,11 @@ The v26.3–v26.6 feature block was previously outside the core runtime scope an
 - Existing saves carrying the old negative equilibrium calibration are migrated by clearing it immediately.
 - Deep Time applies one neutral represented turn, then normal momentum for the rest of the historical span.
 - Craftworld realms now receive an explicit normal settlement cycle after each ordinary campaign turn.
+
+## Revision 27.2 — Stable Autonomous End Turn
+- Replaces the accumulated historical End Turn polling-wrapper chain with one authoritative asynchronous pipeline.
+- AI factions, economies, fixed settlements, fleet settlements and Craftworld realms are processed in bounded batches with browser yields.
+- Post-turn governance, automatic extraction, fleet projects, minor polities, threats, raiders, command networks, claims, contacts and fleet-lift auditing execute once each.
+- Nested AI actions cannot trigger repeated full saves/dashboard renders during End Turn.
+- The loading screen is work-coupled: its phase and percentage follow actual completed turn operations and it closes immediately after the final save/UI rebuild rather than waiting a fixed ten seconds.
+- Turn histories and notification queues are compacted to prevent long-session memory growth.

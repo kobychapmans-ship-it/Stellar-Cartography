@@ -1,5 +1,5 @@
-const CACHE_NAME='cartographica-r26.11-craftworld-growth-grace-v55-tested';
-const CANONICAL='./?rev=26.11-craftworld-one-turn-growth-grace-v55-tested';
+const CACHE_NAME='cartographica-r28.0-faction-leaders-of-renown-v57-tested';
+const CANONICAL='./?rev=28.0-faction-leaders-of-renown-v57-tested';
 const SHELL=[CANONICAL,'./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 self.addEventListener('install',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/cartographica/i.test(k)&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>caches.open(CACHE_NAME)).then(c=>c.addAll(SHELL.map(x=>new Request(x,{cache:'reload'})))).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/cartographica/i.test(k)&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));

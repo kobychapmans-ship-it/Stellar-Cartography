@@ -1,18 +1,41 @@
-STELLAR CARTOGRAPHICA v26.11 CRAFTWORLD GROWTH AUDIT
-Build: 26.11-craftworld-one-turn-growth-grace-v55-tested
+STELLAR CARTOGRAPHICA v27.2 TEST REPORT
+Build: 27.2-single-pass-endturn-work-coupled-progress-v56-tested
 
-PASS — the v26.8 permanent craftworldMomentumOffset268 calibration is ignored and cleared.
-PASS — a newly created Craftworld realm receives exactly one 90-day creation grace cycle at +0 momentum.
-PASS — repeated settlement-panel renders do not consume the grace; only a real settlement cycle does.
-PASS — first normal settlement cycle adds 0 development and consumes the grace.
-PASS — the next cycle immediately uses the realm's genuine infrastructure/district/civic momentum.
-PASS — deterministic representative test resumed +20 raw momentum after the first cycle and accumulated +20 progress on the second cycle.
-PASS — legacy saves carrying a -20 calibration are released immediately and do not receive a new creation grace.
-PASS — compressed Deep Time treats exactly one represented turn as neutral; all remaining represented turns in the same bounded epoch use genuine momentum.
-PASS — representative span-6 Deep Time test processed one neutral turn plus five +20 turns, growing Size 6 to Size 7.
-PASS — Craftworld realms are explicitly advanced once per ordinary campaign turn, with a per-turn duplicate guard.
-PASS — T2–T1000 Deep Time remains bounded; the new logic does not add recursion or per-render state mutation.
-PASS — all embedded JavaScript blocks and the service worker pass Node syntax validation.
+ROOT CAUSE AUDIT
+PASS — the prior runtime contains multiple historical campaignEndTurn polling wrappers.
+PASS — those wrappers wait on _endTurnProcessing and then independently run post-turn work, persistence and/or dashboard rendering.
+PASS — the old presentation uses a fixed 10,000 ms delay before the autonomous turn starts.
+FIXED — v27.2 installs one final authoritative campaignEndTurn that does not invoke the historical polling-wrapper chain.
+FIXED — nested AI helpers cannot persist or rebuild the dashboard while _turnBatch272 is active.
+FIXED — autonomous notices are queued without scheduling repeated notice-display timers during the batch.
+FIXED — transient logs, notifications, battle history and settlement events are compacted before final handover.
 
-MIGRATION
-Old v26.8/v26.10 Craftworld realms with craftworldMomentumOffset268 values are released from that offset immediately. They resume their current natural momentum instead of being artificially held at equilibrium.
+WORK-COUPLED END TURN
+PASS — loading overlay is created before autonomous work begins.
+PASS — progress is calculated from actual faction, settlement, mobile-settlement, Craftworld-realm and post-turn operations.
+PASS — the pipeline yields to the browser between AI factions and bounded work batches.
+PASS — loading overlay remains active through AI, economy, settlement growth, governance, fleet projects, minor polities, threats, command/claim refresh, save and final UI rebuild.
+PASS — overlay reaches 100% only after the campaign has been persisted and the player dashboard rebuilt.
+PASS — fixed 10-second presentation timing is no longer used by the authoritative End Turn path.
+
+20-TURN STRESS HARNESS
+PASS — 20 consecutive End Turns completed.
+PASS — 20 autonomous AI factions were processed each turn.
+PASS — test world expanded to 368 active settlements.
+PASS — final turn reached Turn 21 from Turn 1.
+PASS — zero end-turn recovery exceptions.
+PASS — _endTurnProcessing and _turnBatch272 cleared after every turn.
+PASS — exactly 20 campaign persists and 20 dashboard renders occurred: one of each per completed turn.
+PASS — player notification queue remained capped at 40.
+PASS — campaign log remained bounded at approximately 220 entries.
+PASS — no recursive End Turn calls or call-stack growth occurred.
+
+CRAFTWORLD / CAMPAIGN REGRESSION
+PASS — v26.11 one-turn Craftworld growth-grace logic remains present.
+PASS — Craftworld realms are advanced exactly once by the v27.2 normal-turn pipeline and retain the existing duplicate-turn marker.
+PASS — mobile fleet settlements, pending fleet-settlement activation, minor-polity growth, threats, raiders, settlement consequences and automatic extraction are each explicitly run once.
+PASS — command networks, territory claims, contacts and fleet troop-lift auditing are refreshed before player handover.
+PASS — T2–T1000 independent Deep Time remains separate and is not routed through the normal End Turn pipeline.
+
+BROWSER LIMITATION
+The container browser environment is not reliable for a full iOS/Safari click-through. The crash-sensitive turn engine was therefore tested through the exact v27.2 asynchronous pipeline in a repeated 20-turn Node harness plus full JavaScript syntax/integration validation.

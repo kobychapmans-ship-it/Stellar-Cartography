@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="26.11" />
+<meta name="cartographica-revision" content="28.0" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=26.11-craftworld-one-turn-growth-grace-v55-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=28.0-faction-leaders-of-renown-v57-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='26.11';
-  const BUILD='26.11-craftworld-one-turn-growth-grace-v55-tested';
-  const LABEL='rev 26.11 — Craftworld Growth Grace';
-  const TITLE='Administratum Stellar Cartographica — Revision 26.11';
+  const REVISION='28.0';
+  const BUILD='28.0-faction-leaders-of-renown-v57-tested';
+  const LABEL='rev 28.0 — Faction Leaders of Renown';
+  const TITLE='Administratum Stellar Cartographica — Revision 28.0';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 26.11</title>
+<title>Administratum Stellar Cartographica — Revision 28.0</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -713,6 +713,12 @@ body.campaign-dev-open .campaign-dev-modal{display:flex!important;visibility:vis
 .campaign-dev-modal270{position:fixed!important;display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:50000!important;inset:0 0 calc(96px + env(safe-area-inset-bottom)) 0!important;max-width:none!important;max-height:none!important;background:radial-gradient(circle at 50% 16%,rgba(99,68,37,.23),rgba(5,7,9,.995) 60%)!important}
 body.campaign-dev-open{overflow:hidden!important}.campaign-dev-modal270 .campaign-dev-modal-body{overflow:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior:contain!important}
 @media(min-width:1051px){.campaign-dev-modal270{inset:2vh calc(min(445px,39vw) + 18px) 2vh 2vw!important}}
+</style>
+<style id="rev272-css">
+.campaign-endturn-overlay272 .campaign-endturn-card{width:min(620px,calc(100vw - 28px))}
+.campaign-endturn-overlay272 .campaign-endturn-track{height:12px}
+.campaign-endturn-overlay272 .campaign-endturn-fill{transition:width .12s linear}
+#campaignEndTurnWork272{max-width:70%;text-align:right;white-space:normal}
 </style>
 </head>
 <body>
@@ -3370,6 +3376,7 @@ document.addEventListener('click',e=>{const m=e.target.closest?.('.campaign-flee
 
 
 document.querySelectorAll('.source-note').forEach(n=>{if(n.textContent.includes('Sector Campaign')&&!n.textContent.includes('Strategic Orders'))n.innerHTML+=`<br/><br/><b>Strategic Orders:</b> fleets can now be inspected directly from map markers, including fleet class/role and embarked Task Force manifests. Active translation orders draw visible route lines; movement uses a dashed blue route/destination while invasions use a solid red attack route. The full campaign console is retained while descending from Sector to Sub-sector to System maps. Planetary Population, Planetside Adventures and Colonial Structure are separated into tabs. Generation now includes a pre-campaign faction-geography layer with per-faction states from Diaspora through Hegemonic, which changes initial territory, presence, settlements, military depth and fleet projection when Campaign Mode begins.`});
+window.__cartoPresenceBridge280={keys:PRESENCE_KEYS,stateOptions:campaignPresenceStateOptions};
 })();
 
 (()=>{
@@ -9150,6 +9157,7 @@ function campaignCraftworldGrowthAudit271(root,fac){
   return realms.map((col,i)=>({realm:i+1,size:col.size,grace:Number(col.craftworldMomentumGrace271||0),legacyOffset:Number(col.craftworldMomentumOffset268||0),displayedMomentum:campaignSettlementDevelopment251(col).net,rawMomentum:_campaignSettlementDevelopment251_rev271_raw(col).net,progress:Number(col.development251)||0,cycles:Number(col.cycles)||0}));
 }
 window.__cartoRevision271={version:REV271,build:REV271_BUILD,audit:campaignCraftworldGrowthAudit271,advanceRealms:campaignAdvanceCraftworldRealms271,releaseLegacy:campaignReleaseLegacyCraftworldCalibration271};
+window.__cartoFactionCivilisationBridge280={districts:CAMPAIGN_FACTION_DISTRICTS_263,infrastructure:CAMPAIGN_FACTION_INFRA_263};
 document.title='Administratum Stellar Cartographica — Revision 26.11';
 document.documentElement.dataset.cartographicaRevision=REV271;
 document.documentElement.dataset.cartographicaBuild=REV271_BUILD;
@@ -9278,10 +9286,699 @@ document.title='Administratum Stellar Cartographica — Revision 26.10';
 document.documentElement.dataset.cartographicaRevision=REV270;
 document.documentElement.dataset.cartographicaBuild=REV270_BUILD;
 
+
+/* ===== Revision 27.2 — Single-Pass End Turn & Work-Coupled Progress ===== */
+const REV272='27.2';
+const REV272_BUILD='27.2-single-pass-endturn-work-coupled-progress-v56-tested';
+
+function campaignYield272(ms=0){return new Promise(resolve=>setTimeout(resolve,ms))}
+function campaignEndTurnOverlay272(root){
+  document.querySelector('.campaign-endturn-overlay')?.remove();
+  const d=document.createElement('div');d.className='campaign-endturn-overlay campaign-endturn-overlay272';
+  d.innerHTML=`<div class="campaign-endturn-card">
+    <h3>Advancing Campaign Turn</h3>
+    <p id="campaignEndTurnPhase272">Preparing autonomous turn…</p>
+    <div class="campaign-endturn-track"><div id="campaignEndTurnFill272" class="campaign-endturn-fill"></div></div>
+    <div class="campaign-endturn-meta"><span id="campaignEndTurnPct272">0%</span><span id="campaignEndTurnWork272">Preparing work queue</span></div>
+  </div>`;
+  document.body.appendChild(d);return d;
+}
+function campaignEndTurnProgress272(overlay,done,total,phase,detail=''){
+  if(!overlay)return;
+  const pct=Math.max(0,Math.min(100,total?Math.round(done/total*100):0));
+  const fill=overlay.querySelector('#campaignEndTurnFill272'),num=overlay.querySelector('#campaignEndTurnPct272'),p=overlay.querySelector('#campaignEndTurnPhase272'),w=overlay.querySelector('#campaignEndTurnWork272');
+  if(fill)fill.style.width=`${pct}%`;if(num)num.textContent=`${pct}%`;if(p)p.textContent=phase;if(w)w.textContent=detail||`${done.toLocaleString()} / ${total.toLocaleString()} operations`;
+}
+function campaignCompactTurnState272(c){
+  if(!c)return;
+  if(Array.isArray(c.log)&&c.log.length>220)c.log=c.log.slice(0,220);
+  if(Array.isArray(c.notices)&&c.notices.length>60)c.notices=c.notices.slice(-60);
+  if(Array.isArray(c.playerNotifications)&&c.playerNotifications.length>40)c.playerNotifications=c.playerNotifications.slice(-40);
+  if(Array.isArray(c.battles)&&c.battles.length>140){
+    const pending=c.battles.filter(b=>b.status==='Pending'),done=c.battles.filter(b=>b.status!=='Pending').slice(-Math.max(0,140-pending.length));
+    c.battles=[...done,...pending];
+  }
+  for(const fac of c.factions||[]){
+    if(Array.isArray(fac.history)&&fac.history.length>80)fac.history=fac.history.slice(-80);
+    for(const st of fac.settlements||[])if(Array.isArray(st.colony?.events)&&st.colony.events.length>12)st.colony.events=st.colony.events.slice(0,12);
+  }
+}
+function campaignMobileSettlementTurn272(root,fac,fl,endedTurn){
+  if(!fl||fl.craftworld264||!campaignFleetIsMobileSettlement235(fl))return false;
+  const col=campaignEnsureMobileColony235(fl);if(!col)return false;
+  withSeededRng(`${root.campaign.seed}|T${endedTurn}|FLEETCOL272|${fl.id}`,()=>soiAdvanceColony(col,{}));return true;
+}
+async function campaignRunAutonomousTurn272(root){
+  const c=root?.campaign;if(!c||c._endTurnProcessing)return false;
+  const p=campaignPlayer(c);
+  if(c.battles.some(b=>b.status==='Pending'&&(b.attackerFactionId===p?.id||b.defenderFactionId===p?.id))){
+    if(!confirm('You have unresolved player battles. End the turn anyway and leave them pending?'))return false;
+  }
+
+  c._endTurnProcessing=true;c._turnBatch272=true;
+  const endedTurn=Number(c.turn)||0,overlay=campaignEndTurnOverlay272(root);
+  const ai=(c.factions||[]).filter(f=>f.ai&&!f.prehistoryDormant247);
+  const fixed=(c.factions||[]).flatMap(f=>(f.settlements||[]).filter(st=>st.status!=='Destroyed').map(st=>({fac:f,st})));
+  const mobile=(c.factions||[]).flatMap(f=>(f.fleets||[]).filter(fl=>!fl.craftworld264&&campaignFleetIsMobileSettlement235(fl)).map(fl=>({fac:f,fl})));
+  const craft=(c.factions||[]).flatMap(f=>(f.fleets||[]).filter(fl=>fl.craftworld264).flatMap(fl=>(fl.craftworldColonies264||[]).map((col,i)=>({fac:f,fl,col,i}))));
+  const postWeight=(c.factions?.length||0)+9,total=Math.max(1,ai.length+fixed.length+mobile.length+craft.length+postWeight);
+  let done=0,lastYield=performance.now();
+
+  const step=async(phase,detail='')=>{
+    done++;campaignEndTurnProgress272(overlay,done,total,phase,detail);
+    const now=performance.now();if(now-lastYield>24){lastYield=now;await campaignYield272(0)}
+  };
+
+  try{
+    c.phase='AI';
+    campaignLog(c,`Player phase ended. Autonomous factions begin Turn ${endedTurn}.`,'ai');
+    campaignEndTurnProgress272(overlay,done,total,'Autonomous factions are planning…',`${ai.length} autonomous factions`);
+
+    for(let i=0;i<ai.length;i++){
+      const fac=ai[i];
+      try{campaignAITurn(root,fac)}catch(err){campaignLog(c,`${fac.name} autonomous turn recovered from ${err?.message||err}.`,'war');c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+      await step('Autonomous factions are planning and moving…',`${i+1} / ${ai.length} factions • ${fac.name}`);
+      await campaignYield272(0);
+    }
+
+    c.phase='Economy';
+    for(let i=0;i<(c.factions||[]).length;i++){
+      const fac=c.factions[i];
+      try{const inc=campaignFactionIncome(c,root,fac);campaignLog(c,`${fac.name} economy: +${inc.supply} Supply, +${inc.materiel} Materiel, +${inc.influence} Influence.`,'ai')}
+      catch(err){campaignLog(c,`${fac.name} economy recovered from ${err?.message||err}.`,'war');c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+      await step('Resolving faction economies…',`${i+1} / ${c.factions.length} economies`);
+    }
+
+    for(let i=0;i<fixed.length;i++){
+      const {st}=fixed[i];
+      try{withSeededRng(`${c.seed}|T${endedTurn}|COLONY272|${st.id}`,()=>soiAdvanceColony(st.colony,{}))}
+      catch(err){campaignLog(c,`${st.locationName||st.settlementName246||st.id} settlement cycle recovered from ${err?.message||err}.`,'war');c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+      await step('Processing settlement economies and population development…',`${i+1} / ${fixed.length} fixed settlements`);
+    }
+
+    for(let i=0;i<mobile.length;i++){
+      try{campaignMobileSettlementTurn272(root,mobile[i].fac,mobile[i].fl,endedTurn)}
+      catch(err){campaignLog(c,`${mobile[i].fl.name} mobile settlement recovered from ${err?.message||err}.`,'war');c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+      await step('Advancing mobile settlements…',`${i+1} / ${mobile.length} fleet settlements`);
+    }
+
+    for(let i=0;i<craft.length;i++){
+      const {fl,col}=craft[i];
+      try{
+        if(Number(col.craftworldLastAdvancedTurn271)!==endedTurn){
+          withSeededRng(`${c.seed}|T${endedTurn}|CRAFTWORLD-REALM272|${fl.id}|${craft[i].i}`,()=>soiAdvanceColony(col,{}));
+          col.craftworldLastAdvancedTurn271=endedTurn;
+        }
+      }catch(err){campaignLog(c,`${fl.name} realm ${craft[i].i+1} recovered from ${err?.message||err}.`,'war');c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+      await step('Advancing Craftworld settlement realms…',`${i+1} / ${craft.length} Craftworld realms`);
+    }
+
+    try{campaignAdvanceCoreColonies(root)}catch(err){campaignLog(c,`Core/native colony pass recovered from ${err?.message||err}.`,'war');c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+    await step('Advancing generated native populations…','Core and native colony cycle complete');
+
+    try{campaignSectorEvent(root)}catch(err){campaignLog(c,`Sector event recovered from ${err?.message||err}.`,'war');c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+    await step('Resolving sector events…','Strategic event table complete');
+
+    c.turn=endedTurn+1;c.phase='Player';
+    for(const fac of c.factions||[]){fac.command=fac.maxCommand+(fac.nextCommandBonus||0);fac.nextCommandBonus=0}
+
+    try{
+      for(const fac of c.factions||[])for(const st of (fac.settlements||[]).filter(x=>x.status!=='Destroyed')){
+        campaignRollSettlementConsequence246(root,fac,st,endedTurn);
+        campaignAutoHarvestSettlement246(root,fac,st,endedTurn);
+      }
+      c.postTurnProcessed246=endedTurn;
+    }catch(err){campaignLog(c,`Settlement consequence pass recovered from ${err?.message||err}.`,'war');c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+    await step('Resolving governance and resource automation…','Consequences, rebellions and automatic extraction');
+
+    try{campaignFinalizePendingFleetSettlements262(root)}catch(_){c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+    try{campaignAdvanceMinorPolities263(root)}catch(_){c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+    try{campaignThreatTurn235(root)}catch(_){c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+    try{campaignProcessRaiders239(root)}catch(_){c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+    await step('Resolving fleet projects, minor polities and threats…','Post-turn strategic systems');
+
+    try{campaignLeaderTurn280(root,endedTurn)}catch(err){campaignLog(c,`Faction-leader pass recovered from ${err?.message||err}.`,'war');c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+    await step('Resolving faction leaders…','Leader doctrines, retinues and strategic orders');
+
+    try{
+      for(const f of c.factions||[]){
+        if(f.adventureMilitaryBonus239&&c.turn>f.adventureMilitaryBonus239.untilTurn)delete f.adventureMilitaryBonus239;
+        if(f.adventureFoundationDiscount239&&c.turn>f.adventureFoundationDiscount239.untilTurn)delete f.adventureFoundationDiscount239;
+        if(f.expeditionBuildingDiscount246&&c.turn>f.expeditionBuildingDiscount246.untilTurn)delete f.expeditionBuildingDiscount246;
+        for(const st of f.settlements||[])if(st.colony?.campaignStrategicInvestment&&st.colony.campaignStrategicInvestment.turn<c.turn)delete st.colony.campaignStrategicInvestment;
+        try{campaignRefreshCommand238(root,f,false)}catch(_){}
+      }
+      campaignEnsureTerritoryClaims238(root);campaignEnsureContacts238(root,true);campaignRepairAllFleetLift248(root,false);
+    }catch(err){campaignLog(c,`Strategic refresh recovered from ${err?.message||err}.`,'war');c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+    await step('Refreshing commands, claims and fleet lift…','Strategic state validation');
+
+    campaignCompactTurnState272(c);
+    campaignLog(c,`Turn ${c.turn} begins. One campaign turn represents ${CAMPAIGN_TURN_DAYS} days.`,'gain');
+    try{campaignSyncMap(root)}catch(_){}
+    await step('Finalising campaign state…','Saving and rebuilding the player interface');
+
+    c._turnBatch272=false;
+    campaignPersist(root);campaignRenderDashboard(root);campaignShowView(c.uiView||'overview');
+    try{campaignRefreshMaps235(root)}catch(_){}
+    try{campaignShowNextNotice(root)}catch(_){}
+
+    done=total;campaignEndTurnProgress272(overlay,total,total,'Turn complete',`Turn ${c.turn} ready`);
+    await campaignYield272(120);return true;
+  }finally{
+    c._turnBatch272=false;c._endTurnProcessing=false;overlay?.remove();
+  }
+}
+
+const _campaignQueueNotice_rev272=campaignQueueNotice;
+campaignQueueNotice=function(root,title,text){
+  if(root?.campaign?._turnBatch272){
+    const c=campaignRev23Ensure(root);c.playerNotifications=c.playerNotifications||[];
+    c.playerNotifications.push({title,text,turn:c.turn});
+    if(c.playerNotifications.length>40)c.playerNotifications=c.playerNotifications.slice(-40);
+    return true;
+  }
+  return _campaignQueueNotice_rev272(root,title,text);
+};
+
+const _campaignPersist_rev272=campaignPersist;
+campaignPersist=function(root){if(root?.campaign?._turnBatch272)return false;return _campaignPersist_rev272(root)};
+const _campaignRenderDashboard_rev272=campaignRenderDashboard;
+campaignRenderDashboard=function(root){if(root?.campaign?._turnBatch272)return null;return _campaignRenderDashboard_rev272(root)};
+
+campaignEndTurn=function(root){return campaignRunAutonomousTurn272(root)};
+
+function campaignEndTurnAudit272(root){
+  const c=root?.campaign||{},ai=(c.factions||[]).filter(f=>f.ai&&!f.prehistoryDormant247),fixed=(c.factions||[]).reduce((n,f)=>n+(f.settlements||[]).filter(s=>s.status!=='Destroyed').length,0),mobile=(c.factions||[]).reduce((n,f)=>n+(f.fleets||[]).filter(fl=>!fl.craftworld264&&campaignFleetIsMobileSettlement235(fl)).length,0),craft=(c.factions||[]).reduce((n,f)=>n+(f.fleets||[]).filter(fl=>fl.craftworld264).reduce((m,fl)=>m+(fl.craftworldColonies264||[]).length,0),0);
+  return{revision:REV272,build:REV272_BUILD,aiFactions:ai.length,fixedSettlements:fixed,mobileSettlements:mobile,craftworldRealms:craft,estimatedOperations:ai.length+fixed+mobile+craft+(c.factions?.length||0)+9,recoveries:Number(c.turnRecoveries272||0),singlePass:String(campaignEndTurn).includes('campaignRunAutonomousTurn272')};
+}
+window.__cartoRevision272={version:REV272,build:REV272_BUILD,audit:campaignEndTurnAudit272,runTurn:campaignRunAutonomousTurn272,compact:campaignCompactTurnState272};
+document.title='Administratum Stellar Cartographica — Revision 27.2';
+document.documentElement.dataset.cartographicaRevision=REV272;
+document.documentElement.dataset.cartographicaBuild=REV272_BUILD;
+
+
+/* ===== Revision 28.0 — Faction Leaders of Renown ===== */
+const REV280='28.0';
+const REV280_BUILD='28.0-faction-leaders-of-renown-v57-tested';
+const REV280_REPOSITORY='BSData/horus-heresy-1st-edition';
+const REV280_COMMIT='0a4c10da15f4ea40eea0932090fadafe3b90b696';
+const CAMPAIGN_REPOSITORY_FACTIONS_280=['militia','solar','legion','mechanicum','knights','talons','craftworld','necron','darkcompliance','chaosdaemons','ruinstorm'];
+
+/* Two standalone army catalogues in the cited repository were not previously campaign
+   choices. They receive compact source-derived roster foundations so their named leaders
+   never fall back to a generic xenos army. Supplement-only catalogues remain supplements. */
+CAMPAIGN_FACTION_META.chaosdaemons={label:'Chaos Daemons',colony:'chaos',ai:'Aggressive',desc:'Warp-born hosts whose victories establish breaches, summon reinforcements and corrode settled space.'};
+CAMPAIGN_FACTION_META.ruinstorm={label:'Daemons of the Ruinstorm',colony:'chaos',ai:'Subversive',desc:'Heresy-era empyreal incursions built around manifestations, possessed auxiliaries and Ruinstorm behemoths.'};
+CAMPAIGN_FACTION_NAMES_236.chaosdaemons=['The Crimson Conjunction','Host of the Shattered Veil','The Ninefold Incursion','The Brass Howl','The Garden Unbound','The Sable Masque'];
+CAMPAIGN_FACTION_NAMES_236.ruinstorm=['Signus Manifestation Host','The Utterblight Dominion','Samusian Breach-Host','The Red Tempest of Nartaba','The Choral Ruinstorm','The Aetheric Crown'];
+CAMPAIGN_FACTION_RACE_237.chaosdaemons='Daemonic';CAMPAIGN_FACTION_RACE_237.ruinstorm='Daemonic / Possessed';
+START_FACTION_COLORS.chaosdaemons='#9b3e52';START_FACTION_COLORS.ruinstorm='#824158';
+CAMPAIGN_TECH_LEVELS.chaosdaemons={base:5,max:6,label:'Empyreal Manifestation',domain:'Warp gifts, daemonic bodies, sorcerous movement and reality-breach warfare'};
+CAMPAIGN_TECH_LEVELS.ruinstorm={base:5,max:6,label:'Ruinstorm Ætheric Manifestation',domain:'Heresy-era aetheric dominions, possessed hosts and monstrous warp manifestations'};
+CAMPAIGN_ARCHETYPES254.chaosdaemons={style:'incursion',settlementDensity:.45,war:.98,diplomacy:.08,industry:.28,fleet:.82,research:.70,army:1,desc:'Empyreal incursion: open breaches through battle, manifest warhosts and destabilise mortal domains.'};
+CAMPAIGN_ARCHETYPES254.ruinstorm={style:'ruinstorm',settlementDensity:.55,war:.94,diplomacy:.10,industry:.34,fleet:.78,research:.66,army:1,desc:'Ruinstorm dominion: spread manifestations, possessed armies and monstrous strategic pressure.'};
+CAMPAIGN_NAVAL_DOCTRINES247.chaosdaemons={label:'Empyreal Incursion Fleet',analogue:'Warp manifestation / daemonship host',attackRating:5,command:1,gunnery:1,lances:2,ordnance:3,boarding:5,resilience:3,speed:3,style:'Unreliable but violent manifestations that translate through breaches and overwhelm ships at close range.',vessels:['Warp-spawned escorts','Daemon cruisers','Possessed carriers','Empyreal leviathan']};
+CAMPAIGN_NAVAL_DOCTRINES247.ruinstorm={label:'Ruinstorm Manifestation Host',analogue:'Ruinstorm daemonship host',attackRating:5,command:2,gunnery:1,lances:2,ordnance:4,boarding:5,resilience:4,speed:2,style:'Aetheric vessels and living storms that carry possessed hosts through unstable strategic corridors.',vessels:['Aetheric shrikes','Possessed cruisers','Brute carriers','Ruinstorm behemoth']};
+CAMPAIGN_TRAVEL_METHODS.daemonic={label:'Empyreal Breach Translation',speed:1.35,hazard:.18,supply:.75,kind:'Warp Manifestation',desc:'Daemonhosts cross through unstable breaches. Rapid and cheap where reality is weak, but strategically volatile.'};
+const _campaignTravelMethodKey_rev280=campaignTravelMethodKey;
+campaignTravelMethodKey=function(root,fac,fleet,targetId){return ['chaosdaemons','ruinstorm'].includes(fac?.key)?'daemonic':_campaignTravelMethodKey_rev280(root,fac,fleet,targetId)};
+const _campaignInferFactionFromRoster_rev280=campaignInferFactionFromRoster;
+campaignInferFactionFromRoster=function(cat='',dets=[]){const t=(cat+' '+(dets||[]).map(d=>`${d.catalogue||''} ${d.name||''}`).join(' ')).toLowerCase();if(t.includes('daemons of the ruinstorm')||t.includes('ruinstorm daemon'))return'ruinstorm';if(t.includes('chaos daemons')||t.includes('bloodletters of khorne')||t.includes('pink horrors of tzeentch'))return'chaosdaemons';return _campaignInferFactionFromRoster_rev280(cat,dets)};
+
+HH1_BSDATA.chaosdaemons={label:'Chaos Daemons',source:'(HH) Chaos Daemons Army List.cat',status:'BSData HH1 archive — compact strategic roster',foc:HH1_CRUSADE_FOC,units:[
+  hh1Inf('Daemon Prince','HQ',145,1,1,0,[7,5,6,5,4,7,5,9,'5+'],'Monstrous Creature','Daemonic gifts and patron options',['Fearless','Daemon'],['Daemonic Weapon'],'(HH) Chaos Daemons Army List.cat'),
+  hh1Inf('Herald of Chaos','HQ',55,1,1,0,[6,4,4,4,2,6,3,9,'5+'],'Infantry (Character)','Patron-specific gifts and icons',['Fearless','Daemon'],['Daemonic Weapon'],'(HH) Chaos Daemons Army List.cat'),
+  hh1Inf('Bloodletters of Khorne','Troops',100,10,20,10,[5,3,4,3,1,4,1,7,'5+'],'Infantry','Hellblades',['Fearless','Daemon'],['Hellblade'],'(HH) Chaos Daemons Army List.cat'),
+  hh1Inf('Pink Horrors of Tzeentch','Troops',90,10,20,9,[3,3,3,3,1,3,1,7,'5+'],'Infantry','Warp flame and psychic manifestations',['Fearless','Daemon'],['Warp Flame'],'(HH) Chaos Daemons Army List.cat'),
+  hh1Inf('Plaguebearers of Nurgle','Troops',90,10,20,9,[3,3,4,4,1,2,1,7,'5+'],'Infantry','Plague swords',['Fearless','Daemon'],['Plague Sword'],'(HH) Chaos Daemons Army List.cat'),
+  hh1Inf('Daemonettes of Slaanesh','Troops',90,10,20,9,[5,3,3,3,1,5,2,7,'5+'],'Infantry','Piercing claws',['Fearless','Daemon','Fleet'],['Piercing Claws'],'(HH) Chaos Daemons Army List.cat'),
+  hh1Inf('Bloodcrushers of Khorne','Elites',135,3,6,45,[5,3,5,4,3,4,3,7,'4+'],'Cavalry','Juggernauts and hellblades',['Fearless','Daemon'],['Hellblade'],'(HH) Chaos Daemons Army List.cat'),
+  hh1Inf('Flamers of Tzeentch','Elites',105,3,9,35,[3,4,4,4,2,4,2,7,'5+'],'Jump Infantry','Warpflame',['Fearless','Daemon'],['Warp Flame'],'(HH) Chaos Daemons Army List.cat'),
+  hh1Inf('Flesh Hounds of Khorne','Fast Attack',80,5,20,16,[5,0,5,4,2,4,2,7,'5+'],'Beasts','Collars of Khorne',['Fearless','Daemon','Fleet'],['Claws and Fangs'],'(HH) Chaos Daemons Army List.cat'),
+  hh1Inf('Screamers of Tzeentch','Fast Attack',75,3,9,25,[3,0,4,4,2,4,3,7,'5+'],'Jetbike','Warp jaws',['Fearless','Daemon'],['Warp Jaws'],'(HH) Chaos Daemons Army List.cat'),
+  hh1Inf('Soul Grinder','Heavy Support',180,1,1,0,[3,3,6,7,4,3,4,10,'3+'],'Daemon Engine','Harvester cannon and iron claw',['Fearless','Daemon'],['Harvester Cannon'],'(HH) Chaos Daemons Army List.cat')
+]};
+HH1_BSDATA.ruinstorm={label:'Daemons of the Ruinstorm',source:'(HH) Daemons of the Ruinstorm Army List.cat',status:'BSData HH1 archive — compact strategic roster',foc:HH1_CRUSADE_FOC,units:[
+  hh1Inf('Ruinstorm Daemon Lord','HQ',200,1,1,0,[7,5,6,6,5,6,5,10,'4+'],'Monstrous Creature (Character)','Aetheric dominion and manifestation gifts',['Fearless','Daemon'],['Aetheric Weapon'],'(HH) Daemons of the Ruinstorm Army List.cat'),
+  hh1Inf('Ruinstorm Greater Daemon','HQ',275,1,1,0,[7,4,7,7,6,5,5,10,'4+'],'Monstrous Creature','Greater manifestation gifts',['Fearless','Daemon'],['Aetheric Weapon'],'(HH) Daemons of the Ruinstorm Army List.cat'),
+  hh1Inf('Ruinstorm Daemon Chosen','HQ',90,1,3,45,[5,4,5,5,2,5,3,9,'5+'],'Infantry (Character)','Chosen manifestation gifts',['Fearless','Daemon'],['Warp-forged Blade'],'(HH) Daemons of the Ruinstorm Army List.cat'),
+  hh1Inf('Ruinstorm Daemon Beasts','Troops',110,5,15,18,[4,2,5,4,2,4,3,7,'5+'],'Beasts','Aetheric claws and mutations',['Fearless','Daemon','Fleet'],['Aetheric Claws'],'(HH) Daemons of the Ruinstorm Army List.cat'),
+  hh1Inf('Ruinstorm Daemon Swarms','Troops',80,5,20,12,[3,2,3,3,3,3,3,6,'6+'],'Swarm','Lesser manifestations',['Fearless','Daemon'],['Warp Bites'],'(HH) Daemons of the Ruinstorm Army List.cat'),
+  hh1Inf('Possessed Legionaries','Troops',150,5,15,24,[5,4,5,5,2,4,3,9,'3+'],'Infantry','Possessed Legion wargear',['Fearless','Daemon'],['Boltgun','Warp Talons'],'(HH) Daemons of the Ruinstorm Army List.cat'),
+  hh1Inf('Possessed Auxiliaries','Troops',80,10,30,6,[3,3,4,4,1,3,2,7,'5+'],'Infantry','Possessed human wargear',['Fearless','Daemon'],['Autogun'],'(HH) Daemons of the Ruinstorm Army List.cat'),
+  hh1Inf('Ruinstorm Daemon Brutes','Elites',180,3,9,55,[5,3,6,6,3,3,4,8,'4+'],'Monstrous Creature','Brutal aetheric weapons',['Fearless','Daemon'],['Brute Claws'],'(HH) Daemons of the Ruinstorm Army List.cat'),
+  hh1Inf('Ruinstorm Daemon Cavalry','Fast Attack',150,3,9,45,[5,3,5,5,3,5,4,8,'4+'],'Cavalry','Aetheric mounts and lances',['Fearless','Daemon','Fleet'],['Warp Lance'],'(HH) Daemons of the Ruinstorm Army List.cat'),
+  hh1Inf('Ruinstorm Daemon Shrike','Fast Attack',140,3,9,40,[4,4,5,5,2,6,3,8,'5+'],'Jump Infantry','Winged manifestation weapons',['Fearless','Daemon'],['Aetheric Talons'],'(HH) Daemons of the Ruinstorm Army List.cat'),
+  hh1Inf('Ruinstorm Daemon Behemoth','Heavy Support',300,1,1,0,[5,3,8,8,7,2,5,10,'3+'],'Gargantuan Creature','Colossal aetheric weapons',['Fearless','Daemon'],['Behemoth Claws'],'(HH) Daemons of the Ruinstorm Army List.cat')
+]};
+
+const CAMPAIGN_FACTION_DISTRICTS_280=window.__cartoFactionCivilisationBridge280?.districts||{};
+Object.assign(CAMPAIGN_FACTION_DISTRICTS_280,{
+  chaosdaemons:{label:'Empyreal Breach-Domain',common:{1:{name:'Cultic Summoning Ground',reward:'+1 Influence and manifestation support.',effect:{influenceBonus:1,commandSupport:1}},2:{name:'Reality-Wound Precinct',reward:'+1 tech and +1 defence.',effect:{localTechBonus:1,siteDefence262:1}}},paths:{breach:{label:'Warp Dominion',tiers:{3:{name:'Daemon-Muster Nexus',reward:'Troops and Elites require less Size.',effect:{roleSizeDiscount:{Troops:1,Elites:1}}},4:{name:'Empyreal Confluence',reward:'+2 Influence and command.',effect:{influenceBonus:2,commandSupport:1}},5:{name:'Permanent Warp Breach',reward:'+3 Influence, +2 defence and +2 command.',effect:{influenceBonus:3,siteDefence262:2,commandSupport:2}}}}}},
+  ruinstorm:{label:'Ruinstorm Manifestation Citadel',common:{1:{name:'Aetheric Anchor Pits',reward:'+1 defence and manifestation support.',effect:{siteDefence262:1,commandSupport:1}},2:{name:'Possessed Muster Precinct',reward:'+1 Supply and cheaper Troops.',effect:{supplyBonus:1,recruitSupplyDiscount:.06}}},paths:{storm:{label:'Storm Dominion',tiers:{3:{name:'Brute Manifestation Vault',reward:'Elites require less Size.',effect:{roleSizeDiscount:{Elites:1}}},4:{name:'Living Tempest Nexus',reward:'+2 Influence and tech.',effect:{influenceBonus:2,localTechBonus:1}},5:{name:'Ruinstorm Crown',reward:'+3 command, +2 defence and +2 Influence.',effect:{commandSupport:3,siteDefence262:2,influenceBonus:2}}}}}}
+});
+for(const fk of ['chaosdaemons','ruinstorm']){const d=CAMPAIGN_FACTION_DISTRICTS_280[fk],key=`faction263_${fk}`;if(!CAMPAIGN_BUILDING_CHAINS[key])CAMPAIGN_BUILDING_CHAINS[key]={...d,icon:'✦',color:'#9d4962',factionOnly263:fk,summary:`Unique ${CAMPAIGN_FACTION_META[fk].label} civilisation district.`}}
+const CAMPAIGN_FACTION_INFRA_280=window.__cartoFactionCivilisationBridge280?.infrastructure||{};
+Object.assign(CAMPAIGN_FACTION_INFRA_280,{
+  chaosdaemons:[{name:'Empyreal Anchor Lattice',civic:{order:1,piety:2},desc:'Warp anchors hold manifested hosts together and harden cultic control.'},{name:'Possessed Supply Web',civic:{productivity:2,complacency:-1},desc:'Possessed labour and sacrificial logistics sustain an incursion at mortal cost.'}],
+  ruinstorm:[{name:'Aetheric Storm Conduits',civic:{order:1,piety:2},desc:'Storm conduits stabilise aetheric manifestations and strategic command.'},{name:'Possessed Cohort Infrastructure',civic:{productivity:2,order:1},desc:'Mortal and Legionary hosts provide material support for Ruinstorm entities.'}]
+});
+for(const defs of [CAMPAIGN_FACTION_INFRA_280.chaosdaemons,CAMPAIGN_FACTION_INFRA_280.ruinstorm])for(const d of defs)if(!SOI_INFRA.includes(d.name))SOI_INFRA.push(d.name);
+const CAMPAIGN_PRESENCE_BRIDGE_280=window.__cartoPresenceBridge280||{keys:[],stateOptions:()=>'<option value="auto">Auto / generated context</option>'};
+if(!CAMPAIGN_PRESENCE_BRIDGE_280.keys.includes('chaosdaemons'))CAMPAIGN_PRESENCE_BRIDGE_280.keys.push('chaosdaemons');if(!CAMPAIGN_PRESENCE_BRIDGE_280.keys.includes('ruinstorm'))CAMPAIGN_PRESENCE_BRIDGE_280.keys.push('ruinstorm');
+
+const CAMPAIGN_LEADER_PROTOCOLS_280={
+  grand_strategy:{name:'Master of the Theatre',cadence:'Every turn and after victory',desc:'Banks one cost-free fleet translation each turn; victories immediately fortify the captured strategic node.'},
+  fortress:{name:'Living Fortress Doctrine',cadence:'Every second turn',desc:'Automatically strengthens the least-defended controlled node, creating a real fortification rather than a combat modifier.'},
+  rapid_strike:{name:'Unbound Manoeuvre',cadence:'Every turn',desc:'Banks a cost-free fleet translation that can be spent on movement or invasion and never stacks above one.'},
+  terror:{name:'Weaponised Dread',cadence:'After victory',desc:'Breaks civic Order at the defeated system and disrupts the losing faction’s next command cycle.'},
+  zeal:{name:'Host of the Faithful',cadence:'Every third turn and on victory',desc:'Calls specialist formations into new retinue detachments; victories draw further faithful into the host.'},
+  governance:{name:'Realmcraft',cadence:'Every turn',desc:'Integrates one occupied settlement into the faction; otherwise reinforces the weakest frontier fortification.'},
+  berserker:{name:'Red Momentum',cadence:'After victory',desc:'A victory calls forward a specialist assault formation; defeat wounds the nearest supporting settlement’s civic order.'},
+  siege:{name:'Calculated Siegecraft',cadence:'Every turn and after victory',desc:'Banks a siege order; the next victory converts it into an immediate captured-node fortification.'},
+  forge:{name:'War-Forged Renewal',cadence:'Every turn',desc:'Repairs the most damaged fleet or army; at full readiness it periodically fabricates a specialist formation.'},
+  attrition:{name:'Unbroken Advance',cadence:'Every turn',desc:'Repairs damaged forces to sustain an extended campaign of attrition.'},
+  infiltration:{name:'Hidden Hands',cadence:'Every third turn',desc:'Seeds strategic presence in a neighbouring foreign or unclaimed system, opening routes without automatically conquering it.'},
+  hunter:{name:'The Hunter’s Net',cadence:'Every turn',desc:'Banks a rapid-response translation; victories disrupt the defeated command network.'},
+  prophecy:{name:'Foreseen Withdrawal',cadence:'Every third turn',desc:'Banks one omen. If this faction loses while defending territory, the omen preserves strategic ownership through an ordered withdrawal.'},
+  inspiration:{name:'Exemplar Host',cadence:'Every turn',desc:'Rallies the weakest task force; when all armies are ready it banks a rapid-response translation.'},
+  duellist:{name:'Decapitation Challenge',cadence:'After victory',desc:'Disrupts the defeated faction’s next command cycle and reinforces the victor with an elite retinue on the normal cadence.'},
+  medicae:{name:'Field Apothecarion',cadence:'Every turn',desc:'Restores the most depleted task force and clears one active settlement affliction when possible.'},
+  void_command:{name:'Void Spearhead',cadence:'Every turn and naval victory',desc:'Repairs the most damaged fleet, banks a cost-free translation and repairs the victorious formation after naval battle.'},
+  resistance:{name:'Survivors’ Covenant',cadence:'Every turn and after defeat',desc:'Restores depleted forces and musters a survivor cadre after a setback instead of granting a raw combat modifier.'},
+  resurrection:{name:'The Returned Commander',cadence:'Persistent',desc:'Restores a missing protected command detachment and steadily repairs damaged forces.'},
+  diplomacy:{name:'Voice of the Legion',cadence:'Every second turn',desc:'Improves the least-hostile non-war relationship and can build an actual diplomatic opening.'},
+  assassination:{name:'Decapitation Cell',cadence:'After victory',desc:'Marks and disrupts the defeated command network while seeding covert presence at the battle system.'},
+  null_vigil:{name:'Silent Vigil',cadence:'Every turn and after victory',desc:'Suppresses an active rebellion or removes an empyreal breach; victories erase local warp manifestations.'},
+  aspect:{name:'Path of War',cadence:'Every third turn',desc:'Cycles through the leader’s Aspect specialist formations and musters the next shrine into a real detachment.'},
+  awakening:{name:'Dynastic Reclamation',cadence:'Every fourth turn',desc:'Claims one adjacent unowned node and establishes dynastic presence there.'},
+  archive:{name:'Prismatic Acquisition',cadence:'After victory',desc:'Records one defeated enemy formation as an exhibit, advances research and preserves the acquisition in the leader archive.'},
+  daemon_rift:{name:'Breach in Reality',cadence:'After victory',desc:'Creates a persistent empyreal breach at the battle system; mature breaches periodically manifest specialist reinforcements.'},
+  plague:{name:'Contagion Dominion',cadence:'After victory',desc:'Infects settlements at the defeated system, reducing civic function until future governance repairs them.'},
+  honour:{name:'Oathbound Household',cadence:'Every second turn',desc:'Fortifies the Household’s weakest domain and periodically calls an oath-sworn engine or retinue.'},
+  raider:{name:'Predatory Tithe',cadence:'After victory',desc:'Seizes Supply and Materiel from battle results and feeds them directly into the next campaign turn.'}
+};
+
+const CAMPAIGN_SPECIALIST_META_280={
+  'Mor Deythan Strike Squad':['Elites',125,5,10,20],'Dark Fury Assault Squad':['Fast Attack',175,5,10,25],
+  'Gorgon Terminator Squad':['Elites',225,5,10,35],'Medusan Immortals':['Elites',200,10,20,15],
+  'Phoenix Terminator Squad':['Elites',225,5,10,35],'Palatine Blade Squad':['Elites',150,5,10,20],
+  'Justaerin Terminator Squad':['Elites',255,5,10,40],'Reaver Attack Squad':['Elites',135,5,15,18],
+  'Night Raptor Squad':['Fast Attack',175,5,15,25],'Terror Squad':['Elites',125,5,10,20],
+  'Gal Vorbak Dark Brethren':['Elites',200,5,10,35],'Ashen Circle, The':['Fast Attack',150,5,10,25],
+  'Invictarus Suzerain Squad':['Elites',200,5,10,30],'Fulmentarus Terminator Squad':['Elites',225,5,10,35],
+  'Phalanx Warder Squad':['Elites',175,10,20,15],'Templar Brethren':['Elites',175,5,10,25],
+  'Rampager Squads':['Elites',150,5,15,20],'Red Hand Destroyer Assault Squad':['Fast Attack',150,5,10,22],
+  'Tyrant Siege Terminator Squad':['Heavy Support',295,5,10,45],'Iron Havoc Support Squad':['Heavy Support',185,5,10,28],
+  'Firedrake Terminator Squad':['Elites',275,5,10,45],'Pyroclast Squad':['Elites',175,5,10,25],
+  'Deathshroud Terminator Squad':['Elites',275,5,10,45],'Grave Warden Terminator Squad':['Elites',250,5,10,40],
+  'Lernaean Terminator Squad':['Elites',225,5,10,35],'Headhunter Kill Teams':['Elites',150,5,10,22],
+  'Deathsworn, The':['Elites',150,5,15,22],'Varagyr Wolf Guard Terminator Squad':['Elites',300,5,10,48],
+  'Sekhmet Terminator Cabal':['Elites',255,5,10,42],'Khenetai Blade Occult Cabal':['Elites',175,5,10,26],
+  'Ebon Keshig, The':['Elites',200,5,10,30],'Golden Keshig, The':['Fast Attack',250,5,10,40],
+  'Dawnbreaker Cohort':['Fast Attack',200,5,10,32],'Crimson Paladins':['Elites',200,5,10,32],
+  'Deathwing Companions Detachment':['Elites',250,5,10,40],'Dreadwing Interemptor Squad':['Elites',150,5,10,24],
+  'Blackshield Marauder Squad':['Elites',150,5,15,20],'Knight-Errant':['HQ',115,1,1,0],
+  'Household Retinue Squad':['Elites',115,5,10,20],'Veletaris Storm Section':['Elites',100,10,20,10],
+  'Scyllax Guardian-Automata Covenant':['Elites',180,4,8,35],'The Homonculex':['Fast Attack',175,1,1,0],
+  'Myrmidon Secutor Host':['Elites',120,3,10,40],'Vorax Battle-automata Maniple':['Fast Attack',65,1,5,65],
+  'Thanatar Siege-automata':['Heavy Support',250,1,3,250],'Mechanicum Knight Moirax Talon':['Heavy Support',155,1,3,155],
+  'Questoris Knight Magaera':['Elites',415,1,1,0],'Legio Custodes Hetaeron Guard Squad':['Elites',300,5,10,60],
+  'Legio Custodes Aquilon Terminator Squad':['Elites',225,3,6,65],'Sisters of Silence Oblivion Knight Cadre':['Elites',125,5,10,20],
+  'Dire Avengers':['Troops',65,5,10,13],'Dark Reapers':['Heavy Support',150,5,10,25],'Shadow Spectres':['Fast Attack',150,5,10,25],
+  'Swooping Hawks':['Fast Attack',100,5,10,18],'Howling Banshees':['Elites',100,5,10,18],'Fire Dragons':['Elites',110,5,10,22],
+  'Shining Spears':['Fast Attack',150,3,9,45],'Acquisition Phalanx Lychguard':['Elites',150,5,10,25],'Lychguard':['Elites',150,5,10,25],
+  'Bloodletters of Khorne':['Troops',100,10,20,10],'Bloodcrushers of Khorne':['Elites',135,3,6,45],
+  'Pink Horrors of Tzeentch':['Troops',90,10,20,9],'Flamers of Tzeentch':['Elites',105,3,9,35],
+  'Plaguebearers of Nurgle':['Troops',90,10,20,9],'Daemonettes of Slaanesh':['Troops',90,10,20,9],
+  'Flesh Hounds of Khorne':['Fast Attack',80,5,20,16],'Ruinstorm Daemon Brutes':['Elites',180,3,9,55],
+  'Ruinstorm Daemon Cavalry':['Fast Attack',150,3,9,45],'Ruinstorm Daemon Beasts':['Troops',110,5,15,18],
+  'Possessed Legionaries':['Troops',150,5,15,24],'Possessed Auxiliaries':['Troops',80,10,30,6]
+};
+function campaignSpecialistTemplate280(name,key){
+  const source=/^(Ruinstorm|Possessed)/.test(name)?'(HH) Daemons of the Ruinstorm Army List.cat':/^(Bloodletters|Bloodcrushers|Pink Horrors|Flamers|Plaguebearers|Daemonettes|Flesh Hounds)/.test(name)?'(HH) Chaos Daemons Army List.cat':key==='solar'?'(HH) Solar Auxilia - Crusade Army List.cat':key==='mechanicum'?'(HH) Mechanicum - Taghmata Army List.cat':key==='knights'?'(HH) Mechanicum - Questoris Knight.cat':key==='talons'?'(HH) Talons of the Emperor Army List.cat':key==='craftworld'?'(HH) Craftworld Eldar - Asuryani Army List.cat':key==='necron'?'(HH) Necron Army List.cat':key==='chaosdaemons'?'(HH) Chaos Daemons Army List.cat':key==='ruinstorm'?'(HH) Daemons of the Ruinstorm Army List.cat':'(HH) Legiones Astartes - Crusade Army List.cat';
+  const m=CAMPAIGN_SPECIALIST_META_280[name]||['Elites',150,5,10,20],role=m[0],pts=m[1],min=m[2],max=m[3],extra=m[4];
+  const stats=key==='craftworld'?[4,4,3,3,1,5,2,9,'3+']:key==='necron'?[4,4,5,5,1,2,2,10,'3+']:key==='talons'?[5,5,5,5,2,5,3,9,'2+']:['chaosdaemons','ruinstorm'].includes(key)?[5,3,5,5,2,4,3,8,'5+']:key==='solar'?[4,4,3,3,1,3,2,9,'4+']:key==='mechanicum'||key==='knights'?[4,4,5,5,2,3,2,9,'3+']:[4,4,4,4,1,4,2,9,/Terminator|Gorgon|Justaerin|Firedrake|Deathshroud|Grave Warden|Lernaean|Varagyr|Sekhmet|Ebon Keshig|Fulmentarus/.test(name)?'2+':'3+'];
+  const type=/Knight Magaera|Moirax/.test(name)?'Super-heavy Walker':/Automata|Homonculex|Thanatar|Vorax/.test(name)?'Monstrous Creature':/Cavalry|Keshig|Shining Spears/.test(name)?'Cavalry':/Assault|Raptor|Hawks|Spectres|Dawnbreaker|Ashen Circle/.test(name)?'Jump Infantry':'Infantry';
+  const t=hh1Inf(name,role,pts,min,max,extra,stats,type,'Repository-derived leader specialist package',['Leader of Renown Retinue'],[],source);t.leaderUnlock280=true;t.uniqueSpecialist280=true;return t;
+}
+
+function campaignLeaderRecord280(id,factions,name,affiliation,points,statline,protocol,specialists,lore,scale='renown',source='(HH) Legiones Astartes - Crusade Army List.cat',role=null){return{id:`leader-${id}`,factions:Array.isArray(factions)?factions:[factions],name,affiliation,points,statline,protocol,specialists,lore,scale,source,role:role||(scale==='primarch'||scale==='apex'?'Lord of War':'HQ')}}
+const CAMPAIGN_LEADERS_280=[
+  /* Primarchs — all eighteen repository profiles. Traitor and equivocal Primarchs may also command Dark Compliance. */
+  campaignLeaderRecord280('corax','legion','Corvus Corax','XIX Legion — Raven Guard',450,'WS7 BS6 S6 T6 W6 I7 A6 Ld10 Sv2+','infiltration',['Mor Deythan Strike Squad','Dark Fury Assault Squad'],'Corax makes war through liberation cells, concealed approach and sudden decapitation strikes; his campaign doctrine establishes covert footholds before open conquest.','primarch'),
+  campaignLeaderRecord280('ferrus','legion','Ferrus Manus','X Legion — Iron Hands',455,'WS7 BS6 S7 T7 W6 I5 A4 Ld10 Sv2+','forge',['Gorgon Terminator Squad','Medusan Immortals'],'Ferrus binds Legion warfare to relentless manufacture and bodily endurance, repairing damaged formations and fabricating elite Medusan reserves.','primarch'),
+  campaignLeaderRecord280('fulgrim',['legion','darkcompliance'],'Fulgrim the Illuminator','III Legion — Emperor’s Children',380,'WS8 BS6 S6 T6 W6 I8 A5 Ld10 Sv2+','duellist',['Phoenix Terminator Squad','Palatine Blade Squad'],'Fulgrim pursues the exemplary killing stroke: victories become decapitation actions and draw perfected warrior cadres into his retinue.','primarch'),
+  campaignLeaderRecord280('horus',['legion','darkcompliance'],'Horus the Warmaster','XVI Legion — Sons of Horus',500,'WS8 BS5 S7 T6 W6 I6 A5 Ld10 Sv2+','grand_strategy',['Justaerin Terminator Squad','Reaver Attack Squad'],'The Warmaster coordinates spear-tip fleets across an entire theatre, banking decisive translations and consolidating captured nodes before an enemy can recover.','primarch'),
+  campaignLeaderRecord280('curze',['legion','darkcompliance'],'Konrad Curze','VIII Legion — Night Lords',435,'WS8 BS6 S6 T6 W6 I7 A5 Ld10 Sv2+','terror',['Night Raptor Squad','Terror Squad'],'Curze treats fear as infrastructure: conquest breaks local order and the enemy command cycle rather than merely improving a battle roll.','primarch'),
+  campaignLeaderRecord280('lorgar',['legion','darkcompliance'],'Lorgar','XVII Legion — Word Bearers',375,'WS6 BS6 S6 T6 W5 I6 A4 Ld10 Sv2+','daemon_rift',['Gal Vorbak Dark Brethren','Ashen Circle, The'],'Lorgar turns compliance into revelation; battle sites can become persistent breaches that sustain Gal Vorbak and other consecrated warhosts.','primarch'),
+  campaignLeaderRecord280('guilliman','legion','Roboute Guilliman','XIII Legion — Ultramarines',400,'WS7 BS6 S6 T6 W6 I6 A4 Ld10 Sv2+','governance',['Invictarus Suzerain Squad','Fulmentarus Terminator Squad'],'Guilliman’s strength is realmcraft: occupied populations are incorporated into a functioning polity and undefended frontiers are systematically reinforced.','primarch'),
+  campaignLeaderRecord280('dorn','legion','Rogal Dorn','VII Legion — Imperial Fists',385,'WS8 BS5 S6 T6 W6 I5 A4 Ld10 Sv2+','fortress',['Phalanx Warder Squad','Templar Brethren'],'Dorn converts strategic depth into works of defence, automatically raising the weakest bastion in the faction’s territory.','primarch'),
+  campaignLeaderRecord280('angron',['legion','darkcompliance'],'Angron, the Primarch','XII Legion — World Eaters',400,'WS9 BS5 S7 T6 W5 I7 A6 Ld10 Sv3+','berserker',['Rampager Squads','Red Hand Destroyer Assault Squad'],'Angron’s host feeds upon victory: successful assaults summon fresh Rampagers, while defeat rebounds as civic violence behind the line.','primarch'),
+  campaignLeaderRecord280('perturabo',['legion','darkcompliance'],'Perturabo, the Primarch','IV Legion — Iron Warriors',455,'WS8 BS6 S7 T6 W6 I5 A4 Ld10 Sv2+','siege',['Tyrant Siege Terminator Squad','Iron Havoc Support Squad'],'Perturabo prepares campaigns as siege equations; a banked siege order turns the next conquered system into an immediate fortified bridgehead.','primarch'),
+  campaignLeaderRecord280('vulkan','legion','Vulkan','XVIII Legion — Salamanders',425,'WS7 BS5 S7 T7 W6 I5 A4 Ld10 Sv2+','inspiration',['Firedrake Terminator Squad','Pyroclast Squad'],'Vulkan’s presence preserves both warriors and the people they defend, rallying depleted armies and maintaining a rapid rescue response.','primarch'),
+  campaignLeaderRecord280('mortarion',['legion','darkcompliance'],'Mortarion the Reaper','XIV Legion — Death Guard',425,'WS7 BS5 S6 T7 W7 I5 A5 Ld10 Sv2+','attrition',['Deathshroud Terminator Squad','Grave Warden Terminator Squad'],'Mortarion’s columns win by continuing when others cannot, restoring worn formations and converting victory into renewed logistical endurance.','primarch'),
+  campaignLeaderRecord280('alpharius',['legion','darkcompliance'],'Alpharius','XX Legion — Alpha Legion',415,'WS7 BS7 S6 T6 W6 I6 A5 Ld10 Sv2+','infiltration',['Lernaean Terminator Squad','Headhunter Kill Teams'],'Alpharius establishes hidden hands beyond formal borders, seeding presence and routes of attack without prematurely claiming territory.','primarch'),
+  campaignLeaderRecord280('russ','legion','Leman Russ','VI Legion — Space Wolves',455,'WS9 BS6 S6 T6 W6 I7 A6 Ld10 Sv2+','hunter',['Deathsworn, The','Varagyr Wolf Guard Terminator Squad'],'Russ casts a hunter’s net across the theatre, keeping a rapid pursuit order ready and breaking the command structure of a defeated quarry.','primarch'),
+  campaignLeaderRecord280('magnus',['legion','darkcompliance'],'Magnus the Red','XV Legion — Thousand Sons',495,'WS7 BS5 S7 T6 W6 I6 A4 Ld10 Sv2+/4++','prophecy',['Sekhmet Terminator Cabal','Khenetai Blade Occult Cabal'],'Magnus reads possible futures: a banked omen can turn a lost defensive battle into a foreseen strategic withdrawal that preserves the system.','primarch'),
+  campaignLeaderRecord280('jaghatai','legion','Jaghatai Khan','V Legion — White Scars',395,'WS7 BS6 S6 T6 W6 I8 A6 Ld10 Sv2+ (mounted T7 I7)','rapid_strike',['Ebon Keshig, The','Golden Keshig, The'],'The Khan refuses fixed fronts; each turn his host prepares one free strategic translation for an unexpected move or invasion.','primarch'),
+  campaignLeaderRecord280('sanguinius','legion','Sanguinius','IX Legion — Blood Angels',485,'WS9 BS5 S6 T6 W6 I7 A6 Ld10 Sv2+','inspiration',['Dawnbreaker Cohort','Crimson Paladins'],'Sanguinius turns personal example into operational cohesion, rallying the weakest army and keeping a rescue translation ready when none require recovery.','primarch'),
+  campaignLeaderRecord280('lion','legion',"Lion El’Jonson",'I Legion — Dark Angels',460,'WS8 BS5 S7 T6 W6 I7 A5 Ld10 Sv2+','hunter',['Deathwing Companions Detachment','Dreadwing Interemptor Squad'],'The Lion hunts command nexuses with compartmentalised wings, preserving a pursuit move and disrupting each defeated enemy headquarters.','primarch'),
+
+  /* I–VII Legion commanders and Shattered Legion leaders. */
+  campaignLeaderRecord280('sedras','legion','Marduk Sedras','I Legion — Dark Angels',220,'WS6 BS5 S4 T4 W4 I5 A4 Ld10 Sv2+','archive',['Deathwing Companions Detachment','Dreadwing Interemptor Squad'],'Sedras is a keeper of proscribed arsenals and old campaigns; victories add captured formations to a strategic relic archive.'),
+  campaignLeaderRecord280('corswain','legion','Corswain','I Legion — Dark Angels',200,'WS7 BS4 S4 T4 W4 I5 A4 Ld10 Sv2+','duellist',['Deathwing Companions Detachment','Dreadwing Interemptor Squad'],'Corswain’s battlefield challenges are operational decapitations that leave defeated command structures unable to answer immediately.'),
+  campaignLeaderRecord280('holguin','legion','Holguin','I Legion — Dark Angels',200,'WS6 BS5 S4 T4 W4 I5 A4 Ld10 Sv2+','fortress',['Deathwing Companions Detachment','Dreadwing Interemptor Squad'],'Holguin’s Deathwing cadres hold the most threatened node and turn elite presence into lasting defensive works.'),
+  campaignLeaderRecord280('redloss','legion','Farith Redloss','I Legion — Dark Angels',200,'WS6 BS6 S4 T4 W3 I5 A4 Ld10 Sv2+','siege',['Dreadwing Interemptor Squad','Deathwing Companions Detachment'],'Redloss commits the Dreadwing to terminal objectives; captured ground is immediately remade as a hardened extermination bridgehead.'),
+  campaignLeaderRecord280('thole','legion','Nakrid Thole','I Legion — Dark Angels',185,'WS6 BS5 S4 T4 W3 I6 A4 Ld9 Sv2+','assassination',['Deathwing Companions Detachment','Dreadwing Interemptor Squad'],'Thole’s hunts seed covert contact at the battle site and sever the enemy’s next command cycle.'),
+  campaignLeaderRecord280('nemean','legion','The Nemean Reaver','Blackshields / former I Legion',180,'WS6 BS5 S4 T5 W3 I5 A3 Ld10 Sv2+','resistance',['Blackshield Marauder Squad','Knight-Errant'],'The Nemean Reaver gathers dispossessed survivors into a durable independent host that grows again after setbacks.'),
+  campaignLeaderRecord280('golg',['legion','darkcompliance'],'Erasmus Golg','IV Legion — Iron Warriors',175,'WS6 BS5 S4 T4 W3 I5 A3 Ld9 Sv2+','siege',['Tyrant Siege Terminator Squad','Iron Havoc Support Squad'],'Golg advances behind methodical Tyrant siege cadres, converting success into a fortified line of departure.'),
+  campaignLeaderRecord280('vhalen','legion','Kyr Vhalen','IV Legion — Iron Warriors',195,'WS6 BS5 S4 T4 W4 I5 A4 Ld10 Sv2+','fortress',['Iron Havoc Support Squad','Tyrant Siege Terminator Squad'],'Vhalen’s defence of Paramar is represented by reinforcing the weakest strategic bastion instead of a generic defence bonus.'),
+  campaignLeaderRecord280('dreygur',['legion','darkcompliance'],'Nârik Dreygur','IV Legion — Iron Warriors',135,'WS5 BS5 S4 T4 W3 I5 A3 Ld9 Sv2+','forge',['Iron Havoc Support Squad','Blackshield Marauder Squad'],'Dreygur keeps battered engines and outcast formations operational, repairing the weakest asset before fabricating another cadre.'),
+  campaignLeaderRecord280('qin-xa','legion','Qin Xa','V Legion — White Scars',220,'WS6 BS4 S4 T4 W4 I6 A5 Ld10 Sv2+','rapid_strike',['Golden Keshig, The','Ebon Keshig, The'],'Qin Xa leads the Keshig through sudden concentration and withdrawal, banking a free strategic translation each turn.'),
+  campaignLeaderRecord280('tsolmon','legion','Tsolmon Khan','V Legion — White Scars',180,'WS6 BS5 S5 T4 W3 I5 A4 Ld10 Sv2+','hunter',['Ebon Keshig, The','Golden Keshig, The'],'Tsolmon Khan keeps a mobile hunt group ready to exploit contact and disrupt a defeated foe’s headquarters.'),
+  campaignLeaderRecord280('geigor','legion','Geigor Fell-Hand','VI Legion — Space Wolves',135,'WS5 BS5 S4 T4 W3 I5 A3 Ld9 Sv3+','berserker',['Deathsworn, The','Varagyr Wolf Guard Terminator Squad'],'Geigor’s aggressive spearhead draws Deathsworn to victories and accepts the political cost of defeat.'),
+  campaignLeaderRecord280('hvarl','legion','Hvarl Red-Blade','VI Legion — Space Wolves',210,'WS6 BS5 S4 T4 W4 I5 A4 Ld9 Sv2+','hunter',['Varagyr Wolf Guard Terminator Squad','Deathsworn, The'],'Hvarl ranges ahead of the main host, holding a pursuit order and fixing defeated prey for the next turn.'),
+  campaignLeaderRecord280('polux','legion','Alexis Polux','VII Legion — Imperial Fists',165,'WS6 BS4 S5 T4 W3 I5 A3 Ld10 Sv3+','void_command',['Phalanx Warder Squad','Templar Brethren'],'Polux links void command to stubborn ground defence, repairing fleets and preserving a translation for the next crisis.'),
+  campaignLeaderRecord280('sigismund','legion','Sigismund','VII Legion — Imperial Fists',230,'WS7 BS4 S4 T4 W4 I5 A4 Ld10 Sv2+','duellist',['Templar Brethren','Phalanx Warder Squad'],'Sigismund’s challenge removes enemy leadership from the next command cycle and calls Templar brethren to proven victories.'),
+  campaignLeaderRecord280('rann','legion','Fafnir Rann','VII Legion — Imperial Fists',200,'WS6 BS5 S4 T4 W3 I5 A4 Ld10 Sv2+','fortress',['Phalanx Warder Squad','Templar Brethren'],'Rann turns boarding discipline and shield-wall doctrine into a continuously strengthened frontier node.'),
+  /* VIII–XIV Legion commanders. */
+  campaignLeaderRecord280('llansahai',['legion','darkcompliance'],'Mawdrym Llansahai','VIII Legion — Night Lords',135,'WS5 BS4 S4 T4 W2 I5 A2 Ld9 Sv3+','terror',['Terror Squad','Night Raptor Squad'],'The Flaymaster turns exemplary atrocity into civic collapse at conquered systems and command paralysis among survivors.'),
+  campaignLeaderRecord280('sevatar',['legion','darkcompliance'],'Sevatar','VIII Legion — Night Lords',175,'WS7 BS5 S4 T4 W3 I6 A4 Ld9 Sv3+','duellist',['Night Raptor Squad','Terror Squad'],'Sevatar couples prescient duelling with ruthless command decapitation, leaving a defeated enemy unable to answer at once.'),
+  campaignLeaderRecord280('ophion',['legion','darkcompliance'],'Kheron Ophion of the Kyroptera','VIII Legion — Night Lords',165,'WS6 BS5 S4 T4 W3 I5 A4 Ld10 Sv3+','resistance',['Terror Squad','Night Raptor Squad'],'Ophion’s loyalty to his condemned warriors turns remnants into a force that recovers and musters survivors after defeat.'),
+  campaignLeaderRecord280('crohne','legion','Judiciar Aster Crohne','IX Legion — Blood Angels',155,'WS5 BS5 S4 T4 W3 I5 A3 Ld10 Sv2+','inspiration',['Dawnbreaker Cohort','Crimson Paladins'],'Crohne channels the Blood Angels’ fury through discipline, rallying weakened formations before releasing a rapid response.'),
+  campaignLeaderRecord280('raldoron','legion','Chapter Master Raldoron','IX Legion — Blood Angels',180,'WS7 BS5 S4 T4 W3 I5 A4 Ld10 Sv2+','governance',['Crimson Paladins','Dawnbreaker Cohort'],'Raldoron’s measured command stabilises what the Legion wins, integrating occupied settlements instead of abandoning them to disorder.'),
+  campaignLeaderRecord280('zephon','legion','Dominion Zephon','IX Legion — Blood Angels',185,'WS6 BS5 S4 T4 W3 I5 A4 Ld10 Sv2+','rapid_strike',['Dawnbreaker Cohort','Crimson Paladins'],'Zephon’s jump-borne interventions preserve one sudden strategic translation for threatened allies or a decisive assault.'),
+  campaignLeaderRecord280('autek','legion','Iron-father Autek Mor','X Legion — Iron Hands',225,'WS6 BS5 S5 T5 W3 I4 A3 Ld10 Sv2+','siege',['Gorgon Terminator Squad','Medusan Immortals'],'Autek Mor answers betrayal with planetary-scale force; each prepared victory becomes a fortified extermination base.'),
+  campaignLeaderRecord280('meduson','legion','Shadrak Meduson','X Legion — Iron Hands',195,'WS6 BS5 S4 T4 W3 I5 A3 Ld10 Sv2+','infiltration',['Medusan Immortals','Gorgon Terminator Squad'],'Meduson coordinates scattered Shattered Legion cells, establishing covert presence beyond the formal frontier before striking.'),
+  campaignLeaderRecord280('orth','legion','Spearhead-Centurion Castrmen Orth','X Legion — Iron Hands',80,'WS5 BS5 S4 T4 W2 I4 A3 Ld9 Sv3+','void_command',['Medusan Immortals','Gorgon Terminator Squad'],'Orth’s armoured spearheads link fleet movement, repair and concentrated mechanised response across the theatre.'),
+  campaignLeaderRecord280('tarvitz','legion','Captain Saul Tarvitz','III Legion — Loyalist Emperor’s Children',135,'WS6 BS4 S4 T4 W3 I5 A3 Ld10 Sv2+','resistance',['Palatine Blade Squad','Blackshield Marauder Squad'],'Tarvitz’s Isstvan resistance becomes a survivor network that restores battered armies and grows a cadre after defeat.'),
+  campaignLeaderRecord280('rylanor','legion','Rylanor the Unyielding','III Legion — Loyalist Emperor’s Children',255,'WS6 BS5 S7 AV13/12/10 I4 A2 HP3','resistance',['Palatine Blade Squad','Phoenix Terminator Squad'],'Rylanor’s venerable defiance holds a defeated host together: damaged formations recover and a loyal survivor cadre musters after reversals.','renown','(HH) Legiones Astartes - Crusade Army List.cat','Elites'),
+  campaignLeaderRecord280('eidolon',['legion','darkcompliance'],'Lord Commander Eidolon','III Legion — Emperor’s Children',185,'WS6 BS5 S4 T4 W3 I5 A4 Ld10 Sv2+','rapid_strike',['Phoenix Terminator Squad','Palatine Blade Squad'],'Eidolon drives brutal, fast concentrations of elite force and keeps a fleet translation ready for the next display of supremacy.'),
+  campaignLeaderRecord280('dracos','legion','Cassian Dracos','XVIII Legion — Salamanders',275,'WS6 BS5 S6(10) AV14/12/10 I4 A4 HP4','resurrection',['Firedrake Terminator Squad','Pyroclast Squad'],'Dracos, the Dragon Revenant, cannot be treated as a disposable modifier: his missing command detachment reforms after recovery and repairs its host.'),
+  campaignLeaderRecord280('dracos-reborn','legion','Cassian Dracos Reborn','XVIII Legion — Salamanders',295,'WS6 BS5 S6 AV14/12/10 I4 A4 HP4','resurrection',['Pyroclast Squad','Firedrake Terminator Squad'],'Dracos Reborn embodies literal return from destruction, recreating his command formation after a delay and sustaining its army.'),
+  campaignLeaderRecord280('jurr','legion','Xiaphas Jurr','XVIII Legion — Salamanders',145,'WS5 BS5 S4 T4 W2 I5 A3 Ld10 Sv2+','inspiration',['Pyroclast Squad','Firedrake Terminator Squad'],'Jurr’s Covenant of Fire rallies depleted warriors and holds a rapid relief order for threatened human domains.'),
+  campaignLeaderRecord280('rhytan','legion',"Lord Chaplain Nomus Rhy’tan",'XVIII Legion — Salamanders',215,'WS6 BS4 S4 T4 W3 I5 A3 Ld10 Sv2+','fortress',['Firedrake Terminator Squad','Pyroclast Squad'],'Rhy’tan’s Nocturnean duty binds elite guardians to the weakest holding and turns their presence into lasting defence.'),
+  campaignLeaderRecord280('haar','legion','Endryd Haar','Blackshields / XII Legion exile',185,'WS6 BS4 S4 T5 W3 I4 A4 Ld10 Sv2+','berserker',['Blackshield Marauder Squad','Rampager Squads'],'Haar’s Fangs gather exiles around violent success; victory recruits Marauders, while defeat exacts a real cost from the supporting polity.'),
+  campaignLeaderRecord280('surlak',['legion','darkcompliance'],'Gahlan Surlak','XII Legion — World Eaters',110,'WS5 BS5 S4 T4 W2 I5 A3 Ld9 Sv3+','medicae',['Rampager Squads','Red Hand Destroyer Assault Squad'],'Surlak’s brutal Apothecarion restores the most depleted formation and clears a settlement affliction through ruthless intervention.'),
+  campaignLeaderRecord280('darr','legion','Centurion Shabran Darr','XII Legion — Loyalist World Eaters',115,'WS6 BS5 S4 T4 W2 I5 A3 Ld9 Sv3+','resistance',['Red Hand Destroyer Assault Squad','Rampager Squads'],'Darr turns betrayed Legionaries into a stubborn survivor cadre that recovers after loss rather than dissolving.'),
+  campaignLeaderRecord280('kharn',['legion','darkcompliance'],'Khârn the Bloody','XII Legion — World Eaters',170,'WS7 BS5 S4 T4 W3 I5 A4 Ld9 Sv2+','berserker',['Rampager Squads','Red Hand Destroyer Assault Squad'],'Khârn converts battlefield victory into immediate assault reinforcement and defeat into dangerous unrest behind the lines.'),
+  campaignLeaderRecord280('ventanus','legion','Captain Remus Ventanus','XIII Legion — Ultramarines',155,'WS5 BS5 S4 T4 W3 I5 A3 Ld10 Sv3+','governance',['Invictarus Suzerain Squad','Fulmentarus Terminator Squad'],'Ventanus rebuilds command amid catastrophe, integrating occupied settlements and hardening whatever frontier remains.'),
+  campaignLeaderRecord280('telemechrus','legion','Honoured Telemechrus','XIII Legion — Ultramarines',255,'WS6 BS5 S7 AV13/12/10 I4 A3 HP4','inspiration',['Invictarus Suzerain Squad','Fulmentarus Terminator Squad'],'Telemechrus acts as a living icon of the Legion: his presence restores the weakest host and prepares a rapid relief translation when the line is already secure.','renown','(HH) Legiones Astartes - Crusade Army List.cat','Elites'),
+  campaignLeaderRecord280('morturg','legion','Section Leader Crysos Morturg','XIV Legion — Loyalist Death Guard',175,'WS5 BS5 S4 T4 W3 I5 A3 Ld9 Sv3+','resistance',['Grave Warden Terminator Squad','Blackshield Marauder Squad'],'Morturg’s survival and guerrilla command gather scattered loyalists into formations that recover and return after reversals.'),
+  campaignLeaderRecord280('garro','legion','Nathaniel Garro','Knight-Errant / XIV Legion',175,'WS5 BS5 S4 T4 W3 I5 A4 Ld10 Sv2+','resistance',['Knight-Errant','Deathshroud Terminator Squad'],'Garro preserves a core of purpose through betrayal, reforming a survivor cadre after defeat and sustaining weakened armies.'),
+  campaignLeaderRecord280('rask',['legion','darkcompliance'],'Marshal Durak Rask','XIV Legion — Death Guard',165,'WS5 BS5 S4 T4 W3 I4 A3 Ld9 Sv2+','siege',['Grave Warden Terminator Squad','Deathshroud Terminator Squad'],'Rask’s heavy siege command converts the next successful assault into a durable artillery bridgehead.'),
+  campaignLeaderRecord280('typhon',['legion','darkcompliance'],'Calas Typhon','XIV Legion — Death Guard',200,'WS6 BS5 S4 T4 W3 I5 A3 Ld10 Sv2+','plague',['Grave Warden Terminator Squad','Deathshroud Terminator Squad'],'Typhon leaves conquered settlements under a spreading contagion that damages civic function until governance can repair it.'),
+
+  /* XV–XX Legion commanders, Warmaster cadres and Knights-Errant. */
+  campaignLeaderRecord280('ahriman','legion','Ahzek Ahriman','XV Legion — Thousand Sons',225,'WS5 BS5 S4 T4 W3 I5 A3 Ld10 Sv2+/4++','prophecy',['Sekhmet Terminator Cabal','Khenetai Blade Occult Cabal'],'Ahriman’s divinations bank an omen that can preserve a defended system through a precisely timed withdrawal.'),
+  campaignLeaderRecord280('amon','legion','Magistus Amon','XV Legion — Thousand Sons',170,'WS6 BS5 S4 T4 W3 I5 A3 Ld10 Sv2+','infiltration',['Khenetai Blade Occult Cabal','Sekhmet Terminator Cabal'],'Amon uses occult concealment and intelligence craft to establish hidden strategic presence beyond the visible frontier.'),
+  campaignLeaderRecord280('rubio','legion','Tylos Rubio','Knight-Errant / former XIII Legion',140,'WS5 BS5 S4 T4 W2 I5 A2 Ld10 Sv2+','prophecy',['Knight-Errant','Invictarus Suzerain Squad'],'Rubio’s restored psychic sight becomes a banked omen used to preserve a defensive position through foreseen withdrawal.'),
+  campaignLeaderRecord280('loken','legion','Garviel Loken','Knight-Errant / XVI Legion loyalist',175,'WS6 BS5 S4 T4 W3 I6 A4 Ld10 Sv3+','resistance',['Knight-Errant','Justaerin Terminator Squad'],'Loken’s Luna Wolf loyalists survive treachery by rebuilding around a stubborn core; losses can generate a fresh survivor cadre.'),
+  campaignLeaderRecord280('maloghurst',['legion','darkcompliance'],'Maloghurst the Twisted','XVI Legion — Sons of Horus',140,'WS5 BS5 S4 T4 W3 I4 A2 Ld10 Sv3+','diplomacy',['Reaver Attack Squad','Justaerin Terminator Squad'],'Maloghurst manipulates coalitions and grievances, creating diplomatic openings where a purely military commander would find none.'),
+  campaignLeaderRecord280('abaddon',['legion','darkcompliance'],'Ezekyle Abaddon','XVI Legion — Sons of Horus',215,'WS7 BS5 S4 T4 W3 I5 A4 Ld10 Sv2+','duellist',['Justaerin Terminator Squad','Reaver Attack Squad'],'Abaddon’s spear-tip challenges destroy opposing headquarters and draw Justaerin into victorious command detachments.'),
+  campaignLeaderRecord280('marr',['legion','darkcompliance'],'Tybalt Marr','XVI Legion — Sons of Horus',175,'WS5 BS5 S4 T4 W3 I5 A3 Ld10 Sv2+','hunter',['Reaver Attack Squad','Justaerin Terminator Squad'],'Marr’s pursuit warfare keeps a translation ready and leaves a defeated enemy marked and command-disrupted.'),
+  campaignLeaderRecord280('erebus',['legion','darkcompliance'],'High Chaplain Erebus','XVII Legion — Word Bearers',195,'WS5 BS4 S4 T4 W3 I5 A3 Ld10 Sv2+','daemon_rift',['Gal Vorbak Dark Brethren','Ashen Circle, The'],'Erebus weaponises ritual and betrayal: battle sites become persistent breaches able to manifest consecrated troops.'),
+  campaignLeaderRecord280('layak',['legion','darkcompliance'],'Zardu Layak','XVII Legion — Word Bearers',175,'WS5 BS5 S4 T5 W2 I5 A2 Ld10 Sv2+','daemon_rift',['Gal Vorbak Dark Brethren','Ashen Circle, The'],'Layak’s Crimson Apostle rituals turn bloodshed into an aetheric anchor that periodically sustains new manifestations.'),
+  campaignLeaderRecord280('beloth',['legion','darkcompliance'],'Hol Beloth','XVII Legion — Word Bearers',165,'WS6 BS5 S4 T4 W3 I5 A4 Ld10 Sv2+','zeal',['Ashen Circle, The','Gal Vorbak Dark Brethren'],'Beloth’s assault companies gather around ideological momentum, adding a real specialist detachment on cadence.'),
+  campaignLeaderRecord280('kor-phaeron',['legion','darkcompliance'],'Kor Phaeron','XVII Legion — Word Bearers',155,'WS4 BS4 S4 T3 W4 I5 A2 Ld10 Sv2+','governance',['Gal Vorbak Dark Brethren','Ashen Circle, The'],'Kor Phaeron converts compliance into cultic administration, absorbing occupied settlements into the conquering polity.'),
+  campaignLeaderRecord280('argel-tal',['legion','darkcompliance'],'Argel Tal','XVII Legion — Word Bearers',185,'WS6 BS5 S5 T5 W4 I5 A5 Ld10 Sv2+','daemon_rift',['Gal Vorbak Dark Brethren','Possessed Legionaries'],'Argel Tal’s Gal Vorbak make the boundary between Legion and daemon operationally real, opening breaches where they fight.'),
+  campaignLeaderRecord280('nex','legion','Moritat-Prime Kaedes Nex','XIX Legion — Raven Guard',155,'WS5 BS6 S4 T4 W2 I6 A3 Ld9 Sv3+','assassination',['Mor Deythan Strike Squad','Dark Fury Assault Squad'],'Nex eliminates command figures and leaves a covert Raven Guard presence at the scene of victory.'),
+  campaignLeaderRecord280('maun','legion','Strike Captain Alvarex Maun','XIX Legion — Raven Guard',140,'WS5 BS5 S4 T4 W3 I4 A3 Ld10 Sv2+','rapid_strike',['Mor Deythan Strike Squad','Dark Fury Assault Squad'],'Maun’s drop-assault coordination banks one sudden translation for intervention or invasion every turn.'),
+  campaignLeaderRecord280('dynat','legion','Armillus Dynat','XX Legion — Alpha Legion',200,'WS6 BS5 S4 T4 W4 I5 A3 Ld10 Sv2+','infiltration',['Lernaean Terminator Squad','Headhunter Kill Teams'],'Dynat’s harrowmaster networks establish covert presence at the edge of an enemy domain before the main force commits.'),
+  campaignLeaderRecord280('exodus','legion','Exodus','XX Legion — Alpha Legion',115,'WS5 BS6 S4 T4 W3 I5 A2 Ld9 Sv3+','assassination',['Headhunter Kill Teams','Lernaean Terminator Squad'],'Exodus turns a battlefield victory into the removal of enemy command capacity and a concealed local cell.'),
+  campaignLeaderRecord280('skorr',['legion','darkcompliance'],'Autilon Skorr','XX Legion — Alpha Legion',125,'WS5 BS5 S4 T4 W2 I5 A3 Ld10 Sv2+','infiltration',['Headhunter Kill Teams','Lernaean Terminator Squad'],'Skorr’s mutable plans seed strategic presence beyond ownership, creating future attack routes without overt conquest.'),
+
+  /* Solar Auxilia, Mechanicum, Questoris and Talons. */
+  campaignLeaderRecord280('masade','solar','Lord Marshal Ireton MaSade','Solar Auxilia — Lord Marshal',155,'WS3 BS5 S3 T3 W3 I3 A2 Ld10 Sv2+','void_command',['Household Retinue Squad','Veletaris Storm Section'],'MaSade’s void-tested cohort command repairs the fleet, preserves strategic lift and keeps one translation order in reserve.','renown','(HH) Solar Auxilia - Crusade Army List.cat'),
+  campaignLeaderRecord280('jovan','solar','Surgeon-Primus Aevos Jovan','Solar Auxilia — Surgeon-Primus',50,'WS2 BS2 S3 T3 W2 I3 A1 Ld9 Sv4+','medicae',['Household Retinue Squad','Veletaris Storm Section'],'Jovan’s battlefield medicine restores the most depleted cohort and treats one afflicted settlement instead of adding abstract durability.','renown','(HH) Solar Auxilia - Crusade Army List.cat'),
+  campaignLeaderRecord280('scoria','mechanicum','Anacharis Scoria','Mechanicum — Archmagos of Xana II',275,'WS5 BS5 S5 T6* W4 I5 A3 Ld10 Sv2+','forge',['The Homonculex','Thanatar Siege-automata'],'Scoria’s cybertheurgic war-forges repair damaged assets and fabricate fresh engines when the host is already at full readiness.','renown','(HH) Mechanicum - Taghmata Army List.cat'),
+  campaignLeaderRecord280('draykavac',['mechanicum','knights'],'Archmagos Draykavac','Mechanicum / Questoris — Lord of Cyclothrathe',240,'WS4 BS5 S4 T6* W3 I4 A2 Ld10 Sv2+','forge',['Questoris Knight Magaera','Mechanicum Knight Moirax Talon'],'Draykavac binds enslaved engines and Knight households to an industrial command web that repairs or fabricates a war asset.','renown','(HH) Mechanicum - Taghmata Army List.cat'),
+  campaignLeaderRecord280('satarael','mechanicum','Archmagos Inar Satarael','Mechanicum — Cybernetica Archmagos',295,'WS3 BS5 S6 T6 W5 I4 A3 Ld10 Sv3+','resurrection',['Scyllax Guardian-Automata Covenant','Vorax Battle-automata Maniple'],'Satarael’s self-repairing Cybernetica network reconstructs a missing command formation and sustains the army around it.','renown','(HH) Mechanicum - Taghmata Army List.cat'),
+  campaignLeaderRecord280('decima','mechanicum','Magos Reductor Calleb Decima','Mechanicum — Ordo Reductor',175,'WS3 BS4 S5 T5* W3 I4 A2 Ld10 Sv3+','siege',['Myrmidon Secutor Host','Thanatar Siege-automata'],'Decima applies Ordo Reductor siege logic: a prepared order turns the next captured node into a functioning fortified base.','renown','(HH) Mechanicum - Taghmata Army List.cat'),
+  campaignLeaderRecord280('valdor','talons','Constantin Valdor','Talons — Captain-General of the Legio Custodes',325,'WS7 BS5 S5 T5 W5 I6 A5* Ld10 Sv2+','duellist',['Legio Custodes Hetaeron Guard Squad','Legio Custodes Aquilon Terminator Squad'],'Valdor’s intervention targets the decisive enemy command node, disrupting the loser and drawing Hetaeron reserves to proven success.','renown','(HH) Talons of the Emperor Army List.cat'),
+  campaignLeaderRecord280('krole','talons','Jenetia Krole','Talons — Knight-Commander of the Silent Sisterhood',150,'WS6 BS4 S3 T3 W3 I5 A4 Ld10 Sv2+','null_vigil',['Sisters of Silence Oblivion Knight Cadre','Legio Custodes Hetaeron Guard Squad'],'Krole’s null cadres suppress rebellion, close empyreal breaches and erase a local manifestation after victory.','renown','(HH) Talons of the Emperor Army List.cat'),
+
+  /* Craftworld Phoenix Lords and the Necron repository character. */
+  campaignLeaderRecord280('asurmen','craftworld','Asurmen','Asuryani — First Phoenix Lord',220,'WS7 BS7 S4 T4 W3 I7 A4 Ld10 Sv2+/4++*','aspect',['Dire Avengers','Howling Banshees'],'Asurmen’s Path of the Warrior rotates real Aspect Shrine cadres into the warhost on a three-turn cycle.','renown','(HH) Craftworld Eldar - Asuryani Army List.cat'),
+  campaignLeaderRecord280('maugan-ra','craftworld','Maugan Ra','Asuryani — Phoenix Lord of the Dark Reapers',195,'WS7 BS7 S4 T4 W3 I7 A4 Ld10 Sv2+','attrition',['Dark Reapers','Dire Avengers'],'Maugan Ra sustains an implacable advance, restoring depleted formations and bringing Dark Reaper fire support into the retinue.','renown','(HH) Craftworld Eldar - Asuryani Army List.cat'),
+  campaignLeaderRecord280('irillyth','craftworld','Irillyth','Asuryani — Phoenix Lord of the Shadow Spectres',180,'WS7 BS7 S4 T4 W3 I7 A4 Ld10 Sv2+','infiltration',['Shadow Spectres','Dire Avengers'],'Irillyth’s spectral hosts establish hidden presence beyond a formal border, opening an attack vector before occupation.','renown','(HH) Craftworld Eldar - Asuryani Army List.cat'),
+  campaignLeaderRecord280('baharroth','craftworld','Baharroth','Asuryani — Phoenix Lord of the Swooping Hawks',170,'WS7 BS7 S4 T4 W3 I7 A4 Ld10 Sv2+','rapid_strike',['Swooping Hawks','Dire Avengers'],'Baharroth’s skyborne warhost banks one free strategic translation per turn for intervention or escape.','renown','(HH) Craftworld Eldar - Asuryani Army List.cat'),
+  campaignLeaderRecord280('jain-zar','craftworld','Jain Zar','Asuryani — Phoenix Lord of the Howling Banshees',200,'WS7 BS7 S4 T4 W3 I7 A4 Ld10 Sv2+','duellist',['Howling Banshees','Dire Avengers'],'Jain Zar’s decapitation strikes break enemy command and call another Aspect cadre into the host after proven victories.','renown','(HH) Craftworld Eldar - Asuryani Army List.cat'),
+  campaignLeaderRecord280('fuegan','craftworld','Fuegan','Asuryani — Phoenix Lord of the Fire Dragons',220,'WS7 BS7 S5 T4 W3 I7 A4 Ld10 Sv2+','siege',['Fire Dragons','Dark Reapers'],'Fuegan carries destruction into the strongest position; a banked siege order hardens the breach after conquest.','renown','(HH) Craftworld Eldar - Asuryani Army List.cat'),
+  campaignLeaderRecord280('drastana','craftworld','Drastana','Asuryani — Shining Spears Phoenix Lord',250,'WS7 BS7 S4 T5 W3 I7 A4 Ld10 Sv2+','rapid_strike',['Shining Spears','Swooping Hawks'],'Drastana’s mounted hunt keeps a high-speed translation in reserve and delivers Shining Spears as the signature retinue.','renown','(HH) Craftworld Eldar - Asuryani Army List.cat'),
+  campaignLeaderRecord280('trazyn','necron','Trazyn the Infinite','Necron — Archaeovist of Solemnace',155,'WS5 BS5 S5 T5 W3 I2 A3 Ld10 Sv3+','archive',['Acquisition Phalanx Lychguard','Lychguard'],'Trazyn turns victories into acquisitions: an enemy formation is recorded in the collection and research advances with each new exhibit.','renown','(HH) Necron Army List.cat'),
+
+  /* Chaos Daemons and Ruinstorm characters from their standalone repository catalogues. */
+  campaignLeaderRecord280('anggrath','chaosdaemons',"An’ggrath the Unbound",'Chaos Daemons — Daemon Lord of Khorne',888,'WS10 BS4 S10 T8 W8 I5 A7 Ld10 Sv2+/3++','berserker',['Bloodletters of Khorne','Bloodcrushers of Khorne'],'An’ggrath turns every victory into another manifested assault wave; reversals spill the host’s violence into its own mortal support base.','apex','(HH) Chaos Daemons Army List.cat'),
+  campaignLeaderRecord280('belakor','chaosdaemons',"Be’lakor, the Dark Master",'Chaos Daemons — First Daemon Prince',350,'WS9 BS5 S6 T5 W4 I8 A5 Ld10 Inv4++','infiltration',['Daemonettes of Slaanesh','Pink Horrors of Tzeentch'],'Be’lakor works through shadows and divided loyalties, seeding covert presence before a daemonic host openly manifests.','apex','(HH) Chaos Daemons Army List.cat'),
+  campaignLeaderRecord280('mamon','chaosdaemons','Mamon, Daemon Prince of Nurgle','Chaos Daemons — Scion of Nurgle',220,'WS7 BS5 S– T7 W5 I4 A– Ld9 Sv5+','plague',['Plaguebearers of Nurgle','Ruinstorm Daemon Beasts'],'Mamon leaves conquered settlements diseased and administratively crippled until their owner undertakes recovery.','renown','(HH) Chaos Daemons Army List.cat'),
+  campaignLeaderRecord280('uraka','chaosdaemons',"Uraka ‘The Warfiend’",'Chaos Daemons — Daemon Prince of Khorne',200,'WS7 BS5 S7 T5 W4 I6 A5 Ld9 Sv3+','berserker',['Bloodletters of Khorne','Flesh Hounds of Khorne'],'Uraka’s victories draw another Khornate assault pack through the breach; defeat turns rage inward against the rear area.','renown','(HH) Chaos Daemons Army List.cat'),
+  campaignLeaderRecord280('aetaos','chaosdaemons',"Aetaos’rau’keres",'Chaos Daemons — Daemon Lord of Tzeentch',999,'WS9 BS6 S8 T8 W9 I9 A5 Ld10 Inv3++','prophecy',['Pink Horrors of Tzeentch','Flamers of Tzeentch'],'Aetaos bends possible futures, banking an omen that preserves a defended domain through impossible withdrawal.','apex','(HH) Chaos Daemons Army List.cat'),
+  campaignLeaderRecord280('zarakynel','chaosdaemons','Zarakynel','Chaos Daemons — Daemon Lord of Slaanesh',666,'WS10 BS3 S7 T7 W6 I10 A5 Ld10 Inv3++','terror',['Daemonettes of Slaanesh','Ruinstorm Daemon Cavalry'],'Zarakynel weaponises obsession and dread, collapsing civic order and disrupting command after a victorious manifestation.','apex','(HH) Chaos Daemons Army List.cat'),
+  campaignLeaderRecord280('scabeiathrax','chaosdaemons','Scabeiathrax the Bloated','Chaos Daemons — Daemon Lord of Nurgle',777,'WS9 BS3 S8 T9 W6 I3 A5 Ld10 Inv3++','plague',['Plaguebearers of Nurgle','Ruinstorm Daemon Brutes'],'Scabeiathrax leaves a persistent contagion across settlements in the defeated system rather than receiving a simple strength bonus.','apex','(HH) Chaos Daemons Army List.cat'),
+  campaignLeaderRecord280('kugath','chaosdaemons',"Ku’gath, the Plaguefather",'Chaos Daemons — Great Unclean One',260,'WS6 BS3 S6 T7 W7 I4 A6 Ld9','plague',['Plaguebearers of Nurgle','Ruinstorm Daemon Beasts'],'Ku’gath’s experimental contagions damage local order and productivity after conquest and remain visible in settlement state.','renown','(HH) Chaos Daemons Army List.cat'),
+  campaignLeaderRecord280('masque','chaosdaemons','The Masque of Slaanesh','Chaos Daemons — Daemonic Herald',75,'WS7 BS6 S4 T3 W2 I7 A5 Ld8','terror',['Daemonettes of Slaanesh','Ruinstorm Daemon Cavalry'],'The Masque turns victory into social collapse, breaking civic order and delaying an enemy’s next coherent command response.','renown','(HH) Chaos Daemons Army List.cat'),
+  campaignLeaderRecord280('blue-scribes','chaosdaemons','The Blue Scribes','Chaos Daemons — Tzeentchian Heralds',81,'WS3 BS4 S3 T3 W2 I3 A1 Ld8','prophecy',['Pink Horrors of Tzeentch','Flamers of Tzeentch'],'The Scribes accumulate foreknowledge as a banked omen that can preserve territory when a defence fails.','renown','(HH) Chaos Daemons Army List.cat'),
+  campaignLeaderRecord280('kairos','chaosdaemons','Kairos Fateweaver','Chaos Daemons — Oracle of Tzeentch',300,'WS1 BS6 S5 T5 W5 I2 A1 Ld9','prophecy',['Pink Horrors of Tzeentch','Flamers of Tzeentch'],'Kairos reads both past and future, preserving one strategic domain through a foreseen withdrawal every omen cycle.','apex','(HH) Chaos Daemons Army List.cat'),
+  campaignLeaderRecord280('skarbrand','chaosdaemons','Skarbrand','Chaos Daemons — Exiled Bloodthirster',225,'WS10 BS10 S6 T6 W5 I10 A6 Ld9 Sv3+','berserker',['Bloodcrushers of Khorne','Bloodletters of Khorne'],'Skarbrand’s victories manifest another assault wave, while defeat unleashes uncontrolled violence against the host’s support base.','renown','(HH) Chaos Daemons Army List.cat'),
+  campaignLeaderRecord280('epidimius','chaosdaemons','Epidimius','Chaos Daemons — Tallyman of Nurgle',110,'WS5 BS5 S5 T5 W4 I4 A4 Ld9','plague',['Plaguebearers of Nurgle','Ruinstorm Daemon Beasts'],'Epidimius records conquest through a persistent tally of infected settlements, each requiring future civic repair.','renown','(HH) Chaos Daemons Army List.cat'),
+  campaignLeaderRecord280('kabandha','ruinstorm',"Ka’Bandha, Daemon General of Signus",'Ruinstorm — Daemon General',460,'WS9 BS5 S8 T7 W8 I6 A7 Ld10 Sv3+','berserker',['Ruinstorm Daemon Brutes','Ruinstorm Daemon Cavalry'],'Ka’Bandha turns slaughter into additional Ruinstorm manifestations and punishes failure with disorder among mortal thralls.','apex','(HH) Daemons of the Ruinstorm Army List.cat'),
+  campaignLeaderRecord280('corbax',['ruinstorm','chaosdaemons'],"Cor’bax Utterblight Unbound",'Ruinstorm — Daemon Lord of Decay',425,'WS6 BS3 S7 T8 W8 I3 A5 Ld10 Sv4+','plague',['Ruinstorm Daemon Brutes','Plaguebearers of Nurgle'],'Cor’bax transforms a conquered system into a decaying strategic burden whose settlements remain visibly afflicted.','apex','(HH) Daemons of the Ruinstorm Army List.cat'),
+  campaignLeaderRecord280('samus',['ruinstorm','chaosdaemons'],'Samus Unbound','Ruinstorm — Daemon Lord',415,'WS9 BS5 S8 T7 W7 I9 A6 Ld10 Sv3+','daemon_rift',['Possessed Legionaries','Ruinstorm Daemon Beasts'],'Samus turns bloodshed into a named, persistent breach; as the breach matures it manifests another specialist formation.','apex','(HH) Daemons of the Ruinstorm Army List.cat')
+];
+const CAMPAIGN_LEADER_BY_ID_280=Object.fromEntries(CAMPAIGN_LEADERS_280.map(x=>[x.id,x]));
+function campaignLeadersForFaction280(key){return CAMPAIGN_LEADERS_280.filter(x=>x.factions.includes(key))}
+function campaignLeaderForFaction280(key,id){const x=CAMPAIGN_LEADER_BY_ID_280[id];return x?.factions?.includes(key)?x:null}
+
+function campaignLeaderState280(fac){fac.leaderState280=fac.leaderState280&&typeof fac.leaderState280==='object'?fac.leaderState280:{};fac.leaderState280.history=Array.isArray(fac.leaderState280.history)?fac.leaderState280.history:[];fac.leaderState280.exhibits=Array.isArray(fac.leaderState280.exhibits)?fac.leaderState280.exhibits:[];return fac.leaderState280}
+function campaignLeaderBaseBenefits280(leader){const major=leader.scale==='primarch'||leader.scale==='apex';return{command:major?2:1,supply:major?20:8,materiel:major?25:10,influence:major?12:5,label:major?'+2 maximum Command • +20 Supply • +25 Materiel • +12 Influence':'+1 maximum Command • +8 Supply • +10 Materiel • +5 Influence'}}
+const _campaignBaseMaxCommand238_rev280=campaignBaseMaxCommand238;
+campaignBaseMaxCommand238=function(fac){const base=_campaignBaseMaxCommand238_rev280(fac),leader=campaignLeaderForFaction280(fac?.key,fac?.leaderId280);return base+(leader?campaignLeaderBaseBenefits280(leader).command:0)};
+function campaignLeaderHistory280(root,fac,text,cls='gain'){
+  const st=campaignLeaderState280(fac),row={turn:Number(root?.campaign?.turn||0),text};st.history.unshift(row);st.history=st.history.slice(0,14);campaignLog(root.campaign,`${fac.name} — ${text}`,cls);return row;
+}
+function campaignLeaderUnitFromTemplate280(template,leaderId,retinue=false){const pts=Number(template?.hh1BasePts??template?.pts??0),models=Math.max(1,Number(template?.hh1BaseModels??template?.min??1));return{id:`u-leader280-${leaderId}-${retinue?'retinue':'unit'}-${Math.random().toString(36).slice(2,8)}`,name:template.name,role:template.role||'Elites',models,points:pts,basePoints:pts,formations:1,selections:1,source:`Leader of Renown specialist • ${template.sourceFile||REV280_REPOSITORY}`,upgrades:[],leaderRetinue280:retinue,leaderId280:leaderId,unique280:true}}
+function campaignEnsureLeaderDetachment280(root,fac){
+  const c=root?.campaign,leader=campaignLeaderForFaction280(fac?.key,fac?.leaderId280);if(!c||!fac||!leader)return null;fac.taskForces=fac.taskForces||[];
+  let found=null;for(const tf of fac.taskForces||[])for(const d of tf.detachments||[])if(d.factionCommand280&&d.leaderId280===leader.id){found={tf,d};break}
+  if(!found){
+    let tf=fac.id===c.playerFactionId?(fac.taskForces.find(x=>x.id===c.selectedTaskForceId)||fac.taskForces[0]):fac.taskForces[0];
+    if(!tf){tf={id:`tf-leader280-${fac.id}`,name:`${fac.name} Command Host`,systemId:fac.homeSystemId||fac.territory?.[0]||c.selectedSystemId,detachments:[],basePoints:0,strength:100,status:'Ready',source:'Faction Leader command host',movedTurn:0};fac.taskForces.push(tf);if(fac.id===c.playerFactionId)c.selectedTaskForceId=tf.id}
+    tf.detachments=tf.detachments||[];const d={id:`det-leader280-${fac.id}-${leader.id}`,name:`Faction Command — ${leader.name}`,source:`Leader of Renown • ${leader.source}`,catalogue:leader.source,factionCommand280:true,leaderId280:leader.id,units:[]};tf.detachments.unshift(d);found={tf,d};
+  }
+  const {tf,d}=found;
+  let unit=(d.units||[]).find(u=>u.leaderUnit280&&u.leaderId280===leader.id);
+  if(!unit){unit={id:`u-leader280-${leader.id}`,name:leader.name,role:leader.role,models:1,points:leader.points,basePoints:leader.points,formations:1,selections:1,source:`${leader.source} • ${REV280_REPOSITORY}@${REV280_COMMIT.slice(0,8)}`,upgrades:[],leaderUnit280:true,leaderId280:leader.id,unique280:true,profile280:leader.statline};d.units=d.units||[];d.units.unshift(unit)}
+  if(leader.specialists?.[0]&&!(d.units||[]).some(u=>u.leaderRetinue280))d.units.push(campaignLeaderUnitFromTemplate280(campaignSpecialistTemplate280(leader.specialists[0],fac.key),leader.id,true));
+  const dPoints=(d.units||[]).reduce((n,u)=>n+Number(u.points||0),0);if(tf.pointsOverride!=null&&!d.pointsOverrideApplied280){tf.pointsOverride=Number(tf.pointsOverride||0)+dPoints;d.pointsOverrideApplied280=dPoints}
+  tf.basePoints=(tf.detachments||[]).flatMap(x=>x.units||[]).reduce((n,u)=>n+Number(u.points||0),0);tf.leaderCommand280=leader.id;fac.leaderAttachedTaskForce280=tf.id;return found;
+}
+function campaignApplyLeader280(root,fac,leaderId,announce=true){
+  const c=root?.campaign,leader=campaignLeaderForFaction280(fac?.key,leaderId);if(!c||!fac)return null;
+  for(const tf of fac.taskForces||[])tf.detachments=(tf.detachments||[]).filter(d=>!d.factionCommand280||d.leaderId280===leader?.id);
+  fac.leaderId280=leader?.id||null;fac.leaderSystem280=REV280;if(!leader)return null;
+  const st=campaignLeaderState280(fac);if(!st.baseApplied280){const b=campaignLeaderBaseBenefits280(leader);if(fac.baseMaxCommand238==null)fac.baseMaxCommand238=Math.max(1,Number(fac.maxCommand||4));fac.maxCommand=Math.max(1,Number(fac.maxCommand||0)+b.command);fac.command=Math.max(Number(fac.command||0),fac.maxCommand);fac.treasury=fac.treasury||{supply:0,materiel:0,influence:0};fac.treasury.supply+=b.supply;fac.treasury.materiel+=b.materiel;fac.treasury.influence+=b.influence;st.baseApplied280=true;st.baseBenefits280=b;st.selectedTurn280=Number(c.turn||0)}
+  campaignEnsureLeaderDetachment280(root,fac);fac.notes=fac.notes||[];const note=`Leader of Renown: ${leader.name} — ${CAMPAIGN_LEADER_PROTOCOLS_280[leader.protocol]?.name||leader.protocol}.`;if(!fac.notes.includes(note))fac.notes.push(note);if(announce&&!st.announced280){campaignLeaderHistory280(root,fac,`${leader.name} assumed faction command. ${campaignLeaderBaseBenefits280(leader).label}; ${leader.specialists.join(' and ')} unlocked.`);st.announced280=true}return leader;
+}
+function campaignMigrateLeaders280(root){
+  const c=root?.campaign;if(!c)return null;c.leaderSystemVersion280=REV280;
+  for(const fac of c.factions||[]){if(!fac.leaderId280)continue;const leader=campaignLeaderForFaction280(fac.key,fac.leaderId280);if(!leader){fac.leaderId280=null;continue}campaignLeaderState280(fac);campaignEnsureLeaderDetachment280(root,fac)}return c;
+}
+function campaignLeaderStrongestForce280(fac){return [...(fac?.taskForces||[])].sort((a,b)=>campaignTaskForcePoints(b)-campaignTaskForcePoints(a))[0]||null}
+function campaignLeaderWeakestForce280(fac){return [...(fac?.taskForces||[])].sort((a,b)=>Number(a.strength??100)-Number(b.strength??100))[0]||null}
+function campaignLeaderFortify280(root,fac,forcedSystemId=null){
+  const c=root.campaign,ids=(fac.territory||[]).filter(id=>c.systems?.[id]);if(!ids.length)return null;const sid=forcedSystemId&&ids.includes(forcedSystemId)?forcedSystemId:[...ids].sort((a,b)=>Number(c.systems[a].defence||0)-Number(c.systems[b].defence||0))[0];const s=c.systems[sid];if(!s)return null;s.defence=Math.min(12,Number(s.defence||0)+1);fac.fortifications=fac.fortifications||{};fac.fortifications[sid]=Math.max(Number(fac.fortifications[sid]||0),s.defence);return campaignRecord(root,sid)?.name||sid;
+}
+function campaignLeaderRepair280(root,fac){
+  const fleets=[...(fac.fleets||[])].filter(f=>Number(f.voidDamage247||0)>0).sort((a,b)=>Number(b.voidDamage247||0)-Number(a.voidDamage247||0));if(fleets[0]){const f=fleets[0],before=Number(f.voidDamage247||0);f.voidDamage247=Math.max(0,before-15);return `${f.name} repaired from ${before}% to ${f.voidDamage247}% void damage`}
+  const tf=campaignLeaderWeakestForce280(fac);if(tf&&Number(tf.strength??100)<100){const before=Number(tf.strength??100);tf.strength=Math.min(100,before+8);return `${tf.name} restored from ${before}% to ${tf.strength}% strength`}return null;
+}
+function campaignLeaderIntegrate280(root,fac,systemId=null){
+  const c=root.campaign;for(const other of c.factions||[]){if(other.id===fac.id)continue;const i=(other.settlements||[]).findIndex(s=>s.occupiedBy===fac.id&&(!systemId||s.systemId===systemId)&&c.systems?.[s.systemId]?.ownerFactionId===fac.id);if(i<0)continue;const [s]=other.settlements.splice(i,1);s.factionId=fac.id;s.occupiedBy=null;s.integratedByLeader280=fac.leaderId280;s.integratedTurn280=c.turn;if(s.colony){s.colony.order=Math.max(Number(s.colony.order||0),Math.min(10,Number(s.colony.size||1)+1));s.colony.complacency=Math.max(0,Number(s.colony.complacency||0)-1)}fac.settlements=fac.settlements||[];fac.settlements.push(s);return s.locationName||s.settlementName246||s.id}return null;
+}
+function campaignLeaderSuppress280(root,fac){
+  for(const s of fac.settlements||[]){const rb=s.colony?.rebellion246||s.rebellion246;if(rb?.active){rb.active=false;rb.strength=0;rb.points=0;if(s.colony)s.colony.order=Math.max(Number(s.colony.order||0),Math.ceil(Number(s.colony.size||1)*1.5));return `rebellion suppressed at ${s.locationName||s.id}`}if(s.colony?.leaderPlague280){delete s.colony.leaderPlague280;s.colony.order=Math.min(10,Number(s.colony.order||0)+1);s.colony.productivity=Math.min(10,Number(s.colony.productivity||0)+1);return `contagion purged at ${s.locationName||s.id}`}}
+  const rifts=root.campaign.leaderRifts280||{};const sid=Object.keys(rifts).find(id=>fac.territory?.includes(id));if(sid){delete rifts[sid];return `empyreal breach sealed at ${campaignRecord(root,sid)?.name||sid}`}return null;
+}
+function campaignLeaderTreatAffliction280(fac){for(const s of fac.settlements||[])if(s.colony?.leaderPlague280){delete s.colony.leaderPlague280;s.colony.order=Math.min(10,Number(s.colony.order||0)+1);s.colony.productivity=Math.min(10,Number(s.colony.productivity||0)+1);return s.locationName||s.id}return null}
+function campaignLeaderSeedPresence280(root,fac,preferredId=null){
+  const c=root.campaign,owned=fac.territory||[],pool=[];for(const id of owned)for(const n of campaignNeighbors(root,id))if(!fac.presence?.includes(n.id)&&c.systems?.[n.id])pool.push(n.id);for(const r of campaignSystemRecords(root))if(!fac.presence?.includes(r.id))pool.push(r.id);const unique=[...new Set(pool)],sid=preferredId&&!fac.presence?.includes(preferredId)?preferredId:unique[Math.abs(hashText(`${c.seed}|${fac.id}|leader-presence|${c.turn}`))%Math.max(1,unique.length)];if(!sid)return null;fac.presence=fac.presence||[];fac.presence.push(sid);const st=c.systems[sid];st.presenceFactionIds=st.presenceFactionIds||[];if(!st.presenceFactionIds.includes(fac.id))st.presenceFactionIds.push(fac.id);st.leaderCell280=fac.id;return campaignRecord(root,sid)?.name||sid;
+}
+function campaignLeaderReinforce280(root,fac,leader,force=false){
+  const c=root.campaign,st=campaignLeaderState280(fac),turn=Number(c.turn||0);if(!force&&turn-Number(st.lastReinforcementTurn280??-99)<3)return null;const names=leader.specialists||[];if(!names.length)return null;const index=Number(st.reinforcementIndex280||0)%names.length,name=names[index],template=campaignSpecialistTemplate280(name,fac.key),tf=campaignLeaderStrongestForce280(fac)||campaignEnsureLeaderDetachment280(root,fac)?.tf;if(!tf)return null;const unit=campaignLeaderUnitFromTemplate280(template,leader.id,false),d={id:`det-leader-reinforcement280-${fac.id}-${turn}-${index}`,name:`${leader.name} — Specialist Reinforcement T${turn}`,source:`Leader protocol • ${leader.source}`,leaderReinforcement280:true,leaderId280:leader.id,units:[unit]};tf.detachments=tf.detachments||[];tf.detachments.push(d);if(tf.pointsOverride!=null){tf.pointsOverride=Number(tf.pointsOverride||0)+Number(unit.points||0);d.pointsOverrideApplied280=Number(unit.points||0)}tf.basePoints=(tf.detachments||[]).flatMap(x=>x.units||[]).reduce((n,u)=>n+Number(u.points||0),0);st.reinforcementIndex280=index+1;st.lastReinforcementTurn280=turn;return name;
+}
+function campaignLeaderDiplomacy280(root,fac){const c=root.campaign,candidates=(c.factions||[]).filter(x=>x.id!==fac.id&&campaignRelation(c,fac,x)>-60&&campaignRelation(c,fac,x)<65).sort((a,b)=>campaignRelation(c,fac,a)-campaignRelation(c,fac,b));const other=candidates[0];if(!other)return null;campaignSetRelation(c,fac,other,campaignRelation(c,fac,other)+12);return other.name}
+function campaignLeaderAwaken280(root,fac){const c=root.campaign;fac.presence=fac.presence||[];for(const id of fac.territory||[]){const n=campaignNeighbors(root,id).find(x=>!c.systems?.[x.id]?.ownerFactionId);if(!n)continue;c.systems[n.id].ownerFactionId=fac.id;c.systems[n.id].claimedTurn=c.turn;c.systems[n.id].presenceFactionIds=c.systems[n.id].presenceFactionIds||[];if(!c.systems[n.id].presenceFactionIds.includes(fac.id))c.systems[n.id].presenceFactionIds.push(fac.id);fac.territory.push(n.id);if(!fac.presence.includes(n.id))fac.presence.push(n.id);return n.name}return null}
+
+function campaignLeaderTurn280(root,endedTurn){
+  const c=root?.campaign;if(!c)return 0;let actions=0;
+  for(const fac of c.factions||[]){
+    const leader=campaignLeaderForFaction280(fac.key,fac.leaderId280);if(!leader||fac.prehistoryDormant247)continue;const st=campaignLeaderState280(fac);campaignEnsureLeaderDetachment280(root,fac);if(Number(st.lastAppliedTurn280)>=(Number(endedTurn)||0))continue;st.lastAppliedTurn280=Number(endedTurn)||0;
+    const protocol=leader.protocol,turn=Number(c.turn||0);let result=null;
+    if(['grand_strategy','rapid_strike','hunter','void_command'].includes(protocol)){st.freeTranslation280=1;result='one cost-free fleet translation prepared'}
+    if(protocol==='fortress'&&turn%2===0){const x=campaignLeaderFortify280(root,fac);if(x)result=`fortified ${x}`}
+    if(protocol==='siege'){st.siegeOrder280=1;result='one siege-consolidation order prepared'}
+    if(['forge','attrition','medicae','resistance','resurrection','inspiration','void_command'].includes(protocol)){const x=campaignLeaderRepair280(root,fac);if(x)result=x;else if(protocol==='inspiration'){st.freeTranslation280=1;result='a rapid relief translation prepared'}else if(protocol==='forge'&&turn%4===0){const x=campaignLeaderReinforce280(root,fac,leader,true);if(x)result=`fabricated ${x}`}}
+    if(protocol==='medicae'){const x=campaignLeaderTreatAffliction280(fac);if(x)result=`${result?result+'; ':''}contagion treated at ${x}`}
+    if(protocol==='governance'){const x=campaignLeaderIntegrate280(root,fac)||campaignLeaderFortify280(root,fac);if(x)result=`realmcraft completed at ${x}`}
+    if(protocol==='infiltration'&&turn%3===0){const x=campaignLeaderSeedPresence280(root,fac);if(x)result=`covert presence established at ${x}`}
+    if(protocol==='prophecy'&&turn%3===0){st.omen280=1;result='one strategic omen banked'}
+    if(protocol==='diplomacy'&&turn%2===0){const x=campaignLeaderDiplomacy280(root,fac);if(x)result=`a diplomatic opening created with ${x}`}
+    if(protocol==='null_vigil'){const x=campaignLeaderSuppress280(root,fac);if(x)result=x}
+    if(protocol==='aspect'&&turn%3===0){const x=campaignLeaderReinforce280(root,fac,leader,true);if(x)result=`the Path of War mustered ${x}`}
+    if(protocol==='awakening'&&turn%4===0){const x=campaignLeaderAwaken280(root,fac);if(x)result=`dynastic control awakened at ${x}`}
+    if(protocol==='daemon_rift'){
+      const rifts=Object.values(c.leaderRifts280||{}).filter(x=>x.factionId===fac.id);if(rifts.length&&turn%3===0){const x=campaignLeaderReinforce280(root,fac,leader,true);if(x){rifts[0].manifestations=Number(rifts[0].manifestations||0)+1;result=`${x} manifested through the breach at ${campaignRecord(root,rifts[0].systemId)?.name||rifts[0].systemId}`}}
+    }
+    if(protocol==='zeal'&&turn%3===0){const x=campaignLeaderReinforce280(root,fac,leader,true);if(x)result=`${x} answered the muster`}
+    if(protocol==='honour'&&turn%2===0){const x=campaignLeaderFortify280(root,fac);if(x)result=`oathbound defences raised at ${x}`;if(turn%4===0){const y=campaignLeaderReinforce280(root,fac,leader,true);if(y)result=`${y} answered the Household oath`}}
+    if(result){campaignLeaderHistory280(root,fac,`${leader.name}: ${result}.`);actions++}
+  }
+  return actions;
+}
+
+function campaignLeaderBattleSnapshot280(c,b){return{ownerFactionId:c.systems?.[b?.systemId]?.ownerFactionId||null,occupations:(c.factions||[]).flatMap(f=>(f.settlements||[]).filter(s=>s.systemId===b?.systemId).map(s=>({s,occupiedBy:s.occupiedBy}))),attackerStrength:campaignFindTaskForce(c,b?.attackerTaskForceId)?.tf?.strength,defenderStrength:campaignFindTaskForce(c,b?.defenderTaskForceId)?.tf?.strength}}
+function campaignLeaderRestoreForeseenWithdrawal280(root,b,loser,winner,snap,leader){
+  const c=root.campaign,st=campaignLeaderState280(loser);if(!snap||!st.omen280||snap.ownerFactionId!==loser.id||b.attackerFactionId!==winner.id)return false;st.omen280=0;const sys=c.systems?.[b.systemId];if(sys)sys.ownerFactionId=loser.id;winner.territory=(winner.territory||[]).filter(id=>id!==b.systemId);if(!loser.territory.includes(b.systemId))loser.territory.push(b.systemId);if(winner.stats?.systemsTaken)winner.stats.systemsTaken=Math.max(0,winner.stats.systemsTaken-1);for(const x of snap.occupations||[])x.s.occupiedBy=x.occupiedBy;b.resolution=b.resolution||{};b.resolution.leaderWithdrawal280={leader:leader.name,effect:'Defender retained strategic ownership through a foreseen withdrawal.'};campaignLeaderHistory280(root,loser,`${leader.name} spent a strategic omen: ${b.systemName||b.systemId} remained under ${loser.name} control despite the battlefield defeat.`,'war');return true;
+}
+function campaignLeaderBattle280(root,b,kind='ground',snap=null){
+  const c=root?.campaign;if(!c||!b||b.leaderAftermath280)return false;let winnerId=b.resolution?.winnerFactionId;if(kind==='naval'){winnerId=b.resolution?.winner==='attacker'?b.attackerFactionId:b.resolution?.winner==='defender'?b.defenderFactionId:null}if(!winnerId){b.leaderAftermath280=true;return false}const winner=campaignFaction(c,winnerId),loser=campaignFaction(c,winnerId===b.attackerFactionId?b.defenderFactionId:b.attackerFactionId);if(!winner||!loser){b.leaderAftermath280=true;return false}b.leaderAftermath280=true;let changed=false;
+  const wl=campaignLeaderForFaction280(winner.key,winner.leaderId280),ll=campaignLeaderForFaction280(loser.key,loser.leaderId280);
+  if(ll?.protocol==='prophecy'&&kind==='ground'&&!b.territoryBattle238)changed=campaignLeaderRestoreForeseenWithdrawal280(root,b,loser,winner,snap,ll)||changed;
+  if(wl){const p=wl.protocol,st=campaignLeaderState280(winner),place=campaignRecord(root,b.systemId)?.name||b.systemName||b.systemId;
+    if(['grand_strategy','fortress'].includes(p)||(p==='siege'&&st.siegeOrder280)){const x=campaignLeaderFortify280(root,winner,b.systemId);if(x){if(p==='siege')st.siegeOrder280=0;campaignLeaderHistory280(root,winner,`${wl.name} consolidated the victory by fortifying ${x}.`);changed=true}}
+    if(p==='governance'){const x=campaignLeaderIntegrate280(root,winner,b.systemId);if(x){campaignLeaderHistory280(root,winner,`${wl.name} integrated ${x} after the victory.`);changed=true}}
+    if(p==='terror'){for(const f of c.factions||[])if(f.id!==winner.id)for(const s of f.settlements||[])if(s.systemId===b.systemId&&s.colony){s.colony.order=Math.max(0,Number(s.colony.order||0)-2);s.colony.complacency=Math.max(0,Number(s.colony.complacency||0)-1);s.colony.leaderTerror280={leader:wl.name,turn:c.turn}}loser.nextCommandBonus=Math.min(Number(loser.nextCommandBonus||0),-1);campaignLeaderHistory280(root,winner,`${wl.name} imposed weaponised dread at ${place}; civic Order fell and ${loser.name} lost Command next cycle.`,'war');changed=true}
+    if(p==='plague'){for(const f of c.factions||[])if(f.id!==winner.id)for(const s of f.settlements||[])if(s.systemId===b.systemId&&s.colony){s.colony.order=Math.max(0,Number(s.colony.order||0)-1);s.colony.productivity=Math.max(0,Number(s.colony.productivity||0)-1);s.colony.leaderPlague280={leader:wl.name,turn:c.turn}}campaignLeaderHistory280(root,winner,`${wl.name} left a persistent contagion across settlements at ${place}.`,'war');changed=true}
+    if(['duellist','hunter','assassination'].includes(p)){loser.nextCommandBonus=Math.min(Number(loser.nextCommandBonus||0),-1);if(p==='assassination')campaignLeaderSeedPresence280(root,winner,b.systemId);campaignLeaderHistory280(root,winner,`${wl.name} broke ${loser.name}’s command network at ${place}.`,'war');changed=true}
+    if(['berserker','duellist','zeal','aspect'].includes(p)){const x=campaignLeaderReinforce280(root,winner,wl,false);if(x){campaignLeaderHistory280(root,winner,`${wl.name} drew ${x} into the victorious host.`);changed=true}}
+    if(p==='archive'){
+      const tf=campaignLeaderStrongestForce280(loser),u=(tf?.detachments||[]).flatMap(d=>d.units||[]).filter(x=>!x.leaderUnit280).sort((a,z)=>Number(z.points||0)-Number(a.points||0))[0];if(u&&!st.exhibits.some(x=>x.name===u.name)){st.exhibits.unshift({name:u.name,from:loser.name,systemId:b.systemId,turn:c.turn});st.exhibits=st.exhibits.slice(0,12);winner.researchProgress=Number(winner.researchProgress||0)+8;campaignLeaderHistory280(root,winner,`${wl.name} acquired a ${u.name} exhibit from ${loser.name}; research advanced.`);changed=true}
+    }
+    if(p==='daemon_rift'){c.leaderRifts280=c.leaderRifts280||{};const r=c.leaderRifts280[b.systemId]||{systemId:b.systemId,factionId:winner.id,leaderId:wl.id,openedTurn:c.turn,manifestations:0};r.strength=Math.min(5,Number(r.strength||0)+1);c.leaderRifts280[b.systemId]=r;campaignLeaderSeedPresence280(root,winner,b.systemId);campaignLeaderHistory280(root,winner,`${wl.name} opened an empyreal breach at ${place}.`,'war');changed=true}
+    if(p==='null_vigil'&&c.leaderRifts280?.[b.systemId]){delete c.leaderRifts280[b.systemId];campaignLeaderHistory280(root,winner,`${wl.name} erased the empyreal breach at ${place}.`);changed=true}
+    if(p==='raider'){winner.treasury.supply+=10;winner.treasury.materiel+=10;campaignLeaderHistory280(root,winner,`${wl.name} seized 10 Supply and 10 Materiel from the defeated host.`);changed=true}
+    if(p==='void_command'&&kind==='naval'){const ref=winner.id===b.attackerFactionId?campaignFleetById247(c,b.attackerFleetId):campaignFleetById247(c,b.defenderFleetId),fl=ref?.fleet;if(fl){fl.voidDamage247=Math.max(0,Number(fl.voidDamage247||0)-12);campaignLeaderHistory280(root,winner,`${wl.name} repaired the victorious fleet after the void action at ${place}.`);changed=true}}
+  }
+  if(ll){if(ll.protocol==='berserker'){const s=(loser.settlements||[]).find(x=>x.status!=='Destroyed'&&x.colony);if(s){s.colony.order=Math.max(0,Number(s.colony.order||0)-1);campaignLeaderHistory280(root,loser,`${ll.name}’s defeated host turned its violence inward at ${s.locationName||s.id}.`,'war');changed=true}}if(ll.protocol==='resistance'){const x=campaignLeaderReinforce280(root,loser,ll,false);if(x){campaignLeaderHistory280(root,loser,`${ll.name} gathered ${x} from the survivors of defeat.`);changed=true}}}
+  return changed;
+}
+
+/* ---------- Repository faction and roster integration ---------- */
+const _campaignFactionChoices_rev280=campaignFactionChoices;
+campaignFactionChoices=function(){const repo=CAMPAIGN_REPOSITORY_FACTIONS_280.filter(k=>CAMPAIGN_FACTION_META[k]),other=Object.keys(CAMPAIGN_FACTION_META).filter(k=>!repo.includes(k));return `<optgroup label="Horus Heresy 1st Edition Repository">${repo.map(k=>`<option value="${k}">${esc(CAMPAIGN_FACTION_META[k].label)}</option>`).join('')}</optgroup><optgroup label="Cartographica / Not Yet Character-Linked">${other.map(k=>`<option value="${k}">${esc(CAMPAIGN_FACTION_META[k].label)}</option>`).join('')}</optgroup>`};
+const _campaignParseRosterFile_rev280=campaignParseRosterFile;
+campaignParseRosterFile=async function(...args){const out=await _campaignParseRosterFile_rev280(...args);setTimeout(()=>{const f=document.getElementById('campaignStartFaction');if(f&&out?.inferredFactionKey){f.value=out.inferredFactionKey;campaignRefreshLeaderControl280(window.currentSector)}},0);return out};
+function campaignLeaderSelectedForTemplates280(key){const c=window.currentSector?.campaign,p=c&&campaignPlayer(c);if(p?.key===key&&p.leaderId280)return campaignLeaderForFaction280(key,p.leaderId280);const faction=document.getElementById('campaignStartFaction'),leader=document.getElementById('campaignStartLeader280');return faction?.value===key?campaignLeaderForFaction280(key,leader?.value):null}
+const _campaignFactionTemplates_rev280=campaignFactionTemplates;
+campaignFactionTemplates=function(key){const out=_campaignFactionTemplates_rev280(key),leader=campaignLeaderSelectedForTemplates280(key),seen=new Set((out||[]).map(x=>String(x.name).toLowerCase()));if(leader)for(const name of leader.specialists||[]){if(seen.has(String(name).toLowerCase()))continue;out.push(campaignSpecialistTemplate280(name,key));seen.add(String(name).toLowerCase())}return out};
+const _campaignForceFOC_rev280=campaignForceFOC;
+campaignForceFOC=function(tf,key){const command=(tf?.detachments||[]).filter(d=>d.factionCommand280),ordinary=(tf?.detachments||[]).filter(d=>!d.factionCommand280),out=_campaignForceFOC_rev280({...tf,detachments:ordinary},key);out.factionCommand280=command.map(d=>({name:d.name,points:(d.units||[]).reduce((n,u)=>n+Number(u.points||0),0),leaderId:d.leaderId280}));return out};
+const _campaignRemoveUnit_rev280=campaignRemoveUnit;
+campaignRemoveUnit=function(c,fac,tf,unitId){const u=(tf?.detachments||[]).flatMap(d=>d.units||[]).find(x=>x.id===unitId);if(u?.leaderUnit280||u?.leaderRetinue280){campaignLog(c,`${u.name} is bound to the selected Leader of Renown command detachment and cannot be removed.`,'war');return false}return _campaignRemoveUnit_rev280(c,fac,tf,unitId)};
+
+/* A rapid-strike order is a consumable action, not a permanent speed modifier. */
+const _campaignFleetIssueMove_rev280=campaignFleetIssueMove;
+campaignFleetIssueMove=function(root,fac,fleet,targetId,attackTfId=null,ai=false){const leader=campaignLeaderForFaction280(fac?.key,fac?.leaderId280),st=leader&&campaignLeaderState280(fac);if(!leader||!st?.freeTranslation280)return _campaignFleetIssueMove_rev280(root,fac,fleet,targetId,attackTfId,ai);const beforeSupply=Number(fac.treasury?.supply||0),beforeCommand=Number(fac.command||0),grant=Math.max(1,typeof campaignFleetOrderCost==='function'?campaignFleetOrderCost(root,fac,fleet,targetId):25);fac.treasury.supply=beforeSupply+grant;fac.command=beforeCommand+1;let ok=false;try{ok=_campaignFleetIssueMove_rev280(root,fac,fleet,targetId,attackTfId,ai)}finally{fac.treasury.supply=beforeSupply;fac.command=beforeCommand}if(ok){st.freeTranslation280=Math.max(0,Number(st.freeTranslation280||0)-1);campaignLeaderHistory280(root,fac,`${leader.name} spent ${CAMPAIGN_LEADER_PROTOCOLS_280[leader.protocol]?.name||'a leader order'} on ${fleet.name}’s cost-free translation.`)}return ok};
+
+/* ---------- Battle aftermath hooks ---------- */
+const _campaignAutoResolveBattle_rev280=campaignAutoResolveBattle;
+campaignAutoResolveBattle=function(root,battleId,quiet=false){const b=root?.campaign?.battles?.find(x=>x.id===battleId),pending=!!b?.status?.includes('Pending'),snap=pending?campaignLeaderBattleSnapshot280(root.campaign,b):null,out=_campaignAutoResolveBattle_rev280(root,battleId,quiet);if(pending&&b&&!b.status?.includes('Pending')&&campaignLeaderBattle280(root,b,'ground',snap)){campaignPersist(root);if(!quiet&&!(root?.campaign?._turnBatch272))campaignRenderDashboard(root)}return out};
+const _campaignReportBattle_rev280=campaignReportBattle;
+campaignReportBattle=function(root,battleId,result){const b=root?.campaign?.battles?.find(x=>x.id===battleId),pending=!!b?.status?.includes('Pending'),snap=pending?campaignLeaderBattleSnapshot280(root.campaign,b):null,out=_campaignReportBattle_rev280(root,battleId,result);if(pending&&b&&!b.status?.includes('Pending')&&campaignLeaderBattle280(root,b,'ground',snap)){campaignPersist(root);if(!(root?.campaign?._turnBatch272))campaignRenderDashboard(root)}return out};
+const _campaignResolveNaval247_rev280=campaignResolveNaval247;
+campaignResolveNaval247=function(root,battleId,winner,mode='BFG Tabletop Report',quiet=false){const b=root?.campaign?.navalBattles247?.find(x=>x.id===battleId),pending=b?.status==='Pending',out=_campaignResolveNaval247_rev280(root,battleId,winner,mode,quiet);if(pending&&b?.status==='Resolved'&&campaignLeaderBattle280(root,b,'naval',null)){campaignPersist(root);if(!quiet&&!(root?.campaign?._turnBatch272))campaignRenderDashboard(root)}return out};
+const _campaignAutoResolveNaval247_rev280=campaignAutoResolveNaval247;
+campaignAutoResolveNaval247=function(root,battleId,quiet=false){const b=root?.campaign?.navalBattles247?.find(x=>x.id===battleId),pending=b?.status==='Pending',out=_campaignAutoResolveNaval247_rev280(root,battleId,quiet);if(pending&&b?.status==='Resolved'&&campaignLeaderBattle280(root,b,'naval',null)){campaignPersist(root);if(!quiet&&!(root?.campaign?._turnBatch272))campaignRenderDashboard(root)}return out};
+
+/* ---------- Campaign lifecycle, save migration and bounded Deep Time ---------- */
+const _campaignInitialize_rev280=campaignInitialize;
+campaignInitialize=function(root,opts={}){const c=_campaignInitialize_rev280(root,opts),p=campaignPlayer(c),chosen=opts.leaderId280??opts.leaderId??document.getElementById('campaignStartLeader280')?.value??null;c.leaderSystemVersion280=REV280;if(chosen)campaignApplyLeader280(root,p,chosen,true);campaignRepairAllFleetLift248(root,true);campaignPersist(root);return c};
+const _campaignIntegrateRoster_rev280=campaignIntegrateRoster;
+campaignIntegrateRoster=function(root,...args){const out=_campaignIntegrateRoster_rev280(root,...args),p=root?.campaign&&campaignPlayer(root.campaign);if(p?.leaderId280){campaignEnsureLeaderDetachment280(root,p);campaignRepairAllFleetLift248(root,true);campaignPersist(root)}return out};
+const _campaignPersist_rev280=campaignPersist;
+campaignPersist=function(root){if(root?.campaign)campaignMigrateLeaders280(root);return _campaignPersist_rev280(root)};
+const _campaignRenderDashboard_rev280=campaignRenderDashboard;
+campaignRenderDashboard=function(root){if(root?.campaign)campaignMigrateLeaders280(root);return _campaignRenderDashboard_rev280(root)};
+
+function campaignLeaderDeepTime280(root,turns){const c=root?.campaign,p=campaignPlayer(c),leader=campaignLeaderForFaction280(p?.key,p?.leaderId280);if(!c||!p||!leader)return false;campaignEnsureLeaderDetachment280(root,p);const st=campaignLeaderState280(p),cycles=Math.max(1,Math.min(8,Math.ceil(Number(turns||0)/50)));if(['fortress','grand_strategy','governance','siege','honour'].includes(leader.protocol))for(let i=0;i<Math.min(4,cycles);i++)campaignLeaderFortify280(root,p);if(['forge','attrition','medicae','resistance','resurrection','inspiration','void_command'].includes(leader.protocol))campaignLeaderRepair280(root,p);if(['zeal','aspect','daemon_rift','berserker','duellist','honour'].includes(leader.protocol))for(let i=0;i<Math.min(3,Math.ceil(cycles/2));i++){st.lastReinforcementTurn280=-99;campaignLeaderReinforce280(root,p,leader,true)}if(leader.protocol==='prophecy')st.omen280=1;if(['grand_strategy','rapid_strike','hunter','void_command'].includes(leader.protocol))st.freeTranslation280=1;p.treasury.supply+=Math.min(20,cycles*2);p.treasury.materiel+=Math.min(24,cycles*3);st.lastAppliedTurn280=Math.max(-1,Number(c.turn||turns||0)-1);campaignLeaderHistory280(root,p,`${leader.name} shaped ${Number(turns||0)} turns of Deep Time through ${cycles} bounded leader epochs; command detachment, strategic assets and handover orders were preserved.`);c.prehistory247=c.prehistory247||{};c.prehistory247.leaderEpochs280=cycles;c.prehistory247.leaderId280=leader.id;return true}
+const _campaignSimulatePrehistory257_rev280=campaignSimulatePrehistory257;
+campaignSimulatePrehistory257=async function(root,turns,player,mode){const out=await _campaignSimulatePrehistory257_rev280(root,turns,player,mode);campaignLeaderDeepTime280(root,turns);return out};
+campaignSimulatePrehistory247=campaignSimulatePrehistory257;if(window.__cartoTest247)window.__cartoTest247.simulatePrehistory=(...args)=>campaignSimulatePrehistory257(...args);
+
+/* ---------- Launcher selection and in-game presentation ---------- */
+function campaignLeaderOptionsHTML280(key,selected=''){
+  const pool=campaignLeadersForFaction280(key);if(!pool.length){const repo=CAMPAIGN_REPOSITORY_FACTIONS_280.includes(key),label=repo?'No named Leader of Renown in this source catalogue':'Not linked — faction is outside the cited repository';return `<option value="">${esc(label)}</option>`}
+  const groups=new Map();for(const l of pool){const g=l.scale==='primarch'?'Primarchs':l.affiliation;if(!groups.has(g))groups.set(g,[]);groups.get(g).push(l)}let h='<option value="">No Leader of Renown — standard command</option>';for(const [g,list] of groups)h+=`<optgroup label="${esc(g)}">${list.map(l=>`<option value="${l.id}" ${l.id===selected?'selected':''}>${esc(l.name)} — ${l.points} pts</option>`).join('')}</optgroup>`;return h;
+}
+function campaignLeaderPreviewHTML280(key,id){const leader=campaignLeaderForFaction280(key,id),pool=campaignLeadersForFaction280(key);if(!leader){const repo=CAMPAIGN_REPOSITORY_FACTIONS_280.includes(key);return `<div class="campaign-leader-empty280"><b>${pool.length?'Standard command selected':'No eligible named character found'}</b><span>${pool.length?'Choose a source-backed leader to add a command detachment, signature retinue and triggered strategic doctrine.':repo?'This repository catalogue contains generic commanders but no unique named Leader of Renown. None is invented.':'This faction is not part of the cited HH1 repository and is intentionally left unlinked in v28.0.'}</span></div>`}const p=CAMPAIGN_LEADER_PROTOCOLS_280[leader.protocol],b=campaignLeaderBaseBenefits280(leader);return `<article class="campaign-leader-preview280"><header><span>${leader.scale==='primarch'?'PRIMARCH':leader.scale==='apex'?'APEX CHARACTER':'LEADER OF RENOWN'}</span><h4>${esc(leader.name)}</h4><small>${esc(leader.affiliation)}</small></header><p>${esc(leader.lore)}</p><div class="campaign-leader-preview-grid280"><div><span>Repository profile</span><b>${leader.points} pts</b><small>${esc(leader.statline)}</small></div><div><span>Base benefits</span><b>${esc(b.label)}</b><small>Leader and first retinue are attached at launch.</small></div><div><span>${esc(p.name)}</span><b>${esc(p.cadence)}</b><small>${esc(p.desc)}</small></div><div><span>Specialist troops</span><b>${leader.specialists.map(esc).join(' • ')}</b><small>Unlocked in the shared generator/Add Unit pool.</small></div></div><footer>${esc(leader.source)} • ${REV280_REPOSITORY}@${REV280_COMMIT.slice(0,8)}</footer></article>`}
+function campaignLeaderControlHTML280(key='militia'){const pool=campaignLeadersForFaction280(key);return `<div id="campaignLeaderField280" class="field campaign-leader-field280"><label>Faction Leader of Renown</label><select id="campaignStartLeader280" ${pool.length?'':'disabled'}>${campaignLeaderOptionsHTML280(key)}</select><small id="campaignLeaderHint280">${pool.length?`${pool.length} unique source profile${pool.length===1?'':'s'} available. Selection is fixed when the campaign launches.`:'No eligible named source character is available for this faction.'}</small></div><div id="campaignLeaderPreview280" class="campaign-leader-preview-wrap280">${campaignLeaderPreviewHTML280(key,'')}</div>`}
+function campaignRefreshLeaderControl280(root){const key=document.getElementById('campaignStartFaction')?.value||'militia',sel=document.getElementById('campaignStartLeader280'),hint=document.getElementById('campaignLeaderHint280'),box=document.getElementById('campaignLeaderPreview280'),pool=campaignLeadersForFaction280(key),old=sel?.value||'';if(sel){sel.innerHTML=campaignLeaderOptionsHTML280(key,old);sel.disabled=!pool.length;if(!campaignLeaderForFaction280(key,old))sel.value=''}if(hint)hint.textContent=pool.length?`${pool.length} unique source profile${pool.length===1?'':'s'} available. Selection is fixed when the campaign launches.`:CAMPAIGN_REPOSITORY_FACTIONS_280.includes(key)?'This source catalogue has no unique named Leader of Renown; generic commanders are not relabelled.':'Outside the cited repository; leader support is intentionally deferred.';if(box)box.innerHTML=campaignLeaderPreviewHTML280(key,sel?.value||'');const unit=document.getElementById('campaignStartUnitTemplate');if(unit&&typeof campaignStartUnitOptions==='function'){const keep=unit.value;unit.innerHTML=campaignStartUnitOptions(key);if([...unit.options].some(x=>x.value===keep))unit.value=keep;const t=campaignFactionTemplates(key).find(x=>x.name===unit.value);if(t&&document.getElementById('campaignStartUnitModels'))document.getElementById('campaignStartUnitModels').value=t.hh1BaseModels||t.min||1}}
+const _campaignLauncherHTML_rev280=campaignLauncherHTML;
+campaignLauncherHTML=function(root){let h=_campaignLauncherHTML_rev280(root);const re=/(<div class="field"><label>Player faction<\/label><select id="campaignStartFaction">[\s\S]*?<\/select><\/div>)/i;if(re.test(h))h=h.replace(re,`<div class="campaign-faction-leader-column280">$1${campaignLeaderControlHTML280('militia')}</div>`);return h};
+const _campaignBindLauncher_rev280=campaignBindLauncher;
+campaignBindLauncher=function(root){_campaignBindLauncher_rev280(root);document.getElementById('campaignStartFaction')?.addEventListener('change',()=>campaignRefreshLeaderControl280(root));document.getElementById('campaignStartLeader280')?.addEventListener('change',()=>campaignRefreshLeaderControl280(root));campaignRefreshLeaderControl280(root)};
+
+function campaignLeaderOverviewHTML280(root,c){const p=campaignPlayer(c),leader=campaignLeaderForFaction280(p?.key,p?.leaderId280);if(!p)return'';if(!leader)return `<section class="campaign-leader-card280 empty"><h4>Faction Leader of Renown</h4><p>No named leader is attached to this campaign. Existing v27.2 saves remain valid and receive no retroactive bonus.</p></section>`;const st=campaignLeaderState280(p),proto=CAMPAIGN_LEADER_PROTOCOLS_280[leader.protocol],det=campaignEnsureLeaderDetachment280(root,p),rifts=Object.values(c.leaderRifts280||{}).filter(x=>x.factionId===p.id),orders=[st.freeTranslation280?'Free translation ready':null,st.omen280?'Strategic omen ready':null,st.siegeOrder280?'Siege order ready':null].filter(Boolean);return `<section class="campaign-leader-card280" style="--fac:${p.color}"><div class="campaign-leader-head280"><div><span>${leader.scale==='primarch'?'PRIMARCH':leader.scale==='apex'?'APEX CHARACTER':'LEADER OF RENOWN'}</span><h4>${esc(leader.name)}</h4><small>${esc(leader.affiliation)}</small></div><b>${leader.points.toLocaleString()} pts</b></div><p>${esc(leader.lore)}</p><div class="campaign-leader-live280"><div><span>Profile</span><b>${esc(leader.statline)}</b></div><div><span>Triggered doctrine</span><b>${esc(proto.name)}</b><small>${esc(proto.desc)}</small></div><div><span>Command detachment</span><b>${esc(det?.tf?.name||'Awaiting attachment')}</b><small>${leader.specialists.map(esc).join(' • ')}</small></div><div><span>Ready orders / breaches</span><b>${esc(orders.join(' • ')||'No banked leader order')} • ${rifts.length} breach${rifts.length===1?'':'es'}</b></div></div>${st.exhibits.length?`<details class="campaign-leader-history280"><summary>Acquisition archive — ${st.exhibits.length}</summary>${st.exhibits.map(x=>`<div><b>${esc(x.name)}</b><span>${esc(x.from)} • Turn ${x.turn}</span></div>`).join('')}</details>`:''}<details class="campaign-leader-history280" ${st.history.length?'open':''}><summary>Leader campaign history — ${st.history.length}</summary>${st.history.map(x=>`<div><b>Turn ${x.turn}</b><span>${esc(x.text)}</span></div>`).join('')||'<div><span>No triggered leader actions yet.</span></div>'}</details><footer>${esc(leader.source)} • strategic effects are Cartographica campaign translations of the source profile and character lore.</footer></section>`}
+const _campaignOverviewHTML_rev280=campaignOverviewHTML;
+campaignOverviewHTML=function(root,c){let h=_campaignOverviewHTML_rev280(root,c),card=campaignLeaderOverviewHTML280(root,c);return h.includes('<div class="campaign-grid">')?h.replace('<div class="campaign-grid">','<div class="campaign-grid">'+card):card+h};
+const _campaignForceManagerHTML_rev280=campaignForceManagerHTML;
+campaignForceManagerHTML=function(root,c){let h=_campaignForceManagerHTML_rev280(root,c),p=campaignPlayer(c),leader=campaignLeaderForFaction280(p?.key,p?.leaderId280);if(!leader)return h;const proto=CAMPAIGN_LEADER_PROTOCOLS_280[leader.protocol],banner=`<div class="campaign-leader-army280"><b>Faction Command: ${esc(leader.name)}</b><span>${leader.points} pts • ${esc(leader.statline)} • ${esc(proto.name)}</span><small>The protected Faction Command detachment and signature retinue are outside ordinary FOC slot requirements. Unlocked specialists remain normal paid choices when recruited again.</small></div>`;return banner+h};
+const _campaignRulesReferenceHTML_rev280=campaignRulesReferenceHTML;
+campaignRulesReferenceHTML=function(root){let h=_campaignRulesReferenceHTML_rev280(root),add=`<div class="campaign-rule-card"><h4>93. Leaders of Renown</h4><p>A leader selected directly beneath Player Faction is attached as a protected Faction Command detachment with the repository profile’s points/statline and a signature retinue. Primarchs and apex characters provide a larger command foundation. Old saves and campaigns launched without a leader receive no retroactive bonus.</p></div><div class="campaign-rule-card"><h4>94. Lore-Driven Leader Protocols</h4><p>Leader effects change campaign state: they bank and spend fleet translations or omens, build fortifications, integrate occupied settlements, repair fleets, muster named specialists, seed covert presence, suppress rebellions, open or close warp breaches, spread plagues and archive acquisitions. They are turn/battle triggers rather than permanent attack/defence modifiers.</p></div><div class="campaign-rule-card"><h4>95. Repository Boundary</h4><p>Leader eligibility follows named character profiles in ${REV280_REPOSITORY} at commit ${REV280_COMMIT.slice(0,8)}. Generic commanders are never renamed into canonical characters. Repository factions with no named unique entry show an explicit empty state; Cartographica-only factions are left unlinked.</p></div>`;return h.replace('</div><div class="campaign-reference-note">',add+'</div><div class="campaign-reference-note">')};
+
+function campaignInstallRepositoryPresence280(){const grid=document.querySelector('.faction-presence-grid');if(!grid)return;for(const key of ['chaosdaemons','ruinstorm']){if(document.getElementById(`campaignPresence_${key}`))continue;const m=CAMPAIGN_FACTION_META[key];grid.insertAdjacentHTML('beforeend',`<div class="faction-presence-row"><div><div class="fp-name">${esc(m.label)}</div><div class="fp-desc">${esc(m.desc)}</div></div><select data-faction-presence-key="${key}" id="campaignPresence_${key}">${CAMPAIGN_PRESENCE_BRIDGE_280.stateOptions('auto')}</select></div>`)}}
+campaignInstallRepositoryPresence280();document.addEventListener('DOMContentLoaded',campaignInstallRepositoryPresence280,{once:true});
+
+function campaignLeaderAudit280(root=null){
+  const protocolsUsed=[...new Set(CAMPAIGN_LEADERS_280.map(x=>x.protocol))],ids=CAMPAIGN_LEADERS_280.map(x=>x.id),primarchs=CAMPAIGN_LEADERS_280.filter(x=>x.scale==='primarch');
+  const coverage=Object.fromEntries(CAMPAIGN_REPOSITORY_FACTIONS_280.map(key=>[key,{label:CAMPAIGN_FACTION_META[key]?.label||key,leaders:campaignLeadersForFaction280(key).map(x=>x.name),intentionalEmpty:key==='militia'}]));
+  const implementedProtocols=new Set(['grand_strategy','fortress','rapid_strike','terror','zeal','governance','berserker','siege','forge','attrition','infiltration','hunter','prophecy','inspiration','duellist','medicae','void_command','resistance','resurrection','diplomacy','assassination','null_vigil','aspect','awakening','archive','daemon_rift','plague','honour','raider']);
+  const requiredCoverage=['solar','legion','mechanicum','knights','talons','craftworld','necron','darkcompliance','chaosdaemons','ruinstorm'];
+  const assertions={
+    uniqueLeaderIds:new Set(ids).size===ids.length,
+    exactEighteenPrimarchs:primarchs.length===18,
+    allPrimarchsAvailableToLegiones:primarchs.every(x=>x.factions.includes('legion')),
+    allProtocolsDescribed:protocolsUsed.every(x=>CAMPAIGN_LEADER_PROTOCOLS_280[x]?.desc),
+    allProtocolsChangeCampaignState:protocolsUsed.every(x=>implementedProtocols.has(x)),
+    allSpecialistsDefined:CAMPAIGN_LEADERS_280.every(x=>x.specialists.length&&x.specialists.every(n=>CAMPAIGN_SPECIALIST_META_280[n])),
+    catalogueTraceability:CAMPAIGN_LEADERS_280.every(x=>x.source?.endsWith('.cat')),
+    requiredFactionPoolsPopulated:requiredCoverage.every(x=>coverage[x]?.leaders.length>0),
+    militiaExplicitlyEmpty:coverage.militia?.leaders.length===0&&coverage.militia.intentionalEmpty,
+    launcherDropdownDirectlyFollowsFaction:String(campaignLauncherHTML).includes('campaign-faction-leader-column280')&&String(campaignLauncherHTML).includes("$1${campaignLeaderControlHTML280('militia')}"),
+    leaderTurnIsSinglePass:(String(campaignRunAutonomousTurn272).match(/campaignLeaderTurn280/g)||[]).length===1,
+    battleAftermathHooks:['campaignAutoResolveBattle','campaignReportBattle','campaignResolveNaval247','campaignAutoResolveNaval247'].every(n=>String(({campaignAutoResolveBattle,campaignReportBattle,campaignResolveNaval247,campaignAutoResolveNaval247})[n]).includes('campaignLeaderBattle280')),
+    legacySaveMigration:String(campaignPersist).includes('campaignMigrateLeaders280')&&String(campaignRenderDashboard).includes('campaignMigrateLeaders280')
+  };
+  const live=root?.campaign?{campaignTurn:Number(root.campaign.turn||0),selectedLeader:campaignPlayer(root.campaign)?.leaderId280||null,leaderAttached:!!campaignPlayer(root.campaign)?.leaderAttachedTaskForce280}:null;
+  return{revision:REV280,build:REV280_BUILD,repository:REV280_REPOSITORY,commit:REV280_COMMIT,leaderCount:CAMPAIGN_LEADERS_280.length,primarchCount:primarchs.length,specialistCount:Object.keys(CAMPAIGN_SPECIALIST_META_280).length,protocolCount:protocolsUsed.length,repositoryFactionCount:CAMPAIGN_REPOSITORY_FACTIONS_280.length,coverage,assertions,live,pass:Object.values(assertions).every(Boolean)};
+}
+window.__cartoLeaderAudit280=campaignLeaderAudit280;
+window.__cartoRevision280={version:REV280,build:REV280_BUILD,repository:REV280_REPOSITORY,commit:REV280_COMMIT,audit:campaignLeaderAudit280,leaders:CAMPAIGN_LEADERS_280,protocols:CAMPAIGN_LEADER_PROTOCOLS_280,specialists:CAMPAIGN_SPECIALIST_META_280,applyLeader:campaignApplyLeader280,ensureDetachment:campaignEnsureLeaderDetachment280,leaderTurn:campaignLeaderTurn280,battleSnapshot:campaignLeaderBattleSnapshot280,battleAftermath:campaignLeaderBattle280,migrate:campaignMigrateLeaders280,leaderOptions:campaignLeaderOptionsHTML280,leaderPreview:campaignLeaderPreviewHTML280,factionTemplates:campaignFactionTemplates,commandNetwork:campaignCommandNetwork238};
+const rb280=document.querySelector('.generation-head-actions .badge');if(rb280)rb280.textContent='rev 28.0 — Faction Leaders of Renown';
+document.title='Administratum Stellar Cartographica — Revision 28.0';
+document.documentElement.dataset.cartographicaRevision=REV280;
+document.documentElement.dataset.cartographicaBuild=REV280_BUILD;
+
 })();
 
 
 </script>
+
+<style id="rev280-faction-leaders-css">
+.campaign-faction-leader-column280{grid-column:1/-1;display:grid;gap:8px;min-width:0;padding:10px;border:1px solid rgba(185,151,73,.34);border-left:4px solid #b99749;background:linear-gradient(105deg,rgba(185,151,73,.09),rgba(0,0,0,.08) 58%)}
+.campaign-faction-leader-column280>.field{margin:0;max-width:560px}.campaign-leader-field280{padding-top:8px;border-top:1px solid rgba(255,255,255,.08)}
+.campaign-leader-field280 small{display:block;margin-top:4px;color:#9f998c;font-size:8px;line-height:1.4}.campaign-leader-preview-wrap280{min-width:0}
+.campaign-leader-empty280{display:grid;gap:3px;padding:8px;border:1px dashed rgba(255,255,255,.12);background:rgba(0,0,0,.13)}.campaign-leader-empty280 b{color:#d5c79f;font-size:10px}.campaign-leader-empty280 span{color:#96968f;font-size:9px;line-height:1.45}
+.campaign-leader-preview280,.campaign-leader-card280{border:1px solid rgba(199,164,82,.42);background:radial-gradient(circle at 0 0,rgba(199,164,82,.12),transparent 40%),rgba(4,6,8,.36);padding:10px;box-shadow:inset 0 0 22px rgba(185,151,73,.035)}
+.campaign-leader-preview280 header,.campaign-leader-head280{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap}.campaign-leader-preview280 header>span,.campaign-leader-head280>div>span{display:block;color:#c8a75b;font-size:8px;font-weight:800;letter-spacing:.12em}.campaign-leader-preview280 h4,.campaign-leader-head280 h4{margin:2px 0;color:#ead9a7;font-size:14px}.campaign-leader-preview280 header small,.campaign-leader-head280 small{display:block;color:#9ea1a2;font-size:8px}.campaign-leader-preview280>p,.campaign-leader-card280>p{color:#b8b09d;font-size:9.5px;line-height:1.5;margin:8px 0}
+.campaign-leader-preview-grid280,.campaign-leader-live280{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.campaign-leader-preview-grid280>div,.campaign-leader-live280>div{min-width:0;padding:7px;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.16)}.campaign-leader-preview-grid280 span,.campaign-leader-live280 span{display:block;color:#898f91;font-size:7px;text-transform:uppercase;letter-spacing:.07em}.campaign-leader-preview-grid280 b,.campaign-leader-live280 b{display:block;color:#dbcfb2;font-size:9px;line-height:1.35;margin-top:2px;overflow-wrap:anywhere}.campaign-leader-preview-grid280 small,.campaign-leader-live280 small{display:block;color:#8e928f;font-size:7.5px;line-height:1.4;margin-top:3px}.campaign-leader-preview280 footer,.campaign-leader-card280 footer{margin-top:8px;color:#757d80;font:7.5px ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere}
+.campaign-leader-card280{grid-column:1/-1;border-left:5px solid var(--fac,#b99749)}.campaign-leader-card280.empty{border-left-color:#596064}.campaign-leader-head280>div{min-width:0;flex:1}.campaign-leader-head280>b{color:#e2c77d;white-space:nowrap}.campaign-leader-history280{margin-top:7px;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.12)}.campaign-leader-history280>summary{cursor:pointer;padding:6px 8px;color:#cdbb8a;font-size:8px}.campaign-leader-history280>div{display:flex;justify-content:space-between;gap:8px;padding:5px 8px;border-top:1px solid rgba(255,255,255,.055);font-size:8px}.campaign-leader-history280>div b{color:#c8bd9f}.campaign-leader-history280>div span{color:#8f9493;text-align:right}
+.campaign-leader-army280{display:grid;gap:3px;margin-bottom:9px;padding:9px 10px;border:1px solid rgba(185,151,73,.42);border-left:4px solid #b99749;background:linear-gradient(90deg,rgba(185,151,73,.11),rgba(0,0,0,.09))}.campaign-leader-army280 b{color:#e4d19b}.campaign-leader-army280 span{color:#c2b999;font-size:9px}.campaign-leader-army280 small{color:#858c8d;font-size:8px;line-height:1.4}
+[data-campaign-remove-unit^="u-leader280-"]{display:none!important}
+@media(max-width:650px){.campaign-faction-leader-column280{padding:8px}.campaign-leader-preview-grid280,.campaign-leader-live280{grid-template-columns:1fr}.campaign-leader-history280>div{display:grid}.campaign-leader-history280>div span{text-align:left}}
+</style>
 
 
 
