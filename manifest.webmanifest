@@ -1,9 +1,9 @@
 {
-  "name": "Administratum Stellar Cartographica — Revision 28.1",
-  "short_name": "Cartographica R28.1",
-  "description": "Faction Leaders of Renown: named commanders, specialist detachments and lore-driven campaign actions, built on the stable autonomous-turn pipeline.",
+  "name": "Administratum Stellar Cartographica — Revision 28.2",
+  "short_name": "Cartographica R28.2",
+  "description": "Fleet transit end-turn recovery with faction leaders, daemon factions and the stable autonomous-turn pipeline.",
   "id": "./?app=cartographica-r27.2-stable-autonomous-endturn",
-  "start_url": "./?rev=28.1-campaign-launch-daemon-factions-v58-tested",
+  "start_url": "./?rev=28.2-fleet-transit-endturn-fix-v59-tested",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",

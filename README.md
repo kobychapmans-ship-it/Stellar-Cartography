@@ -1,3 +1,9 @@
+# Administratum Stellar Cartographica — Revision 28.2
+
+The v28.2 hotfix restores fleet movement to the authoritative single-pass End Turn pipeline. Strategic translations, multi-journey legs and in-system fleet navigation now advance during End Turn again. The movement pass is isolated per fleet, repairs malformed legacy transit fields, and can catch up untouched voyages that were left stationary by the v27.2–v28.1 omission. Pending player-controlled naval engagements remain intentionally paused until resolved.
+
+The v28.1 campaign-launch and Chaos Daemons / Daemons of the Ruinstorm fixes remain intact, along with the v28.0 Faction Leaders of Renown system. See `FLEET-TRANSIT-AUDIT-v28.2.md` for the fault analysis and regression coverage.
+
 # Administratum Stellar Cartographica — Revision 28.1
 
 The v28.1 hotfix repairs campaign launching from the single-system setup, handles errors during launch preparation, and corrects daemon faction roster/travel integration. See LAUNCH-FACTION-AUDIT-v28.1.md for the reproduced failure and verification. The earlier release notes below are retained as history.
