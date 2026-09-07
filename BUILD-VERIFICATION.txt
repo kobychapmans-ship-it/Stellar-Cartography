@@ -1,15 +1,18 @@
-STELLAR CARTOGRAPHICA v28.2 BUILD VERIFICATION
-Build: 28.2-fleet-transit-endturn-fix-v59-tested
+STELLAR CARTOGRAPHICA v28.3 BUILD VERIFICATION
+Build: 28.3-fleet-transit-authoritative-endturn-v60-tested
 
 PASS — authoritative normal End Turn remains campaignRunAutonomousTurn272; historical polling wrappers are not re-enabled.
-PASS — v28.2 restores fleet advancement inside the active single-pass End Turn through campaignFinalizePendingFleetSettlements262.
-PASS — movement is guarded by fleetTransitAdvancedThroughTurn282 so the same completed turn cannot advance fleets twice.
-PASS — strategic transit, multi-journey and local-transit state use the existing final campaignAdvanceFleet chain.
+PASS — the v28.3 fleet movement call is directly inside campaignRunAutonomousTurn272 in the main application script.
+PASS — System-scale strategic AU movement advances during End Turn.
+PASS — Sector/Subsector local in-system AU navigation advances during End Turn.
+PASS — Sector/Subsector strategic LY movement advances during End Turn.
+PASS — long journeys make measurable progress on consecutive End Turns.
+PASS — rendered fleet progress changed from 0% to 17% during live long-route testing.
+PASS — multiple player fleets advance in the same End Turn.
+PASS — short inter-system journey arrival was verified through the actual End Turn button.
+PASS — movement is guarded by fleetTransitAdvancedThroughTurn283 so the same completed turn cannot advance fleets twice.
 PASS — per-fleet exception isolation prevents one corrupt fleet from blocking all remaining fleet movement.
 PASS — stale naval pending pointers are repaired; legitimate Pending fleet battles remain paused.
-PASS — invalid transit destinations recover without leaving the fleet committed forever.
-PASS — untouched v27.2-v28.1 voyages can perform bounded catch-up progression.
 PASS — v28.1 campaign-launch and daemon-faction code remains present.
 PASS — all inline JavaScript blocks and sw.js pass node --check.
 PASS — manifest JSON parses and required PWA shell assets exist.
-NOTE — local/file navigation is blocked by administrator policy in the available Chromium environment, so browser click-through is not claimed.

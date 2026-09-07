@@ -1,5 +1,5 @@
-const CACHE_NAME='cartographica-r28.2-fleet-transit-endturn-fix-v59-tested';
-const CANONICAL='./?rev=28.2-fleet-transit-endturn-fix-v59-tested';
+const CACHE_NAME='cartographica-r28.3-fleet-transit-authoritative-v60-tested';
+const CANONICAL='./?rev=28.3-fleet-transit-authoritative-endturn-v60-tested';
 const SHELL=[CANONICAL,'./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 self.addEventListener('install',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/cartographica/i.test(k)&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>caches.open(CACHE_NAME)).then(c=>c.addAll(SHELL.map(x=>new Request(x,{cache:'reload'})))).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/cartographica/i.test(k)&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));

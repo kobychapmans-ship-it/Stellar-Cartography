@@ -1,2 +1,2 @@
-Stellar Cartographica v28.2 — Fleet Transit End-Turn Fix
-Build: 28.2-fleet-transit-endturn-fix-v59-tested
+Stellar Cartographica v28.3 — Authoritative Fleet Transit End-Turn Fix
+Build: 28.3-fleet-transit-authoritative-endturn-v60-tested

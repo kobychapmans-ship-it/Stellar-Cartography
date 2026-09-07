@@ -1,28 +1,37 @@
-STELLAR CARTOGRAPHICA v28.2 TEST REPORT
-Build: 28.2-fleet-transit-endturn-fix-v59-tested
+STELLAR CARTOGRAPHICA v28.3 TEST REPORT
+Build: 28.3-fleet-transit-authoritative-endturn-v60-tested
 
-ROOT CAUSE
-PASS — reproduced from source: campaignRunAutonomousTurn272 advances AI, economy, settlements, sector events and post-turn systems but omitted campaignAdvanceAllFleets.
-PASS — older end-turn flow contained an explicit post-turn fleet advancement call, confirming the regression came from the single-pass rewrite rather than movement-order creation.
+ROOT CAUSE / v28.2 FAILURE REPRODUCTION
+PASS — reproduced the user's exact failure in the rendered game UI using v28.2.
+PASS — a real fleet entered In Transit, the actual End Turn button completed, but remaining distance did not change and lastFleetTransitPass282 was never created.
+PASS — identified the v28.2 fix as a later-script wrapper that did not replace the function binding retained by the authoritative main-script End Turn runner.
 
-FLEET MOVEMENT REGRESSION HARNESS
-PASS — standard strategic voyage advances once per End Turn.
-PASS — in-system voyage advances through the restored End Turn phase.
-PASS — duplicate finalisation in the same turn does not produce duplicate fleet travel.
-PASS — untouched legacy voyage catch-up reaches arrival when sufficient missed movement ticks exist.
-PASS — synthetic fleet exception is isolated and a later fleet still advances.
-PASS — stale navPending247 pointer clears when its battle is missing/resolved.
-PASS — genuine Pending naval battle remains paused.
-PASS — invalid target cancels safely and pauses the remaining multi-journey.
+AUTHORITATIVE v28.3 FIX
+PASS — campaignAdvanceFleetTransit283 is defined in the main application script.
+PASS — campaignRunAutonomousTurn272 directly invokes campaignAdvanceFleetTransit283 after c.turn advances and before post-turn strategic systems.
+PASS — no dependency on fleet-settlement finalisation is required for movement.
+PASS — movement iterates every faction/fleet and isolates errors per fleet.
+PASS — genuine Pending naval battles pause their fleets; stale navPending247 references are repaired.
+PASS — per-completed-turn guard prevents double movement.
+
+LIVE RENDERED-GAME UI TESTS
+PASS — System campaign: actual Fleet Command order created AU transit and actual End Turn completed the 0.4 AU journey.
+PASS — Sector in-system: actual UI order Translation Point -> Eidolon Vigil Primus (0.213 AU) completed on End Turn without changing strategic system.
+PASS — Sector inter-system: Eidolon Vigil -> Alectan Ultima (373.7 ly) reduced to 328.1536261796984 ly after one End Turn.
+PASS — the same long route reduced again to 310.2452616400006 ly on the next End Turn.
+PASS — rendered fleet UI displayed "In transit • 17%" and "310.25 ly remaining of 373.7 ly. Marker progress 17%."
+PASS — simultaneous movement: one End Turn processed 2 active player voyages, advanced 2 and arrived 1 with 0 errors.
+PASS — the in-system fleet arrived while the other fleet continued its inter-system route.
+PASS — inter-system arrival: a second fleet travelled Eidolon Vigil -> Fenris (19.73 ly) and arrived on the actual End Turn.
+PASS — during that same End Turn the long route reduced from 310.2452616400006 ly to 264.87412597678076 ly.
 
 STATIC / PACKAGE VALIDATION
 PASS — all inline JavaScript blocks pass node --check.
 PASS — sw.js passes node --check.
 PASS — manifest.webmanifest parses as JSON.
 PASS — index.html, manifest.webmanifest, icon-192.png, icon-512.png and apple-touch-icon.png are present.
-PASS — PWA cache/start revision changed to 28.2-fleet-transit-endturn-fix-v59-tested.
-PASS — bootstrap revision/title/service-worker registration changed to v28.2 so pageshow/load cannot revert the visible build to v28.1.
-PASS — v28.1 launch interception and Chaos Daemons / Daemons of the Ruinstorm faction registrations remain in the runtime.
+PASS — bootstrap/title/manifest/service-worker cache identify v28.3.
+PASS — v28.1 launch interception and Chaos Daemons / Daemons of the Ruinstorm faction registrations remain present.
 
-BROWSER LIMITATION
-The installed Chromium is blocked by administrator policy from loading localhost and file URLs (net::ERR_BLOCKED_BY_ADMINISTRATOR). No browser click-through claim is made for this package; runtime transit logic was exercised through the exact v28.2 JavaScript integration harness.
+BROWSER ENVIRONMENT NOTE
+Normal localhost/file navigation is administrator-blocked in the available Chromium environment. For live gameplay tests, the full application document was loaded into Chromium and the real DOM launcher, campaign controls, fleet controls and End Turn button were clicked. Service-worker/manifest packaging was checked separately.

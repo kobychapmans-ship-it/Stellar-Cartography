@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="28.2" />
+<meta name="cartographica-revision" content="28.3" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=28.2-fleet-transit-endturn-fix-v59-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=28.3-fleet-transit-authoritative-endturn-v60-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='28.2';
-  const BUILD='28.2-fleet-transit-endturn-fix-v59-tested';
-  const LABEL='rev 28.2 — Fleet Transit End-Turn Fix';
-  const TITLE='Administratum Stellar Cartographica — Revision 28.2';
+  const REVISION='28.3';
+  const BUILD='28.3-fleet-transit-authoritative-endturn-v60-tested';
+  const LABEL='rev 28.3 — Authoritative Fleet Transit';
+  const TITLE='Administratum Stellar Cartographica — Revision 28.3';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 28.2</title>
+<title>Administratum Stellar Cartographica — Revision 28.3</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -9328,6 +9328,46 @@ function campaignMobileSettlementTurn272(root,fac,fl,endedTurn){
   const col=campaignEnsureMobileColony235(fl);if(!col)return false;
   withSeededRng(`${root.campaign.seed}|T${endedTurn}|FLEETCOL272|${fl.id}`,()=>soiAdvanceColony(col,{}));return true;
 }
+function campaignAdvanceFleetTransit283(root,completedTurn){
+  const c=campaignEnsureFleetState(root);if(!c)return{completedTurn,fleets:0,active:0,advanced:0,arrived:0,paused:0,repaired:0,errors:0};
+  if(Number(c.fleetTransitAdvancedThroughTurn283)===Number(completedTurn)&&c.lastFleetTransitPass283)return c.lastFleetTransitPass283;
+  const stats={completedTurn:Number(completedTurn),fleets:0,active:0,advanced:0,arrived:0,paused:0,repaired:0,errors:0};
+  for(const fac of c.factions||[])for(const fleet of fac.fleets||[]){
+    stats.fleets++;
+    if(fleet.navPending247){
+      const pending=(c.navalBattles247||[]).find(b=>b.id===fleet.navPending247);
+      if(!pending||pending.status!=='Pending'){
+        fleet.navPending247=null;
+        if(fleet.transit)fleet.status='In Transit';else if(fleet.localTransit2352)fleet.status='In-System Transit';
+        stats.repaired++;
+        campaignLog(c,`${fleet.name} cleared a stale fleet-engagement lock and resumed transit.`,'gain');
+      }
+    }
+    const before=fleet.localTransit2352||fleet.transit;if(!before)continue;
+    stats.active++;
+    if(fleet.navPending247){stats.paused++;continue}
+    const beforeRemaining=Number(before.remaining),beforeCurrent=fleet.currentId,beforeLocal=fleet.localLocationId2352;
+    try{
+      campaignAdvanceFleet(root,fac,fleet);
+      stats.advanced++;
+      const after=fleet.localTransit2352||fleet.transit;
+      if(!after)stats.arrived++;
+      else{
+        const afterRemaining=Number(after.remaining);
+        if(Number.isFinite(beforeRemaining)&&Number.isFinite(afterRemaining)&&afterRemaining>=beforeRemaining-1e-9&&beforeCurrent===fleet.currentId&&beforeLocal===fleet.localLocationId2352){
+          campaignLog(c,`${fleet.name} reported no measurable transit progress during Turn ${completedTurn}; movement state retained for diagnosis.`,'war');
+        }
+      }
+    }catch(err){
+      stats.errors++;c.turnRecoveries272=(c.turnRecoveries272||0)+1;
+      campaignLog(c,`${fleet.name} fleet transit recovered from ${err?.message||err}; other fleets continued moving.`,'war');
+    }
+  }
+  c.fleetTransitAdvancedThroughTurn283=Number(completedTurn);
+  c.lastFleetTransitPass283=stats;
+  return stats;
+}
+
 async function campaignRunAutonomousTurn272(root){
   const c=root?.campaign;if(!c||c._endTurnProcessing)return false;
   const p=campaignPlayer(c);
@@ -9401,6 +9441,12 @@ async function campaignRunAutonomousTurn272(root){
 
     c.turn=endedTurn+1;c.phase='Player';
     for(const fac of c.factions||[]){fac.command=fac.maxCommand+(fac.nextCommandBonus||0);fac.nextCommandBonus=0}
+
+    try{
+      const fleetPass=campaignAdvanceFleetTransit283(root,endedTurn);
+      campaignLog(c,`Fleet transit phase: ${fleetPass.active} active voyage${fleetPass.active===1?'':'s'}, ${fleetPass.advanced} advanced, ${fleetPass.arrived} arrived${fleetPass.paused?`, ${fleetPass.paused} paused for unresolved void combat`:''}${fleetPass.repaired?`, ${fleetPass.repaired} stale lock${fleetPass.repaired===1?'':'s'} repaired`:''}${fleetPass.errors?`, ${fleetPass.errors} fleet error${fleetPass.errors===1?'':'s'} isolated`:''}.`,'gain');
+    }catch(err){campaignLog(c,`Fleet transit phase recovered from ${err?.message||err}.`,'war');c.turnRecoveries272=(c.turnRecoveries272||0)+1}
+    await step('Advancing fleet transit…','In-system AU and inter-system strategic voyages');
 
     try{
       for(const fac of c.factions||[])for(const st of (fac.settlements||[]).filter(x=>x.status!=='Destroyed')){
@@ -10173,149 +10219,22 @@ body.campaign-dev-open #campaignDashboard.campaign-panel{z-index:16010}
 
 <!-- v26.3+ runtime consolidated into core script in v26.7 -->
 
-<script id="rev282-fleet-transit-endturn-fix">
-/* ==========================================================================
-   Revision 28.2 — End-Turn Fleet Transit Recovery
-   Restores the fleet movement pass omitted by the v27.2 single-pass End Turn
-   runner and isolates malformed fleet state so one fleet cannot block others.
-   ========================================================================== */
-const REV282='28.2';
-const REV282_BUILD='28.2-fleet-transit-endturn-fix-v59-tested';
-
-function campaignRepairTransitRecord282(root,fac,fleet){
-  if(!fleet)return{repaired:0,cancelled:0};
-  const c=root?.campaign;let repaired=0,cancelled=0;
-  const pauseJourney=(reason)=>{const jp=fleet.journeyPlan235;if(jp?.active){jp.status='Paused';jp.pauseReason=reason}};
-  const fixNum=(obj,key,fallback=0)=>{const v=Number(obj?.[key]);if(Number.isFinite(v)&&v>=0)return v;obj[key]=Math.max(0,Number(fallback)||0);repaired++;return obj[key]};
-
-  if(fleet.navPending247){
-    const pending=(c?.navalBattles247||[]).find(b=>b.id===fleet.navPending247);
-    if(!pending||pending.status!=='Pending'){fleet.navPending247=null;if(fleet.transit)fleet.status='In Transit';repaired++;campaignLog(c,`${fleet.name} cleared a stale naval-engagement lock and resumed strategic movement.`,'gain')}
+<script id="rev283-fleet-transit-authoritative-endturn">
+/* Revision 28.3 — authoritative fleet transit is integrated directly into the main End Turn runner. */
+const REV283='28.3';
+const REV283_BUILD='28.3-fleet-transit-authoritative-endturn-v60-tested';
+function campaignFleetTransitAudit283(root=window.currentSector){
+  const c=root?.campaign,rows=[];
+  for(const fac of c?.factions||[])for(const fleet of fac.fleets||[]){
+    const t=fleet.localTransit2352||fleet.transit;if(!t)continue;
+    rows.push({faction:fac.name,fleet:fleet.name,kind:fleet.localTransit2352?'local':'strategic',remaining:Number(t.remaining)||0,distance:Number(t.distance??t.total)||0,status:fleet.status,navPending247:fleet.navPending247||null});
   }
-
-  if(fleet.transit){
-    const t=fleet.transit;
-    const validCurrent=fleet.currentId&&campaignRecord(root,fleet.currentId)?fleet.currentId:null;
-    const validFrom=t.fromId&&campaignRecord(root,t.fromId)?t.fromId:null;
-    t.fromId=validFrom||validCurrent||((fac?.homeSystemId&&campaignRecord(root,fac.homeSystemId))?fac.homeSystemId:null)||(fac?.presence||[]).find(id=>campaignRecord(root,id))||t.fromId||fleet.fromId||fleet.currentId;
-    if(t.fromId!==validFrom&&validFrom==null)repaired++;
-    t.targetId=t.targetId||fleet.targetId||null;
-    const target=t.targetId&&campaignRecord(root,t.targetId);
-    if(!target){
-      const origin=(t.fromId&&campaignRecord(root,t.fromId))?t.fromId:fleet.currentId;
-      fleet.currentId=origin;fleet.fromId=origin;fleet.targetId=null;fleet.transit=null;fleet.pendingAttackTaskForceId=null;fleet.navPending247=null;fleet.status='Ready';
-      pauseJourney('A planned waypoint no longer exists. The fleet returned to its last valid strategic node.');
-      campaignLog(c,`${fleet.name} recovered from an invalid transit destination and returned to ${campaignRecord(root,origin)?.name||origin}.`,'war');
-      cancelled++;
-    }else{
-      const measured=campaignFleetDistance(root,t.fromId||fleet.currentId,t.targetId);
-      const distance=fixNum(t,'distance',fixNum(t,'total',measured.value));
-      if(!Number.isFinite(Number(t.total))||Number(t.total)<0){t.total=distance;repaired++}
-      fixNum(t,'remaining',distance);
-      if(!t.unit)t.unit=measured.unit||'ly';
-      if(!Number.isFinite(Number(t.departTurn))){t.departTurn=Number(c?.turn||1);repaired++}
-      fleet.targetId=t.targetId;fleet.fromId=t.fromId||fleet.currentId;
-    }
-  }
-
-  if(fleet.localTransit2352){
-    const t=fleet.localTransit2352;
-    const loc=t.targetLocationId&&campaignLocalLocation2352(root,fleet,t.targetLocationId);
-    if(!loc){
-      fleet.localTransit2352=null;fleet.status=fleet.transit?'In Transit':'Ready';
-      campaignLog(c,`${fleet.name} recovered from an invalid in-system destination and remained at its last valid local position.`,'war');
-      cancelled++;
-    }else{
-      const distance=fixNum(t,'distance',fixNum(t,'total',0));
-      if(!Number.isFinite(Number(t.total))||Number(t.total)<0){t.total=distance;repaired++}
-      fixNum(t,'remaining',distance);
-      if(!t.unit)t.unit='AU';
-      if(!Number.isFinite(Number(t.departTurn))){t.departTurn=Number(c?.turn||1);repaired++}
-    }
-  }
-  return{repaired,cancelled};
+  return{revision:REV283,build:REV283_BUILD,currentTurn:Number(c?.turn||0),lastPass:c?.lastFleetTransitPass283||null,activeTransits:rows.length,transits:rows};
 }
-
-function campaignTransitRecoveryTicks282(root,fleet,completedTurn){
-  const t=fleet?.localTransit2352||fleet?.transit;if(!t)return 0;
-  const last=Number(t.lastAdvancedTurn282);
-  if(Number.isFinite(last))return Math.max(1,Math.min(50,completedTurn-last));
-  const depart=Number(t.departTurn),distance=Math.max(0,Number(t.distance??t.total)||0),remaining=Math.max(0,Number(t.remaining)||0);
-  const untouched=Math.abs(remaining-distance)<=Math.max(.0005,distance*.000001);
-  if(untouched&&Number.isFinite(depart)&&completedTurn>=depart)return Math.max(1,Math.min(50,completedTurn-depart+1));
-  return 1;
-}
-
-function campaignAdvanceFleetSafe282(root,fac,fleet,completedTurn){
-  const c=root?.campaign;if(!c||!fleet)return{advanced:0,repaired:0,cancelled:0,pending:0};
-  const repair=campaignRepairTransitRecord282(root,fac,fleet);
-  if(!fleet.transit&&!fleet.localTransit2352)return{advanced:0,...repair,pending:0};
-  if(fleet.navPending247)return{advanced:0,...repair,pending:1};
-  const ticks=campaignTransitRecoveryTicks282(root,fleet,completedTurn);let advanced=0;
-  const liveTurn=Number(c.turn)||completedTurn+1;
-  for(let i=0;i<ticks;i++){
-    if(!fleet.transit&&!fleet.localTransit2352)break;
-    if(fleet.navPending247)break;
-    const active=fleet.localTransit2352||fleet.transit;
-    const beforeRemaining=Number(active?.remaining),beforeTarget=active?.targetLocationId||active?.targetId,beforeCurrent=fleet.currentId;
-    if(ticks>1){const depart=Number(active?.departTurn);if(Number.isFinite(depart))c.turn=Math.min(liveTurn,depart+1+i)}
-    try{campaignAdvanceFleet(root,fac,fleet);advanced++}
-    catch(err){
-      c.turn=liveTurn;
-      const msg=String(err?.message||err||'unknown fleet error');
-      campaignLog(c,`${fleet.name} transit recovered from ${msg}. The voyage remains available for the next End Turn.`,'war');
-      c.turnRecoveries272=(c.turnRecoveries272||0)+1;
-      c.turn=liveTurn;
-      break;
-    }
-    c.turn=liveTurn;
-    const now=fleet.localTransit2352||fleet.transit;
-    if(now&&Number.isFinite(Number(now.remaining)))now.lastAdvancedTurn282=completedTurn;
-    const afterRemaining=Number(now?.remaining),afterTarget=now?.targetLocationId||now?.targetId;
-    if(now&&beforeCurrent===fleet.currentId&&beforeTarget===afterTarget&&Number.isFinite(beforeRemaining)&&Number.isFinite(afterRemaining)&&Math.abs(afterRemaining-beforeRemaining)<1e-9)break;
-  }
-  c.turn=liveTurn;
-  const live=fleet.localTransit2352||fleet.transit;if(live)live.lastAdvancedTurn282=completedTurn;
-  return{advanced,...repair,pending:fleet.navPending247?1:0};
-}
-
-const _campaignAdvanceAllFleets_rev282=campaignAdvanceAllFleets;
-campaignAdvanceAllFleets=function(root){
-  const c=campaignEnsureFleetState(root);if(!c)return{fleets:0,active:0,advanced:0,repaired:0,cancelled:0,pending:0};
-  const completedTurn=Math.max(0,(Number(c.turn)||1)-1);let fleets=0,active=0,advanced=0,repaired=0,cancelled=0,pending=0;
-  for(const fac of c.factions||[])for(const fleet of fac.fleets||[]){
-    fleets++;if(fleet.transit||fleet.localTransit2352)active++;
-    try{const q=campaignAdvanceFleetSafe282(root,fac,fleet,completedTurn);advanced+=q.advanced;repaired+=q.repaired;cancelled+=q.cancelled;pending+=q.pending}
-    catch(err){campaignLog(c,`${fleet.name||'Fleet'} movement pass recovered from ${err?.message||err}. Other fleets will continue advancing.`,'war');c.turnRecoveries272=(c.turnRecoveries272||0)+1}
-  }
-  c.lastFleetTransitPass282={completedTurn,fleets,active,advanced,repaired,cancelled,pending};
-  return c.lastFleetTransitPass282;
-};
-
-/* The v27.2 runner already calls this function while its loading overlay is active,
-   immediately after the turn number advances. Hooking here restores exactly one fleet
-   movement phase to each normal End Turn without reviving the historical polling chain. */
-const _campaignFinalizePendingFleetSettlements262_rev282=campaignFinalizePendingFleetSettlements262;
-campaignFinalizePendingFleetSettlements262=function(root){
-  const c=root?.campaign;
-  if(c?._turnBatch272){
-    const completedTurn=Math.max(0,(Number(c.turn)||1)-1);
-    if(Number(c.fleetTransitAdvancedThroughTurn282)!==completedTurn){
-      const q=campaignAdvanceAllFleets(root);
-      c.fleetTransitAdvancedThroughTurn282=completedTurn;
-      if(q?.active)campaignLog(c,`Fleet movement phase: ${q.active} active voyage${q.active===1?'':'s'}, ${q.advanced} movement tick${q.advanced===1?'':'s'} processed${q.repaired?`, ${q.repaired} transit field${q.repaired===1?'':'s'} repaired`:''}${q.cancelled?`, ${q.cancelled} invalid route${q.cancelled===1?'':'s'} cancelled`:''}.`,'gain');
-    }
-  }
-  return _campaignFinalizePendingFleetSettlements262_rev282(root);
-};
-
-function campaignFleetTransitAudit282(root){
-  const c=root?.campaign,rows=[];for(const fac of c?.factions||[])for(const fleet of fac.fleets||[]){const t=fleet.localTransit2352||fleet.transit;if(!t)continue;rows.push({faction:fac.name,fleet:fleet.name,kind:fleet.localTransit2352?'local':'strategic',from:t.fromLocationId||t.fromId||fleet.fromId||fleet.currentId,target:t.targetLocationId||t.targetId||fleet.targetId,remaining:Number(t.remaining)||0,distance:Number(t.distance??t.total)||0,departTurn:Number(t.departTurn),lastAdvancedTurn282:Number(t.lastAdvancedTurn282),navPending247:fleet.navPending247||null,status:fleet.status})}return{revision:REV282,build:REV282_BUILD,currentTurn:Number(c?.turn||0),lastPass:c?.lastFleetTransitPass282||null,activeTransits:rows.length,transits:rows};
-}
-window.__cartoRevision282={version:REV282,build:REV282_BUILD,audit:campaignFleetTransitAudit282,advanceAll:campaignAdvanceAllFleets,repair:campaignRepairTransitRecord282};
-const revMeta282=document.querySelector('meta[name="cartographica-revision"]');if(revMeta282)revMeta282.content=REV282;
-document.title='Administratum Stellar Cartographica — Revision 28.2';
-document.documentElement.dataset.cartographicaRevision=REV282;document.documentElement.dataset.cartographicaBuild=REV282_BUILD;
+window.__cartoRevision283={version:REV283,build:REV283_BUILD,audit:campaignFleetTransitAudit283};
+const revMeta283=document.querySelector('meta[name="cartographica-revision"]');if(revMeta283)revMeta283.content=REV283;
+document.title='Administratum Stellar Cartographica — Revision 28.3';
+document.documentElement.dataset.cartographicaRevision=REV283;document.documentElement.dataset.cartographicaBuild=REV283_BUILD;
 </script>
 
 </body>

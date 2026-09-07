@@ -1,8 +1,16 @@
-# Administratum Stellar Cartographica — Revision 28.2
+# Administratum Stellar Cartographica — Revision 28.3
 
-The v28.2 hotfix restores fleet movement to the authoritative single-pass End Turn pipeline. Strategic translations, multi-journey legs and in-system fleet navigation now advance during End Turn again. The movement pass is isolated per fleet, repairs malformed legacy transit fields, and can catch up untouched voyages that were left stationary by the v27.2–v28.1 omission. Pending player-controlled naval engagements remain intentionally paused until resolved.
+v28.3 replaces the unsuccessful v28.2 fleet-transit hotfix. The actual fault was reproduced through the rendered campaign UI: v28.2 created valid transit orders, but the End Turn runner never invoked its later wrapper because the authoritative single-pass function retained the earlier script-scope binding.
 
-The v28.1 campaign-launch and Chaos Daemons / Daemons of the Ruinstorm fixes remain intact, along with the v28.0 Faction Leaders of Renown system. See `FLEET-TRANSIT-AUDIT-v28.2.md` for the fault analysis and regression coverage.
+The correction is now directly inside `campaignRunAutonomousTurn272`. Every ordinary End Turn executes an explicit fleet-transit phase covering System-scale AU travel, Sector/Subsector inter-system LY travel, and local in-system AU navigation. Multiple fleets are processed independently in the same turn; long journeys continue reducing remaining distance; stale battle locks are repaired without bypassing genuine unresolved naval battles.
+
+Live rendered-game tests confirmed a 373.7 ly route advanced to 328.15 ly and then 310.25 ly, with the fleet card displaying `In transit • 17%` rather than remaining at 0%. A simultaneous second in-system fleet completed a 0.213 AU move in the same End Turn, and a separate 19.73 ly inter-system journey arrived normally. See `FLEET-TRANSIT-AUDIT-v28.3.md` and `TEST-REPORT.txt`.
+
+The v28.1 campaign-launch and Chaos Daemons / Daemons of the Ruinstorm fixes remain intact, along with the v28.0 Faction Leaders of Renown system.
+
+# Revision 28.2 — Superseded failed hotfix
+
+v28.2 identified the missing movement phase but its late-script wrapper did not replace the function binding used by the live End Turn runner. Fleets could therefore still remain at 0% in actual gameplay. Revision 28.3 replaces that approach with a direct in-runner transit phase and is the supported build.
 
 # Administratum Stellar Cartographica — Revision 28.1
 

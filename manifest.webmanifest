@@ -1,9 +1,9 @@
 {
-  "name": "Administratum Stellar Cartographica — Revision 28.2",
-  "short_name": "Cartographica R28.2",
-  "description": "Fleet transit end-turn recovery with faction leaders, daemon factions and the stable autonomous-turn pipeline.",
+  "name": "Administratum Stellar Cartographica \u2014 Revision 28.3",
+  "short_name": "Cartographica R28.3",
+  "description": "Authoritative in-runner fleet transit advancement for in-system and inter-system End Turn movement, with faction leaders and daemon factions retained.",
   "id": "./?app=cartographica-r27.2-stable-autonomous-endturn",
-  "start_url": "./?rev=28.2-fleet-transit-endturn-fix-v59-tested",
+  "start_url": "./?rev=28.3-fleet-transit-authoritative-endturn-v60-tested",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",
