@@ -1,4 +1,6 @@
-# Administratum Stellar Cartographica — Revision 28.0
+# Administratum Stellar Cartographica — Revision 28.1
+
+The v28.1 hotfix repairs campaign launching from the single-system setup, handles errors during launch preparation, and corrects daemon faction roster/travel integration. See LAUNCH-FACTION-AUDIT-v28.1.md for the reproduced failure and verification. The earlier release notes below are retained as history.
 
 ## Faction Leaders of Renown
 

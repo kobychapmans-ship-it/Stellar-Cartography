@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="28.0" />
+<meta name="cartographica-revision" content="28.1" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=28.0-faction-leaders-of-renown-v57-tested" />
+<link rel="manifest" href="./manifest.webmanifest?v=28.1-campaign-launch-daemon-factions-v58-tested" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='28.0';
-  const BUILD='28.0-faction-leaders-of-renown-v57-tested';
-  const LABEL='rev 28.0 — Faction Leaders of Renown';
-  const TITLE='Administratum Stellar Cartographica — Revision 28.0';
+  const REVISION='28.1';
+  const BUILD='28.1-campaign-launch-daemon-factions-v58-tested';
+  const LABEL='rev 28.1 — Campaign Launch & Daemon Factions';
+  const TITLE='Administratum Stellar Cartographica — Revision 28.1';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 28.0</title>
+<title>Administratum Stellar Cartographica — Revision 28.1</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -8454,13 +8454,13 @@ campaignLauncherHTML=function(root){
   return h;
 };
 function campaignPrepareStart264(root){
-  const loreName=val('campaignLoreStart264'),anchor=campaignForceLoreAnchor264(root,loreName);
+  const loreName=$('campaignLoreStart264')?.value||'',anchor=campaignForceLoreAnchor264(root,loreName);
   if(anchor){const sel=$('campaignStartSystem');if(sel){if(![...sel.options].some(o=>o.value===anchor.systemId))sel.add(new Option(campaignRecord(root,anchor.systemId)?.name||anchor.name,anchor.systemId));sel.value=anchor.systemId}}
-  root._campaignStartLore264=anchor;root._campaignCreateLoreFaction264=checked('campaignLoreFaction264');root._campaignCraftworldStart264=val('campaignCraftworldStart264')==='on';
+  root._campaignStartLore264=anchor;root._campaignCreateLoreFaction264=!!$('campaignLoreFaction264')?.checked;root._campaignCraftworldStart264=$('campaignCraftworldStart264')?.value==='on';
   if(root._campaignCraftworldStart264){const f=$('campaignStartFaction');if(f)f.value='craftworld'}
 }
 const _campaignLaunch247_rev264=campaignLaunch247;
-campaignLaunch247=async function(root){campaignPrepareStart264(root);return _campaignLaunch247_rev264(root)};
+campaignLaunch247=async function(root){try{if(!root)throw new Error('Generate a campaign theatre before launching.');campaignPrepareStart264(root);return await _campaignLaunch247_rev264(root)}catch(err){console.error(err);campaignPrehistoryOverlay247(false);const btn=$('campaignStartBtn');if(btn){btn.disabled=false;btn.textContent='Launch Campaign'}alert(`Campaign launch failed: ${err.message||err}`);return false}};
 const _campaignInitialize_rev264=campaignInitialize;
 campaignInitialize=function(root,opts={}){
   const c=_campaignInitialize_rev264(root,opts),p=campaignPlayer(c),anchor=root._campaignStartLore264;
@@ -9478,8 +9478,8 @@ document.documentElement.dataset.cartographicaBuild=REV272_BUILD;
 
 
 /* ===== Revision 28.0 — Faction Leaders of Renown ===== */
-const REV280='28.0';
-const REV280_BUILD='28.0-faction-leaders-of-renown-v57-tested';
+const REV280='28.1';
+const REV280_BUILD='28.1-campaign-launch-daemon-factions-v58-tested';
 const REV280_REPOSITORY='BSData/horus-heresy-1st-edition';
 const REV280_COMMIT='0a4c10da15f4ea40eea0932090fadafe3b90b696';
 const CAMPAIGN_REPOSITORY_FACTIONS_280=['militia','solar','legion','mechanicum','knights','talons','craftworld','necron','darkcompliance','chaosdaemons','ruinstorm'];
@@ -9501,7 +9501,7 @@ CAMPAIGN_NAVAL_DOCTRINES247.chaosdaemons={label:'Empyreal Incursion Fleet',analo
 CAMPAIGN_NAVAL_DOCTRINES247.ruinstorm={label:'Ruinstorm Manifestation Host',analogue:'Ruinstorm daemonship host',attackRating:5,command:2,gunnery:1,lances:2,ordnance:4,boarding:5,resilience:4,speed:2,style:'Aetheric vessels and living storms that carry possessed hosts through unstable strategic corridors.',vessels:['Aetheric shrikes','Possessed cruisers','Brute carriers','Ruinstorm behemoth']};
 CAMPAIGN_TRAVEL_METHODS.daemonic={label:'Empyreal Breach Translation',speed:1.35,hazard:.18,supply:.75,kind:'Warp Manifestation',desc:'Daemonhosts cross through unstable breaches. Rapid and cheap where reality is weak, but strategically volatile.'};
 const _campaignTravelMethodKey_rev280=campaignTravelMethodKey;
-campaignTravelMethodKey=function(root,fac,fleet,targetId){return ['chaosdaemons','ruinstorm'].includes(fac?.key)?'daemonic':_campaignTravelMethodKey_rev280(root,fac,fleet,targetId)};
+campaignTravelMethodKey=function(root,fac,fleet,targetId){return root?._campaignScope!=='system'&&['chaosdaemons','ruinstorm'].includes(fac?.key)?'daemonic':_campaignTravelMethodKey_rev280(root,fac,fleet,targetId)};
 const _campaignInferFactionFromRoster_rev280=campaignInferFactionFromRoster;
 campaignInferFactionFromRoster=function(cat='',dets=[]){const t=(cat+' '+(dets||[]).map(d=>`${d.catalogue||''} ${d.name||''}`).join(' ')).toLowerCase();if(t.includes('daemons of the ruinstorm')||t.includes('ruinstorm daemon'))return'ruinstorm';if(t.includes('chaos daemons')||t.includes('bloodletters of khorne')||t.includes('pink horrors of tzeentch'))return'chaosdaemons';return _campaignInferFactionFromRoster_rev280(cat,dets)};
 
@@ -9531,6 +9531,48 @@ HH1_BSDATA.ruinstorm={label:'Daemons of the Ruinstorm',source:'(HH) Daemons of t
   hh1Inf('Ruinstorm Daemon Shrike','Fast Attack',140,3,9,40,[4,4,5,5,2,6,3,8,'5+'],'Jump Infantry','Winged manifestation weapons',['Fearless','Daemon'],['Aetheric Talons'],'(HH) Daemons of the Ruinstorm Army List.cat'),
   hh1Inf('Ruinstorm Daemon Behemoth','Heavy Support',300,1,1,0,[5,3,8,8,7,2,5,10,'3+'],'Gargantuan Creature','Colossal aetheric weapons',['Fearless','Daemon'],['Behemoth Claws'],'(HH) Daemons of the Ruinstorm Army List.cat')
 ]};
+
+/* v28.1 catalogue reconciliation: base packages, before optional gifts/upgrades.
+   Retain old unit names for save compatibility. D6 attacks use their mean in
+   the strategic estimator; the source expression remains in the rules text. */
+for(const [name,role,base,min,max,extra,stat,type] of [
+ ['Ruinstorm Daemon Lord','HQ',200,1,1,0,[6,5,8,6,6,4,5,10,'4+'],'Monstrous Creature (Character)'],
+ ['Ruinstorm Greater Daemon','HQ',160,1,1,0,[5,4,7,6,5,4,4,10,'4+'],'Monstrous Creature (Character)'],
+ ['Ruinstorm Daemon Chosen','HQ',50,1,1,0,[5,4,5,4,3,4,3,10,'4+'],'Infantry (Character)'],
+ ['Ruinstorm Lesser Daemons','Troops',60,5,20,12,[4,4,4,4,2,4,2,7,'4+'],'Infantry'],
+ ['Ruinstorm Daemon Beasts','Troops',75,3,10,25,[4,4,5,5,2,4,2,7,'4+'],'Beast'],
+ ['Ruinstorm Daemon Swarms','Troops',60,3,10,20,[2,2,2,3,4,3,3.5,7,'4+'],'Swarms'],
+ ['Possessed Legionaries','Troops',100,10,20,10,[4,4,4,4,1,3,2,9,'3+'],'Infantry'],
+ ['Possessed Auxiliaries','Troops',50,10,20,5,[3,3,3,3,1,2,1,9,'5+'],'Infantry'],
+ ['Ruinstorm Daemon Brutes','Elites',150,3,6,50,[4,4,6,6,3,4,3,8,'4+'],'Infantry'],
+ ['Ruinstorm Daemon Cavalry','Fast Attack',125,5,10,25,[4,4,4,4,2,4,3,7,'4+'],'Cavalry'],
+ ['Ruinstorm Daemon Shrike','Fast Attack',160,1,1,0,[4,4,7,6,5,4,4,10,'4+'],'Flying Monstrous Creature'],
+ ['Ruinstorm Daemon Behemoth','Heavy Support',300,1,1,0,[4,4,8,7,10,2,5,7,'4+'],'Monstrous Creature'],
+ ['Ruinstorm Greater Daemon Beasts','Heavy Support',100,1,3,100,[4,4,8,6,4,3,3,7,'4+'],'Monstrous Creature'],
+ ['Ruinstorm Arch-Daemon','Lord of War',600,1,1,0,[6,5,9,8,10,3,6,10,'4+'],'Monstrous Creature (Character)']
+]){
+ const pool=HH1_BSDATA.ruinstorm.units,old=pool.find(u=>u.name===name),unit=hh1Inf(name,role,base,min,max,extra,stat,type,old?.wargear||'Aetheric claws and manifestation gifts',['Daemon of the Ruinstorm',...(name==='Ruinstorm Daemon Swarms'?['Source Attacks: D6; campaign estimate 3.5']:[])],old?.weapons||['Aetheric Claws'],HH1_BSDATA.ruinstorm.source);
+ if(old)pool[pool.indexOf(old)]=unit;else pool.push(unit);
+}
+for(const [name,role,base,min,max,extra,stat,type] of [
+ ['Flamers of Tzeentch','Elites',69,3,9,23,[2,4,4,4,2,4,2,7,'5+'],'Jump Infantry'],
+ ['Flesh Hounds of Khorne','Fast Attack',80,5,20,16,[5,0,4,4,2,4,2,7,'6+'],'Beast'],
+ ['Daemonettes of Slaanesh','Troops',90,10,20,9,[5,4,3,3,1,5,2,7,'5+'],'Infantry'],
+ ['Fiends of Slaanesh','Elites',105,3,9,35,[4,0,4,4,3,6,3,7,'5+'],'Beast'],
+ ['Plague Drones of Nurgle','Fast Attack',126,3,9,42,[3,3,4,5,3,2,3,7,'5+'],'Jet Pack Cavalry'],
+ ['Seekers of Slaanesh','Fast Attack',60,5,20,12,[5,4,3,3,1,5,3,7,'5+'],'Cavalry'],
+ ['Blue Horrors','Troops',50,10,20,5,[3,3,2,2,1,3,1,7,'5+'],'Infantry'],
+ ['Brimstone Horrors','Troops',30,10,20,3,[3,3,1,1,2,3,2,7,'5+'],'Infantry'],
+ ['Great Unclean One','HQ',190,1,1,0,[6,3,6,7,6,4,5,9,'5+'],'Monstrous Creature (Character)'],
+ ['Keeper of Secrets','HQ',170,1,1,0,[9,6,6,6,5,10,6,9,'5+'],'Monstrous Creature (Character)'],
+ ['Lord of Change','HQ',230,1,1,0,[6,6,6,6,5,6,5,9,'5+'],'Flying Monstrous Creature (Character)'],
+ ['Bloodthirster of Unfettered Fury','HQ',250,1,1,0,[10,10,6,6,5,9,6,9,'3+'],'Flying Monstrous Creature (Character)']
+]){
+ const pool=HH1_BSDATA.chaosdaemons.units,old=pool.find(u=>u.name===name),unit=hh1Inf(name,role,base,min,max,extra,stat,type,old?.wargear||'Daemonic weapons and optional gifts',['Daemon','Daemonic Instability'],old?.weapons||['Daemonic Weapon'],HH1_BSDATA.chaosdaemons.source);
+ if(old)pool[pool.indexOf(old)]=unit;else pool.push(unit);
+}
+HH1_BSDATA.chaosdaemons.units.find(u=>u.name==='Bloodcrushers of Khorne').hh1MaxModels=9;
+{const pool=HH1_BSDATA.chaosdaemons.units,i=pool.findIndex(u=>u.name==='Soul Grinder');pool[i]=hh1Veh('Soul Grinder','Heavy Support',135,3,13,13,11,4,'Vehicle (Walker)','Harvester cannon and iron claw; patron upgrades additional',['Daemon'],['Harvester Cannon'],HH1_BSDATA.chaosdaemons.source);}
 
 const CAMPAIGN_FACTION_DISTRICTS_280=window.__cartoFactionCivilisationBridge280?.districts||{};
 Object.assign(CAMPAIGN_FACTION_DISTRICTS_280,{
@@ -9956,8 +9998,8 @@ function campaignLeaderAudit280(root=null){
 }
 window.__cartoLeaderAudit280=campaignLeaderAudit280;
 window.__cartoRevision280={version:REV280,build:REV280_BUILD,repository:REV280_REPOSITORY,commit:REV280_COMMIT,audit:campaignLeaderAudit280,leaders:CAMPAIGN_LEADERS_280,protocols:CAMPAIGN_LEADER_PROTOCOLS_280,specialists:CAMPAIGN_SPECIALIST_META_280,applyLeader:campaignApplyLeader280,ensureDetachment:campaignEnsureLeaderDetachment280,leaderTurn:campaignLeaderTurn280,battleSnapshot:campaignLeaderBattleSnapshot280,battleAftermath:campaignLeaderBattle280,migrate:campaignMigrateLeaders280,leaderOptions:campaignLeaderOptionsHTML280,leaderPreview:campaignLeaderPreviewHTML280,factionTemplates:campaignFactionTemplates,commandNetwork:campaignCommandNetwork238};
-const rb280=document.querySelector('.generation-head-actions .badge');if(rb280)rb280.textContent='rev 28.0 — Faction Leaders of Renown';
-document.title='Administratum Stellar Cartographica — Revision 28.0';
+const rb280=document.querySelector('.generation-head-actions .badge');if(rb280)rb280.textContent='rev 28.1 — Campaign Launch & Daemon Factions';
+document.title='Administratum Stellar Cartographica — Revision 28.1';
 document.documentElement.dataset.cartographicaRevision=REV280;
 document.documentElement.dataset.cartographicaBuild=REV280_BUILD;
 

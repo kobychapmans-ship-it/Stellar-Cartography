@@ -1,2 +1,2 @@
-Stellar Cartographica v28.0 — Faction Leaders of Renown
-Build: 28.0-faction-leaders-of-renown-v57-tested
+Stellar Cartographica v28.1 — Campaign Launch & Daemon Factions
+Build: 28.1-campaign-launch-daemon-factions-v58-tested
