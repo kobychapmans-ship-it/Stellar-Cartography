@@ -1,0 +1,30 @@
+STELLAR CARTOGRAPHICA v29.1 TEST REPORT
+Build: 29.1-heresy-mission-theatres-v1
+
+PASS — JavaScript syntax check
+PASS — PWA loads in headless Chromium
+PASS — Campaign starter launches Horus Heresy mode
+PASS — Segment 01 mission board renders Signus / Prospero / Webway
+PASS — Active mission rejects second activation
+PASS — Signus activation replaces starter system
+PASS — Signus Overview mission objectives render
+PASS — Signus historical force list renders
+PASS — Additional player intervention force generated
+PASS — Save Mission returns to current 90-day board
+PASS — Saved Signus can coexist with newly activated Prospero
+PASS — Prospero activation replaces active theatre with Prospero System
+PASS — Saving Prospero permits Signus resume
+PASS — Resumed Signus restores original force state
+PASS — Direct Blood Angels control generates loyalist-specific Signus objectives
+PASS — All 871 chronology appearances resolve to valid theatre profiles
+PASS — Thramas subsector generation
+PASS — Garmon sector generation
+PASS — v28.3 fleet-transit implementation retained
+
+Coverage:
+41 timeline segments
+871 event appearances
+574 system-scale
+149 subsector-scale
+148 sector-scale
+0 invalid profiles

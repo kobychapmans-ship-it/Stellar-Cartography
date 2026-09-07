@@ -1,3 +1,2 @@
-Stellar Cartographica v29.0 — Horus Heresy Strategic Campaign Framework
-Build: 29.0-horus-heresy-campaign-framework-v1
-Base: v28.3 Authoritative Fleet Transit End-Turn Fix
+29.1
+29.1-heresy-mission-theatres-v1

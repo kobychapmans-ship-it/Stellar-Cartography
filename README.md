@@ -246,3 +246,6 @@ The v26.3–v26.6 feature block was previously outside the core runtime scope an
 - Nested AI actions cannot trigger repeated full saves/dashboard renders during End Turn.
 - The loading screen is work-coupled: its phase and percentage follow actual completed turn operations and it closes immediately after the final save/UI rebuild rather than waiting a fixed ten seconds.
 - Turn histories and notification queues are compacted to prevent long-session memory growth.
+
+## Revision 29.1 — Horus Heresy Mission Theatres
+The Horus Heresy strategic campaign now opens each accepted chronology event as a real Cartographica mission theatre. Only one mission can be active at once; missions can be saved to return to the current 90-day board and later resumed. Theatre scale is selected from system, subsector, or sector according to the event. Historical factions receive seeded settlements, task forces and fleets, while an inserted player faction receives a smaller intervention force. Active objectives are pinned to the Overview tab and change with the controlled historical side.

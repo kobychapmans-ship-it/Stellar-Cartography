@@ -1,0 +1,22 @@
+STELLAR CARTOGRAPHICA v29.1 BUILD VERIFICATION
+Revision: 29.1
+Build ID: 29.1-heresy-mission-theatres-v1
+
+Core files:
+- index.html
+- manifest.webmanifest
+- sw.js
+- VERSION.txt
+
+Campaign additions:
+- Exclusive active mission lock
+- Full local theatre replacement on mission activation
+- System/subsector/sector mission generation
+- Historical faction force seeding
+- Additional-faction intervention force
+- Save/resume local theatre snapshots
+- Side-specific Overview objectives
+- Deterministic fallback profile for every chronology event
+- Authored Signus Order-of-Battle calibration
+
+Verification status: PASS
