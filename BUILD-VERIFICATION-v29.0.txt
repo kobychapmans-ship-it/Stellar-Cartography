@@ -1,0 +1,14 @@
+Stellar Cartographica v29.0 build verification
+
+[PASS] Main runtime JavaScript syntax check (Node --check)
+[PASS] Revision identity: 29.0-horus-heresy-campaign-framework-v1
+[PASS] Manifest start URL uses v29.0 cache identity
+[PASS] Service worker cache name/canonical URL use v29.0 identity
+[PASS] 41 chronology segments embedded
+[PASS] 871 event appearances imported
+[PASS] Horus Heresy launcher option rendered in Chromium
+[PASS] Mission activation/scoring/failure paths exercised
+[PASS] Strategic reward purchase exercised
+[PASS] Historical direct-control path exercised
+[PASS] Actual End Turn advances chronology one segment
+[PASS] v28.3 fleet-transit audit surface retained

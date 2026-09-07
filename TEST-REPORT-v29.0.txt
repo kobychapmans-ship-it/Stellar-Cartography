@@ -1,0 +1,18 @@
+Stellar Cartographica v29.0 — Horus Heresy Campaign Framework
+Live Chromium DOM/runtime regression test: PASS
+
+PASS revision identity 29.0
+PASS embedded chronology contains 41 90-day segments
+PASS campaign launcher exposes Horus Heresy format
+PASS Heresy campaign initializes at selected Segment 07
+PASS faction-based mission funding initializes
+PASS Segment 07 contains Drop Site Massacre / Isstvan V mission offer
+PASS mission activation using additional player faction
+PASS partial mission completion awards positive Mission Points
+PASS zero-objective finalization records Failed and awards 0 Mission Points
+PASS strategic reward spending raises future mission funding
+PASS historical-side direct-control participation mode
+PASS End Turn increments campaign turn and Heresy chronology by one 90-day window
+PASS v28.3 fleet-transit audit surface retained
+
+Browser test executes the actual rendered launch/dashboard controls and the real End Turn button. The local harness loads the complete PWA document into headless Chromium because direct localhost/file navigation is administratively blocked in this execution environment.

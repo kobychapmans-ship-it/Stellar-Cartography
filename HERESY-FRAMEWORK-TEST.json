@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "steps": [
+    {
+      "name": "revision 29.0",
+      "ok": true,
+      "detail": "29.0"
+    },
+    {
+      "name": "timeline 41",
+      "ok": true,
+      "detail": "41"
+    },
+    {
+      "name": "launcher mode control",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "heresy enabled",
+      "ok": true,
+      "detail": "horus-heresy"
+    },
+    {
+      "name": "segment 7 selected",
+      "ok": true,
+      "detail": "7"
+    },
+    {
+      "name": "faction funding",
+      "ok": true,
+      "detail": "70"
+    },
+    {
+      "name": "Isstvan V offer",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mission active",
+      "ok": true,
+      "detail": "1"
+    },
+    {
+      "name": "own faction participation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "partial completion scores",
+      "ok": true,
+      "detail": "{'id': 'hhc-7-0-ofjdxn', 'name': 'Drop Site Massacre / Isstvan V', 'segment': 7, 'status': 'Completed', 'score': 2, 'perfect': False, 'participation': 'own'}"
+    },
+    {
+      "name": "zero objective fails 0",
+      "ok": true,
+      "detail": "{'id': 'hhc-7-0-ofjdxn', 'name': 'Drop Site Massacre / Isstvan V', 'segment': 7, 'status': 'Failed', 'score': 0, 'perfect': False, 'participation': 'own'}"
+    },
+    {
+      "name": "reward raises future funding",
+      "ok": true,
+      "detail": "70->80"
+    },
+    {
+      "name": "historical direct-control option",
+      "ok": true,
+      "detail": "['sideA']"
+    },
+    {
+      "name": "end turn advances 90-day window",
+      "ok": true,
+      "detail": "0->1; 11->12"
+    },
+    {
+      "name": "fleet transit v28.3 audit retained",
+      "ok": true,
+      "detail": "28.3"
+    }
+  ],
+  "errors": []
+}

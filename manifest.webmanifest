@@ -1,9 +1,9 @@
 {
-  "name": "Administratum Stellar Cartographica \u2014 Revision 28.3",
-  "short_name": "Cartographica R28.3",
-  "description": "Authoritative in-runner fleet transit advancement for in-system and inter-system End Turn movement, with faction leaders and daemon factions retained.",
+  "name": "Administratum Stellar Cartographica — Revision 29.0",
+  "short_name": "Cartographica R29.0",
+  "description": "Horus Heresy 90-day strategic campaign framework with chronological mission offers, Mission Points, faction funding and persistent strategic rewards; v28.3 fleet transit retained.",
   "id": "./?app=cartographica-r27.2-stable-autonomous-endturn",
-  "start_url": "./?rev=28.3-fleet-transit-authoritative-endturn-v60-tested",
+  "start_url": "./?rev=29.0-horus-heresy-campaign-framework-v1",
   "scope": "./",
   "display": "standalone",
   "background_color": "#05070a",

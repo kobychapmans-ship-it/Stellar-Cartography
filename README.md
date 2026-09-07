@@ -1,3 +1,11 @@
+# Stellar Cartographica v29.0 — Horus Heresy Strategic Campaign Framework
+
+Revision 29.0 adds an optional overarching Horus Heresy campaign mode driven by the supplied 90-day chronology. It retains the v28.3 authoritative fleet-transit End Turn fix and all existing Cartographica sandbox systems.
+
+The Heresy layer includes 41 chronological 90-day windows, mission offers from canonical events/theatres, historical-side or additional-faction participation, faction-based mission funding, objective scoring, Mission Point banking, persistent strategic rewards, carry-over missions, and automatic chronology advancement after successful End Turns. See `HORUS-HERESY-CAMPAIGN-AUDIT-v29.0.md` and `TEST-REPORT-v29.0.txt`.
+
+---
+
 # Administratum Stellar Cartographica — Revision 28.3
 
 v28.3 replaces the unsuccessful v28.2 fleet-transit hotfix. The actual fault was reproduced through the rendered campaign UI: v28.2 created valid transit orders, but the End Turn runner never invoked its later wrapper because the authoritative single-pass function retained the earlier script-scope binding.
