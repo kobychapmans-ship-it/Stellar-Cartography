@@ -1,0 +1,52 @@
+STELLAR CARTOGRAPHICA v30.0 — REGRESSION TEST REPORT
+Build: 30.0-campaign-core-consolidation-v1
+
+STATIC VALIDATION
+PASS — all inline JavaScript blocks parse with Node.js.
+PASS — service worker parses with Node.js.
+PASS — manifest.webmanifest parses as JSON.
+PASS — v29.3 external Thramas runtime patch tag removed.
+PASS — service-worker cache and canonical navigation URL use v30.0 identity.
+
+LIVE CHROMIUM / ACTUAL DOM TESTS
+PASS — application booted as Revision 30.0.
+PASS — window.__cartoV30 present.
+PASS — Malevolence v29.2 campaign content present.
+PASS — Crusade/Thramas v29.3 campaign content now loads inside authoritative runtime.
+PASS — zero captured page errors during launch and campaign tests.
+
+HORUS HERESY GRAND CAMPAIGN
+PASS — Segment 1 mission board offered Signus, Prospero and War Within the Webway.
+PASS — Signus activation replaced the starter theatre with Signus Cluster.
+PASS — saving Signus released the active-mission lock and enabled other missions in the same 90-day window.
+PASS — a second mission could be activated and saved.
+PASS — Signus could then be resumed and restored its authored fleet state.
+PASS — grand campaign seed remained M31-0001 during mission switching.
+PASS — an End Turn advanced Turn 0 -> Turn 1 and returned to Player phase with no page error.
+
+SIGNUS ORDER OF BATTLE / TRANSPORT INVARIANT
+PASS — Blood Angels task forces embarked across Red Tear, Covenant of Baal, Ignis and Golden Chalice.
+PASS — Space Wolves observer force embarked.
+PASS — Custodes contingent embarked.
+PASS — Mechanicum contingent embarked.
+PASS — Word Bearers contingent embarked.
+PASS — Daemons of the Ruinstorm generated as established/manifested forces with no artificial empty transport fleet.
+PASS — inserted player expedition had an embarked expeditionary fleet.
+PASS — canonical empty-fleet audit count = 0.
+PASS — Sanguinius campaign track and Cathedral of the Mark war-zone state rendered in Overview.
+
+FLEET MOVEMENT REGRESSION
+PASS — system-scope strategic AU transit: movement issued, remaining distance decreased/arrival completed through the authoritative v28.3 transit pass.
+PASS — subsector inter-system LY transit: 82.32 ly -> 46.88864718083013 ly in one simulated End Turn transit phase.
+PASS — subsector local in-system AU transit: 0.216 AU -> arrival in one simulated End Turn transit phase.
+PASS — transit pass reported zero movement errors.
+
+THRAMAS / BOOK NINE
+PASS — Thramas Crusade activated as a subsector theatre.
+PASS — all four Book Nine Devastation missions rendered.
+PASS — all five Eastern Fringe theatre choices rendered.
+PASS — Triplex result test, Loyalist 5 VP vs Traitor 3 VP, applied base accounting plus Triplex bonus Spoils and additional Ruin.
+PASS — no page errors during Thramas activation/result processing.
+
+SAVE STORAGE TEST NOTE
+The automated Chromium harness loads the application into an opaque document origin, where Chromium denies persistent IndexedDB/localStorage by security policy. The Save/Resume test therefore exercised v30's designed embedded-snapshot fallback. IndexedDB store/open/load code parsed and loaded without causing application errors, but a persistent-origin IndexedDB transaction cannot be truthfully claimed from this harness. The fallback exists specifically so campaign saves continue functioning if persistent browser storage is unavailable.

@@ -1,0 +1,32 @@
+STELLAR CARTOGRAPHICA v30.0 BUILD VERIFICATION
+
+Revision: 30.0
+Build: 30.0-campaign-core-consolidation-v1
+
+Production files:
+- index.html
+- manifest.webmanifest
+- sw.js
+- VERSION.txt
+- README.md
+- icon-192.png
+- icon-512.png
+- apple-touch-icon.png
+- Horus_Heresy_90_Day_Timeline.docx
+- V30-CONSOLIDATION-AUDIT.md
+- TEST-REPORT-v30.0.txt
+- BUILD-VERIFICATION-v30.0.txt
+
+Release gates:
+[PASS] HTML/runtime JavaScript syntax
+[PASS] service-worker JavaScript syntax
+[PASS] manifest JSON
+[PASS] unified v30 title/build/cache identity
+[PASS] Thramas authoritative runtime integration
+[PASS] Heresy mission locking + save/resume regression
+[PASS] Signus canonical fleet/territory deployment invariant
+[PASS] system AU transit regression
+[PASS] subsector inter-system LY transit regression
+[PASS] subsector local AU transit regression
+[PASS] Thramas mission/result regression
+[PASS] zero captured Chromium page errors in tested flows

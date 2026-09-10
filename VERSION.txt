@@ -1,2 +1,2 @@
-29.1
-29.1-heresy-mission-theatres-v1
+Stellar Cartographica v30.0
+30.0-campaign-core-consolidation-v1

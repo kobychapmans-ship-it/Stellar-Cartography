@@ -1,5 +1,5 @@
-const CACHE_NAME='cartographica-r29.1-heresy-mission-theatres-v1';
-const CANONICAL='./?rev=29.1-heresy-mission-theatres-v1';
+const CACHE_NAME='stellar-cartographica-v30.0-campaign-core-consolidation-v1';
+const CANONICAL='./?rev=30.0-campaign-core-consolidation-v1';
 const SHELL=[CANONICAL,'./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 self.addEventListener('install',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/cartographica/i.test(k)&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>caches.open(CACHE_NAME)).then(c=>c.addAll(SHELL.map(x=>new Request(x,{cache:'reload'})))).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/cartographica/i.test(k)&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));

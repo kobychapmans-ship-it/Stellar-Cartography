@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
 <meta name="theme-color" content="#05070a" />
-<meta name="cartographica-revision" content="29.1" />
+<meta name="cartographica-revision" content="30.0" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Cartographica" />
-<link rel="manifest" href="./manifest.webmanifest?v=29.1-heresy-mission-theatres-v1" />
+<link rel="manifest" href="./manifest.webmanifest?v=30.0-campaign-core-consolidation-v1" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <script>
 /* Revision 23.9 stable bootstrap: identity only; never reloads the running game. */
 (function(){
   'use strict';
-  const REVISION='29.1';
-  const BUILD='29.1-heresy-mission-theatres-v1';
-  const LABEL='rev 29.1 — Heresy Mission Theatres';
-  const TITLE='Administratum Stellar Cartographica — Revision 29.1';
+  const REVISION='30.0';
+  const BUILD='30.0-campaign-core-consolidation-v1';
+  const LABEL='rev 30.0 — Campaign Core Consolidation';
+  const TITLE='Administratum Stellar Cartographica — Revision 30.0';
   try{
     const u=new URL(location.href);
     if(u.searchParams.get('rev')!==BUILD){u.searchParams.set('rev',BUILD);history.replaceState(null,'',u.pathname+'?'+u.searchParams.toString()+u.hash)}
@@ -40,7 +40,7 @@
   },{once:true});
 })();
 </script>
-<title>Administratum Stellar Cartographica — Revision 29.0</title>
+<title>Administratum Stellar Cartographica — Revision 30.0</title>
 <style>
   :root{
     --void:#05070a; --void2:#0b0f14; --ink:#15110c; --parch:#d7c493; --parch2:#bba875;
@@ -10121,9 +10121,271 @@ const _campaignOverviewHTML291=campaignOverviewHTML;campaignOverviewHTML=functio
 const _campaignBindDashboard291=campaignBindDashboard;campaignBindDashboard=function(root){_campaignBindDashboard291(root);document.querySelectorAll('[data-hhc-save]').forEach(b=>b.addEventListener('click',()=>hhcSaveCurrent291(root)));document.querySelectorAll('[data-hhc-resume]').forEach(b=>b.addEventListener('click',()=>hhcResume291(root,b.dataset.hhcResume)))};
 function hhcCurrentRoot291(){if(window.currentSector?.campaign)return window.currentSector;if(window.currentSubsector){const r=campaignMakeSubsectorRoot(window.currentSubsector);if(r?.campaign)return r}if(window.currentSystem){const r=campaignMakeSystemRoot(window.currentSystem);if(r?.campaign)return r}return null}
 if(!window.__hhcDelegated291){window.__hhcDelegated291=true;document.addEventListener('click',e=>{const b=e.target.closest?.('[data-hhc-activate],[data-hhc-save],[data-hhc-resume],[data-hhc-objective],[data-hhc-finalize],[data-hhc-reward]');if(!b)return;const root=hhcCurrentRoot291();if(!root?.campaign?.heresy290)return;e.preventDefault();e.stopImmediatePropagation();if(b.dataset.hhcActivate){const id=b.dataset.hhcActivate,sel=document.querySelector(`[data-hhc-participation="${id}"]`);hhcActivate290(root,id,sel?.value||'own')}else if(b.dataset.hhcSave)hhcSaveCurrent291(root);else if(b.dataset.hhcResume)hhcResume291(root,b.dataset.hhcResume);else if(b.dataset.hhcObjective)hhcToggleObjective290(root,b.dataset.hhcObjective,b.dataset.hhcOid);else if(b.dataset.hhcFinalize)hhcFinalize290(root,b.dataset.hhcFinalize);else if(b.dataset.hhcReward)hhcBuyReward290(root,b.dataset.hhcReward)},true)}
+
 window.__cartoHeresy291={version:REV291,build:REV291_BUILD,profile:hhcProfile291,sideObjectives:hhcSideObjectives291,offers:hhcOffers290,activate:hhcActivate290,finalize:hhcFinalize290,save:hhcSaveCurrent291,resume:hhcResume291,generate:hhcGenerateRoot291,seedForces:hhcSeedForces291,snapshot:hhcSnapshot291,restore:hhcRestore291,currentRoot:hhcCurrentRoot291};
 
-const rb290=document.querySelector('.generation-head-actions .badge');if(rb290)rb290.textContent='rev 29.1 — Heresy Mission Theatres';document.title='Administratum Stellar Cartographica — Revision 29.1';document.documentElement.dataset.cartographicaRevision=REV291;document.documentElement.dataset.cartographicaBuild=REV291_BUILD;
+/* ===== Revision 29.2 — Malevolence Canonical Campaign Expansion ===== */
+const REV292='29.2',REV292_BUILD='29.2-malevolence-canonical-campaigns-v1';
+const HHC_MALEVOLENCE_292={
+ signus:{source:'The Horus Heresy Book Eight — Malevolence',scale:'system',location:'Signus Cluster',canonical:'Seven inhabited worlds before the fall; Signus Prime throneworld; Phorus outer world; Signus Prime campaign uses six linked War Zones.',warZones:['Wreck of the Red Tear','Twisted Forest','Warped Hills','Warped Plains','Ruined Spires','Cathedral of the Mark'],namedShips:['Red Tear','Covenant of Baal','Ignis','Golden Chalice','Ifrit Nine','Dark Page','Sigma-954','Crest of Fire','Dragon’s Scale','Zodiac Wheel'],notes:['Sanguinius assembled roughly four-fifths of the IX Legion, more than 100,000 warriors; roughly 20,000 remained in distant garrisons and fleets.','The fleet travelled by eight Warp treks; the final real-space reforming point before Signus was Ankaror.','The historical campaign is Waylaid versus Baleful. Waylaid objectives: slay Ka’Bandha and control the Cathedral of the Mark. Baleful objectives: slay Sanguinius and control the Wreck of the Red Tear.']},
+ chondax:{source:'The Horus Heresy Book Eight — Malevolence',scale:'system',location:'Chondax System',canonical:'Triple-star system with sixteen major targets; White Scars central base at Kvarsir/Chondax Prime.',worlds:['Chondax Prime (Kvarsir / White World)','Kren','Shaln','Honderal','Eshmun','Teras','Alkonost','Herkon','Byfrust','Phemus IV'],sites:['Black-blight ruins / White Scars war camp','Tenebrae station network','Byfrust Alpha Legion reserve redoubt','Phemus IV Alpha Legion reserve redoubt'],notes:['Five White Scars Hordes, about 40,000 Legionaries, entered Chondax with Imperial Army support; two more Hordes later arrived. About 60,000 White Scars remained combat effective by the Chondax Engagement.','At the final confrontation the White Scars had no more than about 700 vessels. The Alpha Legion translated more than 1,000 ships into the system; its wider fleet deployment included at least 600 capital craft and upwards of 1,000 smaller strike craft.','Alpha Legion ground strength in-system is assessed at no more than about 30,000 Legionaries, dispersed in strike groups with larger reserves at Byfrust and Phemus IV.']}
+};
+const _hhcProfile292=hhcProfile291;
+hhcProfile291=function(e){const t=(e.n+' '+e.x).toLowerCase();if(/signus/.test(t))return{scale:'system',location:'Signus Cluster',source:'Malevolence — Signus campaign & narrative',systemType:'triple',canonical:'7 worlds before the fall • Signus Prime campaign: 6 linked War Zones',malevolence292:'signus',participants:[
+ {name:'Blood Angels Legion — Signus Armada',key:'legion',side:'A',points:100000,gamePoints:32000,vessels:null,leaderId:'leader-sanguinius',formationCount:4,shipNames:['Red Tear','Covenant of Baal','Ignis','Golden Chalice'],note:'Four-fifths of the Legion; more than 100,000 warriors.'},
+ {name:'Space Wolves Observers — Helik Redknife',key:'legion',side:'A',points:1200,gamePoints:1800,vessels:1,note:'Observer contingent assigned by Malcador.'},
+ {name:'Legio Custodes — Prefect Kalimak Sebran',key:'talons',side:'A',points:80,gamePoints:1400,vessels:1,note:'Small Custodian delegation accompanying the armada.'},
+ {name:'Mechanicum Ark Sigma-954',key:'mechanicum',side:'A',points:2500,gamePoints:2600,vessels:1,note:'Mechanicum support element recorded in the fleet action.'},
+ {name:'Daemons of the Ruinstorm — Ka’Bandha & Kyriss',key:'ruinstorm',side:'B',points:150000,gamePoints:30000,vessels:0,leaderId:'leader-kabandha',formationCount:4,note:'Mass daemonic manifestation; strategic strength intentionally represented as effectively overwhelming.'},
+ {name:'Word Bearers — Praetor Kreed / Dark Page',key:'darkcompliance',side:'B',points:1200,gamePoints:1800,vessels:1,note:'Warmaster emissaries embedded with the Blood Angels fleet.'}
+ ]};
+ if(/chondax/.test(t))return{scale:'system',location:'Chondax System',source:'Malevolence — Chondax campaign & narrative',systemType:'triple',canonical:'3 stars • 16 major targets',malevolence292:'chondax',participants:[
+ {name:'White Scars Legion — Chondax Crusade',key:'legion',side:'A',points:60000,gamePoints:36000,vessels:700,leaderId:'leader-jaghatai',formationCount:7,shipNames:['Swordstorm','Hawkstar','Void-mare'],note:'Five Hordes (~40,000) initially; two more Hordes later; ~60,000 combat effective at the Engagement.'},
+ {name:'Imperial Army — Charonid Sentinels & Saturnyne Rams',key:'solar',side:'A',points:18000,gamePoints:9000,vessels:18,formationCount:2,note:'Specialist siege engineers and mechanised support retained as reserve and garrison forces.'},
+ {name:'Sisters of Silence — Chondax Demi-vigil',key:'talons',side:'A',points:600,gamePoints:1600,vessels:2,note:'Demi-vigil used against psychic outbreaks.'},
+ {name:'Alpha Legion — Chondax Deceivers',key:'darkcompliance',side:'B',points:30000,gamePoints:24000,vessels:1000,formationCount:4,shipNames:['Hydra Interdiction Flotillas','Angvor Reserve Fleet'],note:'No more than ~30,000 Legionaries; final in-system fleet exceeded 1,000 ships.'},
+ {name:'Ork Remnant Clans',key:'ork',side:'C',points:180000,gamePoints:28000,vessels:120,formationCount:4,note:'Ullanor remnants distributed across the sixteen major targets; major strongholds include Black-blight, Hate Spike and Vorskarr.'}
+ ]};
+ return _hhcProfile292(e)};
+function hhcAddCanonicalSettlement292(root,fac,nodeId,name,type='Military Enclave',territory=false){const rec=campaignRecord(root,nodeId);if(!rec)return null;const loc=rec.nodeLocation||campaignLocationProfiles(rec.sys)[0];const s={id:`hhc292-set-${Math.abs(hashText(fac.id+name)).toString(36)}`,factionId:fac.id,systemId:nodeId,locationId:loc?.id||rec.nodeLocationId||'void:primary',locationName:name,locationKind:'Canonical Campaign Site',colony:{type,displayType:type,size:territory?5:3,complacency:0,productivity:territory?5:3,order:territory?6:3,piety:3,pietyLabel:'Doctrine',pfValue:territory?4:2,infrastructure:[],supportUpgrades:[]},status:'Active',foundedTurn:0,occupiedBy:null,canonical291:true,malevolence292:true};fac.settlements.push(s);return s}
+function hhcMakeFleet292(root,fac,nodeId,name,vessels,cargo=[],classKey='armada',roleKey='assault'){const f=campaignFleetMake(root,fac,classKey,roleKey,nodeId,name,cargo);f.canonicalVessels291=vessels||null;f.canonicalVessels292=vessels||null;f.malevolence292=true;f.canonicalShipNames292=[];fac.fleets.push(f);for(const id of cargo){const tf=fac.taskForces.find(x=>x.id===id);if(tf)tf.fleetId=f.id}return f}
+function hhcSplitHistoricalForce292(root,fac,pp,nodeIds){fac.taskForces=[];fac.fleets=[];const n=Math.max(1,Number(pp.formationCount||1)),gameTotal=Math.max(1200,Number(pp.gamePoints||Math.min(12000,pp.points||6000))),strategic=Math.max(1,Number(pp.points||gameTotal));for(let i=0;i<n;i++){const sid=nodeIds[i%nodeIds.length],gp=Math.round(gameTotal/n),sp=Math.round(strategic/n),tf=campaignTaskForceFromGenerated(pp.key,Math.max(1000,gp),sid,`${pp.name} — ${n>1?'Formation '+roman(i+1):'Historical Muster'}`);tf.pointsOverride=Math.max(1000,gp);tf.canonicalStrength291=sp;tf.canonicalStrength292=sp;tf.malevolence292=true;fac.taskForces.push(tf)}return fac.taskForces}
+function hhcApplyMalevolence292(root,pr,m,grand){const c=root.campaign,records=campaignSystemRecords(root),nodes=records.map(x=>x.id);if(!pr.malevolence292||!nodes.length)return c;const kind=pr.malevolence292;for(const fac of c.factions||[]){const pp=pr.participants.find(x=>x.name===fac.name);if(!pp||m.participation==='own'&&fac.id===c.playerFactionId)continue;const tfs=hhcSplitHistoricalForce292(root,fac,pp,nodes);fac.canonicalStrength292=pp.points;fac.canonicalNote292=pp.note||'';fac.canonicalVessels291=pp.vessels||null;fac.canonicalVessels292=pp.vessels||null;const shipNames=pp.shipNames||[];if(pp.vessels===0){for(const tf of tfs){tf.fleetId=null;tf.deployedTerritory292=true}continue}for(let i=0;i<tfs.length;i++){const nm=shipNames[i]||`${pp.name} ${tfs.length>1?'Fleet '+roman(i+1):'Fleet'}`,v=pp.vessels?Math.max(1,Math.round(pp.vessels/tfs.length)):null;const fl=hhcMakeFleet292(root,fac,tfs[i].systemId,nm,v,[tfs[i].id],tfs.length>2?'assault':'armada',pp.key==='solar'?'transport':'assault');fl.canonicalShipNames292=shipNames}
+ if(pp.leaderId){campaignApplyLeader280(root,fac,pp.leaderId,false);const cmd=(fac.taskForces||[]).find(tf=>tf.leaderCommand280===pp.leaderId);if(cmd&&!cmd.fleetId){const fl=fac.fleets[0]||hhcMakeFleet292(root,fac,cmd.systemId,`${fac.name} Command Fleet`,pp.vessels||null,[],'armada','assault');if(campaignFleetCargoPoints(c,fac,fl)+campaignTaskForcePoints(cmd)<=campaignFleetCapacity(fl)){fl.cargoTaskForceIds.push(cmd.id);cmd.fleetId=fl.id}else{cmd.systemId=fl.currentId;cmd.deployedTerritory292=true}}}
+ }
+ if(kind==='signus'){
+   const ba=c.factions.find(f=>/Blood Angels Legion/.test(f.name)),dm=c.factions.find(f=>/Daemons of the Ruinstorm/.test(f.name));if(ba){hhcAddCanonicalSettlement292(root,ba,nodes[0],'Wreck of the Red Tear','Fortified Wreck',true);ba.notes.push('Malevolence: Sanguinius is the Waylaid Hero and Warlord whenever fielded. His campaign casualty track uses Deep Wound → Bleeding Out → Pinioned → Dark Bloodlust.');ba.notes.push('Sire of the Blood Angels: first combat turn +1 Initiative/+1 Attack; Blood Angels Jump Infantry may use jump packs in Movement and Assault; Dawnbreakers may be Troops. Angelic Presence improves nearby friendly combat resolution.');}
+   if(dm){hhcAddCanonicalSettlement292(root,dm,nodes[Math.min(1,nodes.length-1)],'Cathedral of the Mark','Warp Conduit',true);dm.notes.push('Malevolence: Ka’Bandha is the Baleful Hero; the Waylaid campaign objective requires defeating him through the cumulative Fall of Ka’Bandha track.');}
+   c.hhcWarZones292=HHC_MALEVOLENCE_292.signus.warZones.map((name,i)=>({name,controller:i===0?ba?.id:i===5?dm?.id:null,home:i===0?'Waylaid':i===5?'Baleful':null}));
+   c.hhcHeroTrack292={sanguinius:{casualties:0,stages:['Deep Wound','Bleeding Out','Pinioned','Dark Bloodlust'],rules:'Four cumulative removals; Ka’Bandha defeating Sanguinius in close combat counts twice.'},kabandha:{casualties:0,stages:['Warp Dissonance','Disfavoured','Shredded Wings','The Mighty Fall'],rules:'Four cumulative removals; Sanguinius defeating Ka’Bandha in close combat counts twice.'}};
+ }else if(kind==='chondax'){
+   const ws=c.factions.find(f=>/White Scars Legion/.test(f.name)),al=c.factions.find(f=>/Alpha Legion/.test(f.name)),ork=c.factions.find(f=>/Ork Remnant/.test(f.name));if(ws){hhcAddCanonicalSettlement292(root,ws,nodes[0],'Black-blight Ruins — White Scars War Camp','War Camp',true);ws.notes.push('Malevolence: Kvarsir/Chondax Prime is the central command world. White Scars Hordes disperse independently to clear and secure the sixteen major targets.');}
+   if(al){hhcAddCanonicalSettlement292(root,al,nodes[Math.min(1,nodes.length-1)],'Byfrust Hidden Redoubt','Hidden Redoubt',true);hhcAddCanonicalSettlement292(root,al,nodes[Math.min(2,nodes.length-1)],'Phemus IV Hidden Redoubt','Hidden Redoubt',true);hhcAddCanonicalSettlement292(root,al,nodes[Math.min(3,nodes.length-1)],'Tenebrae Interdiction Station','Void Station',false);}
+   if(ork){hhcAddCanonicalSettlement292(root,ork,nodes[Math.min(4,nodes.length-1)],'Hate Spike Ork Fortress','Ork Stronghold',true);hhcAddCanonicalSettlement292(root,ork,nodes[Math.min(5,nodes.length-1)],'Vorskarr Ork Fortress','Ork Stronghold',true);}
+   c.hhcChondax292={phase:'Deception',phases:['Deception','Destruction'],missions:['The Lure','The Snare','The Break','Tendrils of Doubt','Serpent Hunt'],boonsOfTreachery:true,majorTargets:16,centralBase:'Kvarsir / Chondax Prime',namedWorlds:HHC_MALEVOLENCE_292.chondax.worlds};
+ }
+ campaignEnsureFleetState(root);campaignSyncMap(root);return c}
+const _hhcSeedForces292=hhcSeedForces291;
+hhcSeedForces291=function(root,pr,m,grand){const c=_hhcSeedForces292(root,pr,m,grand);return hhcApplyMalevolence292(root,pr,m,grand)};
+const _hhcSideObjectives292=hhcSideObjectives291;
+hhcSideObjectives291=function(e,participation,profile){const t=(e.n+' '+e.x).toLowerCase(),chosen=hhcParticipationParticipant291(participation,profile),side=chosen?.side||(participation==='sideA'?'A':participation==='sideB'?'B':'OWN');if(/signus/.test(t)&&side==='A')return[{id:'kabandha',label:'Slay Ka’Bandha',desc:'Complete the cumulative Fall of Ka’Bandha campaign track; four removals are required, with a Sanguinius close-combat kill counting twice.',points:4,done:false},{id:'cathedral',label:'Control the Cathedral of the Mark',desc:'Advance through the linked Signus Prime War Zones and break the Cathedral’s defensive traits.',points:4,done:false},{id:'redtear',label:'Preserve the Wreck of the Red Tear',desc:'Keep the Waylaid home War Zone and its surviving command infrastructure from Baleful control.',points:2,done:false},{id:'sanguinius',label:'Preserve Sanguinius',desc:'Keep the Great Angel operational; campaign injuries persist through the Malevolence casualty track.',points:2,done:false}];if(/signus/.test(t)&&side==='B')return[{id:'sanguinius',label:'Slay Sanguinius',desc:'Complete the cumulative Fall of Sanguinius track; four removals are required, with a Ka’Bandha close-combat kill counting twice.',points:4,done:false},{id:'redtear',label:'Control the Wreck of the Red Tear',desc:'Break all three defensive traits of the Waylaid home War Zone and seize it permanently.',points:4,done:false},{id:'cathedral',label:'Preserve the Cathedral of the Mark',desc:'Maintain the Baleful home War Zone and the Warp conduit.',points:2,done:false}];if(/chondax/.test(t)&&side==='A')return[{id:'cleanse',label:'Complete the Chondax cleansing',desc:'Clear and secure the system’s major targets while retaining the Chondax Prime war camp.',points:3,done:false},{id:'deception',label:'Survive the Deception phase',desc:'Unmask or endure Alpha Legion ruses through The Lure, The Snare and The Break.',points:2,done:false},{id:'phemus',label:'Break the hidden Alpha Legion network',desc:'Destroy the Byfrust/Phemus IV reserve redoubts and Tenebrae isolation network.',points:3,done:false},{id:'escape',label:'Execute the Chisel and preserve the Legion',desc:'Break the Alpha Legion cordon and retain a viable White Scars fleet for the run to Prospero.',points:3,done:false}];if(/chondax/.test(t)&&side==='B')return[{id:'delay',label:'Maintain the Chondax trap',desc:'Use covert action and Ork manipulation to delay the White Scars and keep them dispersed.',points:3,done:false},{id:'tenebrae',label:'Preserve the Tenebrae network',desc:'Keep the system isolated from reliable communications and outside intervention.',points:2,done:false},{id:'redoubts',label:'Hold Byfrust and Phemus IV',desc:'Preserve the principal hidden reserve bases until the Destruction phase.',points:2,done:false},{id:'cordon',label:'Close the Hydra cordon',desc:'Commit the fleet and prevent the White Scars from escaping Chondax intact.',points:3,done:false}];return _hhcSideObjectives292(e,participation,profile)};
+const _campaignOverviewHTML292=campaignOverviewHTML;
+campaignOverviewHTML=function(root,c){let h=_campaignOverviewHTML292(root,c),hh=hhcEnsure290(root),m=hh?.activeMissions?.find(x=>x.id===hh.currentMissionId),pr=m?.profile291;if(!m||!pr?.malevolence292)return h;const src=HHC_MALEVOLENCE_292[pr.malevolence292],p=campaignPlayer(c),leader=campaignLeaderForFaction280(p?.key,p?.leaderId280);const fleets=(c.factions||[]).flatMap(f=>(f.fleets||[]).map(fl=>`<span><b>${hhcEsc290(fl.name)}</b> — ${hhcEsc290(f.name)}${fl.canonicalVessels292?` • ~${Number(fl.canonicalVessels292).toLocaleString()} vessels`:''} • ${(fl.cargoTaskForceIds||[]).length} embarked force(s)</span>`)).join('');const extra=`<section class="hhc-overview291"><header><div><span>MALEVOLENCE CANONICAL THEATRE</span><h3>${hhcEsc290(src.location)}</h3><p>${hhcEsc290(src.canonical)}</p></div></header><div class="hhc-overview-grid291"><div><h4>Campaign Structure</h4>${(src.notes||[]).map(x=>`<div class="hhc-overview-obj291"><div><span>${hhcEsc290(x)}</span></div></div>`).join('')}${pr.malevolence292==='signus'?`<div class="hhc-force-list291">${HHC_MALEVOLENCE_292.signus.warZones.map(x=>`<span>${hhcEsc290(x)}</span>`).join('')}</div>`:`<div class="hhc-force-list291">${HHC_MALEVOLENCE_292.chondax.worlds.map(x=>`<span>${hhcEsc290(x)}</span>`).join('')}</div>`}</div><div><h4>Fleet Embarkation / Established Forces</h4><div class="hhc-force-list291">${fleets||'<span>Established ground formations only.</span>'}</div>${leader?`<div class="hhc-overview-obj291 done"><div><b>Faction Leader: ${hhcEsc290(leader.name)}</b><span>${hhcEsc290(leader.lore)} • ${hhcEsc290(campaignLeaderBaseBenefits280(leader).label)}</span></div></div>`:''}</div></div></section>`;return extra+h};
+window.__cartoHeresy292={version:REV292,build:REV292_BUILD,malevolence:HHC_MALEVOLENCE_292,profile:hhcProfile291,seedForces:hhcSeedForces291};
+
+const rb290=document.querySelector('.generation-head-actions .badge');if(rb290)rb290.textContent='rev 29.2 — Malevolence Campaigns';document.title='Administratum Stellar Cartographica — Revision 29.2';document.documentElement.dataset.cartographicaRevision=REV292;document.documentElement.dataset.cartographicaBuild=REV292_BUILD;
+
+/* v29.3 Crusade/Thramas moved into the authoritative main runtime scope for v30.0. */
+
+const REV293='29.3',REV293_BUILD='29.3-crusade-thramas-devastation-missions-v1';
+const HHC_CRUSADE_293={source:'The Horus Heresy Book Nine — Crusade',campaign:'Thramas Crusade',defaultPoints:3000,defaultRuinLimit:50,
+sectors:[
+{id:'thramas',name:'Thramas Sector',summary:'Hive-world warfare. Include at least one Large Building per full 1,000 points. Spoils generated in the battle may be sacrificed to reduce Ruin by 2 per Spoils point.'},
+{id:'triplex',name:'Triplex Sector',summary:'Industrial Forge World battlefields. Buildings and Fortifications gain Blessed Autosimulacra. The winner gains +2 Spoils; the battle also adds +D6 Ruin.'},
+{id:'aegis',name:'Aegis Sector',summary:'Open agri-world terrain with sparse structures. Existing war damage can turn Difficult terrain Dangerous, and victories here improve Fealty.'},
+{id:'gulgorahd',name:'Gulgorahd Protectorate',summary:'Ruined militarised worlds. Battles last one extra turn; Spoils are capped and Ruin contribution is reduced.'},
+{id:'tithe',name:'The Tithe Road',summary:'Sparse frontier worlds with D3 dangerous areas and possible storms. Storms impose Night Fighting and strike exposed units; only the winner’s VP contributes to Ruin.'}],
+missions:[
+{id:'logic',name:'The Logic of War',turns:'6 turns',setup:'Determine deployment map and terrain. Deploy Compulsory Troops, up to two Fast Attack choices and Fortifications; all other units begin in Reserve. Place one objective as close to the table centre as possible.',primary:'Point of Control: the player controlling the central objective scores 3 VP on turn 1, 2 VP on turns 2–3, and 1 VP on turn 4 onward.',secondary:['Slay the Warlord: +1 VP.','Last Man Standing: the side with the greatest number of surviving units gains +1 VP.','The Price of Failure if Lords of War are used.'],special:['Reserves','Night Fighting']},
+{id:'stone',name:'No Stone Upon Stone',turns:'6 turns',setup:'The second-deploying player places four Keystone Buildings, each at least 12 inches from another building and 6 inches from a board edge. Both armies then deploy normally except for Reserves.',primary:'Keystone Buildings: each intact claimed Keystone is worth 4 VP; a destroyed Keystone is worth 2 VP to the side that destroyed it. Keystone durability scales with army size and each gains Mighty Bulwark.',secondary:['Slay the Warlord: +1 VP.','Scorched Earth: +1 VP for each non-Keystone Building or Fortification destroyed.','The Price of Failure if Lords of War are used.'],special:['Reserves','Night Fighting']},
+{id:'confrontation',name:'Confrontation',turns:'4–7 turns',setup:'Before other deployment, the first player places their Warlord and attached unit within 12 inches of the table centre. The second player places their Warlord and attached unit 8–12 inches from that enemy Warlord; remaining forces deploy normally.',primary:'A Grudge Long Held: destroying the enemy Warlord scores 4 VP on turns 1–2, 3 VP on turns 3–4, and 2 VP on turns 5–6.',secondary:['The Demands of Honour: +1 VP for destroying an enemy Character in a Challenge.','No Price Too Steep: when a unit is destroyed in combat with an enemy unit containing a Character, roll D6; on 5+ its controller gains 1 VP.','The Price of Failure if Lords of War are used.'],special:['Reserves','Night Fighting','Blood Demands Blood: after turn 4, roll D6 and add +1 per surviving Warlord with at least one wound. On 5+ play another turn, to a maximum of turn 7.']},
+{id:'bastion',name:'The Last Bastion',turns:'6 turns',setup:'After a roll-off, place one Large Building within 12 inches of the table centre. It becomes the Last Bastion. Remaining forces deploy normally except for Reserves.',primary:'Hold Until Relieved: at the end of each game turn, the player controlling the Last Bastion gains D3 VP.',secondary:['Slay the Warlord: +1 VP.','The Direst Circumstances: on turn 6 a trailing player not controlling the Bastion may destroy it for D6 VP; destroying it in other circumstances costs the controlling player D6 VP.','The Price of Failure if Lords of War are used.'],special:['Reserves','Night Fighting','The Last Bastion: Large Building, AV14, 7 Hull Points, Transport Capacity 30, Mighty Bulwark, no emplaced weapons.']}
+]};
+function thramasState293(root){const c=root?.campaign;if(!c)return null;if(!c.hhcThramas293)c.hhcThramas293={source:HHC_CRUSADE_293.source,pointsLimit:3000,ruinLimit:50,ruin:0,spoils:{loyalist:0,traitor:0},fealty:{loyalist:0,traitor:0},selectedSector:'thramas',selectedMission:'logic',battleReports:[]};return c.hhcThramas293}
+function thramasActive293(root){const h=hhcEnsure290(root),m=h?.activeMissions?.find(x=>x.id===h.currentMissionId);return !!(m&&/thramas crusade/i.test(m.name||''))}
+const _prof293=hhcProfile291;hhcProfile291=function(e){if(!/thramas crusade/i.test(e?.n||''))return _prof293(e);return{scale:'subsector',location:'Eastern Fringe — Thramas Theatre',source:HHC_CRUSADE_293.source,canonical:'Book Nine Thramas campaign theatre with Devastation Missions, Spoils, Fealty and Ruin.',crusade293:'thramas',participants:[{name:'Dark Angels Legion',key:'legion',side:'A',points:72000},{name:'Loyalist Eastern Fringe Auxilia',key:'solar',side:'A',points:28000},{name:'Loyalist Mechanicum / Triplex defenders',key:'mechanicum',side:'A',points:24000},{name:'Night Lords Legion',key:'legion',side:'B',points:76000},{name:'Traitor Eastern Fringe Auxilia',key:'darkcompliance',side:'B',points:30000},{name:'Traitor Mechanicum / Legio Victorum elements',key:'mechanicum',side:'B',points:26000}]}}
+const _seed293=hhcSeedForces291;hhcSeedForces291=function(root,pr,m,grand){const c=_seed293(root,pr,m,grand);if(pr?.crusade293==='thramas'){thramasState293(root);for(const f of c.factions||[])f.notes?.push?.('Book Nine: Unique characters should normally participate in only one game per Campaign Turn.');}return c};
+const tm293=id=>HHC_CRUSADE_293.missions.find(x=>x.id===id)||HHC_CRUSADE_293.missions[0],ts293=id=>HHC_CRUSADE_293.sectors.find(x=>x.id===id)||HHC_CRUSADE_293.sectors[0];
+function renderThramas293(root){const st=thramasState293(root),mis=tm293(st.selectedMission),sec=ts293(st.selectedSector);const mb=HHC_CRUSADE_293.missions.map(x=>`<button class="${x.id===st.selectedMission?'generate':'ghost'}" data-thramas293-mission="${x.id}">${hhcEsc290(x.name)}</button>`).join(''),so=HHC_CRUSADE_293.sectors.map(x=>`<option value="${x.id}" ${x.id===st.selectedSector?'selected':''}>${hhcEsc290(x.name)}</option>`).join(''),rows=st.battleReports.slice(-8).reverse().map(r=>`<tr><td>${hhcEsc290(r.mission)}</td><td>${hhcEsc290(r.sector)}</td><td>${r.loyalistVP}-${r.traitorVP}</td><td>${hhcEsc290(r.result)}</td></tr>`).join('')||'<tr><td colspan="4">No Devastation battle reports yet.</td></tr>';
+return `<section class="hhc-overview291 thramas293"><header><div><span>BOOK NINE — CRUSADE</span><h3>Thramas Campaign Missions</h3><p>The Thramas Crusade now uses the book’s four Devastation missions and Eastern Fringe war-zone rules.</p></div></header><div class="hhc-metrics290"><div><span>Ruin</span><b>${st.ruin} / ${st.ruinLimit}</b></div><div><span>Loyalist Spoils</span><b>${st.spoils.loyalist}</b></div><div><span>Traitor Spoils</span><b>${st.spoils.traitor}</b></div><div><span>Loyalist Fealty</span><b>${st.fealty.loyalist}</b></div><div><span>Traitor Fealty</span><b>${st.fealty.traitor}</b></div></div><h4>Devastation Mission</h4><div class="hhc-actions290 thramas-mission-buttons293">${mb}</div><div class="hhc-overview-grid291"><div><h4>${hhcEsc290(mis.name)}</h4><div class="hhc-overview-obj291"><div><b>Game Length</b><span>${hhcEsc290(mis.turns)}</span></div></div><div class="hhc-overview-obj291"><div><b>Set-up / Deployment</b><span>${hhcEsc290(mis.setup)}</span></div></div><div class="hhc-overview-obj291"><div><b>Primary Objective</b><span>${hhcEsc290(mis.primary)}</span></div></div><div class="hhc-force-list291">${mis.secondary.map(x=>`<span><b>Secondary:</b> ${hhcEsc290(x)}</span>`).join('')}${mis.special.map(x=>`<span><b>Special:</b> ${hhcEsc290(x)}</span>`).join('')}</div></div><div><h4>Eastern Fringe War Zone</h4><select id="thramas293Sector">${so}</select><div class="hhc-overview-obj291"><div><b>${hhcEsc290(sec.name)}</b><span>${hhcEsc290(sec.summary)}</span></div></div><h4>Report Tabletop Result</h4><div class="hhc-launch-grid290"><div class="field"><label>Loyalist VP</label><input id="thramas293LoyalVP" type="number" min="0" value="0"></div><div class="field"><label>Traitor VP</label><input id="thramas293TraitorVP" type="number" min="0" value="0"></div></div><div class="hhc-actions290"><button class="generate" data-thramas293-report>Commit Battle Result</button></div><small>Core accounting records each side’s VP as Spoils, the winner’s VP as Fealty, and combined VP as Ruin. Apply the selected sector’s special modifier where required.</small></div></div><div class="hhc-history290"><h4>Devastation Mission Record</h4><table><thead><tr><th>Mission</th><th>Sector</th><th>VP</th><th>Result</th></tr></thead><tbody>${rows}</tbody></table></div></section>`}
+const _ov293=campaignOverviewHTML;campaignOverviewHTML=function(root,c){let h=_ov293(root,c);return thramasActive293(root)?renderThramas293(root)+h:h};
+function report293(root){const st=thramasState293(root),lv=Math.max(0,Number(document.getElementById('thramas293LoyalVP')?.value||0)),tv=Math.max(0,Number(document.getElementById('thramas293TraitorVP')?.value||0));st.spoils.loyalist+=lv;st.spoils.traitor+=tv;st.ruin+=lv+tv;let result='Draw';if(lv>tv){result='Loyalist victory';st.fealty.loyalist+=lv}else if(tv>lv){result='Traitor victory';st.fealty.traitor+=tv}const mis=tm293(st.selectedMission),sec=ts293(st.selectedSector);st.battleReports.push({mission:mis.name,sector:sec.name,loyalistVP:lv,traitorVP:tv,result,turn:root.campaign.turn});campaignLog(root.campaign,`Thramas battle: ${mis.name} • ${sec.name} • ${result} ${lv}-${tv}. Ruin ${st.ruin}/${st.ruinLimit}.`,result==='Traitor victory'?'war':'gain');campaignPersist(root);campaignRenderDashboard(root);campaignShowView('overview')}
+if(!window.__thramas293Bound){window.__thramas293Bound=true;document.addEventListener('click',e=>{const b=e.target.closest?.('[data-thramas293-mission],[data-thramas293-report]');if(!b)return;const root=hhcCurrentRoot291?.();if(!root||!thramasActive293(root))return;e.preventDefault();e.stopImmediatePropagation();const st=thramasState293(root);if(b.dataset.thramas293Mission){st.selectedMission=b.dataset.thramas293Mission;campaignPersist(root);campaignRenderDashboard(root);campaignShowView('overview')}else report293(root)},true);document.addEventListener('change',e=>{if(e.target?.id!=='thramas293Sector')return;const root=hhcCurrentRoot291?.();if(!root||!thramasActive293(root))return;thramasState293(root).selectedSector=e.target.value;campaignPersist(root);campaignRenderDashboard(root);campaignShowView('overview')},true)}
+window.__cartoHeresy293={version:REV293,build:REV293_BUILD,crusade:HHC_CRUSADE_293,state:thramasState293};
+
+
+/* ========================================================================
+   Revision 30.0 — Campaign Core Consolidation
+   One stable integration layer for Heresy theatres, objective events,
+   detached theatre storage, canonical fleet state, and build identity.
+   ======================================================================== */
+const CARTO_BUILD_30=Object.freeze({revision:'30.0',build:'30.0-campaign-core-consolidation-v1',label:'rev 30.0 — Campaign Core Consolidation',title:'Administratum Stellar Cartographica — Revision 30.0',schema:30});
+
+/* ---- Grand campaign identity: theatre generation no longer inherits the active theatre seed. ---- */
+const _hhcEnsure30=hhcEnsure290;
+hhcEnsure290=function(root){
+  const h=_hhcEnsure30(root); if(!h)return h;
+  h.schema30=30;
+  h.grandCampaignId30=h.grandCampaignId30||`hhc-${Math.abs(hashText(String(h.originFactionName||'campaign')+'|'+String(root?.campaign?.createdAt||Date.now()))).toString(36)}`;
+  h.grandSeed30=h.grandSeed30||root?.campaign?.sectorSeed||root?.config?.seed||'STELLAR-CARTOGRAPHICA-HERESY';
+  h.theatreRefs30=h.theatreRefs30||{};
+  return h;
+};
+const _hhcEnable30=hhcEnable290;
+hhcEnable290=function(root,opts={}){const h=_hhcEnable30(root,opts);if(h){h.schema30=30;h.grandCampaignId30=h.grandCampaignId30||`hhc-${Math.abs(hashText(String(root?.config?.seed||'carto')+'|'+Date.now())).toString(36)}`;h.grandSeed30=h.grandSeed30||root?.config?.seed||root?.campaign?.sectorSeed||'STELLAR-CARTOGRAPHICA-HERESY';h.theatreRefs30=h.theatreRefs30||{}}return h};
+hhcGenerateRoot291=function(oldRoot,e,m){
+  const pr=hhcProfile291(e),h=hhcEnsure290(oldRoot),seed=`${h?.grandSeed30||oldRoot?.config?.seed||'carto'}::HHC30::${m.id}`;
+  const cfg={...(oldRoot?.config||{}),seed,era:'30k',naming:'imperial',warpFeatures:true,rareVoidFeatures:true,conflictDensity:'warzone'};
+  let root;
+  if(pr.scale==='system'){const sys=generateSystemData({...cfg,systemType:pr.systemType||'auto'},seed,pr.location,`${pr.location} / Heresy Theatre`);sys.hhcCanonical291={mission:m.name,profile:pr};root=campaignMakeSystemRoot(sys)}
+  else if(pr.scale==='subsector'){const sub=generateSubsectorData({...cfg,subsectorCount:6,subsectorRadius:18},seed,pr.location,`${pr.location} / Heresy Theatre`);sub.hhcCanonical291={mission:m.name,profile:pr};root=campaignMakeSubsectorRoot(sub)}
+  else{root=hhcMakeSector291(cfg,pr.location,seed);root.hhcCanonical291={mission:m.name,profile:pr}}
+  root.hhcProfile291=pr;return root;
+};
+
+/* ---- Timeline hygiene: editorial reconciliation notes never become missions. ---- */
+const _hhcOffers30=hhcOffers290;
+hhcOffers290=function(root){return _hhcOffers30(root).filter(e=>{const t=`${e.n||''} ${e.x||''}`.toLowerCase();return !(e.type==='chronology-note'||/chronology reconciliation|dating conflict|timeline note|editorial note|conflicting date|reconcile/i.test(t))})};
+
+/* ---- Detached theatre storage. Large snapshots live in IndexedDB, not Heresy localStorage. ---- */
+const HHC_DB30='stellar-cartographica-v30',HHC_STORE30='heresy-theatres';
+function hhcDb30(){return new Promise((resolve,reject)=>{try{const q=indexedDB.open(HHC_DB30,1);q.onupgradeneeded=()=>{if(!q.result.objectStoreNames.contains(HHC_STORE30))q.result.createObjectStore(HHC_STORE30)};q.onsuccess=()=>resolve(q.result);q.onerror=()=>reject(q.error)}catch(e){reject(e)}})}
+async function hhcStoreSnapshot30(key,value){const db=await hhcDb30();return new Promise((resolve,reject)=>{const tx=db.transaction(HHC_STORE30,'readwrite');tx.objectStore(HHC_STORE30).put(value,key);tx.oncomplete=()=>{db.close();resolve(true)};tx.onerror=()=>{db.close();reject(tx.error)}})}
+async function hhcLoadSnapshot30(key){const db=await hhcDb30();return new Promise((resolve,reject)=>{const tx=db.transaction(HHC_STORE30,'readonly'),q=tx.objectStore(HHC_STORE30).get(key);q.onsuccess=()=>{db.close();resolve(q.result||null)};q.onerror=()=>{db.close();reject(q.error)}})}
+async function hhcDeleteSnapshot30(key){const db=await hhcDb30();return new Promise((resolve,reject)=>{const tx=db.transaction(HHC_STORE30,'readwrite');tx.objectStore(HHC_STORE30).delete(key);tx.oncomplete=()=>{db.close();resolve(true)};tx.onerror=()=>{db.close();reject(tx.error)}})}
+function hhcSnapshotKey30(h,m){return `${h.grandCampaignId30}:${m.id}`}
+function hhcGrandPersist30(root){
+  const h=root?.campaign?.heresy290;if(!h)return campaignPersist(root);
+  /* Defensive migration: old embedded snapshots are converted on next save/resume, but never recursively persisted again. */
+  for(const m of h.activeMissions||[])if(m.savedSnapshot291&&m.snapshotRef30){delete m.savedSnapshot291}
+  return campaignPersist(root);
+}
+hhcSaveCurrent291=async function(root){
+  const h=hhcEnsure290(root),id=h?.currentMissionId,m=h?.activeMissions?.find(x=>x.id===id);if(!h||!m)return false;
+  const snap=hhcSnapshot291(root),key=hhcSnapshotKey30(h,m);
+  try{await hhcStoreSnapshot30(key,snap);m.snapshotRef30=key;delete m.savedSnapshot291;m.storage30='indexeddb'}
+  catch(err){m.savedSnapshot291=snap;m.storage30='legacy-fallback';m.storageError30=String(err?.message||err)}
+  m.status='Saved';m.savedCampaignTurn=root.campaign.turn;h.currentMissionId=null;h.offerStates[m.id]='saved';h.theatreRefs30[m.id]={key:m.snapshotRef30||null,scope:snap.scope,turn:m.savedCampaignTurn};
+  campaignLog(root.campaign,`Mission saved: ${m.name}. Theatre state detached from the grand campaign${m.snapshotRef30?' in IndexedDB':''}.`,'gain');
+  hhcGrandPersist30(root);campaignRenderDashboard(root);campaignShowView('heresy');return true;
+};
+hhcResume291=async function(root,id){
+  const h=hhcEnsure290(root),m=h?.activeMissions?.find(x=>x.id===id);if(!h||h.currentMissionId||!m)return false;
+  let snap=m.savedSnapshot291||null;if(!snap&&m.snapshotRef30){try{snap=await hhcLoadSnapshot30(m.snapshotRef30)}catch(e){snap=null}}
+  if(!snap){campaignQueueNotice(root,'Saved Mission Unavailable',`The detached theatre snapshot for ${m.name} could not be loaded.`);return false}
+  const nr=hhcRestore291(snap,h);m.status='Active';h.currentMissionId=id;h.offerStates[id]='active';nr.campaign.heresy290=h;campaignLog(nr.campaign,`Mission resumed: ${m.name}.`,'gain');hhcGrandPersist30(nr);hhcShowRoot291(nr,'overview');return true;
+};
+
+/* ---- Canonical theatre fleets: authored OOBs are authoritative. ---- */
+const _hhcApplyMalevolence30=hhcApplyMalevolence292;
+hhcApplyMalevolence292=function(root,pr,m,grand){
+  const c=_hhcApplyMalevolence30(root,pr,m,grand);if(!pr?.malevolence292)return c;
+  for(const fac of c.factions||[]){const pp=pr.participants?.find(x=>x.name===fac.name);if(!pp)continue;
+    fac.canonicalFleetLock30=true;
+    /* Remove only empty generic migration fleets; preserve authored ships and any fleet carrying troops. */
+    fac.fleets=(fac.fleets||[]).filter(fl=>fl.malevolence292||(fl.cargoTaskForceIds||[]).length>0);
+    if(pp.vessels===0){for(const tf of fac.taskForces||[]){tf.fleetId=null;tf.deployedTerritory292=true}fac.fleets=[]}
+    else{
+      /* Every mobile canonical formation must actually be embarked. Reconstruct any fleet omitted by older migration state. */
+      for(const [i,tf] of (fac.taskForces||[]).entries()){if(tf.deployedTerritory292)continue;let fl=(fac.fleets||[]).find(x=>(x.cargoTaskForceIds||[]).includes(tf.id));if(fl){tf.fleetId=fl.id;continue}const names=pp.shipNames||[],nm=names[i]||`${pp.name} ${fac.taskForces.length>1?'Fleet '+roman(i+1):'Fleet'}`,v=pp.vessels?Math.max(1,Math.round(pp.vessels/Math.max(1,fac.taskForces.length))):null;fl=hhcMakeFleet292(root,fac,tf.systemId,nm,v,[tf.id],'armada',pp.key==='solar'?'transport':'assault');fl.canonicalRecovered30=true;tf.fleetId=fl.id}
+    }
+  }
+  if(m?.participation==='own'){const pf=campaignPlayer(c);if(pf){pf.fleets=pf.fleets||[];for(const tf of pf.taskForces||[]){let fl=pf.fleets.find(x=>(x.cargoTaskForceIds||[]).includes(tf.id));if(!fl){fl=pf.fleets.find(x=>!x.transit&&x.currentId===tf.systemId&&campaignFleetCargoPoints(c,pf,x)+campaignTaskForcePoints(tf)<=campaignFleetCapacity(x));if(!fl){const cls=campaignFleetClassForPoints(campaignTaskForcePoints(tf));fl=campaignFleetMake(root,pf,cls,campaignFleetDefaultRole(pf.key),tf.systemId,`${pf.name} Intervention Fleet`,[]);pf.fleets.push(fl)}fl.cargoTaskForceIds=fl.cargoTaskForceIds||[];fl.cargoTaskForceIds.push(tf.id)}tf.fleetId=fl.id}}}
+  campaignSyncMap(root);return c;
+};
+const _ensureFleet30=campaignEnsureFleetState;
+campaignEnsureFleetState=function(root){const c=root?.campaign;if(c?.mode==='horus-heresy-mission'&&c.factions?.some(f=>f.canonicalFleetLock30)){for(const f of c.factions)f.fleets=f.fleets||[];return c}return _ensureFleet30(root)};
+
+/* ---- Campaign event bus and automatic Heresy objective evaluation. ---- */
+function hhcActiveMission30(root){const h=hhcEnsure290(root);return h?.activeMissions?.find(x=>x.id===h.currentMissionId)||null}
+function hhcMarkObjective30(root,id,reason){const m=hhcActiveMission30(root),o=m?.objectives?.find(x=>x.id===id);if(!o||o.done)return false;o.done=true;o.auto30=true;o.completedReason30=reason||'Campaign event';o.completedTurn30=root.campaign.turn;m.score=m.objectives.filter(x=>x.done).reduce((n,x)=>n+x.points,0);return true}
+function hhcEvaluateEvent30(root,type,d={}){
+  const m=hhcActiveMission30(root);if(!m)return false;let changed=false,t=(m.name+' '+(m.description||'')).toLowerCase(),name=String(d.name||d.locationName||d.systemName||'').toLowerCase();
+  if(type==='territoryCaptured'){changed=hhcMarkObjective30(root,'objective',`Captured ${d.name||'strategic territory'}`)||changed;if(/cathedral of the mark/.test(name))changed=hhcMarkObjective30(root,'cathedral','Cathedral of the Mark captured')||changed;if(/wreck of the red tear/.test(name))changed=hhcMarkObjective30(root,'redtear','Wreck of the Red Tear captured')||changed}
+  if(type==='battleResolved'&&d.playerWon){changed=hhcMarkObjective30(root,'battle','Won a campaign battle')||changed;if(/signus/.test(t)){if(/daemon|ruinstorm/i.test(String(d.enemyName||'')))changed=hhcMarkObjective30(root,'purge','Defeated a daemonic formation')||changed;if(/blood angels/i.test(String(d.enemyName||'')))changed=hhcMarkObjective30(root,'cripple','Defeated a Blood Angels formation')||changed}}
+  if(type==='fleetArrived'){changed=hhcMarkObjective30(root,'presence',`Fleet arrived at ${d.name||'the mission theatre'}`)||changed;if(/chondax/.test(t)&&/outside|mande|escape|prospero/i.test(name))changed=hhcMarkObjective30(root,'escape','Fleet broke the Chondax cordon')||changed}
+  if(type==='expeditionCompleted')changed=hhcMarkObjective30(root,'expedition','Expedition completed')||hhcMarkObjective30(root,'adventure','Expedition completed')||changed;
+  if(type==='leaderCasualty'){const q=String(d.leader||'').toLowerCase();if(q.includes('sanguinius'))changed=hhcMarkObjective30(root,'sanguinius','Sanguinius casualty track resolved')||changed;if(q.includes('bandha'))changed=hhcMarkObjective30(root,'kabandha','Ka’Bandha casualty track resolved')||changed}
+  if(changed){campaignLog(root.campaign,`Heresy objective updated automatically from ${type}.`,'gain');hhcGrandPersist30(root)}return changed;
+}
+function hhcEmit30(root,type,detail={}){if(!root?.campaign)return false;root.campaign.hhcEvents30=root.campaign.hhcEvents30||[];root.campaign.hhcEvents30.push({turn:root.campaign.turn,type,detail});root.campaign.hhcEvents30=root.campaign.hhcEvents30.slice(-100);return hhcEvaluateEvent30(root,type,detail)}
+
+const _claim30=campaignClaim;campaignClaim=function(root,targetId,fac,ai=false){const ok=_claim30(root,targetId,fac,ai);if(ok&&fac?.id===root?.campaign?.playerFactionId){const rec=campaignRecord(root,targetId);hhcEmit30(root,'territoryCaptured',{name:rec?.name||targetId,targetId})}return ok};
+const _autoBattle30=campaignAutoResolveBattle;campaignAutoResolveBattle=function(root,id,quiet=false){const b0=root?.campaign?.battles?.find(x=>x.id===id);_autoBattle30(root,id,quiet);const b=root?.campaign?.battles?.find(x=>x.id===id);if(b&&b.status==='Resolved'&&b0){const p=root.campaign.playerFactionId,w=b.resolution?.winnerFactionId,enemy=w===b.attackerFactionId?campaignFaction(root.campaign,b.defenderFactionId):campaignFaction(root.campaign,b.attackerFactionId);hhcEmit30(root,'battleResolved',{playerWon:w===p,enemyName:enemy?.name,systemName:b.systemName})}};
+const _reportBattle30=campaignReportBattle;campaignReportBattle=function(root,id,result){_reportBattle30(root,id,result);const b=root?.campaign?.battles?.find(x=>x.id===id);if(b?.status==='Resolved'){const p=root.campaign.playerFactionId,w=b.resolution?.winnerFactionId,enemy=w===b.attackerFactionId?campaignFaction(root.campaign,b.defenderFactionId):campaignFaction(root.campaign,b.attackerFactionId);hhcEmit30(root,'battleResolved',{playerWon:w===p,enemyName:enemy?.name,systemName:b.systemName})}};
+const _advFleet30=campaignAdvanceFleet;campaignAdvanceFleet=function(root,fac,fleet){const was=!!fleet?.transit,target=fleet?.transit?.targetId;_advFleet30(root,fac,fleet);if(was&&!fleet.transit&&fleet.currentId===target&&fac?.id===root?.campaign?.playerFactionId){hhcEmit30(root,'fleetArrived',{name:campaignRecord(root,target)?.name||target,targetId:target,fleet:fleet.name})}};
+if(typeof campaignRollAdventure239==='function'){const _adv30=campaignRollAdventure239;campaignRollAdventure239=function(w,p,a){const ok=_adv30(w,p,a),root=window.currentSector;if(ok&&root?.campaign)hhcEmit30(root,'expeditionCompleted',{name:a?.title||'Expedition'});return ok}}
+
+/* ---- Signus campaign state actions. ---- */
+function hhcHeroCasualty30(root,hero,byRival=false){const tr=root?.campaign?.hhcHeroTrack292?.[hero];if(!tr)return false;tr.casualties=Math.min(4,Number(tr.casualties||0)+(byRival?2:1));tr.currentStage30=tr.casualties?tr.stages[Math.min(tr.casualties-1,tr.stages.length-1)]:null;hhcEmit30(root,'leaderCasualty',{leader:hero,casualties:tr.casualties,stage:tr.currentStage30});campaignLog(root.campaign,`${hero==='sanguinius'?'Sanguinius':'Ka’Bandha'} campaign casualty track: ${tr.casualties}/4${tr.currentStage30?` — ${tr.currentStage30}`:''}.`,'war');hhcGrandPersist30(root);campaignRenderDashboard(root);campaignShowView('overview');return true}
+function hhcWarZoneVictory30(root,zoneName,factionId){const zones=root?.campaign?.hhcWarZones292||[],z=zones.find(x=>x.name===zoneName);if(!z)return false;z.defensiveTraits30=z.defensiveTraits30??((z.home)?3:0);if(z.home&&z.controller!==factionId&&z.defensiveTraits30>0){z.defensiveTraits30--;if(z.defensiveTraits30<=0)z.controller=factionId}else z.controller=factionId;hhcEmit30(root,'territoryCaptured',{name:z.name,factionId});hhcGrandPersist30(root);campaignRenderDashboard(root);campaignShowView('overview');return true}
+
+/* ---- Chondax state machine and Boons of Treachery ledger. ---- */
+function hhcChondaxState30(root){const q=root?.campaign?.hhcChondax292;if(!q)return null;q.phaseIndex30=q.phaseIndex30??0;q.missionIndex30=q.missionIndex30??0;q.boons30=q.boons30||{A:[],B:[]};q.results30=q.results30||[];q.phase=q.phaseIndex30===0?'Deception':'Destruction';return q}
+function hhcChondaxResult30(root,winner='A'){
+  const q=hhcChondaxState30(root);if(!q)return false;const order=q.phaseIndex30===0?['The Lure','The Snare','The Break']:['Tendrils of Doubt','Serpent Hunt'],name=order[q.missionIndex30]||order[order.length-1];q.results30.push({turn:root.campaign.turn,mission:name,winner});if(winner==='A'||winner==='B')q.boons30[winner].push(`Boon ${q.boons30[winner].length+1}`);q.missionIndex30++;
+  if(q.phaseIndex30===0&&q.missionIndex30>=3){q.phaseIndex30=1;q.phase='Destruction';q.missionIndex30=0;hhcMarkObjective30(root,'deception','Completed the Deception phase')}
+  if(q.phaseIndex30===1&&q.missionIndex30>=2){q.complete30=true;if(winner==='A')hhcMarkObjective30(root,'escape','Completed the Chondax destruction phase')}
+  hhcGrandPersist30(root);campaignRenderDashboard(root);campaignShowView('overview');return true;
+}
+
+/* ---- Thramas Book Nine implementation: sector modifiers + campaign end. ---- */
+function thramasApplyResult30(root,st,lv,tv,sec){let lSpoil=lv,tSpoil=tv,ruin=lv+tv,lFealty=lv>tv?lv:0,tFealty=tv>lv?tv:0,extra='';
+  if(sec.id==='triplex'){if(lv>tv)lSpoil+=2;else if(tv>lv)tSpoil+=2;const d6=1+Math.floor(campaignRandom(root.campaign,`THRAMAS-TRIPLEX-${st.battleReports.length}`)*6);ruin+=d6;extra=`Triplex added ${d6} Ruin and +2 Spoils to the victor.`}
+  else if(sec.id==='aegis'){if(lv>tv)lFealty+=1;else if(tv>lv)tFealty+=1;extra='Aegis granted the victor +1 additional Fealty.'}
+  else if(sec.id==='gulgorahd'){lSpoil=Math.min(4,lSpoil);tSpoil=Math.min(4,tSpoil);ruin=Math.ceil(ruin/2);extra='Gulgorahd capped Spoils at 4 per side and halved Ruin.'}
+  else if(sec.id==='tithe'){ruin=Math.max(lv,tv);extra='Tithe Road contributed only the winning VP score to Ruin.'}
+  st.spoils.loyalist+=lSpoil;st.spoils.traitor+=tSpoil;st.fealty.loyalist+=lFealty;st.fealty.traitor+=tFealty;st.ruin+=ruin;return{lSpoil,tSpoil,ruin,extra}}
+report293=function(root){const st=thramasState293(root),lv=Math.max(0,Number(document.getElementById('thramas293LoyalVP')?.value||0)),tv=Math.max(0,Number(document.getElementById('thramas293TraitorVP')?.value||0)),mis=tm293(st.selectedMission),sec=ts293(st.selectedSector),calc=thramasApplyResult30(root,st,lv,tv,sec);let result='Draw';if(lv>tv)result='Loyalist victory';else if(tv>lv)result='Traitor victory';st.battleReports.push({mission:mis.name,sector:sec.name,loyalistVP:lv,traitorVP:tv,result,turn:root.campaign.turn,ruinAdded30:calc.ruin,modifier30:calc.extra});if(st.ruin>st.ruinLimit){st.complete30=true;st.winner30=st.spoils.loyalist===st.spoils.traitor?(st.fealty.loyalist>=st.fealty.traitor?'Loyalists':'Traitors'):(st.spoils.loyalist>st.spoils.traitor?'Loyalists':'Traitors');campaignLog(root.campaign,`Thramas campaign concluded: ${st.winner30} win on Spoils${st.spoils.loyalist===st.spoils.traitor?' with Fealty tie-breaker':''}.`,'gain')}campaignLog(root.campaign,`Thramas battle: ${mis.name} • ${sec.name} • ${result} ${lv}-${tv}. +${calc.ruin} Ruin. ${calc.extra}`,'war');hhcGrandPersist30(root);campaignRenderDashboard(root);campaignShowView('overview')};
+
+/* ---- Unified action router for v30 campaign additions. Existing critical legacy handlers remain
+         temporarily available, but all new campaign actions use this single delegated route. ---- */
+if(!window.__cartoActionRouter30){window.__cartoActionRouter30=true;document.addEventListener('click',e=>{const b=e.target.closest?.('[data-hhc30-hero],[data-hhc30-zone],[data-hhc30-chondax]');if(!b)return;const root=hhcCurrentRoot291?.();if(!root)return;e.preventDefault();e.stopImmediatePropagation();if(b.dataset.hhc30Hero)hhcHeroCasualty30(root,b.dataset.hhc30Hero,b.dataset.rival==='1');else if(b.dataset.hhc30Zone)hhcWarZoneVictory30(root,b.dataset.hhc30Zone,campaignPlayer(root.campaign)?.id);else if(b.dataset.hhc30Chondax)hhcChondaxResult30(root,b.dataset.hhc30Chondax)},true)}
+
+/* ---- Overview diagnostics for canonical state. ---- */
+const _overview30=campaignOverviewHTML;
+campaignOverviewHTML=function(root,c){let h=_overview30(root,c),m=hhcActiveMission30(root);if(!m)return h;let extra='';if(c.hhcHeroTrack292){const a=c.hhcHeroTrack292.sanguinius,b=c.hhcHeroTrack292.kabandha;extra+=`<section class="hhc-overview291"><header><div><span>V30 CAMPAIGN STATE</span><h3>Signus Hero & War-Zone Tracks</h3></div></header><div class="hhc-overview-grid291"><div><h4>Hero Casualties</h4><div class="hhc-force-list291"><span><b>Sanguinius</b> ${a.casualties}/4 ${a.currentStage30||''}</span><span><b>Ka’Bandha</b> ${b.casualties}/4 ${b.currentStage30||''}</span></div><div class="hhc-actions290"><button class="ghost" data-hhc30-hero="sanguinius">Report Sanguinius casualty</button><button class="ghost" data-hhc30-hero="kabandha">Report Ka’Bandha casualty</button></div></div><div><h4>War Zones</h4><div class="hhc-force-list291">${(c.hhcWarZones292||[]).map(z=>`<span><b>${hhcEsc290(z.name)}</b> • ${z.controller?hhcEsc290(campaignFaction(c,z.controller)?.name||'Controlled'):'Contested'}${z.defensiveTraits30!=null?` • ${z.defensiveTraits30} defensive traits`:''} <button class="ghost" data-hhc30-zone="${hhcEsc290(z.name)}">Record victory</button></span>`).join('')}</div></div></div></section>`}
+  if(c.hhcChondax292){const q=hhcChondaxState30(root),order=q.phaseIndex30===0?['The Lure','The Snare','The Break']:['Tendrils of Doubt','Serpent Hunt'];extra+=`<section class="hhc-overview291"><header><div><span>V30 CAMPAIGN STATE</span><h3>Chondax ${q.phase}</h3><p>Current operation: ${hhcEsc290(order[q.missionIndex30]||'Campaign complete')}</p></div></header><div class="hhc-metrics290"><div><span>Ensnared Boons</span><b>${q.boons30.A.length}</b></div><div><span>Deceiver Boons</span><b>${q.boons30.B.length}</b></div></div><div class="hhc-actions290"><button class="ghost" data-hhc30-chondax="A">Record Ensnared victory</button><button class="ghost" data-hhc30-chondax="B">Record Deceiver victory</button></div></section>`}
+  return extra+h;
+};
+
+/* ---- Heresy-aware portable save: grand state and theatre states are explicit schema fields. ---- */
+const _campaignExport30=campaignExportSave;
+campaignExportSave=async function(root){
+  if(!root?.campaign?.heresy290)return _campaignExport30(root);
+  const h=hhcEnsure290(root),savedTheatres={};
+  for(const m of h.activeMissions||[]){let snap=m.savedSnapshot291||null;if(!snap&&m.snapshotRef30){try{snap=await hhcLoadSnapshot30(m.snapshotRef30)}catch(_){}}if(snap)savedTheatres[m.id]=snap}
+  const payload={format:'Administratum Stellar Cartographica Heresy Campaign Save',schema:30,build:CARTO_BUILD_30,grandCampaign:hhcClone291(h),activeMissionId:h.currentMissionId||null,activeTheatre:hhcSnapshot291(root),savedTheatres,exportedAt:new Date().toISOString()};
+  download(`Horus_Heresy_Campaign_S${h.segment}_T${root.campaign.turn}.json`,JSON.stringify(payload,null,2),'application/json')
+};
+const _campaignImport30=campaignImportSaveFile;
+campaignImportSaveFile=async function(root,file){
+  const x=JSON.parse(await file.text());
+  if(Number(x?.schema)===30&&x?.grandCampaign&&x?.activeTheatre){
+    const h=hhcClone291(x.grandCampaign);h.schema30=30;h.theatreRefs30=h.theatreRefs30||{};
+    for(const m of h.activeMissions||[]){const snap=x.savedTheatres?.[m.id];if(!snap)continue;const key=m.snapshotRef30||`${h.grandCampaignId30||'hhc30'}::${m.id}`;try{await hhcStoreSnapshot30(key,snap);m.snapshotRef30=key;delete m.savedSnapshot291;h.theatreRefs30[m.id]=key}catch(_){m.savedSnapshot291=snap}}
+    h.currentMissionId=x.activeMissionId||null;
+    const nr=hhcRestore291(x.activeTheatre,h);nr.campaign.heresy290=h;campaignPersist(nr);hhcShowRoot291(nr,h.currentMissionId?'overview':'heresy');return true
+  }
+  return _campaignImport30(root,file)
+};
+
+/* ---- Runtime audit API. ---- */
+function campaignAudit30(root=hhcCurrentRoot291?.()||window.currentSector){const c=root?.campaign,h=c?.heresy290;return{revision:CARTO_BUILD_30.revision,build:CARTO_BUILD_30.build,pageErrors:window.__cartoPageErrors30||[],scope:root?campaignScope(root):null,turn:c?.turn??null,phase:c?.phase??null,heresy:!!h,heresySegment:h?.segment??null,currentMissionId:h?.currentMissionId||null,grandSeed:h?.grandSeed30||null,detachedTheatres:Object.keys(h?.theatreRefs30||{}).length,thramasRuntime:!!window.__cartoHeresy293,activeFleetTransits:(c?.factions||[]).flatMap(f=>f.fleets||[]).filter(f=>f.transit||f.localTransit2352).length,canonicalEmptyFleets:(c?.factions||[]).flatMap(f=>(f.fleets||[]).map(fl=>({f,fl}))).filter(x=>x.f.canonicalFleetLock30&&!(x.fl.cargoTaskForceIds||[]).length&&!x.fl.malevolence292).length}}
+function campaignTransitSelfTest30(root=hhcCurrentRoot291?.()||window.currentSector){
+  const c=root?.campaign,p=campaignPlayer(c);if(!root||!c||!p)return{ok:false,reason:'No campaign'};
+  const fleet=(p.fleets||[]).find(f=>!f.transit&&!f.localTransit2352),records=campaignSystemRecords(root);
+  if(!fleet||records.length<2)return{ok:false,reason:'Need stationary player fleet and two strategic nodes'};
+  const snap=hhcClone291(fleet),hold={supply:p.treasury.supply,command:p.command,turn:c.turn,advanced:c.fleetTransitAdvancedThroughTurn283,last:c.lastFleetTransitPass283};
+  p.treasury.supply=999999;p.command=999999;fleet.actionTurn=c.turn;fleet.actionsUsed=0;
+  const target=records.find(r=>r.id!==fleet.currentId&&!campaignAllFleetRefs(c).some(x=>x.fac.id!==p.id&&!x.fleet.transit&&x.fleet.currentId===r.id&&campaignRelationState(campaignRelation(c,p,x.fac))==='War'))||records.find(r=>r.id!==fleet.currentId);let strategic={issued:false,before:null,after:null,stats:null,ok:false};
+  if(target){strategic.issued=campaignFleetIssueMove(root,p,fleet,target.id,null,false);strategic.target=target?.name||target?.id;strategic.speed=campaignFleetSpeed(root,fleet);if(strategic.issued&&root?._campaignScope!=='system'&&Number(fleet.transit?.remaining)<=strategic.speed*1.25){fleet.transit.remaining=strategic.speed*2;fleet.transit.distance=fleet.transit.remaining;fleet.transit.total=fleet.transit.remaining}strategic.before=strategic.issued?Number(fleet.transit?.remaining):null;strategic.navPendingBefore=fleet.navPending247||null;c.fleetTransitAdvancedThroughTurn283=null;c.lastFleetTransitPass283=null;if(strategic.issued)c.turn=hold.turn+1;strategic.stats=strategic.issued?campaignAdvanceFleetTransit283(root,c.turn):null;strategic.after=fleet.transit?Number(fleet.transit.remaining):0;strategic.navPendingAfter=fleet.navPending247||null;strategic.ok=!!strategic.issued&&(strategic.after<strategic.before||!fleet.transit)}
+  for(const k of Object.keys(fleet))delete fleet[k];Object.assign(fleet,hhcClone291(snap));c.turn=hold.turn;p.treasury.supply=999999;p.command=999999;fleet.actionTurn=c.turn;fleet.actionsUsed=0;c.fleetTransitAdvancedThroughTurn283=null;c.lastFleetTransitPass283=null;
+  let local={applicable:root?._campaignScope!=='system',issued:false,before:null,after:null,stats:null,ok:true};
+  if(local.applicable){campaignEnsureFleetLocal2352(root,fleet);const locs=campaignLocalLocations2352(root,fleet),from=fleet.localLocationId2352,targetLoc=locs.find(l=>l.id!==from&&campaignLocalDistance2352(root,fleet,from,l.id)>.0005);if(!targetLoc){local.ok=false;local.reason='No alternate local AU destination'}else{local.issued=campaignIssueLocalMove2352(root,p,fleet,targetLoc.id,'V30 regression self-test');local.before=local.issued?Number(fleet.localTransit2352?.remaining):null;c.fleetTransitAdvancedThroughTurn283=null;c.lastFleetTransitPass283=null;if(local.issued)c.turn=hold.turn+1;local.stats=local.issued?campaignAdvanceFleetTransit283(root,c.turn):null;local.after=fleet.localTransit2352?Number(fleet.localTransit2352.remaining):0;local.ok=!!local.issued&&(local.after<local.before||!fleet.localTransit2352)}}
+  for(const k of Object.keys(fleet))delete fleet[k];Object.assign(fleet,hhcClone291(snap));p.treasury.supply=hold.supply;p.command=hold.command;c.turn=hold.turn;c.fleetTransitAdvancedThroughTurn283=hold.advanced;c.lastFleetTransitPass283=hold.last;
+  return{ok:strategic.ok&&local.ok,strategic,local,scope:campaignScope(root)}
+}
+function campaignInspect30(root=hhcCurrentRoot291?.()||window.currentSector){const c=root?.campaign;return{audit:campaignAudit30(root),factions:(c?.factions||[]).map(f=>({name:f.name,player:f.id===c.playerFactionId,taskForces:(f.taskForces||[]).length,fleets:(f.fleets||[]).map(fl=>({name:fl.name,cargo:(fl.cargoTaskForceIds||[]).length,malevolence:!!fl.malevolence292,vessels:fl.canonicalVessels292??null,status:fl.status}))}))}}
+window.__cartoV30={build:CARTO_BUILD_30,audit:campaignAudit30,inspect:campaignInspect30,transitSelfTest:campaignTransitSelfTest30,emit:hhcEmit30,saveMission:hhcSaveCurrent291,resumeMission:hhcResume291,store:{save:hhcStoreSnapshot30,load:hhcLoadSnapshot30,delete:hhcDeleteSnapshot30}};
+window.__cartoPageErrors30=window.__cartoPageErrors30||[];
+window.addEventListener('error',e=>window.__cartoPageErrors30.push(String(e.message||e.error||'error')));
+window.addEventListener('unhandledrejection',e=>window.__cartoPageErrors30.push(String(e.reason?.message||e.reason||'unhandled rejection')));
+
+/* ---- One authoritative displayed/PWA identity. ---- */
+function campaignApplyBuildIdentity30(){const b=CARTO_BUILD_30,meta=document.querySelector('meta[name="cartographica-revision"]');if(meta)meta.content=b.revision;document.documentElement.dataset.cartographicaRevision=b.revision;document.documentElement.dataset.cartographicaBuild=b.build;document.title=b.title;const badge=document.querySelector('.generation-head-actions .badge');if(badge)badge.textContent=b.label}
+document.addEventListener('DOMContentLoaded',campaignApplyBuildIdentity30,{once:true});window.addEventListener('pageshow',campaignApplyBuildIdentity30);setTimeout(campaignApplyBuildIdentity30,0);
+
 
 })();
 
@@ -10311,9 +10573,11 @@ function campaignFleetTransitAudit283(root=window.currentSector){
   return{revision:REV283,build:REV283_BUILD,currentTurn:Number(c?.turn||0),lastPass:c?.lastFleetTransitPass283||null,activeTransits:rows.length,transits:rows};
 }
 window.__cartoRevision283={version:REV283,build:REV283_BUILD,audit:campaignFleetTransitAudit283};
-const revMeta283=document.querySelector('meta[name="cartographica-revision"]');if(revMeta283)revMeta283.content=REV283;
-document.title='Administratum Stellar Cartographica — Revision 29.1';document.documentElement.dataset.cartographicaRevision='29.1';document.documentElement.dataset.cartographicaBuild=window.__cartoHeresy291?.build||'29.1-heresy-mission-theatres-v1';
+/* v30 owns displayed build identity; v28.3 retains transit audit only. */
 </script>
+
+
+<style id="rev293-crusade-css">.thramas293{border-color:rgba(183,60,54,.48);background:linear-gradient(145deg,rgba(68,8,8,.18),rgba(0,0,0,.22))}.thramas-mission-buttons293{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 12px}.thramas293 select,.thramas293 input{width:100%}</style>
 
 </body>
 </html>
